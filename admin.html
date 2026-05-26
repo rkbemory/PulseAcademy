@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Panel — Pulse for Nurses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="Photo & Logo/Pulse For Nurses Logo.png">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="" class="brand-img">
+      <span class="brand-text">
+        <span class="brand-name">Pulse For Nurses · Admin</span>
+      </span>
+    </a>
+    <nav class="top-nav-links">
+      <a href="index.html">← Back to Site</a>
+      <button id="logout-btn" class="cta-mini" style="border:none;cursor:pointer;">Log out</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Login screen -->
+<section id="login-screen" class="admin-login">
+  <div class="admin-login-card">
+    <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="" class="admin-login-logo">
+    <h1>Admin Sign-in</h1>
+    <p class="muted">Restricted area. Use Main or Deputy credentials.</p>
+    <label>Role
+      <select id="login-role">
+        <option value="main">Main Admin</option>
+        <option value="deputy">Deputy Admin</option>
+      </select>
+    </label>
+    <label>Password
+      <input type="password" id="login-pass" placeholder="Enter password" autocomplete="current-password">
+    </label>
+    <button id="login-btn" class="btn btn-primary">Sign in →</button>
+    <p id="login-err" class="muted login-err"></p>
+    <details class="admin-help">
+      <summary>Default credentials (change immediately)</summary>
+      <p><strong>Main Admin password:</strong> <code>pulse-main-2026</code><br>
+         <strong>Deputy Admin password:</strong> <code>pulse-deputy-2026</code></p>
+      <p>Change them via the "Admin accounts" tab after first sign-in.</p>
+    </details>
+  </div>
+</section>
+
+<!-- Admin app -->
+<main id="admin-app" hidden>
+
+  <div class="admin-shell">
+
+    <aside class="admin-sidebar">
+      <div class="admin-user">
+        <span class="admin-role-pill" id="role-pill">Main Admin</span>
+        <span class="admin-stat" id="stat-questions">0 questions</span>
+        <span class="admin-stat" id="stat-tests">0 tests</span>
+        <span class="admin-stat" id="stat-topics">0 topics</span>
+      </div>
+
+      <nav class="admin-nav">
+        <button data-view="dashboard" class="is-active">📊 Dashboard</button>
+        <button data-view="questions">❓ Questions</button>
+        <button data-view="tests">📝 Tests</button>
+        <button data-view="topics">📖 Topics</button>
+        <button data-view="export">💾 Export / Import</button>
+        <button data-view="accounts" data-main-only>👤 Admin Accounts</button>
+        <button data-view="backend" data-main-only>☁️ Backend Roadmap</button>
+      </nav>
+    </aside>
+
+    <section class="admin-main" id="view-host"></section>
+
+  </div>
+</main>
+
+<script src="data/pulse-core.js"></script>
+<script src="data/msn.js"></script>
+<script src="data/post-basic.js"></script>
+<script src="data/rn.js"></script>
+<script src="data/pulse-loader.js"></script>
+<script src="scripts.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

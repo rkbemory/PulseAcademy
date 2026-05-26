@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MSN Mock Test — Pulse Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="quiz-body">
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-mark"></span>
+      <span>PULSE <em style="font-weight:400;font-style:normal;font-size:0.85rem;color:var(--text-soft);">for Nurses</em></span>
+    </a>
+    <nav>
+      <a href="msn-tests.html">← All Tests</a>
+      <a href="msn.html" class="cta-mini">Exit Quiz</a>
+    </nav>
+  </div>
+</header>
+
+<main id="quiz-root" class="quiz-page"></main>
+
+<script src="data/msn-data.js"></script>
+<script src="quiz-engine.js"></script>
+<script>
+  PulseQuiz.runQuiz();
+</script>
+</body>
+</html>

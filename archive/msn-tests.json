@@ -1,0 +1,76 @@
+{
+  "subjectMocks": [
+    {
+      "id": "sm-fundamental-nursing",
+      "subject": "fundamental-nursing",
+      "title": "Fundamental Nursing — Subject Mock",
+      "duration": 30,
+      "intendedCount": 30,
+      "questionIds": [
+        "fn-001","fn-002","fn-003","fn-004","fn-005","fn-006","fn-007","fn-008","fn-009","fn-010",
+        "fn-011","fn-012","fn-013","fn-014","fn-015","fn-016","fn-017","fn-018","fn-019","fn-020",
+        "fn-021","fn-022","fn-023","fn-024","fn-025","fn-026","fn-027","fn-028","fn-029","fn-030"
+      ],
+      "status": "live"
+    },
+    { "id": "sm-anatomy",       "subject": "anatomy",       "title": "Anatomy & Physiology — Subject Mock", "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-nutrition",     "subject": "nutrition",     "title": "Nutrition — Subject Mock",            "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-microbiology",  "subject": "microbiology",  "title": "Microbiology — Subject Mock",         "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-pharmacology",  "subject": "pharmacology",  "title": "Pharmacology — Subject Mock",         "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-orthopedic",    "subject": "orthopedic",    "title": "Orthopedic Nursing — Subject Mock",   "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-pediatric",     "subject": "pediatric",     "title": "Pediatric Nursing — Subject Mock",    "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-psychiatric",   "subject": "psychiatric",   "title": "Psychiatric Nursing — Subject Mock",  "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-english",       "subject": "english",       "title": "English — Subject Mock",              "duration": 30, "intendedCount": 30, "status": "coming-soon" },
+    { "id": "sm-gk",            "subject": "gk",            "title": "General Knowledge — Subject Mock",    "duration": 30, "intendedCount": 30, "status": "coming-soon" }
+  ],
+  "modelTests": [
+    {
+      "id": "mt-01",
+      "title": "Model Test 01",
+      "duration": 100,
+      "intendedCount": 100,
+      "questionIds": [
+        "fn-001","fn-005","fn-009","fn-013","fn-017",
+        "an-001","an-002","an-003","an-004","an-005",
+        "nu-001","nu-002","nu-003","nu-004","nu-005",
+        "mb-001","mb-002","mb-003","mb-004","mb-005",
+        "ph-001","ph-002","ph-003","ph-004","ph-005",
+        "or-001","or-002","or-003","or-004","or-005",
+        "pd-001","pd-002","pd-003","pd-004","pd-005",
+        "ps-001","ps-002","ps-003","ps-004","ps-005",
+        "en-001","en-002","en-003","en-004","en-005",
+        "gk-001","gk-002","gk-003","gk-004","gk-005"
+      ],
+      "status": "live"
+    },
+    { "id": "mt-02", "title": "Model Test 02", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-03", "title": "Model Test 03", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-04", "title": "Model Test 04", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-05", "title": "Model Test 05", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-06", "title": "Model Test 06", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-07", "title": "Model Test 07", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-08", "title": "Model Test 08", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-09", "title": "Model Test 09", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-10", "title": "Model Test 10", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-11", "title": "Model Test 11", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-12", "title": "Model Test 12", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-13", "title": "Model Test 13", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-14", "title": "Model Test 14", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-15", "title": "Model Test 15", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-16", "title": "Model Test 16", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-17", "title": "Model Test 17", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-18", "title": "Model Test 18", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-19", "title": "Model Test 19", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-20", "title": "Model Test 20", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-21", "title": "Model Test 21", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-22", "title": "Model Test 22", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-23", "title": "Model Test 23", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-24", "title": "Model Test 24", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-25", "title": "Model Test 25", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-26", "title": "Model Test 26", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-27", "title": "Model Test 27", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-28", "title": "Model Test 28", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-29", "title": "Model Test 29", "duration": 100, "intendedCount": 100, "status": "coming-soon" },
+    { "id": "mt-30", "title": "Model Test 30", "duration": 100, "intendedCount": 100, "status": "coming-soon" }
+  ]
+}

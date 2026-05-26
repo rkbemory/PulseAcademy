@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MSN Mock Tests & Model Tests — Pulse Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-mark"></span>
+      <span>PULSE <em style="font-weight:400;font-style:normal;font-size:0.85rem;color:var(--text-soft);">for Nurses</em></span>
+    </a>
+    <nav>
+      <a href="index.html#programs">Programs</a>
+      <a href="msn.html">MSN</a>
+      <a href="#">NCLEX</a>
+      <a href="#">Study Abroad</a>
+      <a href="#">Books</a>
+      <a href="msn-tests.html" class="cta-mini">All Mocks →</a>
+    </nav>
+  </div>
+</header>
+
+<section class="tests-hero">
+  <div class="tests-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> › <a href="msn.html">MSN</a> › <span>Mock & Model Tests</span></div>
+    <span class="pill-tag">⬡ MSN Test Series</span>
+    <h1>Practice. Score. Improve.</h1>
+    <p class="tests-hero-sub">
+      <strong>10 subject-area mock tests</strong> (30 questions each) to drill key topics, plus
+      <strong>30 full model tests</strong> (100 questions each) modeled on the real MSN admission exam.
+      Every result shows your strengths and weaknesses, subject by subject.
+    </p>
+    <div class="tests-hero-stats">
+      <div><strong>10</strong> Subject Mocks</div>
+      <div><strong>30</strong> Model Tests</div>
+      <div><strong>3,300+</strong> Questions</div>
+      <div><strong>10</strong> Subjects</div>
+    </div>
+  </div>
+</section>
+
+<nav class="tests-tabs">
+  <button class="tests-tab is-active" data-target="subject-mocks">📚 Subject Mocks (10)</button>
+  <button class="tests-tab" data-target="model-tests">🎯 Full Model Tests (30)</button>
+</nav>
+
+<section class="block" id="subject-mocks">
+  <div class="section-eyebrow">⬡ Subject Mocks</div>
+  <h2 class="section-title">Drill one subject at a time</h2>
+  <p class="section-lead">30 questions per mock · 30 minutes · instant subject-level feedback. Best for targeted revision when you know your weak area.</p>
+  <div class="test-grid" id="subject-mock-grid"></div>
+</section>
+
+<section class="block" id="model-tests" style="display:none;">
+  <div class="section-eyebrow">⬡ Full Model Tests</div>
+  <h2 class="section-title">Simulate the real MSN exam</h2>
+  <p class="section-lead">100 questions across all 10 subjects · 100 minutes · full strength &amp; weakness analytics after each test.</p>
+  <div class="model-grid" id="model-test-grid"></div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">PULSE for Nurses</div>
+        <p style="margin-bottom:14px;">Job Coaching · Admission Care · Consultation. By nurses, for nurses.</p>
+        <p style="font-size:0.85rem;">Shanir Akhra (Jatrabari) · Mohammadpur (Bashila)<br>📞 01957 376946 · 01723 419164</p>
+      </div>
+      <div class="footer-col">
+        <h5>Programs</h5>
+        <ul>
+          <li><a href="msn.html">MSN</a></li>
+          <li><a href="bsc-basic.html">BSc Basic</a></li>
+          <li><a href="post-basic-bsc.html">Post Basic BSc</a></li>
+          <li><a href="diploma.html">Diploma</a></li>
+          <li><a href="midwifery.html">Midwifery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Beyond</h5>
+        <ul>
+          <li><a href="#">NCLEX Prep</a></li>
+          <li><a href="#">Study Abroad</a></li>
+          <li><a href="#">Books Store</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Pulse</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Faculty</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Telegram Community</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span>Payments: bKash · Nagad · Visa · Mastercard</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/msn-data.js"></script>
+<script src="quiz-engine.js"></script>
+<script src="scripts.js"></script>
+<script>
+  // Tab toggle
+  document.querySelectorAll('.tests-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tests-tab').forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const target = tab.dataset.target;
+      document.getElementById('subject-mocks').style.display = target === 'subject-mocks' ? '' : 'none';
+      document.getElementById('model-tests').style.display = target === 'model-tests' ? '' : 'none';
+      window.scrollTo({ top: document.querySelector('.tests-tabs').offsetTop - 60, behavior: 'smooth' });
+    });
+  });
+  // Render catalog
+  PulseQuiz.renderCatalog();
+</script>
+</body>
+</html>
