@@ -1,8 +1,17 @@
 # Pulse for Nurses
 
+**🩺 Live at <https://pulsefornurses.com>**
+
 A static, browser-based admission prep platform for Bangladeshi nursing students. Three programs (MSN, Post Basic BSc, BNMC RN), 60+ model tests, topic discussions with check-in MCQs, subject-wise evaluation graphs, and a password-gated admin panel.
 
 Built to run from a folder (`file://`) or any static host — no server, no build step, no database required to start.
+
+## Hosting
+
+- **Primary:** [Netlify](https://pulsefornurses.netlify.app) — auto-deploys from this repo on every `git push` to `main`
+- **Backup:** [GitHub Pages](https://rkbemory.github.io/PulseAcademy/) — same content, same host pattern as the [Caregiver Village](https://rkbemory.github.io/general/) app
+- **Domain:** `pulsefornurses.com` (Cloudflare registrar, free Let's Encrypt SSL via Netlify)
+- **PWA:** installable on phone home screens via "Add to Home Screen"
 
 ---
 

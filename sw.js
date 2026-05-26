@@ -2,7 +2,7 @@
    Strategy: cache-first for same-origin assets, network-first for everything else.
    Bumps CACHE_NAME on every meaningful update to retire stale entries. */
 
-const CACHE_NAME = "pulse-v1.0.0";
+const CACHE_NAME = "pulse-v1.1.0";
 const PRECACHE = [
   "./",
   "index.html",
