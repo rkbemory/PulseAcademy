@@ -6,23 +6,50 @@
   const LS_ACCOUNTS = "pulse:admin:accounts";
   const LS_SESSION  = "pulse:admin:session";
 
-  const DEFAULT_ACCOUNTS = {
-    main:   "pulse-main-2026",
-    deputy: "pulse-deputy-2026"
+  /* Default passwords are stored as SHA-256 hashes so the actual passwords
+     never appear in the public source. Once the Main Admin signs in and
+     changes a password via the Accounts tab, the new value is stored in
+     localStorage and replaces the default check for that role. */
+  const DEFAULT_HASHES = {
+    main:   "9fa2de40341bc04a57a2afad45087682fa9e571b5d413487719570a0b93b1212",
+    deputy: "6e7ae3be410c2bc1d650b0ef1372172441f8a009eac90589a5bfab4304a7ab13"
   };
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.from((r || document).querySelectorAll(s)); }
   function escapeHtml(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c])); }
 
+  async function sha256(str) {
+    if (!window.crypto || !window.crypto.subtle) {
+      // Fallback for very old browsers — refuses login (forces upgrade)
+      return "";
+    }
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  }
+
   function loadAccounts() {
     try {
       const a = JSON.parse(localStorage.getItem(LS_ACCOUNTS) || "null");
-      if (a && a.main && a.deputy) return a;
+      if (a && typeof a === "object") return a;
     } catch (e) {}
-    return Object.assign({}, DEFAULT_ACCOUNTS);
+    return null;
   }
   function saveAccounts(a) { localStorage.setItem(LS_ACCOUNTS, JSON.stringify(a)); }
+
+  /* Check a plaintext password against either a localStorage-overridden value
+     or, if not overridden, the default SHA-256 hash. */
+  async function checkPassword(role, plaintext) {
+    if (!plaintext) return false;
+    const stored = loadAccounts();
+    if (stored && stored[role]) {
+      // User has set an explicit password — exact match
+      return stored[role] === plaintext;
+    }
+    // Fall back to default hash check
+    const hash = await sha256(plaintext);
+    return hash === DEFAULT_HASHES[role];
+  }
   function loadSession() {
     try { return JSON.parse(localStorage.getItem(LS_SESSION) || "null"); }
     catch (e) { return null; }
@@ -60,11 +87,12 @@
   }
 
   function attachLogin() {
-    $("#login-btn").addEventListener("click", function () {
+    $("#login-btn").addEventListener("click", async function () {
       const role = $("#login-role").value;
       const pass = $("#login-pass").value;
-      const accounts = loadAccounts();
-      if (accounts[role] === pass) {
+      $("#login-err").textContent = "";
+      const ok = await checkPassword(role, pass);
+      if (ok) {
         const session = { role: role, signedInAt: Date.now() };
         saveSession(session);
         showApp(session);
@@ -535,28 +563,51 @@
   /* ADMIN ACCOUNTS (main only) */
   views.accounts = function (host, session) {
     if (session.role !== "main") { host.innerHTML = "<p class='muted'>Main Admin only.</p>"; return; }
-    const accounts = loadAccounts();
+    const accounts = loadAccounts() || {};
+    const mainSet = !!accounts.main;
+    const deputySet = !!accounts.deputy;
     host.innerHTML =
-      '<header class="admin-view-head"><h1>Admin Accounts</h1><p class="muted">Set passwords for the two admin roles.</p></header>' +
+      '<header class="admin-view-head"><h1>Admin Accounts</h1><p class="muted">Set or rotate the role passwords. Default values use SHA-256 hashes stored in the source, so the actual default is not visible there.</p></header>' +
       '<section class="admin-section">' +
         '<h3>Main Admin password</h3>' +
-        '<input type="text" id="acc-main" value="' + escapeHtml(accounts.main) + '">' +
+        '<p class="muted">' + (mainSet ? "Custom password is set." : "Currently using the default hash-checked password.") + '</p>' +
+        '<input type="password" id="acc-main" placeholder="' + (mainSet ? "Enter new password to rotate" : "Set a custom password") + '">' +
       '</section>' +
       '<section class="admin-section">' +
         '<h3>Deputy Admin password</h3>' +
-        '<input type="text" id="acc-deputy" value="' + escapeHtml(accounts.deputy) + '">' +
-        '<p class="muted">Deputy can edit questions/tests/topics. Cannot access this Accounts tab or Backend tab.</p>' +
+        '<p class="muted">' + (deputySet ? "Custom Deputy password is set." : "Deputy role disabled by default. Set a password here to enable a Deputy.") + '</p>' +
+        '<input type="password" id="acc-deputy" placeholder="' + (deputySet ? "Enter new Deputy password" : "Leave blank to keep Deputy disabled") + '">' +
       '</section>' +
-      '<button id="acc-save" class="btn btn-primary">Save passwords</button>';
+      '<div class="row-actions" style="margin-top:8px;">' +
+        '<button id="acc-save" class="btn btn-primary">Save</button>' +
+        (mainSet || deputySet ? '<button id="acc-reset" class="btn btn-secondary">Reset to defaults</button>' : '') +
+      '</div>';
 
     $("#acc-save").addEventListener("click", function () {
-      const main = $("#acc-main").value.trim();
-      const deputy = $("#acc-deputy").value.trim();
-      if (!main || !deputy) return alert("Both passwords required.");
-      if (main === deputy) return alert("Use different passwords for the two roles.");
-      saveAccounts({ main: main, deputy: deputy });
-      alert("Passwords updated. Existing session remains valid; next sign-in uses the new password.");
+      const main = ($("#acc-main").value || "").trim();
+      const deputy = ($("#acc-deputy").value || "").trim();
+      // Build the new accounts object based on what changed.
+      const next = Object.assign({}, accounts);
+      if (main) next.main = main;
+      if (deputy) next.deputy = deputy;
+      // Validation: if both end up set, they must differ
+      if (next.main && next.deputy && next.main === next.deputy) {
+        return alert("Main and Deputy passwords must be different.");
+      }
+      if (!main && !deputy) return alert("Enter at least one new password to save.");
+      saveAccounts(next);
+      alert("Saved. Your current session stays valid; next sign-in uses the new password(s).");
+      switchView("accounts");
     });
+    const resetBtn = $("#acc-reset");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function () {
+        if (!confirm("Reset both role passwords to the source defaults? This clears the custom passwords stored in this browser.")) return;
+        localStorage.removeItem(LS_ACCOUNTS);
+        alert("Reset done. The next sign-in uses the default hash-checked password.");
+        switchView("accounts");
+      });
+    }
   };
 
   /* BACKEND ROADMAP (main only) */

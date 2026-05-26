@@ -20,14 +20,11 @@ When you're ready to host it: any static host works (Netlify, Vercel, GitHub Pag
 
 URL: `admin.html`
 
-### Default passwords (change immediately)
+### Passwords
 
-| Role | Default password |
-|------|------------------|
-| Main Admin | `pulse-main-2026` |
-| Deputy Admin | `pulse-deputy-2026` |
+Default passwords are stored as **SHA-256 hashes** in `admin.js`, so the actual passwords never appear in the source. The owner of this repo sets the Main Admin password; the Deputy role is disabled by default and can be enabled via **Admin Accounts** if you want a second admin.
 
-Change them on first sign-in under **Admin Accounts** (Main only). New passwords are saved in `localStorage`.
+Once you sign in for the first time, use **Admin Accounts** to rotate either password. New values are saved in `localStorage` on the device you used.
 
 ### What each role can do
 
