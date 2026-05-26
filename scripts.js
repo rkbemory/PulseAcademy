@@ -187,6 +187,21 @@
     if (document.readyState !== "loading") fn();
     else document.addEventListener("DOMContentLoaded", fn);
   }
+  /* ---------------------------------------------------------------
+     7. Register service worker (PWA / offline support)
+     --------------------------------------------------------------- */
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    // Only register on HTTPS or localhost (browsers block SW on http)
+    if (location.protocol !== "https:" && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") return;
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function (err) {
+        // Quiet failure — site still works without it
+        console.warn("Service worker registration failed:", err);
+      });
+    });
+  }
+
   ready(function () {
     injectToggle();
     injectDrawer();
@@ -195,5 +210,6 @@
     attachCounters();
     attachFAQ();
     attachActiveLink();
+    registerServiceWorker();
   });
 })();

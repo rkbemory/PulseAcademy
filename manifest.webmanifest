@@ -1,0 +1,55 @@
+{
+  "name": "Pulse for Nurses",
+  "short_name": "Pulse",
+  "description": "Admission preparation platform for MSN, Post Basic BSc & BNMC RN students. For Nurses, By Nurses.",
+  "start_url": "./",
+  "scope": "./",
+  "id": "/PulseAcademy/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#FAF7F2",
+  "theme_color": "#1E5168",
+  "lang": "en",
+  "categories": ["education", "medical", "books"],
+  "icons": [
+    {
+      "src": "pulse-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pulse-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pulse-icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Try a Free Mock",
+      "short_name": "Free Mock",
+      "description": "Start the first MSN model test",
+      "url": "./quiz.html?program=msn&test=msn-mt-01"
+    },
+    {
+      "name": "MSN Admission",
+      "url": "./msn.html"
+    },
+    {
+      "name": "Post Basic BSc",
+      "url": "./post-basic.html"
+    },
+    {
+      "name": "BNMC RN",
+      "url": "./rn.html"
+    }
+  ]
+}
