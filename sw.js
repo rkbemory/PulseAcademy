@@ -2,7 +2,7 @@
    Strategy: cache-first for same-origin assets, network-first for everything else.
    Bumps CACHE_NAME on every meaningful update to retire stale entries. */
 
-const CACHE_NAME = "pulse-v1.1.0";
+const CACHE_NAME = "pulse-v1.2.0";
 const PRECACHE = [
   "./",
   "index.html",
@@ -59,8 +59,13 @@ self.addEventListener("fetch", function (event) {
 
   const url = new URL(event.request.url);
 
-  // Don't cache admin overrides or anything that might contain sensitive state
-  if (url.pathname.includes("admin")) {
+  // Never cache the visitor-counter API or anything under /api/ or /.netlify/
+  // — must always be a fresh fetch to reflect the current total.
+  if (
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/.netlify/") ||
+    url.pathname.includes("admin")
+  ) {
     event.respondWith(fetch(event.request).catch(function () {
       return caches.match(event.request);
     }));

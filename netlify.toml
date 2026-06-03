@@ -1,0 +1,24 @@
+# Netlify configuration for Pulse for Nurses
+# Static site (no build step) + serverless functions for visitor counter.
+
+[build]
+  publish = "."
+  command = ""
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Pretty alias so /api/visit hits the visit function.
+[[redirects]]
+  from = "/api/visit"
+  to = "/.netlify/functions/visit"
+  status = 200
+  force = true
+
+# SPA-style fallback: any unknown route serves index.html with 404 status,
+# which lets the site degrade gracefully without breaking real 404s.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404

@@ -188,7 +188,102 @@
     else document.addEventListener("DOMContentLoaded", fn);
   }
   /* ---------------------------------------------------------------
-     7. Register service worker (PWA / offline support)
+     7. Visitor counter (Netlify Function + Blobs)
+        - Floating chip in bottom-right of every page.
+        - Increments once per browser per UTC day.
+        - Re-polls every 30s so the number ticks live.
+     --------------------------------------------------------------- */
+  function attachVisitorCounter() {
+    // Skip on admin / preview surfaces
+    if (location.pathname.includes("admin")) return;
+
+    const chip = injectCounterChip();
+    if (!chip) return;
+
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD UTC
+    const lastVisit = localStorage.getItem("pulse:lastVisitDay");
+    const shouldIncrement = lastVisit !== today;
+
+    let lastShown = 0;
+    function setCount(n, animate) {
+      const span = chip.querySelector(".vc-count");
+      if (!span) return;
+      if (animate && n !== lastShown) animateCount(span, lastShown, n);
+      else span.textContent = n.toLocaleString();
+      lastShown = n;
+      chip.classList.toggle("is-loaded", true);
+    }
+
+    function fetchCount(action) {
+      return fetch("/api/visit?action=" + action, { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) { return data && typeof data.total === "number" ? data.total : null; })
+        .catch(function () { return null; });
+    }
+
+    // Initial: increment once per day, otherwise just read.
+    fetchCount(shouldIncrement ? "increment" : "read").then(function (n) {
+      if (n == null) { chip.classList.add("is-error"); return; }
+      if (shouldIncrement) localStorage.setItem("pulse:lastVisitDay", today);
+      setCount(n, true);
+    });
+
+    // Poll every 30s (read only — no further increments)
+    setInterval(function () {
+      fetchCount("read").then(function (n) { if (n != null) setCount(n, true); });
+    }, 30000);
+
+    // Re-poll when tab becomes visible again (after being backgrounded)
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") {
+        fetchCount("read").then(function (n) { if (n != null) setCount(n, true); });
+      }
+    });
+  }
+
+  function injectCounterChip() {
+    if (document.querySelector(".visitor-counter")) return document.querySelector(".visitor-counter");
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = "visitor-counter";
+    el.setAttribute("aria-label", "Total visitors to Pulse for Nurses");
+    el.title = "Total visitors to Pulse for Nurses";
+    el.innerHTML =
+      '<span class="vc-icon" aria-hidden="true">👀</span>' +
+      '<span class="vc-label">Visitors</span>' +
+      '<span class="vc-count" aria-live="polite">—</span>';
+    el.addEventListener("click", function () {
+      // Tiny celebration tap — also nudges a fresh re-read
+      fetch("/api/visit?action=read", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && typeof data.total === "number") {
+            const span = el.querySelector(".vc-count");
+            if (span) animateCount(span, parseInt((span.textContent || "0").replace(/[^\d]/g, ""), 10) || 0, data.total);
+          }
+        })
+        .catch(function () {});
+    });
+    document.body.appendChild(el);
+    return el;
+  }
+
+  function animateCount(el, from, to) {
+    if (from === to) { el.textContent = to.toLocaleString(); return; }
+    const dur = 900;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(from + (to - from) * eased);
+      el.textContent = val.toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------------------------------------------------------------
+     8. Register service worker (PWA / offline support)
      --------------------------------------------------------------- */
   function registerServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
@@ -210,6 +305,7 @@
     attachCounters();
     attachFAQ();
     attachActiveLink();
+    attachVisitorCounter();
     registerServiceWorker();
   });
 })();

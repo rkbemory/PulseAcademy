@@ -3370,6 +3370,118 @@ p a:hover {
   .home-hero::after,
   .community-band::before,
   footer::before { display: none; }
-  .btn, .nav-toggle, .nav-drawer, .nav-drawer-backdrop { display: none !important; }
+  .btn, .nav-toggle, .nav-drawer, .nav-drawer-backdrop, .visitor-counter { display: none !important; }
 }
+
+/* ============================================================
+   ============ VISITOR COUNTER CHIP (Netlify-backed) =========
+   Bottom-right floating pill on every page. Animates on update.
+   ============================================================ */
+.visitor-counter {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px 9px 14px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(228, 220, 207, 0.65);
+  border-radius: 999px;
+  box-shadow:
+    0 6px 18px rgba(20, 58, 75, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.84rem;
+  color: var(--primary-deep);
+  cursor: pointer;
+  transition: transform .22s, box-shadow .22s, background .22s;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: vc-enter .55s ease-out .35s forwards;
+}
+.visitor-counter:hover,
+.visitor-counter:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 10px 24px rgba(20, 58, 75, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.visitor-counter:active { transform: translateY(0); }
+.visitor-counter .vc-icon {
+  font-size: 1rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
+}
+.visitor-counter .vc-label {
+  font-weight: 500;
+  color: var(--text-soft);
+  letter-spacing: 0.2px;
+}
+.visitor-counter .vc-count {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--accent-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  min-width: 1.5ch;
+  text-align: right;
+  transition: transform .2s;
+}
+.visitor-counter:hover .vc-count { transform: scale(1.05); }
+
+/* Subtle "live" pulse dot to the left of the icon */
+.visitor-counter::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16A34A;
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
+  animation: vc-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes vc-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55); }
+  50%      { box-shadow: 0 0 0 7px rgba(22, 163, 74, 0); }
+}
+.visitor-counter.is-error::before {
+  background: var(--text-muted);
+  animation: none;
+}
+.visitor-counter.is-error .vc-label::after { content: " unavailable"; color: var(--text-muted); font-size: 0.78rem; }
+
+@keyframes vc-enter {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .visitor-counter { animation: none; opacity: 1; transform: none; }
+  .visitor-counter::before { animation: none; }
+}
+
+/* Mobile: tighter, no "Visitors" label, smaller dot */
+@media (max-width: 560px) {
+  .visitor-counter {
+    bottom: 14px;
+    right: 14px;
+    padding: 8px 14px 8px 12px;
+    font-size: 0.78rem;
+    gap: 6px;
+  }
+  .visitor-counter .vc-label { display: none; }
+  .visitor-counter .vc-count { font-size: 0.88rem; }
+}
+
+/* Slide above mobile drawer when drawer open */
+body:has(.nav-drawer.is-open) .visitor-counter,
+.nav-drawer.is-open ~ .visitor-counter { display: none; }
 
