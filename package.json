@@ -1,0 +1,19 @@
+{
+  "name": "pulse-for-nurses",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Pulse for Nurses — admission preparation platform (static site + Netlify Functions).",
+  "type": "module",
+  "homepage": "https://pulsefornurses.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rkbemory/PulseAcademy.git"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
