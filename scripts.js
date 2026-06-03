@@ -189,54 +189,44 @@
   }
   /* ---------------------------------------------------------------
      7. Visitor counter (Netlify Function + Blobs)
-        - Floating chip in bottom-right of every page.
+        - Floating chip in top-right of every page (below sticky header).
+        - Shows Today + All-time totals.
         - Increments once per browser per UTC day.
-        - Re-polls every 30s so the number ticks live.
+        - Re-polls every 30s so the numbers tick live.
      --------------------------------------------------------------- */
   function attachVisitorCounter() {
-    // Skip on admin / preview surfaces
     if (location.pathname.includes("admin")) return;
 
     const chip = injectCounterChip();
     if (!chip) return;
 
-    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD UTC
+    const today = new Date().toISOString().slice(0, 10);
     const lastVisit = localStorage.getItem("pulse:lastVisitDay");
     const shouldIncrement = lastVisit !== today;
 
-    let lastShown = 0;
-    function setCount(n, animate) {
-      const span = chip.querySelector(".vc-count");
-      if (!span) return;
-      if (animate && n !== lastShown) animateCount(span, lastShown, n);
-      else span.textContent = n.toLocaleString();
-      lastShown = n;
-      chip.classList.toggle("is-loaded", true);
-    }
-
-    function fetchCount(action) {
+    function fetchCounts(action) {
       return fetch("/api/visit?action=" + action, { cache: "no-store" })
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (data) { return data && typeof data.total === "number" ? data.total : null; })
+        .then(function (data) {
+          if (!data || typeof data.total !== "number") return null;
+          return data;
+        })
         .catch(function () { return null; });
     }
 
-    // Initial: increment once per day, otherwise just read.
-    fetchCount(shouldIncrement ? "increment" : "read").then(function (n) {
-      if (n == null) { chip.classList.add("is-error"); return; }
+    fetchCounts(shouldIncrement ? "increment" : "read").then(function (data) {
+      if (!data) { chip.classList.add("is-error"); return; }
       if (shouldIncrement) localStorage.setItem("pulse:lastVisitDay", today);
-      setCount(n, true);
+      updateChip(chip, data);
     });
 
-    // Poll every 30s (read only — no further increments)
     setInterval(function () {
-      fetchCount("read").then(function (n) { if (n != null) setCount(n, true); });
+      fetchCounts("read").then(function (data) { if (data) updateChip(chip, data); });
     }, 30000);
 
-    // Re-poll when tab becomes visible again (after being backgrounded)
     document.addEventListener("visibilitychange", function () {
       if (document.visibilityState === "visible") {
-        fetchCount("read").then(function (n) { if (n != null) setCount(n, true); });
+        fetchCounts("read").then(function (data) { if (data) updateChip(chip, data); });
       }
     });
   }
@@ -246,26 +236,45 @@
     const el = document.createElement("button");
     el.type = "button";
     el.className = "visitor-counter";
-    el.setAttribute("aria-label", "Total visitors to Pulse for Nurses");
-    el.title = "Total visitors to Pulse for Nurses";
+    el.setAttribute("aria-label", "Today and all-time visitors to Pulse for Nurses");
+    el.title = "Today's visitors · All-time visitors";
     el.innerHTML =
+      '<span class="vc-pulse" aria-hidden="true"></span>' +
       '<span class="vc-icon" aria-hidden="true">👀</span>' +
-      '<span class="vc-label">Visitors</span>' +
-      '<span class="vc-count" aria-live="polite">—</span>';
+      '<span class="vc-stat">' +
+        '<span class="vc-stat-label">Today</span>' +
+        '<span class="vc-stat-value vc-today" aria-live="polite">—</span>' +
+      '</span>' +
+      '<span class="vc-divider" aria-hidden="true"></span>' +
+      '<span class="vc-stat">' +
+        '<span class="vc-stat-label">All time</span>' +
+        '<span class="vc-stat-value vc-total" aria-live="polite">—</span>' +
+      '</span>';
     el.addEventListener("click", function () {
-      // Tiny celebration tap — also nudges a fresh re-read
       fetch("/api/visit?action=read", { cache: "no-store" })
         .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data && typeof data.total === "number") {
-            const span = el.querySelector(".vc-count");
-            if (span) animateCount(span, parseInt((span.textContent || "0").replace(/[^\d]/g, ""), 10) || 0, data.total);
-          }
-        })
+        .then(function (data) { if (data) updateChip(el, data); })
         .catch(function () {});
     });
     document.body.appendChild(el);
     return el;
+  }
+
+  function parseIntSafe(str) {
+    return parseInt(String(str || "0").replace(/[^\d]/g, ""), 10) || 0;
+  }
+
+  function updateChip(chip, data) {
+    if (typeof data.today === "number") {
+      const el = chip.querySelector(".vc-today");
+      if (el) animateCount(el, parseIntSafe(el.textContent), data.today);
+    }
+    if (typeof data.total === "number") {
+      const el = chip.querySelector(".vc-total");
+      if (el) animateCount(el, parseIntSafe(el.textContent), data.total);
+    }
+    chip.classList.add("is-loaded");
+    chip.classList.remove("is-error");
   }
 
   function animateCount(el, from, to) {

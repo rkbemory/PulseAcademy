@@ -3375,78 +3375,53 @@ p a:hover {
 
 /* ============================================================
    ============ VISITOR COUNTER CHIP (Netlify-backed) =========
-   Bottom-right floating pill on every page. Animates on update.
+   Top-right floating pill on every page, just under the sticky
+   header. Shows Today and All-time counts side by side, with
+   a live pulse dot and brand-gradient numbers.
    ============================================================ */
 .visitor-counter {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  top: 78px;          /* sits just below the sticky header */
+  right: 16px;
   z-index: 90;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 16px 9px 14px;
-  background: rgba(255, 255, 255, 0.85);
+  gap: 10px;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid rgba(228, 220, 207, 0.65);
   border-radius: 999px;
   box-shadow:
-    0 6px 18px rgba(20, 58, 75, 0.10),
+    0 8px 22px rgba(20, 58, 75, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
   font-family: 'Inter', sans-serif;
-  font-size: 0.84rem;
   color: var(--primary-deep);
   cursor: pointer;
   transition: transform .22s, box-shadow .22s, background .22s;
   -webkit-tap-highlight-color: transparent;
   opacity: 0;
-  transform: translateY(6px);
-  animation: vc-enter .55s ease-out .35s forwards;
+  transform: translateY(-6px);
+  animation: vc-enter .55s ease-out .4s forwards;
 }
 .visitor-counter:hover,
 .visitor-counter:focus-visible {
-  transform: translateY(-2px);
+  transform: translateY(0);
   background: rgba(255, 255, 255, 0.95);
   box-shadow:
-    0 10px 24px rgba(20, 58, 75, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    0 12px 28px rgba(20, 58, 75, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
-.visitor-counter:active { transform: translateY(0); }
-.visitor-counter .vc-icon {
-  font-size: 1rem;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
-}
-.visitor-counter .vc-label {
-  font-weight: 500;
-  color: var(--text-soft);
-  letter-spacing: 0.2px;
-}
-.visitor-counter .vc-count {
-  font-family: 'Playfair Display', serif;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  font-size: 0.95rem;
-  color: var(--primary);
-  background: linear-gradient(135deg, var(--primary), var(--accent-deep));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  min-width: 1.5ch;
-  text-align: right;
-  transition: transform .2s;
-}
-.visitor-counter:hover .vc-count { transform: scale(1.05); }
+.visitor-counter:active { transform: translateY(1px); }
 
-/* Subtle "live" pulse dot to the left of the icon */
-.visitor-counter::before {
-  content: "";
+/* Live pulse dot */
+.visitor-counter .vc-pulse {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #16A34A;
-  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55);
   animation: vc-pulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
@@ -3454,34 +3429,85 @@ p a:hover {
   0%, 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55); }
   50%      { box-shadow: 0 0 0 7px rgba(22, 163, 74, 0); }
 }
-.visitor-counter.is-error::before {
+
+.visitor-counter .vc-icon {
+  font-size: 0.95rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.10));
+}
+
+/* Each stat is a tiny stacked column: small label above, gradient number below */
+.visitor-counter .vc-stat {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.05;
+  gap: 1px;
+}
+.visitor-counter .vc-stat-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.visitor-counter .vc-stat-value {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--primary), var(--accent-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  min-width: 1.2ch;
+  transition: transform .2s;
+}
+.visitor-counter:hover .vc-stat-value { transform: scale(1.04); }
+
+.visitor-counter .vc-divider {
+  width: 1px;
+  height: 22px;
+  background: linear-gradient(180deg, transparent, rgba(20, 58, 75, 0.18), transparent);
+  flex-shrink: 0;
+}
+
+/* Error state */
+.visitor-counter.is-error .vc-pulse {
   background: var(--text-muted);
   animation: none;
+  box-shadow: none;
 }
-.visitor-counter.is-error .vc-label::after { content: " unavailable"; color: var(--text-muted); font-size: 0.78rem; }
+.visitor-counter.is-error .vc-stat-value { color: var(--text-muted); -webkit-text-fill-color: var(--text-muted); }
 
 @keyframes vc-enter {
   to { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .visitor-counter { animation: none; opacity: 1; transform: none; }
-  .visitor-counter::before { animation: none; }
+  .visitor-counter .vc-pulse { animation: none; }
 }
 
-/* Mobile: tighter, no "Visitors" label, smaller dot */
+/* Mobile: tighter, hide labels and the eye icon to save space */
 @media (max-width: 560px) {
   .visitor-counter {
-    bottom: 14px;
-    right: 14px;
-    padding: 8px 14px 8px 12px;
-    font-size: 0.78rem;
-    gap: 6px;
+    top: 64px;
+    right: 10px;
+    padding: 6px 11px;
+    gap: 7px;
   }
-  .visitor-counter .vc-label { display: none; }
-  .visitor-counter .vc-count { font-size: 0.88rem; }
+  .visitor-counter .vc-icon { display: none; }
+  .visitor-counter .vc-stat-label { font-size: 0.54rem; }
+  .visitor-counter .vc-stat-value { font-size: 0.88rem; }
+  .visitor-counter .vc-divider { height: 18px; }
 }
 
-/* Slide above mobile drawer when drawer open */
+@media (max-width: 380px) {
+  .visitor-counter .vc-stat-label { display: none; }
+  .visitor-counter { gap: 5px; padding: 5px 10px; }
+}
+
+/* Hide when the mobile drawer is open (drawer slides in from the right) */
 body:has(.nav-drawer.is-open) .visitor-counter,
 .nav-drawer.is-open ~ .visitor-counter { display: none; }
 
