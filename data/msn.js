@@ -67,7 +67,7 @@
         { id: "msn-t-ic-q4", subject: "fundamental-nursing", stem: "Alcohol-based hand rub is NOT appropriate when hands are:", options: ["Routinely dirty between patients","Visibly soiled or contaminated with C. difficile","After removing gloves","Before patient contact"], answer: 1, explanation: "Soap and water are required when hands are visibly soiled and after exposure to C. difficile (alcohol does not kill spores) or norovirus." },
         { id: "msn-t-ic-q5", subject: "fundamental-nursing", stem: "The FIRST link in the chain of infection is:", options: ["Reservoir","Infectious agent","Portal of exit","Susceptible host"], answer: 1, explanation: "The infectious agent (microorganism) initiates the chain." },
         { id: "msn-t-ic-q6", subject: "fundamental-nursing", stem: "Sterile technique is required for:", options: ["Oral medication administration","Routine bed bath","Urinary catheterization","Taking blood pressure"], answer: 2, explanation: "Catheterization breaches the urinary tract sterile field and requires aseptic technique." },
-        { id: "msn-t-ic-q7", subject: "fundamental-nursing", stem: "The single most effective measure to prevent healthcare-associated infection is:", options: ["Wearing gloves at all times","Hand hygiene","Routine antibiotics","Isolating every patient"], answer: 1, explanation: "Hand hygiene is the most effective measure to prevent the spread of healthcare-associated infections." },
+        { id: "msn-t-ic-q7", subject: "fundamental-nursing", stem: "Standard precautions should be applied to:", options: ["Only patients with a known infection","All patients regardless of diagnosis","Only patients in isolation rooms","Only during surgical procedures"], answer: 1, explanation: "Standard precautions are used for every patient at all times, because infection status is often unknown." },
         { id: "msn-t-ic-q8", subject: "fundamental-nursing", stem: "Tuberculosis requires which type of transmission-based precaution?", options: ["Contact","Droplet","Airborne","Standard only"], answer: 2, explanation: "TB spreads via airborne droplet nuclei, requiring airborne precautions and an N95 respirator." },
         { id: "msn-t-ic-q9", subject: "fundamental-nursing", stem: "After removing personal protective equipment, which item is generally removed last?", options: ["Gloves","Gown","Mask/respirator","Apron"], answer: 2, explanation: "The mask or respirator is removed last (outside the room), as the face remains protected until other items are off." },
         { id: "msn-t-ic-q10", subject: "fundamental-nursing", stem: "Sharps such as used needles should be disposed of by:", options: ["Recapping then binning","Placing in a puncture-proof sharps container","Throwing in general waste","Bending before disposal"], answer: 1, explanation: "Used sharps go straight into a puncture-proof container without recapping, to prevent needlestick injury." }
@@ -100,7 +100,7 @@
         { id: "msn-t-ca-q5", subject: "adult-health", stem: "Nitroglycerin is contraindicated when systolic BP is below:", options: ["140 mmHg","120 mmHg","100 mmHg","90 mmHg"], answer: 3, explanation: "SBP <90 mmHg is the threshold — nitrates can cause profound hypotension. Also avoid with recent PDE-5 inhibitor use." },
         { id: "msn-t-ca-q6", subject: "adult-health", stem: "Jugular venous distention with peripheral edema and hepatomegaly suggests:", options: ["Left heart failure","Right heart failure","Mitral stenosis","Pericarditis"], answer: 1, explanation: "Right HF causes systemic venous congestion: JVD, peripheral edema, ascites, hepatomegaly." },
         { id: "msn-t-ca-q7", subject: "adult-health", stem: "Door-to-balloon time target for STEMI is:", options: ["≤30 minutes","≤60 minutes","≤90 minutes","≤180 minutes"], answer: 2, explanation: "The AHA guideline is door-to-balloon ≤90 minutes from first medical contact." },
-        { id: "msn-t-ca-q8", subject: "adult-health", stem: "The classic site of pain in a myocardial infarction is:", options: ["Right lower abdomen","Central crushing chest pain radiating to the left arm or jaw","Localized to the right shoulder only","Sharp pain worse on inspiration"], answer: 1, explanation: "MI typically causes central, crushing chest pain that may radiate to the left arm, neck, or jaw." },
+        { id: "msn-t-ca-q8", subject: "adult-health", stem: "The most specific blood marker for diagnosing a myocardial infarction is:", options: ["White cell count","Cardiac troponin","Blood glucose","Serum sodium"], answer: 1, explanation: "Cardiac troponin (T or I) is the most sensitive and specific biomarker for myocardial injury; it rises within a few hours of an MI." },
         { id: "msn-t-ca-q9", subject: "adult-health", stem: "During adult CPR, the recommended chest compression rate is:", options: ["60–80 per minute","100–120 per minute","140–160 per minute","As fast as possible"], answer: 1, explanation: "High-quality CPR uses a compression rate of 100–120 per minute at a depth of 5–6 cm." },
         { id: "msn-t-ca-q10", subject: "adult-health", stem: "A patient on furosemide for heart failure should be monitored for:", options: ["Hyperkalaemia","Hypokalaemia","Hypercalcaemia","Hypernatraemia"], answer: 1, explanation: "Loop diuretics such as furosemide cause potassium loss, risking hypokalaemia and arrhythmias." }
       ]
@@ -133,7 +133,7 @@
         { id: "msn-t-ph-q6", subject: "pharmacology", stem: "A patient on furosemide is most at risk for:", options: ["Hyperkalemia","Hypokalemia","Hypernatremia","Hyperglycemia"], answer: 1, explanation: "Loop diuretics cause potassium wasting → hypokalemia. Monitor K+ and supplement as needed." },
         { id: "msn-t-ph-q7", subject: "pharmacology", stem: "The therapeutic serum digoxin level is:", options: ["0.1–0.5 ng/mL","0.5–2.0 ng/mL","2.5–4.0 ng/mL","5.0–7.0 ng/mL"], answer: 1, explanation: "0.5–2.0 ng/mL is therapeutic; >2.0 ng/mL is toxic." },
         { id: "msn-t-ph-q8", subject: "pharmacology", stem: "The 'rights' of medication administration include all EXCEPT:", options: ["Right patient","Right dose","Right brand name preference","Right route"], answer: 2, explanation: "The rights include patient, drug, dose, route, time, and documentation — not brand preference." },
-        { id: "msn-t-ph-q9", subject: "pharmacology", stem: "Which antidote reverses opioid overdose?", options: ["Flumazenil","Naloxone","Vitamin K","Protamine"], answer: 1, explanation: "Naloxone is the opioid antagonist used to reverse opioid-induced respiratory depression." },
+        { id: "msn-t-ph-q9", subject: "pharmacology", stem: "The antidote for paracetamol (acetaminophen) overdose is:", options: ["N-acetylcysteine","Naloxone","Flumazenil","Protamine"], answer: 0, explanation: "N-acetylcysteine is the antidote for paracetamol poisoning; it replenishes glutathione and prevents liver damage." },
         { id: "msn-t-ph-q10", subject: "pharmacology", stem: "A patient on warfarin has anticoagulation monitored using the:", options: ["aPTT","INR","Blood glucose","Serum sodium"], answer: 1, explanation: "Warfarin therapy is monitored with the INR; vitamin K is its reversal agent." }
       ]
     },
@@ -164,8 +164,8 @@
         { id: "msn-t-mn-q4", subject: "midwifery", stem: "The most common cause of postpartum haemorrhage is:", options: ["Uterine atony","Retained placenta","Birth trauma","Coagulopathy"], answer: 0, explanation: "Tone (atony) accounts for ~70% of PPH. First action: fundal massage. First-line drug: oxytocin." },
         { id: "msn-t-mn-q5", subject: "midwifery", stem: "First-line drug to prevent seizures in severe pre-eclampsia is:", options: ["Diazepam","Phenytoin","Magnesium sulfate","Phenobarbital"], answer: 2, explanation: "Magnesium sulfate is the gold standard. Monitor: respiratory rate ≥12, urine output ≥30 mL/h, patellar reflex present." },
         { id: "msn-t-mn-q6", subject: "midwifery", stem: "Pre-eclampsia is diagnosed after 20 weeks with:", options: ["BP ≥120/80","BP ≥140/90 + proteinuria","Proteinuria alone","Edema alone"], answer: 1, explanation: "Pre-eclampsia: new-onset hypertension ≥140/90 plus proteinuria (or end-organ dysfunction) after 20 weeks gestation." },
-        { id: "msn-t-mn-q7", subject: "midwifery", stem: "The most common cause of primary postpartum haemorrhage is:", options: ["Retained placenta","Uterine atony","Cervical tear","Coagulation failure"], answer: 1, explanation: "Uterine atony (a poorly contracting uterus) is the leading cause of primary postpartum haemorrhage." },
-        { id: "msn-t-mn-q8", subject: "midwifery", stem: "The first-line drug to treat eclamptic seizures is:", options: ["Diazepam","Magnesium sulfate","Phenytoin","Calcium gluconate"], answer: 1, explanation: "Magnesium sulfate is first-line to control and prevent eclamptic seizures; calcium gluconate is its antidote." },
+        { id: "msn-t-mn-q7", subject: "midwifery", stem: "The recommended time to initiate breastfeeding after a normal birth is:", options: ["Within the first hour","After 6 hours","After 24 hours","After the first bath"], answer: 0, explanation: "Early initiation within the first hour ('the golden hour') gives the baby colostrum and promotes bonding and uterine contraction." },
+        { id: "msn-t-mn-q8", subject: "midwifery", stem: "The antidote for magnesium sulfate toxicity is:", options: ["Naloxone","Calcium gluconate","Vitamin K","Atropine"], answer: 1, explanation: "Calcium gluconate reverses magnesium sulfate toxicity; monitor reflexes, respiratory rate, and urine output during MgSO4 therapy." },
         { id: "msn-t-mn-q9", subject: "midwifery", stem: "The normal duration of a full-term pregnancy is approximately:", options: ["34 weeks","37 weeks","40 weeks","44 weeks"], answer: 2, explanation: "A full-term pregnancy lasts about 40 weeks (term is 37–42 weeks) from the last menstrual period." },
         { id: "msn-t-mn-q10", subject: "midwifery", stem: "Immediate care of the newborn at birth includes:", options: ["Delayed drying and cooling","Drying, warmth, and assessing breathing","Routine suctioning of all babies","Immediate bathing"], answer: 1, explanation: "Immediate newborn care is to dry, keep warm, and ensure the baby is breathing — the first steps of essential newborn care." }
       ]
@@ -432,7 +432,7 @@
     { id: "fn-002", subject: "fundamental-nursing", stem: "The nurse is preparing to take a patient's pulse. Which artery is most commonly used for routine pulse assessment in adults?", options: ["Carotid artery","Radial artery","Brachial artery","Femoral artery"], answer: 1, explanation: "The radial artery at the wrist is the most accessible and commonly used site for routine pulse assessment." },
     { id: "fn-003", subject: "fundamental-nursing", stem: "Which of the following is the FIRST link in the chain of infection?", options: ["Reservoir","Infectious agent","Portal of exit","Susceptible host"], answer: 1, explanation: "The chain of infection begins with the infectious agent." },
     { id: "fn-004", subject: "fundamental-nursing", stem: "The most effective method of preventing the spread of infection in a hospital setting is:", options: ["Wearing gloves at all times","Hand hygiene","Using disinfectants on surfaces","Isolating all patients"], answer: 1, explanation: "Hand hygiene is universally recognized as the single most effective measure to prevent healthcare-associated infections." },
-    { id: "fn-005", subject: "fundamental-nursing", stem: "A patient's blood pressure is recorded as 140/90 mmHg. This reading is classified as:", options: ["Normal","Elevated","Stage 1 Hypertension","Stage 2 Hypertension"], answer: 2, explanation: "Per ACC/AHA, 140/90 falls at the Stage 1/Stage 2 hypertension threshold." },
+    { id: "fn-005", subject: "fundamental-nursing", stem: "A patient's blood pressure is recorded as 140/90 mmHg. This reading is classified as:", options: ["Normal","Elevated","Stage 1 Hypertension","Stage 2 Hypertension"], answer: 3, explanation: "Per ACC/AHA 2017, a reading of ≥140/90 mmHg is Stage 2 hypertension (Stage 1 is 130–139/80–89 mmHg)." },
     { id: "fn-006", subject: "fundamental-nursing", stem: "When transferring a patient from bed to wheelchair, the chair should be positioned:", options: ["At a 90-degree angle to the bed","At a 45-degree angle on the patient's stronger side","Parallel to the foot of the bed","Facing away from the bed"], answer: 1, explanation: "45-degree angle on stronger side allows safe pivot transfer." },
     { id: "fn-007", subject: "fundamental-nursing", stem: "Which position is BEST for a patient in acute respiratory distress?", options: ["Supine","Trendelenburg","High Fowler's (semi-sitting upright)","Prone"], answer: 2, explanation: "High Fowler's maximizes lung expansion." },
     { id: "fn-008", subject: "fundamental-nursing", stem: "Sterile technique is required when:", options: ["Administering oral medication","Inserting a urinary catheter","Taking a blood pressure","Feeding a patient"], answer: 1, explanation: "Catheterization breaches a sterile cavity and requires aseptic technique." },
@@ -454,7 +454,7 @@
     { id: "fn-024", subject: "fundamental-nursing", stem: "An advance directive:", options: ["Authorizes organ donation only","Specifies patient wishes for end-of-life care","Releases the hospital from liability","Names the primary physician"], answer: 1, explanation: "Specifies preferences when the patient cannot communicate (living will, durable POA for healthcare)." },
     { id: "fn-025", subject: "fundamental-nursing", stem: "A cane should be held:", options: ["On the affected (weaker) side","On the unaffected (stronger) side","In the dominant hand","In front"], answer: 1, explanation: "Cane on the strong side; advanced with the affected leg for wider base of support." },
     { id: "fn-026", subject: "fundamental-nursing", stem: "Greatest risk of bed rest:", options: ["Hypertension","DVT","Hyperthermia","Hyperglycemia"], answer: 1, explanation: "Immobility → venous stasis → DVT." },
-    { id: "fn-027", subject: "fundamental-nursing", stem: "Coarse bubbling sounds that clear with coughing are:", options: ["Wheezes","Crackles","Rhonchi","Stridor"], answer: 2, explanation: "Rhonchi: coarse, low-pitched gurgling that often clears with coughing." },
+    { id: "fn-027", subject: "fundamental-nursing", stem: "Coarse, low-pitched snoring or gurgling sounds that often clear with coughing are:", options: ["Wheezes","Fine crackles","Rhonchi","Stridor"], answer: 2, explanation: "Rhonchi are coarse, low-pitched, snoring/gurgling sounds from secretions in the larger airways that often clear with coughing." },
     { id: "fn-028", subject: "fundamental-nursing", stem: "Therapeutic communication uses:", options: ["Giving advice","'Why' questions","Active listening and open-ended questions","False reassurance"], answer: 2, explanation: "Active listening, open-ended questions, silence, reflection, validation." },
     { id: "fn-029", subject: "fundamental-nursing", stem: "Before digoxin, the nurse must check the patient's:", options: ["BP","Respiratory rate","Apical pulse for one full minute","Temperature"], answer: 2, explanation: "Hold if apical pulse <60 bpm (adults)." },
     { id: "fn-030", subject: "fundamental-nursing", stem: "A patient refuses prescribed medication. The nurse should:", options: ["Administer anyway","Document refusal and notify physician","Hide in food","Insist"], answer: 1, explanation: "Patients have the right to refuse. Document and notify prescriber." },
@@ -517,7 +517,7 @@
 
     /* ---------- PSYCHIATRIC (6) ---------- */
     { id: "ps-001", subject: "psychiatric", stem: "A patient with schizophrenia reports hearing voices. This is:", options: ["Delusion","Auditory hallucination","Illusion","Confabulation"], answer: 1, explanation: "Hallucination: sensory perception without external stimulus." },
-    { id: "ps-002", subject: "psychiatric", stem: "First-line drug for acute mania:", options: ["Lithium","Diazepam","Haloperidol","Fluoxetine"], answer: 0, explanation: "Lithium is the gold-standard mood stabilizer." },
+    { id: "ps-002", subject: "psychiatric", stem: "First-line mood stabilizer for acute mania:", options: ["Lithium","Diazepam","Sertraline","Fluoxetine"], answer: 0, explanation: "Lithium is the gold-standard mood stabilizer for mania; the other options are a benzodiazepine and antidepressants." },
     { id: "ps-003", subject: "psychiatric", stem: "Positive symptom of schizophrenia:", options: ["Apathy","Flat affect","Hallucinations","Social withdrawal"], answer: 2, explanation: "Positives: hallucinations, delusions, disorganization." },
     { id: "ps-004", subject: "psychiatric", stem: "Best response to a suicidal patient who says 'I won't be a problem anymore':", options: ["'You will feel better tomorrow'","'Are you thinking of harming yourself?'","'Don't talk like that'","'Let's discuss something positive'"], answer: 1, explanation: "Direct questioning is essential for assessment." },
     { id: "ps-005", subject: "psychiatric", stem: "Tardive dyskinesia results from:", options: ["SSRIs","Long-term antipsychotics","Benzodiazepines","Lithium"], answer: 1, explanation: "Chronic dopamine-receptor blockade by typical antipsychotics." },
@@ -570,10 +570,10 @@
     { id: "gk-002", subject: "gk", stem: "Bangladesh's victory day:", options: ["26 March 1971","16 December 1971","21 February 1952","17 April 1971"], answer: 1, explanation: "Victory Day: 16 December 1971. Independence Day: 26 March 1971." },
     { id: "gk-003", subject: "gk", stem: "WHO headquarters location:", options: ["New York","Geneva","Paris","London"], answer: 1, explanation: "Geneva, Switzerland." },
     { id: "gk-004", subject: "gk", stem: "International Nurses Day:", options: ["April 7","May 12","July 1","October 24"], answer: 1, explanation: "12 May — birthday of Florence Nightingale." },
-    { id: "gk-005", subject: "gk", stem: "Longest river in Bangladesh:", options: ["Padma","Jamuna","Meghna","Brahmaputra"], answer: 2, explanation: "Meghna." },
+    { id: "gk-005", subject: "gk", stem: "The widest river in Bangladesh is the:", options: ["Padma","Jamuna","Meghna","Brahmaputra"], answer: 2, explanation: "The Meghna is the widest river in Bangladesh." },
     { id: "gk-006", subject: "gk", stem: "Florence Nightingale is associated with the:", options: ["First World War","Crimean War","American Civil War","Boer War"], answer: 1, explanation: "Crimean War (1853-56) — laid foundations of modern nursing." },
     { id: "gk-007", subject: "gk", stem: "World Health Day observed on:", options: ["April 7","May 12","July 1","October 16"], answer: 0, explanation: "7 April — anniversary of WHO founding (1948)." },
-    { id: "gk-008", subject: "gk", stem: "Bangladesh Nursing & Midwifery Council headquartered in:", options: ["Mohakhali, Dhaka","Mirpur, Dhaka","Bashila, Dhaka","Sylhet"], answer: 0, explanation: "BNMC is headquartered in Mohakhali, Dhaka." }
+    { id: "gk-008", subject: "gk", stem: "The International Council of Nurses (ICN) is headquartered in:", options: ["Geneva, Switzerland","New York, USA","London, UK","Washington, DC"], answer: 0, explanation: "The International Council of Nurses (ICN), the global federation of national nurses' associations, is headquartered in Geneva, Switzerland." }
   ];
 
   /* ============================================================
@@ -669,7 +669,18 @@
     });
   });
 
-  /* Auto-populate Model Tests 04 – 10 (live) with deterministic varied selections. */
+  /* Look up each question by id, and derive a "fact key" (subject + correct-answer
+     text) so a single test never repeats the same fact via two different items. */
+  const bankById = {};
+  questionBank.forEach(function (q) { bankById[q.id] = q; });
+  function factKey(id) {
+    const q = bankById[id];
+    if (!q) return id;
+    return q.subject + "|" + String(q.options[q.answer]).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  /* Auto-populate Model Tests 04 – 10 (live) with deterministic varied selections.
+     Skips any question whose fact is already in the test. */
   function pickIdsForTest(testNum) {
     const ids = questionBank.map(function (q) { return q.id; });
     const n = ids.length;
@@ -678,15 +689,20 @@
     const step = (n % 3 === 0) ? 4 : 3;
     const picks = [];
     const seen = {};
+    const seenFact = {};
     let i = offset;
     let safety = n * 6;
     while (picks.length < 30 && safety-- > 0) {
       const id = ids[i % n];
-      if (!seen[id]) { picks.push(id); seen[id] = true; }
+      const fk = factKey(id);
+      if (!seen[id] && !seenFact[fk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; }
       i += step;
     }
     let backfill = 0;
-    while (picks.length < 30) { picks.push(ids[backfill++ % n]); }
+    while (picks.length < 30 && backfill < n) {
+      const id = ids[backfill++];
+      if (!seen[id]) { picks.push(id); seen[id] = true; }
+    }
     return picks;
   }
 
@@ -715,7 +731,8 @@
     });
   }
 
-  /* Pick `count` questions spread evenly across the whole bank (good subject mix). */
+  /* Pick `count` questions spread evenly across the whole bank (good subject mix),
+     skipping any question whose fact is already chosen for this test. */
   function pickSpread(count, seed) {
     const ids = questionBank.map(function (q) { return q.id; });
     const n = ids.length;
@@ -723,13 +740,16 @@
     const step = Math.max(1, Math.floor(n / count));
     const picks = [];
     const seen = {};
+    const seenFact = {};
     let i = seed % n;
-    let safety = n * 8;
+    let safety = n * 10;
     while (picks.length < count && safety-- > 0) {
       const id = ids[i % n];
-      if (!seen[id]) { picks.push(id); seen[id] = true; }
+      const fk = factKey(id);
+      if (!seen[id] && !seenFact[fk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; }
       i += step + (picks.length % 2); /* nudge to avoid landing on the same stride */
     }
+    /* Relaxed backfill (fact guard dropped) only if the strict pass fell short. */
     let backfill = 0;
     while (picks.length < count && backfill < n) {
       const id = ids[backfill++];
