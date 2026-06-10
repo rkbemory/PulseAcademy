@@ -1,8 +1,9 @@
 /* Pulse for Nurses — minimal service worker.
-   Strategy: cache-first for same-origin assets, network-first for everything else.
-   Bumps CACHE_NAME on every meaningful update to retire stale entries. */
+   Strategy: network-first for page navigations (so new/updated pages always load
+   and never get stuck on a stale cache), cache-first for static assets, and
+   network-first for the API. Bumps CACHE_NAME on every meaningful update. */
 
-const CACHE_NAME = "pulse-v2.5.0";
+const CACHE_NAME = "pulse-v2.6.0";
 const PRECACHE = [
   "./",
   "index.html",
@@ -76,25 +77,36 @@ self.addEventListener("fetch", function (event) {
     return;
   }
 
-  // Same-origin: cache-first
+  // Same-origin PAGE NAVIGATIONS: network-first so new/updated pages always load.
+  // Falls back to the cached page (or home) only when the network is unavailable.
+  if (url.origin === location.origin && event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).then(function (response) {
+        if (response && response.status === 200 && response.type === "basic") {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(function (cache) { cache.put(event.request, copy); });
+        }
+        return response;
+      }).catch(function () {
+        return caches.match(event.request).then(function (cached) {
+          return cached || caches.match("index.html");
+        });
+      })
+    );
+    return;
+  }
+
+  // Same-origin STATIC ASSETS (css/js/data/images): cache-first for speed.
   if (url.origin === location.origin) {
     event.respondWith(
       caches.match(event.request).then(function (cached) {
         if (cached) return cached;
         return fetch(event.request).then(function (response) {
-          // Only cache successful, basic responses
           if (response && response.status === 200 && response.type === "basic") {
             const copy = response.clone();
-            caches.open(CACHE_NAME).then(function (cache) {
-              cache.put(event.request, copy);
-            });
+            caches.open(CACHE_NAME).then(function (cache) { cache.put(event.request, copy); });
           }
           return response;
-        }).catch(function () {
-          // Network failed and not in cache — fall back to home page for nav requests
-          if (event.request.mode === "navigate") {
-            return caches.match("index.html");
-          }
         });
       })
     );
