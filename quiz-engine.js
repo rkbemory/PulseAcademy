@@ -392,6 +392,9 @@
       hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt });
       localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
     } catch (e) {}
+    if (window.PulseAuth && window.PulseAuth.enabled) {
+      try { window.PulseAuth.saveResult(result); window.PulseAuth.noteQuizFinished(); } catch (e) {}
+    }
     window.location.href = "results.html";
   }
 
@@ -583,6 +586,9 @@
       hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt });
       localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
     } catch (e) {}
+    if (window.PulseAuth && window.PulseAuth.enabled) {
+      try { window.PulseAuth.saveResult(result); window.PulseAuth.noteQuizFinished(); } catch (e) {}
+    }
     window.location.href = "results.html";
   }
 

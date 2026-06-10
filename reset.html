@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reset Password — Pulse for Nurses</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text"><span class="brand-name">Pulse For Nurses</span></span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="block" style="max-width:440px;">
+    <div class="section-eyebrow">⬡ Account</div>
+    <h2 class="section-title">Set a new password</h2>
+    <p class="section-lead" id="reset-intro">Enter a new password for your Pulse account below.</p>
+    <form class="consult-form" id="reset-form">
+      <div class="form-row">
+        <label for="rp1">New password</label>
+        <input id="rp1" type="password" minlength="6" placeholder="At least 6 characters" required>
+      </div>
+      <div class="form-row">
+        <label for="rp2">Confirm new password</label>
+        <input id="rp2" type="password" minlength="6" placeholder="Re-enter password" required>
+      </div>
+      <div class="pulse-auth-msg" id="reset-msg" hidden></div>
+      <button type="submit" class="btn btn-primary consult-submit" id="reset-btn">Update password →</button>
+    </form>
+    <p style="margin-top:18px;"><a href="index.html">← Back to home</a></p>
+  </section>
+</main>
+
+<script src="data/auth-config.js"></script>
+<script>
+(function () {
+  var cfg = window.PulseAuthConfig || {};
+  var configured = cfg.supabaseUrl && cfg.supabaseAnonKey &&
+    cfg.supabaseUrl.indexOf("REPLACE_WITH") === -1 && cfg.supabaseAnonKey.indexOf("REPLACE_WITH") === -1;
+  var msg = document.getElementById("reset-msg");
+  var btn = document.getElementById("reset-btn");
+  function show(t, ok) { if (!t) { msg.hidden = true; return; } msg.hidden = false; msg.textContent = t; msg.className = "pulse-auth-msg " + (ok ? "is-ok" : "is-err"); }
+  if (!configured) { document.getElementById("reset-intro").textContent = "Accounts are not configured yet."; btn.disabled = true; return; }
+
+  var s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+  s.onload = function () {
+    var supa = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    document.getElementById("reset-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var p1 = document.getElementById("rp1").value, p2 = document.getElementById("rp2").value;
+      if (p1 !== p2) { show("Passwords do not match."); return; }
+      btn.disabled = true; btn.textContent = "…";
+      supa.auth.updateUser({ password: p1 }).then(function (r) {
+        btn.disabled = false; btn.textContent = "Update password →";
+        if (r.error) { show(r.error.message); return; }
+        show("Password updated. You can now sign in. Redirecting…", true);
+        setTimeout(function () { window.location.href = "index.html"; }, 1800);
+      });
+    });
+  };
+  document.head.appendChild(s);
+})();
+</script>
+</body>
+</html>

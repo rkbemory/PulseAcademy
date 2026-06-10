@@ -1,0 +1,314 @@
+/* Pulse for Nurses — accounts & login (Supabase).
+   - Email/password sign-up & sign-in, Google one-tap sign-in, password recovery.
+   - Saves quiz results to the user's account (table `quiz_results`) when signed in.
+   - Soft, dismissible prompt after a few anonymous quizzes inviting sign-up.
+   - GRACEFUL: if auth-config.js still has placeholder values, this whole module
+     stays dormant and the site behaves exactly as before (local-only progress).
+   The anon key is meant to live in the browser; Row Level Security protects data. */
+(function () {
+  "use strict";
+
+  var cfg = window.PulseAuthConfig || {};
+  var configured =
+    cfg.supabaseUrl && cfg.supabaseAnonKey &&
+    cfg.supabaseUrl.indexOf("REPLACE_WITH") === -1 &&
+    cfg.supabaseAnonKey.indexOf("REPLACE_WITH") === -1;
+
+  /* Public API stub — present even when disabled so callers never break. */
+  window.PulseAuth = {
+    enabled: false,
+    user: null,
+    openModal: function () {},
+    signOut: function () {},
+    saveResult: function () { return Promise.resolve(null); },
+    onChange: function () {},
+    noteQuizFinished: function () {}
+  };
+
+  if (!configured) return; /* dormant until Supabase is set up */
+
+  var SDK_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+  var supa = null;
+  var listeners = [];
+
+  function ready(fn) {
+    if (document.readyState !== "loading") fn();
+    else document.addEventListener("DOMContentLoaded", fn);
+  }
+  function el(tag, cls, html) { var n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]; }); }
+
+  /* ---- Load the Supabase SDK, then boot ---- */
+  function loadSdk() {
+    return new Promise(function (resolve, reject) {
+      if (window.supabase && window.supabase.createClient) return resolve();
+      var s = document.createElement("script");
+      s.src = SDK_URL; s.async = true;
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  loadSdk().then(boot).catch(function () { /* offline / blocked — stay silent */ });
+
+  function boot() {
+    supa = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    window.PulseAuth.enabled = true;
+    window.PulseAuth.openModal = openModal;
+    window.PulseAuth.signOut = signOut;
+    window.PulseAuth.saveResult = saveResult;
+    window.PulseAuth.onChange = function (cb) { if (typeof cb === "function") listeners.push(cb); };
+    window.PulseAuth.noteQuizFinished = noteQuizFinished;
+
+    supa.auth.getSession().then(function (res) {
+      setUser(res && res.data && res.data.session ? res.data.session.user : null);
+    });
+    supa.auth.onAuthStateChange(function (_event, session) {
+      setUser(session ? session.user : null);
+    });
+
+    ready(function () {
+      injectNavControl();
+      injectModal();
+    });
+  }
+
+  function setUser(u) {
+    window.PulseAuth.user = u || null;
+    renderNavControl();
+    listeners.forEach(function (cb) { try { cb(window.PulseAuth.user); } catch (e) {} });
+    if (window.PulseAuth.user) {
+      // Once signed in, push any locally-stored history up and hide the prompt.
+      hidePrompt();
+      syncLocalHistory();
+    }
+  }
+
+  /* ============================================================
+     NAV CONTROL — a small account button in the top nav
+     ============================================================ */
+  function injectNavControl() {
+    var nav = document.querySelector(".top-nav-links");
+    if (!nav || document.querySelector(".pulse-acct")) return;
+    var wrap = el("div", "pulse-acct");
+    nav.appendChild(wrap);
+    renderNavControl();
+  }
+  function renderNavControl() {
+    var wrap = document.querySelector(".pulse-acct");
+    if (!wrap) return;
+    var u = window.PulseAuth.user;
+    if (u) {
+      var label = (u.email || "Account");
+      var initial = (label[0] || "P").toUpperCase();
+      wrap.innerHTML =
+        '<button class="pulse-acct-btn" type="button" aria-label="Account menu">' +
+          '<span class="pulse-acct-avatar">' + esc(initial) + '</span>' +
+          '<span class="pulse-acct-name">' + esc(label.split("@")[0]) + '</span>' +
+        '</button>' +
+        '<div class="pulse-acct-menu" hidden>' +
+          '<div class="pulse-acct-email">' + esc(label) + '</div>' +
+          '<a class="pulse-acct-item" href="results.html">My last result</a>' +
+          '<button class="pulse-acct-item pulse-acct-signout" type="button">Sign out</button>' +
+        '</div>';
+      var btn = wrap.querySelector(".pulse-acct-btn");
+      var menu = wrap.querySelector(".pulse-acct-menu");
+      btn.addEventListener("click", function () { menu.hidden = !menu.hidden; });
+      document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) menu.hidden = true; });
+      wrap.querySelector(".pulse-acct-signout").addEventListener("click", signOut);
+    } else {
+      wrap.innerHTML = '<button class="pulse-acct-signin" type="button">Sign in</button>';
+      wrap.querySelector(".pulse-acct-signin").addEventListener("click", function () { openModal("signin"); });
+    }
+  }
+
+  /* ============================================================
+     AUTH MODAL
+     ============================================================ */
+  var modal = null;
+  function injectModal() {
+    if (document.querySelector(".pulse-auth-modal")) return;
+    modal = el("div", "pulse-auth-modal");
+    modal.hidden = true;
+    modal.innerHTML =
+      '<div class="pulse-auth-backdrop"></div>' +
+      '<div class="pulse-auth-card" role="dialog" aria-modal="true" aria-label="Sign in">' +
+        '<button class="pulse-auth-close" type="button" aria-label="Close">&times;</button>' +
+        '<div class="pulse-auth-head">' +
+          '<div class="pulse-auth-logo">Pulse</div>' +
+          '<h3 class="pulse-auth-title">Save your progress</h3>' +
+          '<p class="pulse-auth-sub">Free account — your scores follow you across devices. Practice stays free.</p>' +
+        '</div>' +
+        '<button class="pulse-auth-google" type="button">' +
+          '<span class="pulse-auth-g">G</span> Continue with Google</button>' +
+        '<div class="pulse-auth-or"><span>or</span></div>' +
+        '<form class="pulse-auth-form">' +
+          '<input class="pulse-auth-input" type="email" name="email" placeholder="Email" autocomplete="email" required>' +
+          '<input class="pulse-auth-input" type="password" name="password" placeholder="Password (min 6 characters)" autocomplete="current-password" minlength="6" required>' +
+          '<div class="pulse-auth-msg" hidden></div>' +
+          '<button class="pulse-auth-submit" type="submit">Sign in</button>' +
+        '</form>' +
+        '<div class="pulse-auth-links">' +
+          '<button class="pulse-auth-toggle" type="button">New here? Create an account</button>' +
+          '<button class="pulse-auth-forgot" type="button">Forgot password?</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    var mode = "signin";
+    var form = modal.querySelector(".pulse-auth-form");
+    var msg = modal.querySelector(".pulse-auth-msg");
+    var submit = modal.querySelector(".pulse-auth-submit");
+    var title = modal.querySelector(".pulse-auth-title");
+    var toggle = modal.querySelector(".pulse-auth-toggle");
+
+    function setMode(m) {
+      mode = m;
+      submit.textContent = m === "signup" ? "Create account" : "Sign in";
+      toggle.textContent = m === "signup" ? "Already have an account? Sign in" : "New here? Create an account";
+      title.textContent = m === "signup" ? "Create your free account" : "Welcome back";
+      showMsg("");
+    }
+    function showMsg(text, ok) {
+      if (!text) { msg.hidden = true; return; }
+      msg.hidden = false; msg.textContent = text;
+      msg.className = "pulse-auth-msg" + (ok ? " is-ok" : " is-err");
+    }
+
+    modal._setMode = setMode;
+    modal.querySelector(".pulse-auth-close").addEventListener("click", closeModal);
+    modal.querySelector(".pulse-auth-backdrop").addEventListener("click", closeModal);
+    toggle.addEventListener("click", function () { setMode(mode === "signup" ? "signin" : "signup"); });
+
+    modal.querySelector(".pulse-auth-google").addEventListener("click", function () {
+      supa.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin + window.location.pathname }
+      });
+    });
+
+    modal.querySelector(".pulse-auth-forgot").addEventListener("click", function () {
+      var email = form.email.value.trim();
+      if (!email) { showMsg("Enter your email above first, then tap Forgot password."); return; }
+      supa.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + "/reset.html" })
+        .then(function (r) {
+          showMsg(r.error ? r.error.message : "Password reset link sent — check your email.", !r.error);
+        });
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = form.email.value.trim();
+      var password = form.password.value;
+      submit.disabled = true; submit.textContent = "…";
+      var p = mode === "signup"
+        ? supa.auth.signUp({ email: email, password: password })
+        : supa.auth.signInWithPassword({ email: email, password: password });
+      p.then(function (r) {
+        submit.disabled = false;
+        setMode(mode); /* resets button label */
+        if (r.error) { showMsg(r.error.message); return; }
+        if (mode === "signup" && r.data && r.data.user && !r.data.session) {
+          showMsg("Account created — check your email to confirm, then sign in.", true);
+          setMode("signin");
+          return;
+        }
+        closeModal();
+      });
+    });
+  }
+
+  function openModal(mode) {
+    if (!modal) return;
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    if (modal._setMode) modal._setMode(mode === "signup" ? "signup" : "signin");
+    var inp = modal.querySelector('input[name=email]'); if (inp) inp.focus();
+  }
+  function closeModal() {
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  function signOut() {
+    supa.auth.signOut().then(function () { var m = document.querySelector(".pulse-acct-menu"); if (m) m.hidden = true; });
+  }
+
+  /* ============================================================
+     PROGRESS SYNC — save quiz results to the account
+     ============================================================ */
+  function saveResult(result) {
+    if (!window.PulseAuth.user || !result) return Promise.resolve(null);
+    var row = {
+      user_id: window.PulseAuth.user.id,
+      program_id: result.programId,
+      test_id: result.testId,
+      test_title: result.testTitle,
+      test_type: result.testType || "model",
+      score: result.score,
+      correct: result.correct,
+      total: result.total,
+      pass_probability: (typeof result.passProbability === "number") ? result.passProbability : null,
+      submitted_at: new Date(result.submittedAt || Date.now()).toISOString(),
+      detail: result.perSubject || {}
+    };
+    return supa.from("quiz_results").insert(row).then(function (r) { return r; }).catch(function () { return null; });
+  }
+
+  /* When a user signs in, push any results saved locally while anonymous. */
+  function syncLocalHistory() {
+    try {
+      var hist = JSON.parse(localStorage.getItem("pulse:history") || "[]");
+      if (!hist.length || localStorage.getItem("pulse:synced") === "1") return;
+      var rows = hist.slice(0, 50).map(function (h) {
+        return {
+          user_id: window.PulseAuth.user.id,
+          program_id: h.programId, test_id: h.testId, test_title: h.testTitle,
+          test_type: "model", score: h.score, correct: h.correct, total: h.total,
+          submitted_at: new Date(h.submittedAt || Date.now()).toISOString(), detail: {}
+        };
+      });
+      supa.from("quiz_results").insert(rows).then(function () {
+        try { localStorage.setItem("pulse:synced", "1"); } catch (e) {}
+      });
+    } catch (e) {}
+  }
+
+  /* ============================================================
+     SOFT PROMPT — after a few anonymous quizzes
+     ============================================================ */
+  var PROMPT_DISMISSED = "pulse:promptDismissed";
+  var QUIZ_COUNT = "pulse:quizCount";
+
+  function noteQuizFinished() {
+    if (window.PulseAuth.user) return; /* already signed in */
+    var n = 0;
+    try { n = parseInt(localStorage.getItem(QUIZ_COUNT) || "0", 10) + 1; localStorage.setItem(QUIZ_COUNT, String(n)); } catch (e) {}
+    var threshold = cfg.promptAfterQuizzes || 2;
+    if (n >= threshold && localStorage.getItem(PROMPT_DISMISSED) !== "1") {
+      ready(showPrompt);
+    }
+  }
+
+  function showPrompt() {
+    if (window.PulseAuth.user || document.querySelector(".pulse-prompt")) return;
+    var bar = el("div", "pulse-prompt",
+      '<span class="pulse-prompt-text">📈 Enjoying your practice? Create a free account to <strong>save your progress</strong> across devices.</span>' +
+      '<span class="pulse-prompt-actions">' +
+        '<button class="pulse-prompt-cta" type="button">Save my progress</button>' +
+        '<button class="pulse-prompt-dismiss" type="button" aria-label="Dismiss">Not now</button>' +
+      '</span>');
+    document.body.appendChild(bar);
+    requestAnimationFrame(function () { bar.classList.add("is-in"); });
+    bar.querySelector(".pulse-prompt-cta").addEventListener("click", function () { openModal("signup"); });
+    bar.querySelector(".pulse-prompt-dismiss").addEventListener("click", function () {
+      try { localStorage.setItem(PROMPT_DISMISSED, "1"); } catch (e) {}
+      hidePrompt();
+    });
+  }
+  function hidePrompt() {
+    var bar = document.querySelector(".pulse-prompt");
+    if (bar) { bar.classList.remove("is-in"); setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 300); }
+  }
+})();
