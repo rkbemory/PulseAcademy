@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Feedback & Support — Pulse for Nurses</title>
+<meta name="description" content="Tell us about any issue, concern, or difficulty you faced on Pulse for Nurses — we read every message and reply where we can.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1E5168">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text">
+        <span class="brand-name">Pulse For Nurses</span>
+      </span>
+    </a>
+    <nav class="top-nav-links" aria-label="Primary">
+      <a href="msn.html">MSN</a>
+      <a href="post-basic.html">Post Basic</a>
+      <a href="rn.html">BNMC RN</a>
+      <a href="books.html">Books</a>
+      <a href="quiz.html?program=msn&amp;test=msn-mt-01" class="cta-mini">Free Mock →</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="block" style="max-width:760px;">
+    <div class="section-eyebrow">⬡ Feedback &amp; Support</div>
+    <h2 class="section-title">Something not working? Tell us.</h2>
+    <p class="section-lead">Found a wrong answer, a page that won't load, or anything confusing? Send it here — we read every message, and your report makes Pulse better for every nurse who follows you.</p>
+
+    <form class="consult-form" name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+      <input type="hidden" name="form-name" value="feedback">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <div class="form-row">
+        <label for="fb-type">What is this about?</label>
+        <select id="fb-type" name="type" required>
+          <option value="" disabled selected>Choose one…</option>
+          <option>🐞 Something is broken / not working</option>
+          <option>❓ A question or answer looks wrong</option>
+          <option>😕 Something is confusing or hard to use</option>
+          <option>💡 Suggestion or new idea</option>
+          <option>🗨️ Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="fb-msg">Describe it</label>
+        <textarea id="fb-msg" name="message" rows="5" required placeholder="What happened? Which page or test were you on? (বাংলায় লিখলেও চলবে)"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="fb-name">Your name <span class="optional">(optional)</span></label>
+        <input id="fb-name" name="name" type="text" autocomplete="name" placeholder="e.g., Sharmin Akter">
+      </div>
+      <div class="form-row">
+        <label for="fb-email">Email or phone <span class="optional">(optional — only if you'd like a reply)</span></label>
+        <input id="fb-email" name="contact" type="text" autocomplete="email" placeholder="you@example.com or 01XXXXXXXXX">
+      </div>
+      <button type="submit" class="btn btn-primary consult-submit">Send feedback →</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span><a href="index.html">← Back to home</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>

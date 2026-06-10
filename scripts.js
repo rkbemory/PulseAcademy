@@ -42,8 +42,11 @@
       '<a href="rn.html" class="' + activeFor("rn.html") + '">🎓 BNMC RN</a>',
       '<div class="nav-drawer-sep"></div>',
       '<span class="nav-drawer-section">Explore</span>',
+      '<a href="index.html#nclex">🌎 NCLEX-RN <span class="footer-soon">soon</span></a>',
+      '<a href="index.html#consult">🧭 Consultation <span class="footer-soon">soon</span></a>',
       '<a href="books.html" class="' + activeFor("books.html") + '">📚 Books</a>',
       '<a href="tests.html?program=msn">📝 All Tests</a>',
+      '<a href="feedback.html" class="' + activeFor("feedback.html") + '">💬 Feedback &amp; Support</a>',
       '<a href="admin.html" class="' + activeFor("admin.html") + '">🔒 Admin</a>',
       '<a href="quiz.html?program=msn&test=msn-mt-01" class="nav-drawer-cta">🎯 Try a Free Mock</a>',
       '<div class="nav-drawer-social">',
@@ -56,6 +59,7 @@
     backdrop.className = "nav-drawer-backdrop";
     backdrop.setAttribute("aria-hidden", "true");
 
+    drawer.inert = true; // keep links unfocusable while hidden
     document.body.appendChild(drawer);
     document.body.appendChild(backdrop);
 
@@ -67,6 +71,7 @@
       toggle.setAttribute("aria-expanded", "false");
       drawer.classList.remove("is-open");
       drawer.setAttribute("aria-hidden", "true");
+      drawer.inert = true;
       backdrop.classList.remove("is-open");
       document.body.style.overflow = "";
     }
@@ -75,6 +80,7 @@
       toggle.setAttribute("aria-expanded", "true");
       drawer.classList.add("is-open");
       drawer.setAttribute("aria-hidden", "false");
+      drawer.inert = false;
       backdrop.classList.add("is-open");
       document.body.style.overflow = "hidden";
     }
@@ -236,7 +242,7 @@
     const el = document.createElement("button");
     el.type = "button";
     el.className = "visitor-counter";
-    el.setAttribute("aria-label", "Today and all-time visitors to Pulse for Nurses");
+    // No aria-label: the visible Today/All-time text is the accessible name.
     el.title = "Today's visitors · All-time visitors";
     el.innerHTML =
       '<span class="vc-pulse" aria-hidden="true"></span>' +
