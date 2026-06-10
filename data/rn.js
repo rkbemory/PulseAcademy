@@ -27,7 +27,12 @@
         { id: "rn-t-vs-q2", subject: "fundamental-nursing", stem: "Adult resting pulse range:", options: ["40–60","60–100","100–140","Above 140"], answer: 1, explanation: "60–100 bpm normal." },
         { id: "rn-t-vs-q3", subject: "fundamental-nursing", stem: "Normal adult respiratory rate:", options: ["8–10","12–20","20–28","30–40"], answer: 1, explanation: "12–20 breaths/min." },
         { id: "rn-t-vs-q4", subject: "fundamental-nursing", stem: "Normal blood pressure is:", options: ["Less than 120/80","120/80","140/90","160/100"], answer: 0, explanation: "Normal: <120/80 mmHg." },
-        { id: "rn-t-vs-q5", subject: "fundamental-nursing", stem: "Pulse is best counted for one full minute when it is:", options: ["Regular","Strong","Irregular","Fast"], answer: 2, explanation: "Irregular pulse requires a full-minute count for accuracy." }
+        { id: "rn-t-vs-q5", subject: "fundamental-nursing", stem: "Pulse is best counted for one full minute when it is:", options: ["Regular","Strong","Irregular","Fast"], answer: 2, explanation: "Irregular pulse requires a full-minute count for accuracy." },
+        { id: "rn-t-vs-q6", subject: "fundamental-nursing", stem: "Normal oxygen saturation (SpO₂) on room air for a healthy adult is:", options: ["80–84%","85–89%","90–94%","95–100%"], answer: 3, explanation: "Normal SpO₂ on room air is 95–100%; below 90% needs attention." },
+        { id: "rn-t-vs-q7", subject: "fundamental-nursing", stem: "Respirations should be counted:", options: ["While telling the patient","Without the patient being aware","Only when asleep","For 10 seconds × 6"], answer: 1, explanation: "Awareness changes the breathing rate, so count discreetly." },
+        { id: "rn-t-vs-q8", subject: "fundamental-nursing", stem: "Fever in an adult is usually defined as a temperature above:", options: ["37 °C","38 °C","39 °C","40 °C"], answer: 1, explanation: "A temperature above 38 °C is generally considered fever." },
+        { id: "rn-t-vs-q9", subject: "fundamental-nursing", stem: "An undersized blood pressure cuff will most likely give a:", options: ["Falsely low reading","Falsely high reading","Accurate reading","No reading"], answer: 1, explanation: "A too-small cuff requires extra pressure, falsely raising the reading." },
+        { id: "rn-t-vs-q10", subject: "fundamental-nursing", stem: "The radial pulse is felt at the:", options: ["Neck","Wrist","Groin","Ankle"], answer: 1, explanation: "The radial pulse is felt at the wrist and is the routine site for checking pulse." }
       ]
     },
     {
@@ -50,7 +55,12 @@
         { id: "rn-t-bm-q2", subject: "fundamental-nursing", stem: "Best position for breathing difficulty:", options: ["Supine","Prone","High Fowler's","Trendelenburg"], answer: 2, explanation: "High Fowler's (60–90°) maximizes chest expansion." },
         { id: "rn-t-bm-q3", subject: "fundamental-nursing", stem: "Repositioning to prevent pressure ulcer is recommended every:", options: ["30 minutes","2 hours","4 hours","8 hours"], answer: 1, explanation: "Every 2 hours minimum." },
         { id: "rn-t-bm-q4", subject: "fundamental-nursing", stem: "Sims' position is used for:", options: ["Postural drainage","Enema administration","Spinal procedures","CPR"], answer: 1, explanation: "Sims' (semi-prone) is the position for rectal procedures and enemas." },
-        { id: "rn-t-bm-q5", subject: "fundamental-nursing", stem: "An empty bed ready for a new admission is called:", options: ["Open bed","Closed bed","Occupied bed","Anesthetic bed"], answer: 1, explanation: "Closed bed = made, covered, ready." }
+        { id: "rn-t-bm-q5", subject: "fundamental-nursing", stem: "An empty bed ready for a new admission is called:", options: ["Open bed","Closed bed","Occupied bed","Anesthetic bed"], answer: 1, explanation: "Closed bed = made, covered, ready." },
+        { id: "rn-t-bm-q6", subject: "fundamental-nursing", stem: "An early sign of a developing pressure ulcer is:", options: ["Redness that does not fade when pressed","Increased appetite","Faster pulse","Clear urine"], answer: 0, explanation: "Non-blanching redness over a bony area is an early warning of a pressure ulcer." },
+        { id: "rn-t-bm-q7", subject: "fundamental-nursing", stem: "When lifting a heavy object, the nurse should:", options: ["Bend at the waist","Keep the load away from the body","Bend the knees and use the leg muscles","Twist while lifting"], answer: 2, explanation: "Bend the knees, keep the load close, and use the strong leg muscles to protect the back." },
+        { id: "rn-t-bm-q8", subject: "fundamental-nursing", stem: "The best position for an unconscious patient to keep the airway clear is:", options: ["Supine flat","Recovery (lateral) position","Prone","Sitting upright"], answer: 1, explanation: "The recovery (lateral) position lets secretions drain and keeps the airway open." },
+        { id: "rn-t-bm-q9", subject: "fundamental-nursing", stem: "A pressure sore most commonly develops over:", options: ["The abdomen","Bony prominences such as the sacrum and heels","The palms","The forehead"], answer: 1, explanation: "Pressure ulcers form over bony prominences (sacrum, heels, hips) where pressure is greatest." },
+        { id: "rn-t-bm-q10", subject: "fundamental-nursing", stem: "Hand hygiene before and after patient contact is done to:", options: ["Save time","Prevent the spread of infection","Replace gloves","Warm the hands"], answer: 1, explanation: "Hand hygiene is the most effective way to prevent the spread of infection between patients." }
       ]
     },
     {
@@ -74,7 +84,12 @@
         { id: "rn-t-an-q2", subject: "anatomy", stem: "How many cranial nerves?", options: ["10","12","14","31"], answer: 1, explanation: "12 pairs." },
         { id: "rn-t-an-q3", subject: "anatomy", stem: "Adults have how many permanent teeth?", options: ["20","28","32","36"], answer: 2, explanation: "32 permanent (including wisdom teeth)." },
         { id: "rn-t-an-q4", subject: "anatomy", stem: "Number of chambers in the heart:", options: ["2","3","4","6"], answer: 2, explanation: "Four: 2 atria, 2 ventricles." },
-        { id: "rn-t-an-q5", subject: "anatomy", stem: "Cerebellum controls:", options: ["Vision","Balance and coordination","Memory","Speech only"], answer: 1, explanation: "Cerebellum coordinates movement, balance, posture." }
+        { id: "rn-t-an-q5", subject: "anatomy", stem: "Cerebellum controls:", options: ["Vision","Balance and coordination","Memory","Speech only"], answer: 1, explanation: "Cerebellum coordinates movement, balance, posture." },
+        { id: "rn-t-an-q6", subject: "anatomy", stem: "The functional unit of the kidney is the:", options: ["Alveolus","Nephron","Neuron","Hepatocyte"], answer: 1, explanation: "The nephron is the microscopic filtering unit of the kidney." },
+        { id: "rn-t-an-q7", subject: "anatomy", stem: "The largest organ of the human body is the:", options: ["Liver","Brain","Skin","Heart"], answer: 2, explanation: "The skin is the body's largest organ." },
+        { id: "rn-t-an-q8", subject: "anatomy", stem: "Insulin is produced by the:", options: ["Liver","Beta cells of the pancreas","Kidney","Thyroid gland"], answer: 1, explanation: "The beta cells of the pancreas produce insulin." },
+        { id: "rn-t-an-q9", subject: "anatomy", stem: "Which chamber of the heart pumps oxygenated blood to the whole body?", options: ["Right atrium","Right ventricle","Left atrium","Left ventricle"], answer: 3, explanation: "The left ventricle pumps oxygenated blood into the aorta and systemic circulation." },
+        { id: "rn-t-an-q10", subject: "anatomy", stem: "The gas exchange unit of the lung is the:", options: ["Bronchus","Trachea","Alveolus","Pleura"], answer: 2, explanation: "Gas exchange occurs across the walls of the alveoli." }
       ]
     },
     {
@@ -98,7 +113,12 @@
         { id: "rn-t-nu-q2", subject: "nutrition", stem: "Scurvy is caused by deficiency of:", options: ["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"], answer: 2, explanation: "Vitamin C deficiency → scurvy." },
         { id: "rn-t-nu-q3", subject: "nutrition", stem: "Pernicious anemia results from deficiency of:", options: ["Iron","Folate","Vitamin B12","Vitamin C"], answer: 2, explanation: "B12 deficiency (lack of intrinsic factor)." },
         { id: "rn-t-nu-q4", subject: "nutrition", stem: "Goiter is caused by deficiency of:", options: ["Iron","Iodine","Calcium","Zinc"], answer: 1, explanation: "Iodine deficiency." },
-        { id: "rn-t-nu-q5", subject: "nutrition", stem: "Vitamin K is needed for:", options: ["Vision","Blood clotting","Calcium absorption","Cell division"], answer: 1, explanation: "Vitamin K activates clotting factors II, VII, IX, X." }
+        { id: "rn-t-nu-q5", subject: "nutrition", stem: "Vitamin K is needed for:", options: ["Vision","Blood clotting","Calcium absorption","Cell division"], answer: 1, explanation: "Vitamin K activates clotting factors II, VII, IX, X." },
+        { id: "rn-t-nu-q6", subject: "nutrition", stem: "Vitamin A deficiency causes:", options: ["Scurvy","Night blindness","Rickets","Goitre"], answer: 1, explanation: "Vitamin A deficiency causes night blindness and impairs immunity." },
+        { id: "rn-t-nu-q7", subject: "nutrition", stem: "Kwashiorkor is mainly caused by a deficiency of:", options: ["Carbohydrate","Protein","Fat","Water"], answer: 1, explanation: "Kwashiorkor is protein deficiency, causing oedema and a swollen abdomen." },
+        { id: "rn-t-nu-q8", subject: "nutrition", stem: "Vitamin C helps the absorption of:", options: ["Calcium","Iron","Sodium","Potassium"], answer: 1, explanation: "Vitamin C enhances the absorption of dietary iron." },
+        { id: "rn-t-nu-q9", subject: "nutrition", stem: "Carbohydrates provide how many kilocalories per gram?", options: ["2 kcal","4 kcal","7 kcal","9 kcal"], answer: 1, explanation: "Carbohydrate and protein each provide about 4 kcal/g; fat provides 9 kcal/g." },
+        { id: "rn-t-nu-q10", subject: "nutrition", stem: "The recommended infant feeding for the first six months is:", options: ["Formula milk","Exclusive breastfeeding","Cow's milk","Solid food"], answer: 1, explanation: "Exclusive breastfeeding is recommended for the first six months." }
       ]
     },
     {
@@ -122,7 +142,12 @@
         { id: "rn-t-co-q2", subject: "community-health", stem: "MR-1 is given at:", options: ["6 weeks","10 weeks","9 months","15 months"], answer: 2, explanation: "9 months." },
         { id: "rn-t-co-q3", subject: "community-health", stem: "Alma-Ata Declaration year:", options: ["1948","1968","1978","1988"], answer: 2, explanation: "1978." },
         { id: "rn-t-co-q4", subject: "community-health", stem: "Most effective reversible contraceptive:", options: ["Condom","Pill","Implant","Withdrawal"], answer: 2, explanation: "Implant — LARC with <1% failure rate." },
-        { id: "rn-t-co-q5", subject: "community-health", stem: "Infant Mortality Rate is per:", options: ["100","1,000","10,000","100,000"], answer: 1, explanation: "Per 1,000 live births." }
+        { id: "rn-t-co-q5", subject: "community-health", stem: "Infant Mortality Rate is per:", options: ["100","1,000","10,000","100,000"], answer: 1, explanation: "Per 1,000 live births." },
+        { id: "rn-t-co-q6", subject: "community-health", stem: "Maternal Mortality Ratio is expressed per:", options: ["1,000 live births","10,000 live births","100,000 live births","1,000,000 live births"], answer: 2, explanation: "Maternal mortality ratio is the number of maternal deaths per 100,000 live births." },
+        { id: "rn-t-co-q7", subject: "community-health", stem: "Immunization to prevent disease before it occurs is an example of:", options: ["Primary prevention","Secondary prevention","Tertiary prevention","Rehabilitation"], answer: 0, explanation: "Primary prevention stops disease before it starts — immunization is a key example." },
+        { id: "rn-t-co-q8", subject: "community-health", stem: "Screening to detect disease early in people without symptoms is:", options: ["Primary prevention","Secondary prevention","Tertiary prevention","Health promotion"], answer: 1, explanation: "Secondary prevention is early detection through screening." },
+        { id: "rn-t-co-q9", subject: "community-health", stem: "Safe drinking water and sanitation mainly help prevent:", options: ["Diabetes","Diarrhoeal and water-borne diseases","Heart disease","Cancer"], answer: 1, explanation: "Clean water and sanitation prevent water-borne diseases such as cholera, typhoid, and diarrhoea." },
+        { id: "rn-t-co-q10", subject: "community-health", stem: "The cold chain for vaccines refers to:", options: ["Keeping the child cool","Keeping vaccines at a safe temperature from storage to use","Giving vaccines in winter","Cooling the injection site"], answer: 1, explanation: "The cold chain keeps vaccines effective by maintaining safe temperatures throughout storage and transport." }
       ]
     },
     {
@@ -146,7 +171,12 @@
         { id: "rn-t-ch-q2", subject: "child-health", stem: "ORS plus what mineral for diarrhea?", options: ["Iron","Zinc","Iodine","Calcium"], answer: 1, explanation: "Zinc 10-20 mg/day × 10-14 days." },
         { id: "rn-t-ch-q3", subject: "child-health", stem: "A child should walk independently by approximately:", options: ["6 mo","9 mo","12 mo","18 mo"], answer: 2, explanation: "Most walk by 12 mo (range 9-15)." },
         { id: "rn-t-ch-q4", subject: "child-health", stem: "Anterior fontanelle closes by:", options: ["3 mo","6 mo","12-18 mo","3 yr"], answer: 2, explanation: "12-18 mo." },
-        { id: "rn-t-ch-q5", subject: "child-health", stem: "IMCI danger sign:", options: ["Mild cough","Convulsions","Mild fever","Normal feeding"], answer: 1, explanation: "Convulsions = urgent danger sign." }
+        { id: "rn-t-ch-q5", subject: "child-health", stem: "IMCI danger sign:", options: ["Mild cough","Convulsions","Mild fever","Normal feeding"], answer: 1, explanation: "Convulsions = urgent danger sign." },
+        { id: "rn-t-ch-q6", subject: "child-health", stem: "BCG vaccine, given at birth, protects against:", options: ["Measles","Tuberculosis","Polio","Tetanus"], answer: 1, explanation: "BCG protects against tuberculosis and is given at birth in the EPI schedule." },
+        { id: "rn-t-ch-q7", subject: "child-health", stem: "A newborn's normal respiratory rate is approximately:", options: ["12–20/min","20–30/min","30–60/min","60–80/min"], answer: 2, explanation: "Newborns breathe faster than adults — about 30–60 breaths per minute." },
+        { id: "rn-t-ch-q8", subject: "child-health", stem: "The first-line treatment for mild-to-moderate dehydration from diarrhoea is:", options: ["IV fluids","Oral rehydration solution (ORS)","Antibiotics","Anti-diarrhoeal drugs"], answer: 1, explanation: "ORS is first-line for mild-to-moderate dehydration, with zinc to reduce severity." },
+        { id: "rn-t-ch-q9", subject: "child-health", stem: "A newborn's normal heart rate is approximately:", options: ["40–60 bpm","60–100 bpm","100–160 bpm","160–200 bpm"], answer: 2, explanation: "A newborn's normal heart rate is about 100–160 beats per minute." },
+        { id: "rn-t-ch-q10", subject: "child-health", stem: "Breastfeeding should ideally begin:", options: ["Within the first hour of birth","After 24 hours","After the first bath","Only when milk comes in"], answer: 0, explanation: "Early initiation within the first hour gives the baby colostrum and supports bonding." }
       ]
     },
     {
@@ -170,7 +200,12 @@
         { id: "rn-t-en-q2", subject: "english", stem: "Correct article: '___ honest man.'", options: ["A","An","The","No article"], answer: 1, explanation: "'An' before silent 'h' (vowel sound)." },
         { id: "rn-t-en-q3", subject: "english", stem: "Past tense of 'go':", options: ["goed","went","gone","going"], answer: 1, explanation: "Irregular: go → went → gone." },
         { id: "rn-t-en-q4", subject: "english", stem: "Synonym of 'happy':", options: ["Sad","Joyful","Tired","Angry"], answer: 1, explanation: "Joyful." },
-        { id: "rn-t-en-q5", subject: "english", stem: "Identify the verb: 'The nurse cared for the patient.'", options: ["nurse","cared","for","patient"], answer: 1, explanation: "'Cared' is the verb." }
+        { id: "rn-t-en-q5", subject: "english", stem: "Identify the verb: 'The nurse cared for the patient.'", options: ["nurse","cared","for","patient"], answer: 1, explanation: "'Cared' is the verb." },
+        { id: "rn-t-en-q6", subject: "english", stem: "Choose the correctly spelled word:", options: ["Recieve","Receive","Receeve","Receve"], answer: 1, explanation: "'Receive' follows the rule 'i before e except after c'." },
+        { id: "rn-t-en-q7", subject: "english", stem: "Choose the correct sentence:", options: ["She do not like tea.","She does not likes tea.","She does not like tea.","She not like tea."], answer: 2, explanation: "With 'does not', the main verb stays in its base form: 'does not like'." },
+        { id: "rn-t-en-q8", subject: "english", stem: "The plural of 'child' is:", options: ["Childs","Childes","Children","Childrens"], answer: 2, explanation: "'Children' is the irregular plural of 'child'." },
+        { id: "rn-t-en-q9", subject: "english", stem: "Choose the correct preposition: 'The patient is allergic ___ penicillin.'", options: ["with","to","for","on"], answer: 1, explanation: "The correct phrase is 'allergic to'." },
+        { id: "rn-t-en-q10", subject: "english", stem: "The opposite (antonym) of 'acute' is:", options: ["Sudden","Severe","Chronic","Sharp"], answer: 2, explanation: "'Chronic' (long-lasting) is the opposite of 'acute' (sudden, short-term)." }
       ]
     },
     {
@@ -194,7 +229,156 @@
         { id: "rn-t-gk-q2", subject: "gk", stem: "International Nurses Day:", options: ["7 April","5 May","12 May","16 December"], answer: 2, explanation: "12 May — Florence Nightingale's birthday." },
         { id: "rn-t-gk-q3", subject: "gk", stem: "WHO headquarters:", options: ["New York","Geneva","Paris","Dhaka"], answer: 1, explanation: "Geneva, Switzerland." },
         { id: "rn-t-gk-q4", subject: "gk", stem: "Capital of Bangladesh:", options: ["Chittagong","Sylhet","Dhaka","Khulna"], answer: 2, explanation: "Dhaka." },
-        { id: "rn-t-gk-q5", subject: "gk", stem: "BNMC regulates:", options: ["Medical doctors","Nursing and midwifery profession","Pharmacy","Dental practice"], answer: 1, explanation: "Bangladesh Nursing & Midwifery Council." }
+        { id: "rn-t-gk-q5", subject: "gk", stem: "BNMC regulates:", options: ["Medical doctors","Nursing and midwifery profession","Pharmacy","Dental practice"], answer: 1, explanation: "Bangladesh Nursing & Midwifery Council." },
+        { id: "rn-t-gk-q6", subject: "gk", stem: "The founder of modern nursing, the 'Lady with the Lamp', is:", options: ["Florence Nightingale","Clara Barton","Virginia Henderson","Mother Teresa"], answer: 0, explanation: "Florence Nightingale founded modern nursing during the Crimean War." },
+        { id: "rn-t-gk-q7", subject: "gk", stem: "World Health Day is observed on:", options: ["April 7","May 12","July 1","December 16"], answer: 0, explanation: "World Health Day is on 7 April, the anniversary of WHO's founding in 1948." },
+        { id: "rn-t-gk-q8", subject: "gk", stem: "The headquarters of the United Nations (UN) is in:", options: ["Geneva","New York","London","Paris"], answer: 1, explanation: "The UN is headquartered in New York City, USA." },
+        { id: "rn-t-gk-q9", subject: "gk", stem: "The national flower of Bangladesh is the:", options: ["Rose","Water lily (Shapla)","Marigold","Sunflower"], answer: 1, explanation: "The water lily (Shapla) is the national flower of Bangladesh." },
+        { id: "rn-t-gk-q10", subject: "gk", stem: "The ancient physician known as the 'Father of Medicine' is:", options: ["Aristotle","Hippocrates","Galen","Avicenna"], answer: 1, explanation: "Hippocrates is regarded as the 'Father of Medicine', after whom the Hippocratic Oath is named." }
+      ]
+    },
+
+    /* ============================================================
+       NEW TOPICS (Phase 3 expansion) — foundational RN level
+       ============================================================ */
+    {
+      id: "rn-t-infection",
+      title: "Infection Prevention & Control",
+      subject: "fundamental-nursing",
+      readMinutes: 8,
+      summary: "Hand hygiene, the chain of infection, standard and isolation precautions, PPE, and safe sharps disposal.",
+      content: [
+        { h: "Why Infection Control Matters", p: "Patients in hospital can easily pick up new infections. Good infection control protects patients, their families, and you as a nurse. The most important habit is clean hands. Simple, consistent practice prevents most hospital-acquired infections." },
+        { h: "The Chain of Infection", p: "Infection spreads through a chain: the germ, where it lives (reservoir), how it leaves, how it travels, how it enters a new person, and a person who can catch it. Break any link and you stop the infection. Hand hygiene, cleaning, and immunization each break a different link." },
+        { h: "Hand Hygiene", p: "Wash your hands with soap and water for 40–60 seconds when they are dirty or after caring for a patient with diarrhoea. Use alcohol hand rub (20–30 seconds) when hands are not visibly soiled. Clean your hands before touching a patient, before a clean procedure, after contact with body fluids, after touching the patient, and after touching their surroundings." },
+        { h: "Standard Precautions", p: "Use standard precautions for every patient, because you cannot always tell who is infectious. Treat all blood and body fluids as if they could spread infection. Wear gloves and an apron when contact with body fluids is likely, and always clean your hands afterwards." },
+        { h: "Isolation Precautions", p: "Some infections need extra care. Contact precautions (gloves and gown) stop germs spread by touch. Droplet precautions (a surgical mask) stop germs spread by coughs and sneezes nearby. Airborne precautions (a special N95 mask and, ideally, a separate room) are needed for tuberculosis, measles, and chickenpox." },
+        { h: "Personal Protective Equipment", p: "Put on PPE in this order: gown, mask, eye protection, then gloves. Take it off in this order: gloves, eye protection, gown, then mask last — because the front is dirty and the face stays protected until the end. Clean your hands straight after removing PPE." },
+        { h: "Sharps & Waste", p: "Put used needles straight into a puncture-proof sharps box. Never recap a needle by hand — this causes many needlestick injuries. Keep infectious waste separate from ordinary waste. If you get a needlestick injury, make it bleed, wash with soap and water, and report it at once." }
+      ],
+      checkIn: [
+        { id: "rn-t-inf-q1", subject: "fundamental-nursing", stem: "The single most effective way to prevent the spread of infection is:", options: ["Wearing gloves always","Hand hygiene","Daily antibiotics","Isolating all patients"], answer: 1, explanation: "Hand hygiene is the most effective measure to prevent infection spread." },
+        { id: "rn-t-inf-q2", subject: "fundamental-nursing", stem: "Standard precautions should be used for:", options: ["Only known infected patients","Every patient","Only patients in isolation","Only during surgery"], answer: 1, explanation: "Standard precautions apply to all patients, since infection status is often unknown." },
+        { id: "rn-t-inf-q3", subject: "fundamental-nursing", stem: "Tuberculosis requires which type of precaution?", options: ["Contact","Droplet","Airborne","None"], answer: 2, explanation: "TB spreads through the air and needs airborne precautions with an N95 mask." },
+        { id: "rn-t-inf-q4", subject: "fundamental-nursing", stem: "Used needles should be:", options: ["Recapped then binned","Placed in a puncture-proof sharps box","Put in general waste","Bent first"], answer: 1, explanation: "Dispose of sharps directly without recapping to avoid needlestick injury." },
+        { id: "rn-t-inf-q5", subject: "fundamental-nursing", stem: "When removing PPE, which item is taken off last?", options: ["Gloves","Gown","Eye protection","Mask"], answer: 3, explanation: "The mask is removed last, keeping the face protected until the end." },
+        { id: "rn-t-inf-q6", subject: "fundamental-nursing", stem: "Alcohol hand rub should NOT be used when:", options: ["Before touching a patient","Hands are visibly soiled","After touching surroundings","Before a clean procedure"], answer: 1, explanation: "When hands are visibly dirty, wash with soap and water instead of alcohol rub." },
+        { id: "rn-t-inf-q7", subject: "fundamental-nursing", stem: "Droplet precautions require the nurse to wear a:", options: ["N95 respirator","Surgical mask","Sterile gown only","Nothing extra"], answer: 1, explanation: "Droplet precautions need a surgical mask when working close to the patient." },
+        { id: "rn-t-inf-q8", subject: "fundamental-nursing", stem: "The correct order for putting on PPE is:", options: ["Gloves, gown, mask","Gown, mask, eye protection, gloves","Mask, gloves, gown","Eye protection, gloves, gown"], answer: 1, explanation: "Don PPE as gown, mask, eye protection, then gloves." },
+        { id: "rn-t-inf-q9", subject: "fundamental-nursing", stem: "After a needlestick injury, the first action is to:", options: ["Ignore it","Make it bleed and wash with soap and water","Apply a tight bandage only","Wait until the shift ends"], answer: 1, explanation: "Encourage bleeding, wash the area, then report immediately." },
+        { id: "rn-t-inf-q10", subject: "fundamental-nursing", stem: "Treating all blood and body fluids as potentially infectious is part of:", options: ["Airborne precautions","Standard precautions","Contact precautions only","No precautions"], answer: 1, explanation: "Standard precautions treat all blood and body fluids as potentially infectious." }
+      ]
+    },
+    {
+      id: "rn-t-medication",
+      title: "Medication Administration Basics",
+      subject: "pharmacology",
+      readMinutes: 8,
+      summary: "The rights of medication administration, common routes, safe practice, and a few key drug facts.",
+      content: [
+        { h: "The Rights of Medication", p: "Before giving any medicine, check the rights: the right patient, right drug, right dose, right route, right time, and right documentation. Confirm the patient's identity with two identifiers such as name and date of birth. Checking carefully every single time prevents most medication errors." },
+        { h: "Routes of Administration", p: "Medicines can be given by mouth (oral), under the tongue (sublingual), into a muscle (intramuscular), under the skin (subcutaneous), into a vein (intravenous), or onto the skin (topical). The intravenous route works fastest and is used in emergencies. The oral route is the most common and convenient when the patient can swallow safely." },
+        { h: "Safe Practice", p: "Read the label three times: when you pick the medicine up, when you prepare it, and before you give it. Never give a medicine you did not prepare yourself. Do not leave medicines at the bedside — watch the patient take them. Report and record any medicine refused or omitted, and never document a dose before it is given." },
+        { h: "High-Alert Medicines", p: "Some medicines can cause serious harm if given wrongly — insulin, heparin, strong opioids, and potassium chloride. These need extra care, often an independent check by a second nurse. Never give potassium chloride as a rapid injection into a vein, as it can stop the heart." },
+        { h: "Injections & Sites", p: "Intramuscular injections are commonly given into the deltoid (upper arm) or the vastus lateralis (thigh, preferred in infants). Subcutaneous injections such as insulin go into the fatty layer under the skin; rotate the sites to protect the tissue. Always use a new sterile needle and syringe and dispose of them safely." },
+        { h: "Common Antidotes", p: "Know a few key antidotes: naloxone reverses opioid overdose, vitamin K reverses warfarin, protamine reverses heparin, and pyridoxine (vitamin B6) prevents the nerve damage caused by the TB drug isoniazid. Recognising these quickly can save a life." },
+        { h: "Patient Education", p: "Teach patients the name of each medicine, why they take it, how and when to take it, and any common side effects. Stress finishing the full course of antibiotics. Good teaching improves adherence and reduces complications and readmissions." }
+      ],
+      checkIn: [
+        { id: "rn-t-med-q1", subject: "pharmacology", stem: "Which is NOT one of the 'rights' of medication administration?", options: ["Right patient","Right dose","Right cost","Right route"], answer: 2, explanation: "The rights are patient, drug, dose, route, time, and documentation — not cost." },
+        { id: "rn-t-med-q2", subject: "pharmacology", stem: "The fastest route for medication in an emergency is:", options: ["Oral","Intramuscular","Intravenous","Topical"], answer: 2, explanation: "The intravenous route delivers medication into the blood fastest." },
+        { id: "rn-t-med-q3", subject: "pharmacology", stem: "The antidote for an opioid overdose is:", options: ["Flumazenil","Naloxone","Vitamin K","Atropine"], answer: 1, explanation: "Naloxone reverses opioid-induced respiratory depression." },
+        { id: "rn-t-med-q4", subject: "pharmacology", stem: "Patient identity before giving medicine should be confirmed with:", options: ["Bed number only","Two identifiers such as name and date of birth","Room number","The diagnosis"], answer: 1, explanation: "Use two identifiers (e.g., name and date of birth) to confirm the right patient." },
+        { id: "rn-t-med-q5", subject: "pharmacology", stem: "Which medicine must NEVER be given by rapid intravenous push?", options: ["Normal saline","Potassium chloride","Paracetamol","Vitamin C"], answer: 1, explanation: "Rapid IV potassium chloride can cause fatal cardiac arrest; it must be diluted and infused slowly." },
+        { id: "rn-t-med-q6", subject: "pharmacology", stem: "The preferred intramuscular injection site in infants is the:", options: ["Deltoid","Vastus lateralis (thigh)","Buttock","Forearm"], answer: 1, explanation: "The vastus lateralis (thigh) is preferred for IM injection in infants." },
+        { id: "rn-t-med-q7", subject: "pharmacology", stem: "The antidote for warfarin overdose is:", options: ["Protamine sulfate","Vitamin K","Naloxone","Calcium"], answer: 1, explanation: "Vitamin K reverses warfarin; protamine reverses heparin." },
+        { id: "rn-t-med-q8", subject: "pharmacology", stem: "Insulin is given by which route?", options: ["Intravenous push routinely","Subcutaneous","Oral","Rectal"], answer: 1, explanation: "Insulin is normally given subcutaneously into the fatty layer under the skin." },
+        { id: "rn-t-med-q9", subject: "pharmacology", stem: "High-alert medicines such as insulin and heparin should be:", options: ["Given quickly without checks","Independently double-checked by two nurses","Left at the bedside","Given by any staff"], answer: 1, explanation: "High-alert drugs need an independent double-check to prevent serious harm." },
+        { id: "rn-t-med-q10", subject: "pharmacology", stem: "Pyridoxine (vitamin B6) is given with isoniazid (TB drug) to prevent:", options: ["Liver failure","Peripheral neuropathy","Deafness","Kidney stones"], answer: 1, explanation: "Pyridoxine prevents the peripheral neuropathy that isoniazid can cause." }
+      ]
+    },
+    {
+      id: "rn-t-firstaid",
+      title: "First Aid & Emergency Care",
+      subject: "adult-health",
+      readMinutes: 8,
+      summary: "ABC assessment, basic life support, recovery position, and first aid for bleeding, burns, choking, and shock.",
+      content: [
+        { h: "First, Keep Safe & Check ABC", p: "In any emergency, make sure the scene is safe, then check ABC: Airway (is it open?), Breathing (is the person breathing?), Circulation (is there a pulse, is there bleeding?). ABC tells you what to treat first. Call for help early." },
+        { h: "Basic Life Support", p: "If a person is unresponsive and not breathing normally, call for help and start CPR. Push hard and fast in the centre of the chest at 100–120 compressions per minute, about 5–6 cm deep, allowing the chest to come back up between pushes. Continue until help or a defibrillator arrives." },
+        { h: "Recovery Position", p: "An unconscious person who is breathing should be placed in the recovery position — on their side. This keeps the airway open and lets fluids or vomit drain out instead of being inhaled. Keep checking that they are still breathing." },
+        { h: "Bleeding", p: "Control bleeding by applying firm, direct pressure on the wound with a clean cloth and raising the injured part if possible. Keep pressing; add more dressings on top rather than removing soaked ones. Severe, uncontrolled bleeding can quickly lead to shock." },
+        { h: "Burns", p: "Cool a burn with clean, cool (not ice-cold) running water for about 20 minutes. Remove jewellery or tight clothing before swelling starts, unless stuck to the burn. Cover loosely with a clean, non-fluffy cloth or cling film. Do not apply toothpaste, butter, or oil." },
+        { h: "Choking", p: "If a choking person cannot cough, speak, or breathe, give firm back blows between the shoulder blades, then abdominal thrusts (the Heimlich manoeuvre) in adults. Alternate until the object comes out or the person becomes unconscious — then start CPR and call for help." },
+        { h: "Shock", p: "Shock is dangerously low blood flow to the body, often from severe bleeding, fluid loss, or infection. Signs are a fast weak pulse, cold pale clammy skin, fast breathing, and confusion. Lay the person down, keep them warm, control any bleeding, and get urgent medical help." }
+      ],
+      checkIn: [
+        { id: "rn-t-fa-q1", subject: "adult-health", stem: "In an emergency, ABC stands for:", options: ["Assess, Bandage, Call","Airway, Breathing, Circulation","Alert, Breathe, Compress","Airway, Bleeding, CPR"], answer: 1, explanation: "ABC = Airway, Breathing, Circulation — the priority sequence in any emergency." },
+        { id: "rn-t-fa-q2", subject: "adult-health", stem: "The chest compression rate in adult CPR is:", options: ["40–60 per minute","60–80 per minute","100–120 per minute","140–160 per minute"], answer: 2, explanation: "High-quality CPR uses 100–120 compressions per minute, 5–6 cm deep." },
+        { id: "rn-t-fa-q3", subject: "adult-health", stem: "An unconscious person who is breathing should be placed in the:", options: ["Supine position","Recovery (side) position","Sitting position","Prone position"], answer: 1, explanation: "The recovery position keeps the airway open and lets fluids drain." },
+        { id: "rn-t-fa-q4", subject: "adult-health", stem: "The first action to control external bleeding is:", options: ["Apply a tourniquet immediately","Apply firm direct pressure","Give water to drink","Remove all clothing"], answer: 1, explanation: "Firm direct pressure on the wound is the first step to control bleeding." },
+        { id: "rn-t-fa-q5", subject: "adult-health", stem: "A burn should first be cooled with:", options: ["Ice","Cool running water for about 20 minutes","Butter","Toothpaste"], answer: 1, explanation: "Cool the burn with cool running water for ~20 minutes; never use ice, butter, or toothpaste." },
+        { id: "rn-t-fa-q6", subject: "adult-health", stem: "For an adult who is choking and cannot breathe, you should give:", options: ["Water to drink","Back blows and abdominal thrusts","A hard slap on the cheek","Nothing, just wait"], answer: 1, explanation: "Alternate back blows and abdominal thrusts until the object clears." },
+        { id: "rn-t-fa-q7", subject: "adult-health", stem: "Signs of shock include:", options: ["Slow strong pulse and warm skin","Fast weak pulse and cold clammy skin","High fever only","Normal vital signs"], answer: 1, explanation: "Shock causes a fast weak pulse, cold pale clammy skin, and confusion." },
+        { id: "rn-t-fa-q8", subject: "adult-health", stem: "Before starting CPR, the rescuer should first:", options: ["Give water","Check that the scene is safe and the person is unresponsive","Apply a bandage","Take the blood pressure"], answer: 1, explanation: "Ensure the scene is safe and check responsiveness and breathing before starting CPR." },
+        { id: "rn-t-fa-q9", subject: "adult-health", stem: "If a wound dressing becomes soaked with blood, you should:", options: ["Remove it and look","Add more dressings on top and keep pressing","Stop pressing","Wash the wound with soap"], answer: 1, explanation: "Add more dressings over the soaked one and maintain pressure; removing it disturbs clotting." },
+        { id: "rn-t-fa-q10", subject: "adult-health", stem: "A person in shock should be:", options: ["Made to sit upright","Laid down and kept warm","Given a large meal","Left alone"], answer: 1, explanation: "Lay the person down, keep them warm, control bleeding, and get urgent help." }
+      ]
+    },
+    {
+      id: "rn-t-maternal",
+      title: "Maternal & Newborn Care Basics",
+      subject: "midwifery",
+      readMinutes: 8,
+      summary: "Antenatal care, danger signs in pregnancy, stages of labour, postpartum bleeding, and newborn care.",
+      content: [
+        { h: "Antenatal Care", p: "Antenatal care keeps mother and baby healthy and finds problems early. WHO recommends at least eight antenatal visits. Checks include blood pressure, weight, urine for protein and sugar, the baby's growth and heartbeat, tetanus vaccine, and iron and folic acid tablets. Folic acid early in pregnancy helps prevent birth defects of the spine." },
+        { h: "Danger Signs in Pregnancy", p: "Teach every pregnant woman to seek care urgently for: severe headache or blurred vision, swelling of the face and hands, vaginal bleeding, severe abdominal pain, reduced baby movements, high fever, or fits. These may mean serious problems such as pre-eclampsia or bleeding." },
+        { h: "Stages of Labour", p: "Labour has three stages. The first stage is from the start of regular contractions until the cervix is fully open (10 cm) — this is the longest. The second stage is from full opening to the birth of the baby. The third stage is the delivery of the placenta." },
+        { h: "Pre-eclampsia", p: "Pre-eclampsia is high blood pressure (140/90 or more) with protein in the urine after 20 weeks of pregnancy, often with headache and swelling. If untreated it can cause fits (eclampsia), which are very dangerous. Magnesium sulfate is the main drug used to prevent and treat these fits." },
+        { h: "Postpartum Bleeding", p: "Heavy bleeding after birth (postpartum haemorrhage) is a leading cause of mother's death. The commonest cause is a uterus that does not contract well (atony). If it happens: call for help, rub up the uterus, give a drug such as oxytocin, set up a drip, and watch the vital signs closely." },
+        { h: "Newborn Care", p: "At birth, dry the baby, keep it warm against the mother's skin, and make sure it is breathing. Start breastfeeding within the first hour to give the baby colostrum, the first protective milk. Keep the cord clean and dry. Watch for danger signs: poor feeding, fast or difficult breathing, fever or cold body, and yellow colour in the first day." },
+        { h: "Breastfeeding", p: "Exclusive breastfeeding — only breast milk, nothing else — is recommended for the first six months. Help the mother position the baby so its mouth covers most of the dark area around the nipple. Feed on demand. Breast milk is the perfect food and protects the baby from infection." }
+      ],
+      checkIn: [
+        { id: "rn-t-mat-q1", subject: "midwifery", stem: "WHO recommends a minimum number of antenatal visits of:", options: ["2","4","8","12"], answer: 2, explanation: "WHO recommends a minimum of eight antenatal care contacts." },
+        { id: "rn-t-mat-q2", subject: "midwifery", stem: "The first stage of labour ends when:", options: ["Contractions begin","The cervix is fully (10 cm) open","The baby is born","The placenta is delivered"], answer: 1, explanation: "The first stage runs from onset of labour to full cervical dilatation." },
+        { id: "rn-t-mat-q3", subject: "midwifery", stem: "The commonest cause of bleeding after birth is:", options: ["Retained placenta","Uterus not contracting (atony)","A small tear","Clotting problems"], answer: 1, explanation: "Uterine atony — a poorly contracting uterus — is the leading cause of postpartum haemorrhage." },
+        { id: "rn-t-mat-q4", subject: "midwifery", stem: "The main drug used to prevent fits in severe pre-eclampsia is:", options: ["Diazepam","Magnesium sulfate","Paracetamol","Aspirin"], answer: 1, explanation: "Magnesium sulfate prevents and treats eclamptic fits." },
+        { id: "rn-t-mat-q5", subject: "midwifery", stem: "Breastfeeding should ideally start:", options: ["Within the first hour of birth","After 12 hours","After the first bath","On the second day"], answer: 0, explanation: "Early initiation within the first hour gives the baby colostrum and helps bonding." },
+        { id: "rn-t-mat-q6", subject: "midwifery", stem: "A danger sign in pregnancy needing urgent care is:", options: ["Mild back ache","Severe headache with blurred vision","Mild nausea","Occasional heartburn"], answer: 1, explanation: "Severe headache with blurred vision can signal pre-eclampsia and needs urgent care." },
+        { id: "rn-t-mat-q7", subject: "midwifery", stem: "The first protective milk produced after birth is called:", options: ["Foremilk","Colostrum","Hindmilk","Formula"], answer: 1, explanation: "Colostrum is the first thick milk, rich in antibodies that protect the baby." },
+        { id: "rn-t-mat-q8", subject: "midwifery", stem: "Immediate care of the newborn at birth includes:", options: ["Delayed drying","Drying, warmth, and checking breathing","Immediate bathing","Routine deep suction for all"], answer: 1, explanation: "Dry the baby, keep it warm, and make sure it is breathing." },
+        { id: "rn-t-mat-q9", subject: "midwifery", stem: "Pre-eclampsia is diagnosed after 20 weeks with high blood pressure plus:", options: ["Swelling alone","Protein in the urine","Headache alone","Nausea"], answer: 1, explanation: "Pre-eclampsia is BP ≥140/90 with proteinuria after 20 weeks." },
+        { id: "rn-t-mat-q10", subject: "midwifery", stem: "Iron and folic acid are given in pregnancy mainly to prevent:", options: ["Diabetes","Anaemia (and neural tube defects)","High blood pressure","Infection"], answer: 1, explanation: "Iron prevents anaemia and folic acid prevents neural tube defects." }
+      ]
+    },
+    {
+      id: "rn-t-medsurg",
+      title: "Common Medical–Surgical Conditions",
+      subject: "adult-health",
+      readMinutes: 9,
+      summary: "Everyday care points for diabetes, hypertension, asthma/COPD, and basic pre- and post-operative nursing.",
+      content: [
+        { h: "Diabetes Care", p: "Diabetes means high blood sugar. Watch for low blood sugar (hypoglycaemia) — sweating, shaking, confusion — and treat a conscious patient quickly with sugar or juice. High blood sugar causes thirst, frequent urination, and tiredness. Teach foot care: check feet daily, wear good shoes, never walk barefoot, because poor sensation leads to ulcers." },
+        { h: "High Blood Pressure", p: "Hypertension is blood pressure of 140/90 mmHg or more (Stage 2). It often has no symptoms but raises the risk of stroke and heart disease. Care includes a low-salt diet, regular activity, taking medicines as prescribed, and regular blood-pressure checks. Encourage patients not to stop their tablets when they feel well." },
+        { h: "Asthma & COPD", p: "These cause narrowed airways and breathlessness. Reliever inhalers (such as salbutamol) open the airways quickly. In COPD with long-term carbon-dioxide retention, give oxygen carefully and aim for an oxygen level of 88–92%. Sit the breathless patient upright, stay calm, and give prescribed treatment. A 'silent chest' in asthma is an emergency." },
+        { h: "Heart Failure", p: "In heart failure the heart pumps poorly, so fluid builds up — causing breathlessness, swollen ankles, and tiredness. Care includes a low-salt diet, daily weighing to spot fluid gain, fluid limits if prescribed, and water tablets (diuretics) such as furosemide. Watch for low potassium with these tablets." },
+        { h: "Pre-operative Care", p: "Before surgery: confirm consent, keep the patient nil by mouth as instructed, remove jewellery and dentures, check the surgical site is marked, and give any pre-operative medicines. Explain what will happen to reduce fear. A 'time-out' confirms the right patient, right site, and right operation before starting." },
+        { h: "Post-operative Care", p: "After surgery: check vital signs often, watch the wound for bleeding, manage pain, and monitor fluids. Encourage early movement, deep breathing, and leg exercises to prevent chest infection and blood clots in the legs (DVT). Report heavy bleeding, fever, or sudden breathlessness at once." },
+        { h: "Wound Care", p: "Use clean or sterile technique as needed. A healthy healing wound has pink or red tissue; yellow or black tissue suggests slough or dead tissue needing review. Good nutrition (protein and vitamin C), control of blood sugar, and keeping the wound clean all help healing." }
+      ],
+      checkIn: [
+        { id: "rn-t-ms-q1", subject: "adult-health", stem: "The immediate treatment for a conscious patient with low blood sugar is:", options: ["Insulin","Fast-acting sugar such as juice","Antibiotics","Nil by mouth"], answer: 1, explanation: "Give a conscious hypoglycaemic patient fast-acting sugar, then recheck." },
+        { id: "rn-t-ms-q2", subject: "adult-health", stem: "Stage 2 hypertension begins at a blood pressure of:", options: ["120/80","130/80","140/90","160/100"], answer: 2, explanation: "Per ACC/AHA, Stage 2 hypertension is ≥140/90 mmHg." },
+        { id: "rn-t-ms-q3", subject: "adult-health", stem: "The target oxygen level for a COPD patient who retains CO₂ is:", options: ["95–100%","88–92%","80–85%","Above 99%"], answer: 1, explanation: "Aim for SpO₂ 88–92% in COPD to avoid removing the breathing drive." },
+        { id: "rn-t-ms-q4", subject: "adult-health", stem: "Important advice for a diabetic patient's foot care is:", options: ["Walk barefoot to toughen the skin","Check the feet daily and wear good shoes","Soak feet in hot water daily","Ignore small cuts"], answer: 1, explanation: "Daily inspection and proper footwear prevent diabetic foot ulcers." },
+        { id: "rn-t-ms-q5", subject: "adult-health", stem: "The best position for a breathless patient is:", options: ["Lying flat","Sitting upright (Fowler's)","On the stomach","Head down"], answer: 1, explanation: "Sitting upright eases breathing by allowing fuller lung expansion." },
+        { id: "rn-t-ms-q6", subject: "adult-health", stem: "To prevent blood clots in the legs after surgery, the nurse should encourage:", options: ["Strict bed rest","Early movement and leg exercises","A high-salt diet","Restricting fluids"], answer: 1, explanation: "Early mobilization and leg exercises reduce the risk of deep vein thrombosis." },
+        { id: "rn-t-ms-q7", subject: "adult-health", stem: "A patient on furosemide (a water tablet) should be watched for low:", options: ["Potassium","Calcium","Sodium","Glucose"], answer: 0, explanation: "Furosemide causes potassium loss, risking hypokalaemia." },
+        { id: "rn-t-ms-q8", subject: "adult-health", stem: "The reliever inhaler for sudden asthma symptoms is:", options: ["An inhaled steroid","Salbutamol","An antibiotic","A water tablet"], answer: 1, explanation: "Salbutamol, a short-acting reliever, opens the airways quickly." },
+        { id: "rn-t-ms-q9", subject: "adult-health", stem: "The best daily measure to detect fluid build-up in heart failure is:", options: ["Temperature","Daily weighing","Skin colour","Pulse only"], answer: 1, explanation: "Daily weight at the same time best detects fluid retention." },
+        { id: "rn-t-ms-q10", subject: "adult-health", stem: "Before surgery, the nurse must ensure the patient has:", options: ["Eaten a large meal","Signed informed consent and is nil by mouth as instructed","Removed the ID band","Walked a long distance"], answer: 1, explanation: "Confirm consent and that the patient is appropriately nil by mouth before surgery." }
       ]
     }
   ];
@@ -290,7 +474,7 @@
       "rn-an-003","rn-an-007",
       "rn-nu-002","rn-nu-004","rn-nu-006",
       "rn-co-003",
-      "rn-ch-003","rn-ch-005",
+      "rn-ch-004","rn-ch-005",
       "rn-en-002","rn-en-004","rn-en-005",
       "rn-gk-003",
       "rn-fn-001","rn-fn-005",
@@ -312,8 +496,23 @@
     });
   });
 
+  /* Look up each question by id and derive fact/stem keys so a single test never
+     repeats the same fact or an identical stem via two different items. */
+  const bankById = {};
+  questionBank.forEach(function (q) { bankById[q.id] = q; });
+  function factKey(id) {
+    const q = bankById[id];
+    if (!q) return id;
+    return q.subject + "|" + String(q.options[q.answer]).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+  function stemKey(id) {
+    const q = bankById[id];
+    if (!q) return id;
+    return String(q.stem).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
   /* Auto-populate Tests 03 – 20 with 30 questions each, drawn deterministically
-     from the bank with a per-test rotation so each test feels distinct. */
+     from the bank with a per-test rotation. Skips same-fact / same-stem collisions. */
   function pickIdsForTest(testNum) {
     const ids = questionBank.map(function (q) { return q.id; });
     const n = ids.length;
@@ -322,15 +521,48 @@
     const step = (n % 3 === 0) ? 4 : 3;
     const picks = [];
     const seen = {};
+    const seenFact = {};
+    const seenStem = {};
     let i = offset;
     let safety = n * 6;
     while (picks.length < 30 && safety-- > 0) {
       const id = ids[i % n];
-      if (!seen[id]) { picks.push(id); seen[id] = true; }
+      const fk = factKey(id), sk = stemKey(id);
+      if (!seen[id] && !seenFact[fk] && !seenStem[sk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; seenStem[sk] = true; }
       i += step;
     }
     let backfill = 0;
-    while (picks.length < 30) { picks.push(ids[backfill++ % n]); }
+    while (picks.length < 30 && backfill < n) {
+      const id = ids[backfill++];
+      if (!seen[id]) { picks.push(id); seen[id] = true; }
+    }
+    return picks;
+  }
+
+  /* Pick `count` questions spread evenly across the bank, skipping same-fact /
+     same-stem collisions — used for the full model tests. */
+  function pickSpread(count, seed) {
+    const ids = questionBank.map(function (q) { return q.id; });
+    const n = ids.length;
+    if (n === 0) return [];
+    const step = Math.max(1, Math.floor(n / count));
+    const picks = [];
+    const seen = {};
+    const seenFact = {};
+    const seenStem = {};
+    let i = seed % n;
+    let safety = n * 10;
+    while (picks.length < count && safety-- > 0) {
+      const id = ids[i % n];
+      const fk = factKey(id), sk = stemKey(id);
+      if (!seen[id] && !seenFact[fk] && !seenStem[sk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; seenStem[sk] = true; }
+      i += step + (picks.length % 2);
+    }
+    let backfill = 0;
+    while (picks.length < count && backfill < n) {
+      const id = ids[backfill++];
+      if (!seen[id]) { picks.push(id); seen[id] = true; }
+    }
     return picks;
   }
 
@@ -346,7 +578,7 @@
     });
   }
 
-  /* Tests 11 – 20 — coming soon */
+  /* Tests 11 – 20 — now live, auto-populated from the expanded bank. */
   for (let i = 11; i <= 20; i++) {
     tests.push({
       id: "rn-mt-" + String(i).padStart(2, "0"),
@@ -354,10 +586,39 @@
       type: "model",
       duration: 30,
       intendedCount: 30,
-      status: "coming-soon",
-      questionIds: []
+      status: "live",
+      questionIds: pickIdsForTest(i)
     });
   }
+
+  /* Three full model tests — 100 Q each, evenly spread across subjects. */
+  tests.push({
+    id: "rn-fmt-01",
+    title: "BNMC RN Full Model Test 01 (100 Q)",
+    type: "full-model",
+    duration: 100,
+    intendedCount: 100,
+    status: "live",
+    questionIds: pickSpread(100, 0)
+  });
+  tests.push({
+    id: "rn-fmt-02",
+    title: "BNMC RN Full Model Test 02 (100 Q)",
+    type: "full-model",
+    duration: 100,
+    intendedCount: 100,
+    status: "live",
+    questionIds: pickSpread(100, 5)
+  });
+  tests.push({
+    id: "rn-fmt-03",
+    title: "BNMC RN Full Model Test 03 (100 Q)",
+    type: "full-model",
+    duration: 100,
+    intendedCount: 100,
+    status: "live",
+    questionIds: pickSpread(100, 11)
+  });
 
   /* Register the topic check-in tests (questions already in bank above). */
   topics.forEach(function (t) {
