@@ -1,0 +1,5 @@
+# Cloudflare Pages routing.
+# /api/* is handled by Pages Functions (functions/api/...), which run before this file.
+# Unknown routes fall back to the homepage with a 404 status, matching the old
+# Netlify behavior so deep links degrade gracefully without breaking real 404s.
+/*  /index.html  404

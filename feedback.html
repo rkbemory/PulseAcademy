@@ -39,9 +39,13 @@
     <h2 class="section-title">Something not working? Tell us.</h2>
     <p class="section-lead">Found a wrong answer, a page that won't load, or anything confusing? Send it here — we read every message, and your report makes Pulse better for every nurse who follows you.</p>
 
-    <form class="consult-form" name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
-      <input type="hidden" name="form-name" value="feedback">
-      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+    <form class="consult-form" name="feedback" method="POST" action="https://api.web3forms.com/submit">
+      <!-- Web3Forms: use the same access key as on index.html (free key from https://web3forms.com). -->
+      <input type="hidden" name="access_key" value="REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="New Pulse feedback / support message">
+      <input type="hidden" name="from_name" value="Pulse for Nurses — Feedback">
+      <input type="hidden" name="redirect" value="https://pulsefornurses.com/thanks.html">
+      <input type="checkbox" name="botcheck" class="hidden-field" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-row">
         <label for="fb-type">What is this about?</label>
         <select id="fb-type" name="type" required>
