@@ -42,7 +42,7 @@
       '<a href="rn.html" class="' + activeFor("rn.html") + '">🎓 BNMC RN</a>',
       '<div class="nav-drawer-sep"></div>',
       '<span class="nav-drawer-section">Explore</span>',
-      '<a href="index.html#nclex">🌎 NCLEX-RN <span class="footer-soon">soon</span></a>',
+      '<a href="nclex.html" class="' + activeFor("nclex.html") + '">🌎 NCLEX-RN</a>',
       '<a href="index.html#consult">🧭 Consultation <span class="footer-soon">soon</span></a>',
       '<a href="books.html" class="' + activeFor("books.html") + '">📚 Books</a>',
       '<a href="tests.html?program=msn">📝 All Tests</a>',

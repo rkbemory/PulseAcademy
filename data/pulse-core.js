@@ -28,16 +28,16 @@ window.PulseCore = {
      A subject may appear in one program's tests and not another's.
      `programs` lists which programs use this subject. */
   subjects: {
-    "fundamental-nursing":  { name: "Fundamental Nursing",       short: "Fund. Nurs.", color: "#6B2424", icon: "FN", programs: ["msn","post-basic","rn"] },
-    "anatomy":              { name: "Anatomy & Physiology",      short: "Anatomy",     color: "#C0392B", icon: "AN", programs: ["msn","post-basic","rn"] },
-    "nutrition":            { name: "Nutrition",                 short: "Nutrition",   color: "#E89B2C", icon: "NU", programs: ["msn","post-basic","rn"] },
+    "fundamental-nursing":  { name: "Fundamental Nursing",       short: "Fund. Nurs.", color: "#6B2424", icon: "FN", programs: ["msn","post-basic","rn","nclex"] },
+    "anatomy":              { name: "Anatomy & Physiology",      short: "Anatomy",     color: "#C0392B", icon: "AN", programs: ["msn","post-basic","rn","nclex"] },
+    "nutrition":            { name: "Nutrition",                 short: "Nutrition",   color: "#E89B2C", icon: "NU", programs: ["msn","post-basic","rn","nclex"] },
     "microbiology":         { name: "Microbiology",              short: "Micro.",      color: "#1E8A5A", icon: "MB", programs: ["msn","post-basic"] },
-    "pharmacology":         { name: "Pharmacology",              short: "Pharm.",      color: "#1E3A8A", icon: "PH", programs: ["msn","post-basic"] },
-    "adult-health":         { name: "Adult & Elderly Health",    short: "Adult Hlth",  color: "#7C3AED", icon: "AH", programs: ["msn","post-basic"] },
-    "child-health":         { name: "Child Health Nursing",      short: "Child Hlth",  color: "#DB2777", icon: "CH", programs: ["msn","post-basic","rn"] },
-    "psychiatric":          { name: "Mental Health Nursing",     short: "Psych.",      color: "#0E7490", icon: "PS", programs: ["msn","post-basic"] },
-    "community-health":     { name: "Community Health Nursing",  short: "Comm. Hlth",  color: "#16A34A", icon: "CO", programs: ["msn","post-basic","rn"] },
-    "midwifery":            { name: "Midwifery & Women's Health",short: "Midwifery",   color: "#BE185D", icon: "MW", programs: ["msn","post-basic"] },
+    "pharmacology":         { name: "Pharmacology",              short: "Pharm.",      color: "#1E3A8A", icon: "PH", programs: ["msn","post-basic","nclex"] },
+    "adult-health":         { name: "Adult & Elderly Health",    short: "Adult Hlth",  color: "#7C3AED", icon: "AH", programs: ["msn","post-basic","nclex"] },
+    "child-health":         { name: "Child Health Nursing",      short: "Child Hlth",  color: "#DB2777", icon: "CH", programs: ["msn","post-basic","rn","nclex"] },
+    "psychiatric":          { name: "Mental Health Nursing",     short: "Psych.",      color: "#0E7490", icon: "PS", programs: ["msn","post-basic","nclex"] },
+    "community-health":     { name: "Community Health Nursing",  short: "Comm. Hlth",  color: "#16A34A", icon: "CO", programs: ["msn","post-basic","rn","nclex"] },
+    "midwifery":            { name: "Midwifery & Women's Health",short: "Midwifery",   color: "#BE185D", icon: "MW", programs: ["msn","post-basic","nclex"] },
     "nursing-mgmt":         { name: "Nursing Management",        short: "Mgmt.",       color: "#0F1B4C", icon: "NM", programs: ["msn"] },
     "research":             { name: "Research Methodology",      short: "Research",    color: "#7E22CE", icon: "RM", programs: ["msn"] },
     "english":              { name: "English",                   short: "English",     color: "#374151", icon: "EN", programs: ["msn","post-basic","rn"] },
@@ -165,13 +165,46 @@ window.PulseCore = {
           "Topic-wise revision drills"
         ]
       }
+    },
+
+    "nclex": {
+      id: "nclex",
+      name: "NCLEX-RN",
+      fullName: "NCLEX-RN® — Preparation for Bangladeshi Nurses",
+      tagline: "Topic discussions, model question sets, and NCLEX-style adaptive practice exams.",
+      level: "International",
+      color: "#7C6FD9",
+      accent: "#2AA7C7",
+      icon: "🌎",
+      hasBook: false,
+      hasFullModel: false,
+      hasAdaptive: true,
+      modelTestCount: 20,
+      modelTestQuestions: 20,
+      modelTestDuration: 25,
+      adaptiveCount: 2,
+      adaptiveMin: 75,
+      adaptiveMax: 75,
+      books: [],
+      bookBundle: null,
+      paid: {
+        name: "Pulse NCLEX Premium",
+        priceLabel: "Coming soon",
+        perks: [
+          "Next-Gen NCLEX case studies",
+          "Unlimited adaptive exams",
+          "Live review classes",
+          "Credential & licensing guidance"
+        ]
+      }
     }
   }
 };
 
-/* Empty per-program containers — populated by msn.js / post-basic.js / rn.js */
+/* Empty per-program containers — populated by msn.js / post-basic.js / rn.js / nclex.js */
 window.PulsePrograms = window.PulsePrograms || {
   "msn":        { topics: [], questionBank: [], tests: [] },
   "post-basic": { topics: [], questionBank: [], tests: [] },
-  "rn":         { topics: [], questionBank: [], tests: [] }
+  "rn":         { topics: [], questionBank: [], tests: [] },
+  "nclex":      { topics: [], questionBank: [], tests: [] }
 };

@@ -88,6 +88,32 @@
       '</section>';
     }
 
+    /* Adaptive exams (NCLEX) */
+    const adaptiveTests = prog.tests.filter(function (t) { return t.type === "adaptive"; });
+    if (adaptiveTests.length) {
+      html += '<section class="catalog-section">' +
+        '<h2 class="section-title">NCLEX-Style Adaptive Exams</h2>' +
+        '<p class="section-lead">Questions adjust to your level as you go — get one right and the next gets harder. Ends with an estimated pass probability. One question at a time, no going back, just like the real test.</p>' +
+        '<div class="model-grid">' +
+          adaptiveTests.map(function (t) {
+            const live = t.status === "live";
+            const href = live
+              ? "quiz.html?program=" + encodeURIComponent(programId) + "&test=" + encodeURIComponent(t.id)
+              : "#";
+            const num = t.id.match(/(\d+)$/);
+            return '<a class="model-card model-card-full ' + (live ? "is-live" : "is-locked") + '" href="' + href + '">' +
+              '<div class="model-card-num" style="background:linear-gradient(135deg,#7C6FD9,#2AA7C7)">' + (num ? num[1] : "?") + '</div>' +
+              '<div class="model-card-body">' +
+                '<h3 class="model-card-title">' + escapeHtml(t.title) + '</h3>' +
+                '<div class="model-card-meta">' + t.minQ + '–' + t.maxQ + ' Qs · adaptive · pass estimate</div>' +
+              '</div>' +
+              (live ? '<span class="model-card-cta">Start →</span>' : '<span class="model-card-cta is-locked">Coming soon</span>') +
+            '</a>';
+          }).join("") +
+        '</div>' +
+      '</section>';
+    }
+
     /* Full model tests (MSN only) */
     if (fullTests.length) {
       html += '<section class="catalog-section">' +
@@ -203,6 +229,7 @@
       root.innerHTML = '<div class="quiz-error"><h2>Test not found</h2><p>No quiz exists with that ID.</p><a class="btn-primary" href="' + programId + '.html">Back to ' + escapeHtml(window.Pulse.getProgram(programId).name) + '</a></div>';
       return;
     }
+    if (test.adaptive) { runAdaptive(root, programId, test); return; }
     const questions = (test.questionIds || [])
       .map(function (qid) { return window.Pulse.findQuestion(programId, qid); })
       .filter(Boolean);
@@ -369,6 +396,205 @@
   }
 
   /* ============================================================
+     ADAPTIVE EXAM RUNNER (NCLEX-style approximation)
+     Sequential, one question at a time, no going back.
+     Difficulty rises after a correct answer and falls after a wrong
+     one; the exam ends once the result is clear (min/max question
+     bounds) and reports an estimated pass probability.
+     ============================================================ */
+  let arun = null;
+
+  function runAdaptive(root, programId, test) {
+    const pool = (test.pool || [])
+      .map(function (qid) { return window.Pulse.findQuestion(programId, qid); })
+      .filter(Boolean);
+    if (pool.length < (test.minQ || 30)) {
+      root.innerHTML = '<div class="quiz-error"><h2>This exam isn\'t ready yet</h2><a class="btn-primary" href="tests.html?program=' + encodeURIComponent(programId) + '">Browse other tests</a></div>';
+      return;
+    }
+    const byDiff = { 1: [], 2: [], 3: [] };
+    pool.forEach(function (q) { (byDiff[q.diff] || byDiff[2]).push(q); });
+
+    arun = {
+      programId: programId,
+      test: test,
+      byDiff: byDiff,
+      usedIds: {},
+      targetDiff: 2,     /* start at medium */
+      ability: 0,        /* running ability estimate */
+      asked: [],         /* questions shown, in order */
+      answers: [],       /* selected option index per asked */
+      correct: [],       /* boolean per asked */
+      minQ: test.minQ || 30,
+      maxQ: test.maxQ || 60,
+      startedAt: Date.now()
+    };
+    renderAdaptiveShell(root);
+    nextAdaptiveQuestion();
+  }
+
+  function renderAdaptiveShell(root) {
+    root.innerHTML =
+      '<div class="quiz-topbar">' +
+        '<div class="quiz-title">' + escapeHtml(arun.test.title) + '</div>' +
+        '<div class="quiz-timer" id="quiz-timer">0:00</div>' +
+        '<button class="quiz-submit-top" id="quiz-end">End Exam</button>' +
+      '</div>' +
+      '<div class="quiz-shell quiz-shell-adaptive">' +
+        '<main class="quiz-main quiz-main-wide">' +
+          '<div class="adaptive-status" id="adaptive-status"></div>' +
+          '<div id="quiz-question"></div>' +
+          '<div class="quiz-nav">' +
+            '<span class="adaptive-note">Adaptive · you can\'t return to a previous question</span>' +
+            '<button class="btn-primary" id="quiz-next" disabled>Next →</button>' +
+          '</div>' +
+        '</main>' +
+      '</div>';
+    $("#quiz-next").addEventListener("click", submitAdaptiveAnswer);
+    $("#quiz-end").addEventListener("click", function () {
+      if (arun.asked.length >= arun.minQ) {
+        if (confirm("End the exam now and see your estimated result?")) finishAdaptive();
+      } else {
+        alert("Answer at least " + arun.minQ + " questions for a reliable estimate. You're at " + arun.asked.length + ".");
+      }
+    });
+    startAdaptiveTimer();
+  }
+
+  function pickAdaptiveQuestion() {
+    /* Prefer the target difficulty, then step outward to find an unused item. */
+    const order = arun.targetDiff === 1 ? [1, 2, 3] : arun.targetDiff === 3 ? [3, 2, 1] : [2, 1, 3];
+    for (let d = 0; d < order.length; d++) {
+      const bucket = arun.byDiff[order[d]] || [];
+      for (let j = 0; j < bucket.length; j++) {
+        if (!arun.usedIds[bucket[j].id]) return bucket[j];
+      }
+    }
+    return null;
+  }
+
+  function nextAdaptiveQuestion() {
+    const q = pickAdaptiveQuestion();
+    if (!q) { finishAdaptive(); return; }
+    arun.usedIds[q.id] = true;
+    arun.asked.push(q);
+    arun.answers.push(null);
+    arun.correct.push(null);
+    renderAdaptiveQuestion();
+  }
+
+  function renderAdaptiveQuestion() {
+    const idx = arun.asked.length - 1;
+    const q = arun.asked[idx];
+    const sub = window.Pulse.getSubject(q.subject);
+    const diffLabel = q.diff === 1 ? "Foundational" : q.diff === 3 ? "Advanced" : "Intermediate";
+
+    $("#adaptive-status").innerHTML =
+      '<span class="adaptive-count">Question ' + arun.asked.length + '</span>' +
+      '<span class="adaptive-diff adaptive-diff-' + q.diff + '">' + diffLabel + '</span>' +
+      '<div class="adaptive-progress"><div class="adaptive-progress-fill" style="width:' +
+        Math.min(100, Math.round((arun.asked.length / arun.maxQ) * 100)) + '%"></div></div>';
+
+    const opts = q.options.map(function (opt, i) {
+      return '<label class="quiz-option">' +
+        '<input type="radio" name="aq-' + escapeHtml(q.id) + '" value="' + i + '">' +
+        '<span class="opt-letter">' + String.fromCharCode(65 + i) + '</span>' +
+        '<span class="opt-text">' + escapeHtml(opt) + '</span>' +
+      '</label>';
+    }).join("");
+
+    $("#quiz-question").innerHTML =
+      '<div class="quiz-q-header">' +
+        '<span class="quiz-q-subject" style="background:' + sub.color + '">' + escapeHtml(sub.name) + '</span>' +
+      '</div>' +
+      '<h2 class="quiz-q-stem">' + escapeHtml(q.stem) + '</h2>' +
+      '<div class="quiz-options">' + opts + '</div>';
+
+    $("#quiz-next").disabled = true;
+    $$("input[type=radio]", $("#quiz-question")).forEach(function (input) {
+      input.addEventListener("change", function (e) {
+        arun.answers[idx] = parseInt(e.target.value, 10);
+        $$("#quiz-question .quiz-option").forEach(function (o) { o.classList.remove("is-selected"); });
+        e.target.closest(".quiz-option").classList.add("is-selected");
+        $("#quiz-next").disabled = false;
+      });
+    });
+  }
+
+  function submitAdaptiveAnswer() {
+    const idx = arun.asked.length - 1;
+    if (arun.answers[idx] == null) return;
+    const q = arun.asked[idx];
+    const isCorrect = arun.answers[idx] === q.answer;
+    arun.correct[idx] = isCorrect;
+
+    /* Adjust ability and target difficulty. Harder items move ability more. */
+    const weight = q.diff === 3 ? 1.4 : q.diff === 1 ? 0.7 : 1.0;
+    arun.ability += (isCorrect ? weight : -weight);
+    arun.targetDiff = arun.ability >= 1 ? 3 : arun.ability <= -1 ? 1 : 2;
+
+    /* Stop rule: after the minimum, end when the result is clearly decided. */
+    const answered = arun.asked.length;
+    if (answered >= arun.maxQ) { finishAdaptive(); return; }
+    if (answered >= arun.minQ && Math.abs(arun.ability) >= 3) { finishAdaptive(); return; }
+    nextAdaptiveQuestion();
+  }
+
+  function finishAdaptive() {
+    const perSubject = {};
+    let correct = 0, attempted = 0;
+    let weightedGot = 0, weightedTotal = 0;
+    const detail = arun.asked.map(function (q, i) {
+      const userAns = arun.answers[i];
+      const wasAttempted = userAns != null;
+      const isCorrect = userAns === q.answer;
+      if (wasAttempted) attempted++;
+      if (isCorrect) correct++;
+      const w = q.diff || 2;
+      weightedTotal += w;
+      if (isCorrect) weightedGot += w;
+      const subj = perSubject[q.subject] = perSubject[q.subject] || { correct: 0, total: 0, attempted: 0 };
+      subj.total++;
+      if (wasAttempted) subj.attempted++;
+      if (isCorrect) subj.correct++;
+      return { qid: q.id, subject: q.subject, userAns: userAns, correctIdx: q.answer, isCorrect: isCorrect, attempted: wasAttempted };
+    });
+    const passProbability = weightedTotal ? Math.max(1, Math.min(99, Math.round((weightedGot / weightedTotal) * 100))) : 0;
+    const elapsed = Math.floor((Date.now() - arun.startedAt) / 1000);
+    const result = {
+      programId: arun.programId,
+      testId: arun.test.id,
+      testTitle: arun.test.title,
+      testType: "adaptive",
+      adaptive: true,
+      passProbability: passProbability,
+      total: arun.asked.length,
+      correct: correct,
+      attempted: attempted,
+      score: pct(correct, arun.asked.length),
+      timeSeconds: elapsed,
+      perSubject: perSubject,
+      detail: detail,
+      submittedAt: Date.now()
+    };
+    try {
+      localStorage.setItem(window.Pulse.LS_LAST, JSON.stringify(result));
+      const hist = JSON.parse(localStorage.getItem(window.Pulse.LS_HISTORY) || "[]");
+      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt });
+      localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
+    } catch (e) {}
+    window.location.href = "results.html";
+  }
+
+  function startAdaptiveTimer() {
+    const timerEl = $("#quiz-timer"); if (!timerEl) return;
+    setInterval(function () {
+      const elapsed = Math.floor((Date.now() - arun.startedAt) / 1000);
+      timerEl.textContent = fmtTime(elapsed);
+    }, 1000);
+  }
+
+  /* ============================================================
      RESULTS PAGE
      ============================================================ */
   function renderResults() {
@@ -398,6 +624,19 @@
     const weaknesses = subjectRows.filter(function (r) { return r.band === "weak"; });
 
     const overallBand = result.score >= 75 ? "strong" : result.score >= 50 ? "medium" : "weak";
+    const adaptiveBanner = (result.adaptive && typeof result.passProbability === "number")
+      ? '<div class="adaptive-result-banner adaptive-band-' + (result.passProbability >= 65 ? "pass" : result.passProbability >= 50 ? "borderline" : "fail") + '">' +
+          '<div class="adaptive-result-prob">' + result.passProbability + '%</div>' +
+          '<div class="adaptive-result-label">Estimated pass probability<br><span>across ' + result.total + ' adaptive questions</span></div>' +
+          '<p class="adaptive-result-note">' +
+            (result.passProbability >= 65
+              ? "You're tracking like a likely pass. Keep practicing harder items to build a safety margin."
+              : result.passProbability >= 50
+              ? "You're on the borderline. Focus on your weak subjects below and retake to push above 65%."
+              : "Below the comfort zone. Work through the topic discussions for the weak subjects, then retake.") +
+          ' This is a practice estimate, not an official NCLEX prediction.</p>' +
+        '</div>'
+      : '';
     const verdict = result.score >= 75 ? "Excellent — you're tracking well above the cutoff."
                   : result.score >= 60 ? "Solid — sharpen your weak areas to push into the top band."
                   : result.score >= 40 ? "Improving — focus revision on the weak subjects below."
@@ -449,6 +688,7 @@
             '<span><strong>' + fmtTime(result.timeSeconds) + '</strong> time</span>' +
           '</div>' +
           '<p class="result-verdict">' + escapeHtml(verdict) + '</p>' +
+          adaptiveBanner +
         '</div>' +
       '</section>' +
 

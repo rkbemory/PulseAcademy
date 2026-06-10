@@ -2,13 +2,14 @@
    Strategy: cache-first for same-origin assets, network-first for everything else.
    Bumps CACHE_NAME on every meaningful update to retire stale entries. */
 
-const CACHE_NAME = "pulse-v2.4.0";
+const CACHE_NAME = "pulse-v2.5.0";
 const PRECACHE = [
   "./",
   "index.html",
   "msn.html",
   "post-basic.html",
   "rn.html",
+  "nclex.html",
   "books.html",
   "tests.html",
   "quiz.html",
@@ -25,6 +26,7 @@ const PRECACHE = [
   "data/msn.js",
   "data/post-basic.js",
   "data/rn.js",
+  "data/nclex.js",
   "data/pulse-loader.js",
   "pulse-icon.png",
   "pulse-social.png",
