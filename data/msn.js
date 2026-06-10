@@ -678,6 +678,11 @@
     if (!q) return id;
     return q.subject + "|" + String(q.options[q.answer]).toLowerCase().replace(/[^a-z0-9]/g, "");
   }
+  function stemKey(id) {
+    const q = bankById[id];
+    if (!q) return id;
+    return String(q.stem).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
 
   /* Auto-populate Model Tests 04 – 10 (live) with deterministic varied selections.
      Skips any question whose fact is already in the test. */
@@ -690,12 +695,13 @@
     const picks = [];
     const seen = {};
     const seenFact = {};
+    const seenStem = {};
     let i = offset;
     let safety = n * 6;
     while (picks.length < 30 && safety-- > 0) {
       const id = ids[i % n];
-      const fk = factKey(id);
-      if (!seen[id] && !seenFact[fk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; }
+      const fk = factKey(id), sk = stemKey(id);
+      if (!seen[id] && !seenFact[fk] && !seenStem[sk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; seenStem[sk] = true; }
       i += step;
     }
     let backfill = 0;
@@ -741,12 +747,13 @@
     const picks = [];
     const seen = {};
     const seenFact = {};
+    const seenStem = {};
     let i = seed % n;
     let safety = n * 10;
     while (picks.length < count && safety-- > 0) {
       const id = ids[i % n];
-      const fk = factKey(id);
-      if (!seen[id] && !seenFact[fk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; }
+      const fk = factKey(id), sk = stemKey(id);
+      if (!seen[id] && !seenFact[fk] && !seenStem[sk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; seenStem[sk] = true; }
       i += step + (picks.length % 2); /* nudge to avoid landing on the same stride */
     }
     /* Relaxed backfill (fact guard dropped) only if the strict pass fell short. */

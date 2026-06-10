@@ -29,7 +29,11 @@
         { id: "pb-t-fn-q3", subject: "fundamental-nursing", stem: "An error in nursing documentation should be:", options: ["Erased completely","Covered with correction fluid","Struck through with a single line, initialled, dated","Re-written on a new page"], answer: 2, explanation: "Strike through with one line, write 'error', initial, date — preserves the audit trail." },
         { id: "pb-t-fn-q4", subject: "fundamental-nursing", stem: "Therapeutic communication includes all EXCEPT:", options: ["Open-ended questions","Active listening","False reassurance","Reflection"], answer: 2, explanation: "False reassurance ('Don't worry, everything will be fine') blocks communication." },
         { id: "pb-t-fn-q5", subject: "fundamental-nursing", stem: "A patient with the capacity to make decisions has the right to:", options: ["Demand any medication","Refuse treatment even if life-saving","Override physician orders","Receive free care"], answer: 1, explanation: "Competent adults have the right to refuse treatment, even when refusal could be fatal." },
-        { id: "pb-t-fn-q6", subject: "fundamental-nursing", stem: "Informed consent requires the patient to understand all EXCEPT:", options: ["Nature of the procedure","Risks and benefits","Alternatives","Cost of insurance"], answer: 3, explanation: "Procedure details, risks/benefits, alternatives, and right to withdraw — not insurance cost." }
+        { id: "pb-t-fn-q6", subject: "fundamental-nursing", stem: "Informed consent requires the patient to understand all EXCEPT:", options: ["Nature of the procedure","Risks and benefits","Alternatives","Cost of insurance"], answer: 3, explanation: "Procedure details, risks/benefits, alternatives, and right to withdraw — not insurance cost." },
+        { id: "pb-t-fn-q7", subject: "fundamental-nursing", stem: "In Maslow's hierarchy of needs, which needs must be met first?", options: ["Self-esteem needs","Physiological needs","Love and belonging","Safety needs"], answer: 1, explanation: "Physiological needs (air, water, food, sleep) form the base of Maslow's hierarchy and are met first." },
+        { id: "pb-t-fn-q8", subject: "fundamental-nursing", stem: "A patient has the right to refuse treatment. The nurse should:", options: ["Force the treatment","Document the refusal and inform the prescriber","Hide the medicine in food","Discharge the patient"], answer: 1, explanation: "Competent patients may refuse; the nurse documents the refusal and notifies the prescriber." },
+        { id: "pb-t-fn-q9", subject: "fundamental-nursing", stem: "The single most effective way to prevent cross-infection is:", options: ["Wearing gloves always","Hand hygiene","Daily antibiotics","Isolating all patients"], answer: 1, explanation: "Hand hygiene is the most effective measure to prevent the spread of infection." },
+        { id: "pb-t-fn-q10", subject: "fundamental-nursing", stem: "Good nursing documentation should be:", options: ["Written in pencil","Factual, accurate, and timely","Completed at end of shift only","Based on opinion"], answer: 1, explanation: "Records must be factual, accurate, complete, and contemporaneous — 'not documented, not done'." }
       ]
     },
     {
@@ -56,7 +60,11 @@
         { id: "pb-t-an-q3", subject: "anatomy", stem: "Insulin is produced by:", options: ["Liver","Alpha cells of pancreas","Beta cells of pancreas","Thyroid"], answer: 2, explanation: "Beta cells of islets of Langerhans." },
         { id: "pb-t-an-q4", subject: "anatomy", stem: "Each kidney contains approximately:", options: ["100","10,000","1 million","100 million"], answer: 2, explanation: "About 1 million nephrons per kidney." },
         { id: "pb-t-an-q5", subject: "anatomy", stem: "Cardiac output for a healthy adult at rest is approximately:", options: ["1 L/min","5 L/min","10 L/min","20 L/min"], answer: 1, explanation: "CO = HR × SV ≈ 70 × 70 mL = ~5 L/min." },
-        { id: "pb-t-an-q6", subject: "anatomy", stem: "Which muscle is involuntary?", options: ["Biceps","Smooth muscle of intestine","Quadriceps","Tongue muscle"], answer: 1, explanation: "Smooth (visceral) muscle is involuntary." }
+        { id: "pb-t-an-q6", subject: "anatomy", stem: "Which muscle is involuntary?", options: ["Biceps","Smooth muscle of intestine","Quadriceps","Tongue muscle"], answer: 1, explanation: "Smooth (visceral) muscle is involuntary." },
+        { id: "pb-t-an-q7", subject: "anatomy", stem: "The functional unit of the kidney is the:", options: ["Alveolus","Nephron","Neuron","Hepatocyte"], answer: 1, explanation: "The nephron is the microscopic filtering unit of the kidney." },
+        { id: "pb-t-an-q8", subject: "anatomy", stem: "The largest organ of the human body is the:", options: ["Liver","Brain","Skin","Lung"], answer: 2, explanation: "The skin is the body's largest organ, providing protection, temperature regulation, and sensation." },
+        { id: "pb-t-an-q9", subject: "anatomy", stem: "Which chamber of the heart pumps oxygenated blood to the body?", options: ["Right atrium","Right ventricle","Left atrium","Left ventricle"], answer: 3, explanation: "The left ventricle pumps oxygenated blood into the aorta and systemic circulation." },
+        { id: "pb-t-an-q10", subject: "anatomy", stem: "Normal adult resting heart rate is:", options: ["40–60 bpm","60–100 bpm","100–120 bpm","120–140 bpm"], answer: 1, explanation: "The normal adult resting heart rate is 60–100 beats per minute." }
       ]
     },
     {
@@ -83,7 +91,11 @@
         { id: "pb-t-ch-q3", subject: "child-health", stem: "BCG is administered at:", options: ["Birth","6 weeks","9 months","15 months"], answer: 0, explanation: "BCG at birth (Bangladesh EPI)." },
         { id: "pb-t-ch-q4", subject: "child-health", stem: "A child's weight at 1 year is approximately:", options: ["Same as birth","Double birth weight","Triple birth weight","Four times birth weight"], answer: 2, explanation: "Triple by 1 year." },
         { id: "pb-t-ch-q5", subject: "child-health", stem: "First-line antibiotic for community-acquired pediatric pneumonia is:", options: ["Ciprofloxacin","Amoxicillin","Vancomycin","Azithromycin"], answer: 1, explanation: "Oral amoxicillin × 5–7 days for non-severe community-acquired pneumonia (IMCI/WHO)." },
-        { id: "pb-t-ch-q6", subject: "child-health", stem: "IMCI 'pink' classification indicates:", options: ["Home care","Treatment at facility","Urgent referral","Counseling only"], answer: 2, explanation: "Pink = severe classification, urgent pre-referral treatment and transfer." }
+        { id: "pb-t-ch-q6", subject: "child-health", stem: "IMCI 'pink' classification indicates:", options: ["Home care","Treatment at facility","Urgent referral","Counseling only"], answer: 2, explanation: "Pink = severe classification, urgent pre-referral treatment and transfer." },
+        { id: "pb-t-ch-q7", subject: "child-health", stem: "Which is a general IMCI danger sign requiring urgent referral?", options: ["Mild runny nose","Inability to drink or breastfeed","A single loose stool","Slight irritability"], answer: 1, explanation: "Inability to drink/breastfeed, vomiting everything, convulsions, and lethargy are general danger signs." },
+        { id: "pb-t-ch-q8", subject: "child-health", stem: "In the EPI schedule, the first dose of pentavalent vaccine is given at:", options: ["Birth","6 weeks","9 months","15 months"], answer: 1, explanation: "Pentavalent (DPT-HepB-Hib) is given at 6, 10, and 14 weeks; the first dose is at 6 weeks." },
+        { id: "pb-t-ch-q9", subject: "child-health", stem: "The first-line treatment for mild-to-moderate dehydration from diarrhoea is:", options: ["IV fluids","Oral rehydration solution (ORS)","Antibiotics","Anti-diarrhoeal drugs"], answer: 1, explanation: "ORS replaces lost fluid and electrolytes and is first-line for mild-to-moderate dehydration." },
+        { id: "pb-t-ch-q10", subject: "child-health", stem: "A newborn's normal respiratory rate is approximately:", options: ["12–20/min","20–30/min","30–60/min","60–80/min"], answer: 2, explanation: "Newborns breathe faster than adults — a normal rate is about 30–60 breaths per minute." }
       ]
     },
     {
@@ -110,7 +122,11 @@
         { id: "pb-t-co-q3", subject: "community-health", stem: "Screening mammography is an example of:", options: ["Primary prevention","Secondary prevention","Tertiary prevention","Quaternary prevention"], answer: 1, explanation: "Secondary prevention = early detection in asymptomatic individuals." },
         { id: "pb-t-co-q4", subject: "community-health", stem: "MMR is expressed per:", options: ["1000 live births","10,000 live births","100,000 live births","1 million population"], answer: 2, explanation: "Maternal Mortality Ratio: per 100,000 live births." },
         { id: "pb-t-co-q5", subject: "community-health", stem: "Most effective primary prevention against measles:", options: ["Hand hygiene","Isolation","Vaccination","Antibiotics"], answer: 2, explanation: "MR vaccine is the primary prevention strategy." },
-        { id: "pb-t-co-q6", subject: "community-health", stem: "Number of essential elements of PHC per Alma-Ata:", options: ["5","6","8","10"], answer: 2, explanation: "Eight elements: education, nutrition, water/sanitation, MCH/FP, immunization, endemic disease prevention, treatment of common conditions, essential drugs." }
+        { id: "pb-t-co-q6", subject: "community-health", stem: "Number of essential elements of PHC per Alma-Ata:", options: ["5","6","8","10"], answer: 2, explanation: "Eight elements: education, nutrition, water/sanitation, MCH/FP, immunization, endemic disease prevention, treatment of common conditions, essential drugs." },
+        { id: "pb-t-co-q7", subject: "community-health", stem: "Immunization to prevent disease before it occurs is an example of:", options: ["Primary prevention","Secondary prevention","Tertiary prevention","Rehabilitation"], answer: 0, explanation: "Primary prevention stops disease before it starts — immunization and health promotion are key examples." },
+        { id: "pb-t-co-q8", subject: "community-health", stem: "Rehabilitation after a stroke is an example of:", options: ["Primary prevention","Secondary prevention","Tertiary prevention","Health promotion"], answer: 2, explanation: "Tertiary prevention reduces complications and disability after disease has occurred, e.g., rehabilitation." },
+        { id: "pb-t-co-q9", subject: "community-health", stem: "The crude birth rate is expressed per:", options: ["100 population","1,000 population","10,000 population","100,000 population"], answer: 1, explanation: "Crude birth rate is the number of live births per 1,000 population per year." },
+        { id: "pb-t-co-q10", subject: "community-health", stem: "The infant mortality rate measures deaths of children under:", options: ["28 days","1 year of age","5 years of age","10 years of age"], answer: 1, explanation: "Infant mortality rate is the number of deaths of children under 1 year per 1,000 live births." }
       ]
     },
     {
@@ -137,7 +153,11 @@
         { id: "pb-t-ph-q3", subject: "pharmacology", stem: "Insulin should be stored, when opened, at:", options: ["Freezer","Room temperature ≤28 days","Refrigerator 2-8°C only","Window sill in sunlight"], answer: 1, explanation: "Opened insulin: room temperature ≤28 days; unopened in fridge." },
         { id: "pb-t-ph-q4", subject: "pharmacology", stem: "Two patient identifiers BEST include:", options: ["Room number and bed","Name and date of birth","Diagnosis and physician","Time and date"], answer: 1, explanation: "Two unique identifiers: full name + DOB (or hospital ID). Never room number alone." },
         { id: "pb-t-ph-q5", subject: "pharmacology", stem: "Fastest medication route for life-threatening emergency:", options: ["Oral","Sublingual","Intramuscular","Intravenous"], answer: 3, explanation: "IV: immediate onset, fully bioavailable." },
-        { id: "pb-t-ph-q6", subject: "pharmacology", stem: "High-alert medications require:", options: ["Single nurse check","Independent double-check by two nurses","No special handling","Verbal confirmation only"], answer: 1, explanation: "ISMP recommends independent double-check for high-alert drugs (insulin, heparin, opioids, KCl, chemo)." }
+        { id: "pb-t-ph-q6", subject: "pharmacology", stem: "High-alert medications require:", options: ["Single nurse check","Independent double-check by two nurses","No special handling","Verbal confirmation only"], answer: 1, explanation: "ISMP recommends independent double-check for high-alert drugs (insulin, heparin, opioids, KCl, chemo)." },
+        { id: "pb-t-ph-q7", subject: "pharmacology", stem: "The antidote for an opioid overdose is:", options: ["Flumazenil","Naloxone","Vitamin K","Atropine"], answer: 1, explanation: "Naloxone reverses opioid-induced respiratory depression." },
+        { id: "pb-t-ph-q8", subject: "pharmacology", stem: "Warfarin therapy is monitored using the:", options: ["aPTT","INR","Blood glucose","Serum potassium"], answer: 1, explanation: "Warfarin is monitored with the INR (target usually 2.0–3.0); vitamin K is its reversal agent." },
+        { id: "pb-t-ph-q9", subject: "pharmacology", stem: "Before giving digoxin, the nurse must check the patient's:", options: ["Temperature","Apical pulse for one full minute","Blood glucose","Respiratory rate"], answer: 1, explanation: "Check the apical pulse for a full minute and withhold the dose if it is below 60 bpm in an adult." },
+        { id: "pb-t-ph-q10", subject: "pharmacology", stem: "The antidote for warfarin overdose is:", options: ["Protamine sulfate","Vitamin K","Naloxone","Flumazenil"], answer: 1, explanation: "Vitamin K reverses warfarin; protamine sulfate reverses heparin." }
       ]
     },
     {
@@ -164,7 +184,185 @@
         { id: "pb-t-ad-q3", subject: "adult-health", stem: "tPA window for ischemic stroke:", options: ["≤30 min","≤2 hours","≤4.5 hours","≤12 hours"], answer: 2, explanation: "tPA up to 4.5 h from symptom onset (after CT rules out hemorrhage)." },
         { id: "pb-t-ad-q4", subject: "adult-health", stem: "Most important post-op intervention to prevent DVT:", options: ["Bed rest","Early ambulation","High-fat diet","Restrict fluids"], answer: 1, explanation: "Early ambulation + leg exercises + pharmacological prophylaxis prevent DVT." },
         { id: "pb-t-ad-q5", subject: "adult-health", stem: "Stage 2 hypertension begins at:", options: ["120/80","130/80","140/90","160/100"], answer: 2, explanation: "ACC/AHA 2017: Stage 2 ≥140/≥90." },
-        { id: "pb-t-ad-q6", subject: "adult-health", stem: "COPD oxygen therapy targets SpO2 of approximately:", options: ["≥99%","94-98%","88-92%","75-80%"], answer: 2, explanation: "In COPD with chronic CO2 retention, target SpO2 88-92% to avoid suppressing hypoxic drive." }
+        { id: "pb-t-ad-q6", subject: "adult-health", stem: "COPD oxygen therapy targets SpO2 of approximately:", options: ["≥99%","94-98%","88-92%","75-80%"], answer: 2, explanation: "In COPD with chronic CO2 retention, target SpO2 88-92% to avoid suppressing hypoxic drive." },
+        { id: "pb-t-ad-q7", subject: "adult-health", stem: "The normal serum potassium range in adults is:", options: ["1.5–2.5 mmol/L","3.5–5.0 mmol/L","8.5–10.5 mmol/L","135–145 mmol/L"], answer: 1, explanation: "Normal serum potassium is 3.5–5.0 mmol/L; values outside this range threaten cardiac rhythm." },
+        { id: "pb-t-ad-q8", subject: "adult-health", stem: "The classic chest pain of a myocardial infarction:", options: ["Is sharp and worse on inspiration","Is central and crushing, radiating to the arm or jaw","Is localised to the right flank","Only occurs after eating"], answer: 1, explanation: "MI typically causes central, crushing chest pain radiating to the left arm, neck, or jaw." },
+        { id: "pb-t-ad-q9", subject: "adult-health", stem: "The best position for a breathless patient is:", options: ["Supine flat","Trendelenburg","High-Fowler's (sitting upright)","Prone"], answer: 2, explanation: "Sitting upright in high-Fowler's position maximises lung expansion and eases breathing." },
+        { id: "pb-t-ad-q10", subject: "adult-health", stem: "A patient on furosemide should be monitored for low levels of:", options: ["Potassium","Calcium","Sodium","Glucose"], answer: 0, explanation: "Loop diuretics such as furosemide cause potassium loss, risking hypokalaemia and arrhythmias." }
+      ]
+    },
+
+    /* ============================================================
+       NEW TOPICS (Phase 2b expansion)
+       ============================================================ */
+    {
+      id: "pb-t-infection",
+      title: "Infection Prevention & Control",
+      subject: "fundamental-nursing",
+      readMinutes: 9,
+      summary: "The chain of infection, standard and transmission-based precautions, hand hygiene, PPE, and safe handling of sharps and waste.",
+      content: [
+        { h: "The Chain of Infection", p: "Infection spreads through six links: the infectious agent, a reservoir (where it lives), a portal of exit, a mode of transmission, a portal of entry, and a susceptible host. Breaking any link stops the spread. Nursing actions target each link — for example, hand hygiene breaks transmission, and immunization reduces host susceptibility. Understanding the chain helps you choose the right precaution for each situation." },
+        { h: "Hand Hygiene", p: "Hand hygiene is the single most effective measure to prevent healthcare-associated infection. Use alcohol-based hand rub for routine decontamination when hands are not visibly soiled, and soap and water when they are soiled or after caring for a patient with diarrhoea. The WHO 'five moments' are: before touching a patient, before a clean/aseptic procedure, after body-fluid exposure risk, after touching a patient, and after touching the patient's surroundings." },
+        { h: "Standard Precautions", p: "Standard precautions apply to every patient at all times, regardless of diagnosis, because infection status is often unknown. They include hand hygiene, gloves and other PPE when contact with body fluids is likely, safe injection practice, respiratory hygiene, and safe handling of sharps, linen, and waste. Treat all blood and body fluids as potentially infectious." },
+        { h: "Transmission-Based Precautions", p: "Added to standard precautions for specific organisms. Contact precautions (gloves and gown) for organisms spread by touch, such as MRSA or C. difficile. Droplet precautions (surgical mask within ~1 metre) for influenza, pertussis, and meningococcus. Airborne precautions (N95 respirator and a negative-pressure room) for tuberculosis, measles, and chickenpox. Knowing which category a disease falls into is frequently tested." },
+        { h: "Personal Protective Equipment", p: "Select PPE based on the anticipated exposure. The order of putting on (donning) is gown, mask/respirator, goggles, then gloves. The order of removing (doffing) is gloves, goggles, gown, then mask/respirator last — because the front of items is contaminated and the face is protected until last. Perform hand hygiene immediately after removing all PPE." },
+        { h: "Asepsis", p: "Medical asepsis (clean technique) reduces the number of organisms and prevents their spread — used for routine care such as giving oral medication. Surgical asepsis (sterile technique) eliminates all organisms and is required for invasive procedures such as urinary catheterization, wound dressing, and injections. Once a sterile field is contaminated, it must be discarded." },
+        { h: "Sharps & Waste Safety", p: "Dispose of used needles immediately in a puncture-proof sharps container without recapping — recapping is a leading cause of needlestick injury. Segregate clinical waste from general waste per local policy. If a needlestick injury occurs, encourage bleeding, wash with soap and water, report immediately, and follow post-exposure prophylaxis protocols. Never bend or break needles by hand." },
+        { h: "Preventing Healthcare-Associated Infection", p: "Common preventable infections include catheter-associated urinary tract infection, central-line bloodstream infection, surgical site infection, and ventilator-associated pneumonia. Prevent them with strict asepsis on insertion, daily review of whether devices are still needed, early removal, elevating the head of the bed, good oral care, and meticulous hand hygiene. Antibiotic stewardship — using the right drug only when needed — limits resistance." }
+      ],
+      checkIn: [
+        { id: "pb-t-inf-q1", subject: "fundamental-nursing", stem: "The single most effective measure to prevent healthcare-associated infection is:", options: ["Wearing gloves at all times","Hand hygiene","Routine antibiotics","Isolating every patient"], answer: 1, explanation: "Hand hygiene is the most effective measure to prevent the spread of infection." },
+        { id: "pb-t-inf-q2", subject: "fundamental-nursing", stem: "Tuberculosis requires which transmission-based precaution?", options: ["Contact","Droplet","Airborne","Standard only"], answer: 2, explanation: "TB spreads via airborne droplet nuclei, requiring airborne precautions and an N95 respirator." },
+        { id: "pb-t-inf-q3", subject: "fundamental-nursing", stem: "Standard precautions are applied to:", options: ["Only patients with a known infection","All patients regardless of diagnosis","Only patients in isolation","Only during surgery"], answer: 1, explanation: "Standard precautions apply to every patient at all times, because infection status is often unknown." },
+        { id: "pb-t-inf-q4", subject: "fundamental-nursing", stem: "When doffing PPE, which item is removed last?", options: ["Gloves","Gown","Goggles","Mask/respirator"], answer: 3, explanation: "The mask or respirator is removed last, as the face stays protected until other contaminated items are off." },
+        { id: "pb-t-inf-q5", subject: "fundamental-nursing", stem: "Used needles should be:", options: ["Recapped then binned","Placed directly in a puncture-proof sharps container","Put in general waste","Bent before disposal"], answer: 1, explanation: "Dispose of sharps immediately without recapping to prevent needlestick injury." },
+        { id: "pb-t-inf-q6", subject: "fundamental-nursing", stem: "Which procedure requires sterile (surgical aseptic) technique?", options: ["Giving oral medicine","Urinary catheter insertion","Taking blood pressure","Feeding a patient"], answer: 1, explanation: "Urinary catheterization is invasive and requires sterile technique." },
+        { id: "pb-t-inf-q7", subject: "fundamental-nursing", stem: "Which precaution is required for a patient with C. difficile?", options: ["Airborne","Contact","Droplet","None"], answer: 1, explanation: "C. difficile spreads by contact; use gloves, gown, and soap-and-water hand washing (alcohol rub does not kill spores)." },
+        { id: "pb-t-inf-q8", subject: "fundamental-nursing", stem: "Breaking the 'chain of infection' at the mode of transmission is achieved mainly by:", options: ["Immunization","Hand hygiene and cleaning","Giving antibiotics","Improving nutrition"], answer: 1, explanation: "Hand hygiene and environmental cleaning interrupt transmission, a key link in the chain." },
+        { id: "pb-t-inf-q9", subject: "fundamental-nursing", stem: "After a needlestick injury, the first action is to:", options: ["Ignore it if small","Encourage bleeding and wash with soap and water","Apply a tight bandage only","Wait until end of shift to report"], answer: 1, explanation: "Encourage bleeding, wash the site, then report immediately and follow post-exposure prophylaxis." },
+        { id: "pb-t-inf-q10", subject: "fundamental-nursing", stem: "When are alcohol-based hand rubs NOT appropriate?", options: ["Before touching a patient","When hands are visibly soiled","After touching surroundings","Before an aseptic task"], answer: 1, explanation: "When hands are visibly soiled or after caring for diarrhoea (e.g., C. difficile), wash with soap and water instead." }
+      ]
+    },
+    {
+      id: "pb-t-maternal",
+      title: "Maternal & Newborn Care",
+      subject: "midwifery",
+      readMinutes: 10,
+      summary: "Antenatal care, the stages of labour, danger signs in pregnancy, postpartum haemorrhage, and essential newborn care.",
+      content: [
+        { h: "Antenatal Care", p: "Antenatal care monitors the health of mother and baby and detects problems early. WHO recommends a minimum of eight antenatal contacts. Routine care includes blood pressure and weight checks, urine testing for protein and sugar, measuring fundal height, checking the baby's heart, tetanus immunization, and iron and folic acid supplementation. Folic acid before and in early pregnancy reduces neural tube defects." },
+        { h: "Danger Signs in Pregnancy", p: "Teach every pregnant woman the danger signs that need urgent care: severe headache or blurred vision, swelling of the face and hands, vaginal bleeding, severe abdominal pain, reduced or absent fetal movements, fever, and convulsions. These may signal pre-eclampsia, haemorrhage, infection, or fetal distress. Early recognition and referral save lives." },
+        { h: "Stages of Labour", p: "Labour has three stages. The first stage runs from the onset of regular contractions to full (10 cm) cervical dilatation, and is the longest. The second stage is from full dilatation to the birth of the baby. The third stage is from the birth of the baby to delivery of the placenta. Active management of the third stage — a uterotonic, controlled cord traction, and uterine massage — reduces postpartum haemorrhage." },
+        { h: "Pre-eclampsia & Eclampsia", p: "Pre-eclampsia is new high blood pressure (≥140/90) with proteinuria after 20 weeks of pregnancy, with headache, visual changes, and swelling. Untreated, it can progress to eclampsia (seizures), which is life-threatening. Magnesium sulfate is the first-line drug to prevent and treat eclamptic seizures; calcium gluconate is its antidote. Monitor reflexes, respiratory rate, and urine output during magnesium therapy." },
+        { h: "Postpartum Haemorrhage", p: "Postpartum haemorrhage — blood loss over 500 mL after vaginal birth — is a leading cause of maternal death. The most common cause is uterine atony (a poorly contracting uterus). Remember the four T's: Tone (atony), Trauma (tears), Tissue (retained placenta), Thrombin (clotting problems). First actions: call for help, massage the uterus, give a uterotonic such as oxytocin, ensure IV access, and monitor vital signs." },
+        { h: "Essential Newborn Care", p: "At birth, dry the baby thoroughly, keep it warm (skin-to-skin with the mother), and ensure it is breathing. Initiate breastfeeding within the first hour to provide colostrum and promote bonding. Routine care includes cord care (keep clean and dry), vitamin K to prevent bleeding, eye care, weighing, and immunization (BCG and OPV-0). Watch for danger signs: poor feeding, lethargy, fast or difficult breathing, fever or low temperature, and jaundice in the first 24 hours." },
+        { h: "Breastfeeding Support", p: "Exclusive breastfeeding for six months is recommended. Help the mother with positioning and attachment — the baby's mouth should cover much of the areola, not just the nipple, to feed well and prevent sore nipples. Feed on demand, day and night. Colostrum, the first thick yellow milk, is rich in antibodies. Reassure mothers that frequent feeding is normal and builds the milk supply." },
+        { h: "Family Planning Basics", p: "Counsel on birth spacing of at least two years for maternal and child health. Methods include barrier methods (condoms, which also prevent sexually transmitted infection), combined and progestogen-only pills, injectables, implants and intrauterine devices (long-acting reversible methods), and permanent methods. Lactational amenorrhoea offers short-term protection only under specific conditions. Choice should be informed and voluntary." }
+      ],
+      checkIn: [
+        { id: "pb-t-mat-q1", subject: "midwifery", stem: "WHO recommends a minimum number of antenatal contacts of:", options: ["4","6","8","12"], answer: 2, explanation: "WHO's 2016 guidance recommends a minimum of eight antenatal care contacts." },
+        { id: "pb-t-mat-q2", subject: "midwifery", stem: "The first stage of labour ends when:", options: ["Contractions begin","The cervix is fully (10 cm) dilated","The baby is born","The placenta is delivered"], answer: 1, explanation: "The first stage runs from onset of labour to full cervical dilatation." },
+        { id: "pb-t-mat-q3", subject: "midwifery", stem: "The most common cause of postpartum haemorrhage is:", options: ["Retained placenta","Uterine atony","Cervical tear","Clotting failure"], answer: 1, explanation: "Uterine atony (a poorly contracting uterus) is the leading cause of postpartum haemorrhage." },
+        { id: "pb-t-mat-q4", subject: "midwifery", stem: "The first-line drug to prevent and treat eclamptic seizures is:", options: ["Diazepam","Magnesium sulfate","Phenytoin","Calcium gluconate"], answer: 1, explanation: "Magnesium sulfate is first-line; calcium gluconate is its antidote." },
+        { id: "pb-t-mat-q5", subject: "midwifery", stem: "Pre-eclampsia is diagnosed after 20 weeks with:", options: ["BP ≥120/80","BP ≥140/90 plus proteinuria","Proteinuria alone","Swelling alone"], answer: 1, explanation: "Pre-eclampsia is new hypertension ≥140/90 with proteinuria (or end-organ signs) after 20 weeks." },
+        { id: "pb-t-mat-q6", subject: "midwifery", stem: "Breastfeeding should ideally be initiated:", options: ["Within the first hour of birth","After 6 hours","After 24 hours","After the first bath"], answer: 0, explanation: "Early initiation within the first hour gives colostrum and promotes bonding and uterine contraction." },
+        { id: "pb-t-mat-q7", subject: "midwifery", stem: "A danger sign in pregnancy requiring urgent care is:", options: ["Mild back ache","Severe headache with blurred vision","Occasional heartburn","Mild ankle swelling in late pregnancy"], answer: 1, explanation: "Severe headache with visual changes suggests pre-eclampsia and needs urgent assessment." },
+        { id: "pb-t-mat-q8", subject: "midwifery", stem: "Immediate care of a newborn at birth includes:", options: ["Delayed drying","Drying, warmth, and ensuring breathing","Routine deep suctioning of all babies","Immediate bathing"], answer: 1, explanation: "Dry the baby, keep it warm, and ensure breathing — the first steps of essential newborn care." },
+        { id: "pb-t-mat-q9", subject: "midwifery", stem: "Active management of the third stage of labour helps prevent:", options: ["Pre-eclampsia","Postpartum haemorrhage","Gestational diabetes","Preterm labour"], answer: 1, explanation: "A uterotonic, controlled cord traction, and uterine massage reduce postpartum haemorrhage." },
+        { id: "pb-t-mat-q10", subject: "midwifery", stem: "The first thick yellow breast milk, rich in antibodies, is called:", options: ["Colostrum","Foremilk","Hindmilk","Formula"], answer: 0, explanation: "Colostrum is the antibody-rich first milk, ideal for the newborn's immune protection." }
+      ]
+    },
+    {
+      id: "pb-t-mental",
+      title: "Mental Health Nursing Basics",
+      subject: "psychiatric",
+      readMinutes: 9,
+      summary: "Therapeutic communication, common disorders, suicide risk, key psychiatric medications, and the nurse's role in mental health.",
+      content: [
+        { h: "Therapeutic Communication", p: "The therapeutic relationship is the foundation of mental health nursing. Use active listening, open-ended questions, silence, reflection, and validation to build trust. Avoid barriers such as false reassurance ('everything will be fine'), giving advice, judging, or changing the subject. Be genuine, non-judgemental, and consistent. Maintain professional boundaries while showing empathy." },
+        { h: "Anxiety & Depression", p: "Anxiety is excessive worry with physical symptoms such as palpitations, sweating, and restlessness; mild anxiety can sharpen focus, but severe anxiety impairs function. Depression features persistent low mood, loss of interest, sleep and appetite changes, low energy, guilt, and poor concentration. Always assess a depressed patient for suicidal thoughts. Treatment combines psychotherapy, medication, and social support." },
+        { h: "Schizophrenia", p: "Schizophrenia is a psychotic disorder. Positive symptoms (added experiences) include hallucinations, delusions, and disorganized thinking. Negative symptoms (lost functions) include flat affect, social withdrawal, and lack of motivation. Auditory hallucinations are the most common type. Care includes building trust, not arguing about delusions, ensuring safety, promoting medication adherence, and supporting daily functioning." },
+        { h: "Suicide Risk", p: "Take every expression of suicidal thinking seriously. Ask directly — 'Are you thinking of harming yourself?' — asking does not plant the idea; it opens assessment and shows you care. Assess intent, plan, and means. The priority is safety: provide close observation, remove dangerous objects, and never leave a high-risk patient alone. Statements like 'I won't be a problem anymore' may signal intent and require immediate response." },
+        { h: "Psychiatric Medications", p: "Antipsychotics treat psychosis; watch for extrapyramidal side effects and, with long-term typical agents, tardive dyskinesia. Antidepressants (SSRIs) take two to four weeks to work — counsel patients not to stop early. Mood stabilizers such as lithium need blood-level monitoring (therapeutic 0.6–1.2 mEq/L); early toxicity causes nausea, tremor, and diarrhoea. Benzodiazepines relieve acute anxiety but risk dependence." },
+        { h: "Substance Use", p: "Substance use disorders involve compulsive use despite harm. Withdrawal from alcohol can be dangerous — tremor, sweating, agitation, and, at its worst, seizures and delirium tremens. Treat with a calm environment, monitoring, and medication as prescribed. Approach without judgement, support motivation to change, and connect patients with rehabilitation and community resources." },
+        { h: "The Nurse's Role & Stigma", p: "Mental illness is common and treatable, yet stigma stops many people from seeking help. Nurses promote mental health by listening without judgement, providing accurate information, involving family, and linking patients to services. Care for the whole person — physical health is often neglected in mental illness. Your respectful attitude can itself be therapeutic and can challenge harmful stereotypes in the community." }
+      ],
+      checkIn: [
+        { id: "pb-t-men-q1", subject: "psychiatric", stem: "A therapeutic communication technique is:", options: ["Giving false reassurance","Active listening and open-ended questions","Changing the subject","Being judgemental"], answer: 1, explanation: "Active listening, open-ended questions, and empathy build trust; false reassurance is a barrier." },
+        { id: "pb-t-men-q2", subject: "psychiatric", stem: "The most common type of hallucination in schizophrenia is:", options: ["Visual","Auditory","Tactile","Olfactory"], answer: 1, explanation: "Auditory hallucinations (hearing voices) are the most common in schizophrenia." },
+        { id: "pb-t-men-q3", subject: "psychiatric", stem: "The priority when caring for a suicidal patient is:", options: ["Leaving them to rest alone","Ensuring safety and close observation","Avoiding the topic","Quick discharge"], answer: 1, explanation: "Safety is the priority — assess intent, remove means, and provide close observation." },
+        { id: "pb-t-men-q4", subject: "psychiatric", stem: "Therapeutic lithium serum level is:", options: ["0.1–0.5 mEq/L","0.6–1.2 mEq/L","1.5–2.5 mEq/L","3.0–4.0 mEq/L"], answer: 1, explanation: "0.6–1.2 mEq/L is therapeutic; above 1.5 mEq/L is toxic." },
+        { id: "pb-t-men-q5", subject: "psychiatric", stem: "A positive symptom of schizophrenia is:", options: ["Flat affect","Social withdrawal","Hallucinations","Lack of motivation"], answer: 2, explanation: "Positive symptoms add experiences — hallucinations, delusions, disorganization; negative symptoms are losses." },
+        { id: "pb-t-men-q6", subject: "psychiatric", stem: "Tardive dyskinesia is associated with long-term use of:", options: ["SSRIs","Antipsychotics","Benzodiazepines","Lithium"], answer: 1, explanation: "Tardive dyskinesia results from chronic dopamine-receptor blockade by antipsychotics." },
+        { id: "pb-t-men-q7", subject: "psychiatric", stem: "The best response to a patient who says 'I won't be a problem anymore' is:", options: ["'You'll feel better tomorrow'","'Are you thinking of harming yourself?'","'Don't talk like that'","'Let's change the subject'"], answer: 1, explanation: "Direct questioning is essential to assess suicidal intent; it does not plant the idea." },
+        { id: "pb-t-men-q8", subject: "psychiatric", stem: "SSRIs typically take how long to show full effect?", options: ["A few hours","1–2 days","2–4 weeks","6 months"], answer: 2, explanation: "Antidepressants usually take 2–4 weeks to work; counsel patients not to stop early." },
+        { id: "pb-t-men-q9", subject: "psychiatric", stem: "A dangerous feature of alcohol withdrawal is:", options: ["Mild headache","Seizures and delirium tremens","Increased appetite","Drowsiness only"], answer: 1, explanation: "Severe alcohol withdrawal can cause seizures and delirium tremens, which can be fatal." },
+        { id: "pb-t-men-q10", subject: "psychiatric", stem: "Early signs of lithium toxicity include:", options: ["Constipation and dry skin","Nausea, tremor, and diarrhoea","Weight gain only","Hair loss"], answer: 1, explanation: "Early lithium toxicity causes nausea, coarse tremor, and diarrhoea; later, ataxia and seizures." }
+      ]
+    },
+    {
+      id: "pb-t-nutrition",
+      title: "Nutrition & Diet Therapy",
+      subject: "nutrition",
+      readMinutes: 8,
+      summary: "Macro- and micronutrients, therapeutic diets, malnutrition, and nutrition across the lifespan.",
+      content: [
+        { h: "Macronutrients", p: "The three macronutrients provide energy. Carbohydrates (4 kcal/g) are the body's main fuel. Proteins (4 kcal/g) build and repair tissue and are vital during growth, pregnancy, and healing. Fats (9 kcal/g) are the most energy-dense and carry fat-soluble vitamins. A balanced diet provides energy and the building blocks for health; needs rise during illness, surgery, and recovery." },
+        { h: "Micronutrients", p: "Vitamins and minerals are needed in small amounts but are essential. Vitamin A protects vision and immunity; deficiency causes night blindness. Vitamin C aids wound healing and iron absorption; deficiency causes scurvy. Vitamin D and calcium build bone. Iron prevents anaemia. Iodine prevents goitre. Folic acid in early pregnancy prevents neural tube defects. Many of these are public-health priorities in Bangladesh." },
+        { h: "Therapeutic Diets", p: "Diet is adjusted to the patient's condition. Diabetes: controlled carbohydrate, regular meals. Hypertension and heart failure: low salt. Chronic kidney disease: controlled protein, low potassium and phosphate. Liver failure: adequate calories, protein adjusted to the situation. After surgery: high protein and vitamin C for healing. Always check for swallowing difficulty and modify texture to prevent aspiration." },
+        { h: "Protein-Energy Malnutrition", p: "Malnutrition remains common in children. Marasmus is severe wasting from overall energy (and protein) deficiency — the child looks 'skin and bones'. Kwashiorkor is mainly protein deficiency with oedema, a swollen abdomen, and skin and hair changes. Both are dangerous. Management is careful, staged refeeding to avoid refeeding syndrome, treating infection, and correcting micronutrient deficiencies." },
+        { h: "Nutrition Assessment", p: "Assess nutrition using weight and height (and BMI in adults), mid-upper arm circumference in children, recent weight change, appetite, and diet history. Growth charts detect faltering early in children. Look for signs of deficiency — pale conjunctiva (anaemia), poor wound healing, brittle hair, oedema. Identifying malnutrition early allows timely intervention." },
+        { h: "Nutrition Across the Lifespan", p: "Needs change with age. Infants: exclusive breastfeeding for six months, then complementary feeding. Children and adolescents: extra energy and protein for growth. Pregnancy and lactation: increased energy, protein, iron, and folate. Older adults: enough protein to preserve muscle, with attention to appetite, dentition, and hydration. Match dietary advice to the person's life stage and circumstances." },
+        { h: "Hydration & Enteral Feeding", p: "Adequate fluid is part of nutrition. Monitor intake and output and watch for dehydration (dry mouth, reduced urine, lethargy) or overload. When patients cannot eat safely, nasogastric or other enteral feeding maintains nutrition — confirm tube position before feeding, elevate the head of the bed to reduce aspiration, and give feeds at the prescribed rate." }
+      ],
+      checkIn: [
+        { id: "pb-t-nut-q1", subject: "nutrition", stem: "Which macronutrient is the most energy-dense, at 9 kcal per gram?", options: ["Carbohydrate","Protein","Fat","Fibre"], answer: 2, explanation: "Fat provides about 9 kcal/g, more than carbohydrate or protein (4 kcal/g each)." },
+        { id: "pb-t-nut-q2", subject: "nutrition", stem: "Vitamin C deficiency causes:", options: ["Night blindness","Scurvy","Goitre","Rickets"], answer: 1, explanation: "Vitamin C deficiency causes scurvy; it also aids wound healing and iron absorption." },
+        { id: "pb-t-nut-q3", subject: "nutrition", stem: "Kwashiorkor is primarily a deficiency of:", options: ["Carbohydrate","Protein","Fat","Water"], answer: 1, explanation: "Kwashiorkor is mainly protein deficiency, with oedema and a swollen abdomen." },
+        { id: "pb-t-nut-q4", subject: "nutrition", stem: "A patient with chronic kidney disease should generally restrict:", options: ["Potassium and phosphate","Vitamin C","Fibre","Water-soluble vitamins"], answer: 0, explanation: "CKD diets restrict potassium and phosphate, with controlled protein." },
+        { id: "pb-t-nut-q5", subject: "nutrition", stem: "Folic acid in early pregnancy prevents:", options: ["Anaemia only","Neural tube defects","Goitre","Night blindness"], answer: 1, explanation: "Folic acid before and in early pregnancy reduces the risk of neural tube defects." },
+        { id: "pb-t-nut-q6", subject: "nutrition", stem: "Vitamin A deficiency classically causes:", options: ["Scurvy","Night blindness","Beriberi","Pellagra"], answer: 1, explanation: "Vitamin A deficiency causes night blindness and impairs immunity." },
+        { id: "pb-t-nut-q7", subject: "nutrition", stem: "Marasmus is best described as:", options: ["Protein deficiency with oedema","Severe wasting from energy deficiency","Vitamin C deficiency","Iron overload"], answer: 1, explanation: "Marasmus is severe wasting from overall energy (and protein) deficiency, without oedema." },
+        { id: "pb-t-nut-q8", subject: "nutrition", stem: "Vitamin C enhances the absorption of:", options: ["Calcium","Iron","Sodium","Potassium"], answer: 1, explanation: "Vitamin C reduces dietary iron to its more absorbable ferrous form, enhancing absorption." },
+        { id: "pb-t-nut-q9", subject: "nutrition", stem: "To reduce aspiration risk during nasogastric feeding, the nurse should:", options: ["Lay the patient flat","Elevate the head of the bed","Give the feed rapidly","Skip checking tube position"], answer: 1, explanation: "Elevating the head of the bed and confirming tube position reduce aspiration risk." },
+        { id: "pb-t-nut-q10", subject: "nutrition", stem: "The recommended infant feeding for the first six months is:", options: ["Formula only","Exclusive breastfeeding","Cow's milk","Solid foods"], answer: 1, explanation: "Exclusive breastfeeding for six months is recommended, then complementary feeding." }
+      ]
+    },
+    {
+      id: "pb-t-vitals",
+      title: "Vital Signs & Health Assessment",
+      subject: "fundamental-nursing",
+      readMinutes: 9,
+      summary: "Normal ranges and correct technique for the core vital signs, pain assessment, and when to escalate.",
+      content: [
+        { h: "Why Vital Signs Matter", p: "Vital signs are the quickest way to know whether a patient is stable or deteriorating. Trends matter more than single readings — a steady rise in heart rate or fall in blood pressure can be the first warning of trouble. Always compare with the patient's own baseline and record findings promptly and accurately." },
+        { h: "Temperature", p: "Normal adult oral temperature is 36.5–37.5 °C. Rectal readings are about 0.5 °C higher and axillary about 0.5 °C lower. Fever (>38 °C) suggests infection; very high temperature (≥41 °C, hyperpyrexia) is an emergency. A low temperature can also signal serious infection, especially in the elderly and newborns." },
+        { h: "Pulse", p: "Normal adult resting pulse is 60–100 beats per minute. Use the radial artery for routine checks and count for a full minute if the rhythm is irregular. Assess rate, rhythm, and strength. Bradycardia is below 60 and tachycardia above 100. Children have faster rates than adults." },
+        { h: "Respiration", p: "Normal adult respiration is 12–20 breaths per minute. Count without telling the patient, because awareness changes the rate. Note depth, rhythm, and effort, including the use of accessory muscles. Fast breathing (tachypnoea) is an important early sign of illness, especially in children." },
+        { h: "Blood Pressure", p: "Normal blood pressure is below 120/80 mmHg. Per ACC/AHA 2017: elevated 120–129/<80, Stage 1 hypertension 130–139/80–89, and Stage 2 ≥140/90. Use a correctly sized cuff covering about 80% of the arm — too small a cuff falsely raises the reading. Position the patient seated, rested, with the arm at heart level, and recheck any abnormal value." },
+        { h: "Oxygen Saturation & Pain", p: "Pulse oximetry (SpO₂) is the 'sixth vital sign'; normal on room air is 95–100%, and below 90% needs intervention. In COPD with CO₂ retention, target 88–92%. Pain is the 'fifth vital sign' — self-report is the gold standard; use a 0–10 numeric scale for adults and faces scales for children. Reassess pain after every intervention." },
+        { h: "When to Escalate", p: "Report urgently for: heart rate below 40 or above 130, respiratory rate below 8 or above 25, systolic blood pressure below 90 or above 180, SpO₂ below 90% on room air, temperature above 39.5 °C or below 35 °C, or any sudden change in consciousness. Many hospitals use an early-warning score to trigger escalation. When in doubt, ask for senior help — patient safety comes first." }
+      ],
+      checkIn: [
+        { id: "pb-t-vit-q1", subject: "fundamental-nursing", stem: "Normal adult oral body temperature is:", options: ["35.0–36.0 °C","36.5–37.5 °C","37.5–38.5 °C","38.0–39.0 °C"], answer: 1, explanation: "Normal adult oral temperature is 36.5–37.5 °C." },
+        { id: "pb-t-vit-q2", subject: "fundamental-nursing", stem: "Normal adult resting pulse rate is:", options: ["40–60 bpm","60–100 bpm","100–120 bpm","120–140 bpm"], answer: 1, explanation: "The normal adult resting pulse is 60–100 beats per minute." },
+        { id: "pb-t-vit-q3", subject: "fundamental-nursing", stem: "Normal adult respiratory rate is:", options: ["6–10/min","12–20/min","22–28/min","30–40/min"], answer: 1, explanation: "Normal adult respiration is 12–20 breaths per minute." },
+        { id: "pb-t-vit-q4", subject: "fundamental-nursing", stem: "Per ACC/AHA 2017, Stage 2 hypertension begins at:", options: ["120/80","130/80","140/90","160/100"], answer: 2, explanation: "Stage 2 hypertension is ≥140/90 mmHg." },
+        { id: "pb-t-vit-q5", subject: "fundamental-nursing", stem: "Normal SpO₂ on room air for a healthy adult is:", options: ["80–84%","85–89%","90–94%","95–100%"], answer: 3, explanation: "Normal SpO₂ on room air is 95–100%; below 90% requires intervention." },
+        { id: "pb-t-vit-q6", subject: "fundamental-nursing", stem: "Respirations should be counted:", options: ["While telling the patient to breathe normally","Without the patient being aware","Only when the patient sleeps","For 10 seconds × 6"], answer: 1, explanation: "Awareness changes the breathing rate, so count respirations discreetly." },
+        { id: "pb-t-vit-q7", subject: "fundamental-nursing", stem: "An undersized blood pressure cuff will most likely give a:", options: ["Falsely low reading","Falsely high reading","Accurate reading","No reading"], answer: 1, explanation: "Too small a cuff requires extra pressure to occlude the artery, falsely raising the reading." },
+        { id: "pb-t-vit-q8", subject: "fundamental-nursing", stem: "The gold standard for assessing pain in an alert adult is:", options: ["Vital sign changes","The nurse's judgement","The patient's self-report","Facial expression only"], answer: 2, explanation: "Self-report on a 0–10 scale is the gold standard — pain is what the patient says it is." },
+        { id: "pb-t-vit-q9", subject: "fundamental-nursing", stem: "Hyperpyrexia (a medical emergency) is a temperature of:", options: ["≥38 °C","≥39 °C","≥40 °C","≥41 °C"], answer: 3, explanation: "Hyperpyrexia (≥41 °C) risks central nervous system injury and is an emergency." },
+        { id: "pb-t-vit-q10", subject: "fundamental-nursing", stem: "Which finding should be reported to senior staff urgently?", options: ["Pulse 72 bpm","SpO₂ 98%","Respiratory rate 14/min","SpO₂ 88% on room air"], answer: 3, explanation: "SpO₂ below 90% on room air is a danger sign needing urgent review." }
+      ]
+    },
+    {
+      id: "pb-t-microbiology",
+      title: "Microbiology & Immunity Basics",
+      subject: "microbiology",
+      readMinutes: 8,
+      summary: "Types of microorganisms, sterilization vs. disinfection, how infections spread, immunity, and antibiotic resistance.",
+      content: [
+        { h: "Types of Microorganisms", p: "Microorganisms include bacteria, viruses, fungi, and parasites. Bacteria are single-celled and may be helpful (gut flora) or harmful; they are treated with antibiotics. Viruses are smaller, need a host cell to multiply, and do not respond to antibiotics. Fungi cause infections such as thrush and ringworm. Parasites include protozoa (e.g., malaria) and worms. Knowing the type guides treatment." },
+        { h: "Normal Flora & Opportunists", p: "The body normally carries harmless or helpful microorganisms — normal flora — on the skin and in the gut and elsewhere. They aid digestion and compete with harmful organisms. Problems arise when flora move to the wrong site (gut bacteria entering the urinary tract) or when immunity is weakened, letting normally harmless 'opportunistic' organisms cause disease." },
+        { h: "Sterilization vs. Disinfection", p: "Sterilization destroys all microorganisms, including spores — achieved by autoclaving (steam under pressure) for instruments. Disinfection reduces organisms on surfaces but may not kill spores; boiling, for example, disinfects but does not sterilize. Antiseptics are applied to skin. Choose the method by the level of risk: critical items entering sterile tissue must be sterilized." },
+        { h: "How Infections Spread", p: "Routes include direct contact, droplets (coughing, sneezing within about a metre), airborne tiny particles that travel further (tuberculosis, measles), vehicles such as contaminated food or water (cholera, typhoid), and vectors such as mosquitoes (malaria, dengue). Matching the route to the right precaution — contact, droplet, or airborne — prevents spread." },
+        { h: "Immunity", p: "Immunity is the body's defence against infection. Innate immunity is the inborn, non-specific first line (skin, stomach acid, inflammation). Adaptive immunity is specific and develops over time. Active immunity comes from infection or vaccination and is long-lasting; passive immunity is borrowed antibodies (from the mother across the placenta or in breast milk, or from immunoglobulin injections) and is temporary." },
+        { h: "Vaccination", p: "Vaccines train the immune system to recognize an organism without causing the disease, protecting the individual and, through herd immunity, the community. Live vaccines (BCG, measles, oral polio) are generally avoided in significant immunodeficiency and pregnancy. Maintaining the cold chain keeps vaccines effective. Immunization is one of the most cost-effective public-health measures." },
+        { h: "Antibiotic Resistance", p: "Overuse and misuse of antibiotics let bacteria become resistant, making infections harder to treat. Prevent resistance through antibiotic stewardship: use antibiotics only when needed, choose the right drug and dose, complete the prescribed course, and never use antibiotics for viral illness. Nurses educate patients and support correct, rational use." }
+      ],
+      checkIn: [
+        { id: "pb-t-mic-q1", subject: "microbiology", stem: "Which organism does NOT respond to antibiotics?", options: ["Bacteria","Viruses","Both equally","Neither"], answer: 1, explanation: "Antibiotics act on bacteria, not viruses; viral illness should not be treated with antibiotics." },
+        { id: "pb-t-mic-q2", subject: "microbiology", stem: "Sterilization differs from disinfection in that sterilization:", options: ["Only cleans surfaces","Destroys all microorganisms including spores","Is used on skin","Uses plain water"], answer: 1, explanation: "Sterilization (e.g., autoclaving) destroys all organisms including spores; disinfection may not kill spores." },
+        { id: "pb-t-mic-q3", subject: "microbiology", stem: "Boiling instruments achieves:", options: ["Sterilization","Disinfection (not sporicidal)","Antisepsis of skin","Nothing useful"], answer: 1, explanation: "Boiling disinfects but does not reliably kill spores, so it is not true sterilization." },
+        { id: "pb-t-mic-q4", subject: "microbiology", stem: "Malaria is caused by a:", options: ["Bacterium","Virus","Protozoan parasite","Fungus"], answer: 2, explanation: "Malaria is caused by Plasmodium, a protozoan parasite spread by mosquitoes." },
+        { id: "pb-t-mic-q5", subject: "microbiology", stem: "Immunity from a vaccine is an example of:", options: ["Passive immunity","Active immunity","Innate immunity","No immunity"], answer: 1, explanation: "Vaccination produces active immunity by stimulating the body to make its own antibodies." },
+        { id: "pb-t-mic-q6", subject: "microbiology", stem: "Antibodies passed from mother to baby in breast milk give:", options: ["Active immunity","Passive immunity","Innate immunity","Permanent immunity"], answer: 1, explanation: "Maternal antibodies provide temporary passive immunity to the newborn." },
+        { id: "pb-t-mic-q7", subject: "microbiology", stem: "Tuberculosis spreads mainly by the:", options: ["Faecal–oral route","Airborne route","Vector (mosquito) route","Direct skin contact"], answer: 1, explanation: "TB spreads by airborne droplet nuclei, requiring airborne precautions." },
+        { id: "pb-t-mic-q8", subject: "microbiology", stem: "Antibiotic resistance is best prevented by:", options: ["Using antibiotics for every fever","Stopping antibiotics as soon as you feel better","Using antibiotics only when needed and completing the course","Sharing leftover antibiotics"], answer: 2, explanation: "Rational use — only when indicated, correct drug and full course — limits resistance." },
+        { id: "pb-t-mic-q9", subject: "microbiology", stem: "The body's inborn, non-specific first line of defence is:", options: ["Adaptive immunity","Innate immunity","Passive immunity","Acquired immunity"], answer: 1, explanation: "Innate immunity (skin, stomach acid, inflammation) is the inborn, non-specific first line." },
+        { id: "pb-t-mic-q10", subject: "microbiology", stem: "Cholera and typhoid are typically spread through:", options: ["Mosquito bites","Contaminated food and water","Airborne particles","Direct skin contact"], answer: 1, explanation: "Cholera and typhoid spread via contaminated food and water (the faecal–oral route)." }
       ]
     }
   ];
@@ -176,7 +374,7 @@
     { id: "pb-fn-002", subject: "fundamental-nursing", stem: "Hand hygiene is most effective when:", options: ["Performed once a shift","Performed before and after every patient contact","Only when hands appear soiled","Only between rooms"], answer: 1, explanation: "Before and after every patient encounter — also before aseptic procedures and after body fluid exposure." },
     { id: "pb-fn-003", subject: "fundamental-nursing", stem: "Therapeutic communication does NOT include:", options: ["Open-ended questions","Silence","False reassurance","Reflection"], answer: 2, explanation: "False reassurance ('Everything will be fine') is non-therapeutic." },
     { id: "pb-fn-004", subject: "fundamental-nursing", stem: "Informed consent must include:", options: ["Diagnosis only","Procedure, risks, benefits, alternatives, and right to refuse","Cost only","Insurance details"], answer: 1, explanation: "Full disclosure: nature, risks/benefits, alternatives, consequences of refusal." },
-    { id: "pb-fn-005", subject: "fundamental-nursing", stem: "Correct technique for hand washing duration:", options: ["5 seconds","20 seconds","20 seconds (CDC) or ≥40-60 s (WHO)","2 minutes"], answer: 2, explanation: "WHO: 40-60 s. CDC: ~20 s. The longer recommendation aligns with WHO surgical hand hygiene." },
+    { id: "pb-fn-005", subject: "fundamental-nursing", stem: "The WHO-recommended duration for routine handwashing with soap and water is:", options: ["5 seconds","10 seconds","40–60 seconds","5 minutes"], answer: 2, explanation: "WHO recommends 40–60 seconds for routine handwashing with soap and water (alcohol-based hand rub takes 20–30 seconds)." },
     { id: "pb-fn-006", subject: "fundamental-nursing", stem: "Documentation should be:", options: ["Written in pencil","Written in red ink","Done in chronological order, factually","Verbally only"], answer: 2, explanation: "FACCO: factual, accurate, complete, current, organized — in chronological order, permanent ink." },
     { id: "pb-fn-007", subject: "fundamental-nursing", stem: "The Joint Commission identifies the 'time-out' as critical before:", options: ["Eating","Surgery / invasive procedures","Discharge","Admission"], answer: 1, explanation: "Universal Protocol time-out before procedure: correct patient, correct site, correct procedure." },
     { id: "pb-fn-008", subject: "fundamental-nursing", stem: "Patient confidentiality permits sharing information with:", options: ["Anyone who asks","Family without consent","Members of the care team on a need-to-know basis","Social media"], answer: 2, explanation: "Need-to-know within the care team is permitted; broader disclosure requires consent (with limited legal exceptions)." },
@@ -209,7 +407,7 @@
     { id: "pb-ph-002", subject: "pharmacology", stem: "Warfarin reversal:", options: ["Vitamin K","Protamine","Calcium gluconate","Naloxone"], answer: 0, explanation: "Vitamin K." },
     { id: "pb-ph-003", subject: "pharmacology", stem: "Iron supplementation in children with anemia is best absorbed with:", options: ["Milk","Vitamin C","Calcium","Tea"], answer: 1, explanation: "Vitamin C (ascorbate) enhances non-heme iron absorption." },
     { id: "pb-ph-004", subject: "pharmacology", stem: "First-line antitubercular regimen (intensive phase):", options: ["HRZE × 2 months","HR × 6 months","Z × 9 months","RIF × 4 months"], answer: 0, explanation: "WHO standard: Isoniazid + Rifampicin + Pyrazinamide + Ethambutol (HRZE) × 2 mo intensive, then HR × 4 mo continuation." },
-    { id: "pb-ph-005", subject: "pharmacology", stem: "Side effect of isoniazid:", options: ["Optic neuritis","Peripheral neuropathy","Hepatotoxicity","All except optic neuritis"], answer: 3, explanation: "INH: peripheral neuropathy (prevented by pyridoxine) and hepatotoxicity. Optic neuritis is ethambutol." },
+    { id: "pb-ph-005", subject: "pharmacology", stem: "Peripheral neuropathy caused by isoniazid (INH) is prevented by giving:", options: ["Pyridoxine (vitamin B6)","Vitamin K","Calcium","Folic acid"], answer: 0, explanation: "Isoniazid can cause peripheral neuropathy, prevented by co-administering pyridoxine (vitamin B6); optic neuritis is an ethambutol effect." },
     /* Adult Health */
     { id: "pb-ad-001", subject: "adult-health", stem: "HbA1c target for most diabetic adults:", options: ["<5%","<6%","<7%","<8%"], answer: 2, explanation: "<7% per ADA for most non-pregnant adults." },
     { id: "pb-ad-002", subject: "adult-health", stem: "Stage 2 HTN starts at:", options: ["120/80","130/80","140/90","160/100"], answer: 2, explanation: "ACC/AHA 2017: Stage 2 ≥140/≥90." },
@@ -249,7 +447,7 @@
     /* GK */
     { id: "pb-gk-001", subject: "gk", stem: "Father of the Nation of Bangladesh:", options: ["Sher-e-Bangla","Bangabandhu Sheikh Mujibur Rahman","Maulana Bhasani","Tajuddin Ahmad"], answer: 1, explanation: "Bangabandhu Sheikh Mujibur Rahman." },
     { id: "pb-gk-002", subject: "gk", stem: "BNMC stands for:", options: ["Bangladesh Nursing & Midwifery Council","Bangladesh National Medical Council","Bangladesh Nursing & Medical College","Bangladesh Nurse Membership Council"], answer: 0, explanation: "Bangladesh Nursing & Midwifery Council." },
-    { id: "pb-gk-003", subject: "gk", stem: "First woman nursing graduate of Bangladesh (commonly cited):", options: ["Sufia Kamal","Begum Rokeya","Multiple early graduates from Mitford","Pritilata"], answer: 2, explanation: "Modern nursing education in Bangladesh dates to the colonial period via Mitford Hospital and later institutions." },
+    { id: "pb-gk-003", subject: "gk", stem: "The founder of modern nursing, known as the 'Lady with the Lamp', is:", options: ["Florence Nightingale","Clara Barton","Virginia Henderson","Mother Teresa"], answer: 0, explanation: "Florence Nightingale, the 'Lady with the Lamp', founded modern nursing during the Crimean War." },
     { id: "pb-gk-004", subject: "gk", stem: "International Midwife Day:", options: ["May 5","May 12","July 1","October 16"], answer: 0, explanation: "International Day of the Midwife: 5 May." },
     { id: "pb-gk-005", subject: "gk", stem: "Ekushey February (Language Martyrs' Day) is observed on:", options: ["21 February","26 March","16 December","17 April"], answer: 0, explanation: "21 February — recognized as International Mother Language Day by UNESCO." }
   ];
@@ -313,8 +511,23 @@
     });
   });
 
+  /* Look up each question by id and derive a "fact key" (subject + correct-answer
+     text) so a single test never repeats the same fact via two different items. */
+  const bankById = {};
+  questionBank.forEach(function (q) { bankById[q.id] = q; });
+  function factKey(id) {
+    const q = bankById[id];
+    if (!q) return id;
+    return q.subject + "|" + String(q.options[q.answer]).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+  function stemKey(id) {
+    const q = bankById[id];
+    if (!q) return id;
+    return String(q.stem).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
   /* Auto-populate Tests 03 – 20 with 30 questions each, drawn deterministically
-     from the bank with a per-test rotation so each test feels distinct. */
+     from the bank with a per-test rotation. Skips same-fact collisions. */
   function pickIdsForTest(testNum) {
     const ids = questionBank.map(function (q) { return q.id; });
     const n = ids.length;
@@ -323,16 +536,48 @@
     const step = (n % 3 === 0) ? 4 : 3;
     const picks = [];
     const seen = {};
+    const seenFact = {};
+    const seenStem = {};
     let i = offset;
     let safety = n * 6;
     while (picks.length < 30 && safety-- > 0) {
       const id = ids[i % n];
-      if (!seen[id]) { picks.push(id); seen[id] = true; }
+      const fk = factKey(id), sk = stemKey(id);
+      if (!seen[id] && !seenFact[fk] && !seenStem[sk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; seenStem[sk] = true; }
       i += step;
     }
-    // If bank smaller than 30, allow controlled reuse to fill to 30.
     let backfill = 0;
-    while (picks.length < 30) { picks.push(ids[backfill++ % n]); }
+    while (picks.length < 30 && backfill < n) {
+      const id = ids[backfill++];
+      if (!seen[id]) { picks.push(id); seen[id] = true; }
+    }
+    return picks;
+  }
+
+  /* Pick `count` questions spread evenly across the bank, skipping same-fact
+     collisions — used for the full model tests. */
+  function pickSpread(count, seed) {
+    const ids = questionBank.map(function (q) { return q.id; });
+    const n = ids.length;
+    if (n === 0) return [];
+    const step = Math.max(1, Math.floor(n / count));
+    const picks = [];
+    const seen = {};
+    const seenFact = {};
+    const seenStem = {};
+    let i = seed % n;
+    let safety = n * 10;
+    while (picks.length < count && safety-- > 0) {
+      const id = ids[i % n];
+      const fk = factKey(id), sk = stemKey(id);
+      if (!seen[id] && !seenFact[fk] && !seenStem[sk]) { picks.push(id); seen[id] = true; seenFact[fk] = true; seenStem[sk] = true; }
+      i += step + (picks.length % 2);
+    }
+    let backfill = 0;
+    while (picks.length < count && backfill < n) {
+      const id = ids[backfill++];
+      if (!seen[id]) { picks.push(id); seen[id] = true; }
+    }
     return picks;
   }
 
@@ -348,7 +593,7 @@
     });
   }
 
-  /* Tests 11 – 20 — coming soon */
+  /* Tests 11 – 20 — now live, auto-populated from the expanded bank. */
   for (let i = 11; i <= 20; i++) {
     tests.push({
       id: "pb-mt-" + String(i).padStart(2, "0"),
@@ -356,10 +601,39 @@
       type: "model",
       duration: 30,
       intendedCount: 30,
-      status: "coming-soon",
-      questionIds: []
+      status: "live",
+      questionIds: pickIdsForTest(i)
     });
   }
+
+  /* Three full model tests — 100 Q each, evenly spread across all subjects. */
+  tests.push({
+    id: "pb-fmt-01",
+    title: "Post Basic Full Model Test 01 (100 Q)",
+    type: "full-model",
+    duration: 100,
+    intendedCount: 100,
+    status: "live",
+    questionIds: pickSpread(100, 0)
+  });
+  tests.push({
+    id: "pb-fmt-02",
+    title: "Post Basic Full Model Test 02 (100 Q)",
+    type: "full-model",
+    duration: 100,
+    intendedCount: 100,
+    status: "live",
+    questionIds: pickSpread(100, 5)
+  });
+  tests.push({
+    id: "pb-fmt-03",
+    title: "Post Basic Full Model Test 03 (100 Q)",
+    type: "full-model",
+    duration: 100,
+    intendedCount: 100,
+    status: "live",
+    questionIds: pickSpread(100, 11)
+  });
 
   /* Register the topic check-in tests (questions already in bank above). */
   topics.forEach(function (t) {
