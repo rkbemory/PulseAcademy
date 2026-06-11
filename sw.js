@@ -3,7 +3,7 @@
    and never get stuck on a stale cache), cache-first for static assets, and
    network-first for the API. Bumps CACHE_NAME on every meaningful update. */
 
-const CACHE_NAME = "pulse-v2.10.0";
+const CACHE_NAME = "pulse-v2.11.0";
 const PRECACHE = [
   "./",
   "index.html",
@@ -99,7 +99,23 @@ self.addEventListener("fetch", function (event) {
     return;
   }
 
-  // Same-origin STATIC ASSETS (css/js/data/images): cache-first for speed.
+  // Same-origin CSS / JS: network-first so design and logic updates appear
+  // immediately after a deploy (cache is only a fallback when offline).
+  if (url.origin === location.origin && /\.(css|js)$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(event.request).then(function (response) {
+        if (response && response.status === 200 && response.type === "basic") {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(function (cache) { cache.put(event.request, copy); });
+        }
+        return response;
+      }).catch(function () { return caches.match(event.request); })
+    );
+    return;
+  }
+
+  // Other same-origin assets (images, fonts, icons): cache-first for speed
+  // — these rarely change, so serving them from cache is safe and fast.
   if (url.origin === location.origin) {
     event.respondWith(
       caches.match(event.request).then(function (cached) {
