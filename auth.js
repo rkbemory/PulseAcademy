@@ -134,39 +134,60 @@
       '<div class="pulse-auth-backdrop"></div>' +
       '<div class="pulse-auth-card" role="dialog" aria-modal="true" aria-label="Sign in">' +
         '<button class="pulse-auth-close" type="button" aria-label="Close">&times;</button>' +
-        '<div class="pulse-auth-head">' +
-          '<div class="pulse-auth-logo">Pulse</div>' +
-          '<h3 class="pulse-auth-title">Save your progress</h3>' +
-          '<p class="pulse-auth-sub">Free account — your scores follow you across devices. Practice stays free.</p>' +
+        '<div class="pulse-auth-banner">' +
+          '<img class="pulse-auth-brand-logo" src="Photo & Logo/Pulse For Nurses Logo.png" alt="">' +
+          '<div class="pulse-auth-brand-name">Pulse <span>for Nurses</span></div>' +
+          '<div class="pulse-auth-brand-tag">For Nurses, By Nurses</div>' +
         '</div>' +
-        '<button class="pulse-auth-google" type="button">' +
-          '<span class="pulse-auth-g">G</span> Continue with Google</button>' +
-        '<div class="pulse-auth-or"><span>or</span></div>' +
-        '<form class="pulse-auth-form">' +
-          '<input class="pulse-auth-input" type="email" name="email" placeholder="Email" autocomplete="email" required>' +
-          '<input class="pulse-auth-input" type="password" name="password" placeholder="Password (min 6 characters)" autocomplete="current-password" minlength="6" required>' +
-          '<div class="pulse-auth-msg" hidden></div>' +
-          '<button class="pulse-auth-submit" type="submit">Sign in</button>' +
-        '</form>' +
-        '<div class="pulse-auth-links">' +
-          '<button class="pulse-auth-toggle" type="button">New here? Create an account</button>' +
-          '<button class="pulse-auth-forgot" type="button">Forgot password?</button>' +
+        '<div class="pulse-auth-body">' +
+          '<h3 class="pulse-auth-title">Welcome back</h3>' +
+          '<p class="pulse-auth-sub">Sign in to save your progress across devices. Practice always stays free.</p>' +
+          '<button class="pulse-auth-google" type="button">' +
+            '<span class="pulse-auth-g">G</span> Continue with Google</button>' +
+          '<div class="pulse-auth-or"><span>or use your email</span></div>' +
+          '<form class="pulse-auth-form">' +
+            '<input class="pulse-auth-input" type="email" name="email" placeholder="Email address" autocomplete="email" required>' +
+            '<input class="pulse-auth-input" type="password" name="password" placeholder="Password (min 6 characters)" autocomplete="current-password" minlength="6" required>' +
+            '<input class="pulse-auth-input pulse-auth-confirm" type="password" name="password2" placeholder="Re-enter password to confirm" autocomplete="new-password" minlength="6" hidden>' +
+            '<button class="pulse-auth-forgot" type="button">Forgot password?</button>' +
+            '<div class="pulse-auth-msg" hidden></div>' +
+            '<button class="pulse-auth-submit" type="submit">Sign in</button>' +
+          '</form>' +
+          '<div class="pulse-auth-switch">' +
+            '<span class="pulse-auth-switch-text">New to Pulse for Nurses?</span>' +
+            '<button class="pulse-auth-toggle" type="button">Create a free account</button>' +
+          '</div>' +
         '</div>' +
       '</div>';
     document.body.appendChild(modal);
 
     var mode = "signin";
+    var card = modal.querySelector(".pulse-auth-card");
     var form = modal.querySelector(".pulse-auth-form");
     var msg = modal.querySelector(".pulse-auth-msg");
     var submit = modal.querySelector(".pulse-auth-submit");
     var title = modal.querySelector(".pulse-auth-title");
+    var sub = modal.querySelector(".pulse-auth-sub");
     var toggle = modal.querySelector(".pulse-auth-toggle");
+    var confirmInput = modal.querySelector(".pulse-auth-confirm");
+    var forgotBtn = modal.querySelector(".pulse-auth-forgot");
+    var switchText = modal.querySelector(".pulse-auth-switch-text");
 
     function setMode(m) {
       mode = m;
-      submit.textContent = m === "signup" ? "Create account" : "Sign in";
-      toggle.textContent = m === "signup" ? "Already have an account? Sign in" : "New here? Create an account";
-      title.textContent = m === "signup" ? "Create your free account" : "Welcome back";
+      var signup = m === "signup";
+      card.classList.toggle("is-signup", signup);
+      submit.textContent = signup ? "Create my free account" : "Sign in";
+      title.textContent = signup ? "Create your free account" : "Welcome back";
+      sub.textContent = signup
+        ? "Free forever — your scores and progress follow you across devices."
+        : "Sign in to save your progress across devices. Practice always stays free.";
+      toggle.textContent = signup ? "Sign in instead" : "Create a free account";
+      switchText.textContent = signup ? "Already have an account?" : "New to Pulse for Nurses?";
+      confirmInput.hidden = !signup;
+      confirmInput.required = signup;
+      forgotBtn.style.display = signup ? "none" : "block";
+      form.password.setAttribute("autocomplete", signup ? "new-password" : "current-password");
       showMsg("");
     }
     function showMsg(text, ok) {
@@ -200,6 +221,10 @@
       e.preventDefault();
       var email = form.email.value.trim();
       var password = form.password.value;
+      if (mode === "signup" && password !== form.password2.value) {
+        showMsg("The two passwords don't match — please re-enter them.");
+        return;
+      }
       submit.disabled = true; submit.textContent = "…";
       var p = mode === "signup"
         ? supa.auth.signUp({ email: email, password: password })
