@@ -4155,3 +4155,46 @@ section.block .section-title::after,
 
 /* Respect the hidden attribute on the forgot link (overrides display:block) */
 .pulse-auth-forgot[hidden] { display: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   NAV — program links as solid colored pills (like the CTA button)
+   Each program in its own brand colour. Desktop only (mobile uses drawer).
+   ════════════════════════════════════════════════════════════════ */
+.top-nav-links a[href="msn.html"],
+.top-nav-links a[href="post-basic.html"],
+.top-nav-links a[href="rn.html"],
+.top-nav-links a[href="nclex.html"],
+.top-nav-links a[href="books.html"] {
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(20,58,75,0.14);
+  transition: transform .16s, box-shadow .2s, filter .2s;
+}
+.top-nav-links a[href="msn.html"]:hover,
+.top-nav-links a[href="post-basic.html"]:hover,
+.top-nav-links a[href="rn.html"]:hover,
+.top-nav-links a[href="nclex.html"]:hover,
+.top-nav-links a[href="books.html"]:hover {
+  color: #fff;
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+  box-shadow: 0 6px 16px rgba(20,58,75,0.22);
+}
+/* Per-program brand colours */
+.top-nav-links a[href="msn.html"]        { background: linear-gradient(135deg,#1E3A8A,#2B4FA8); }
+.top-nav-links a[href="post-basic.html"] { background: linear-gradient(135deg,#1E5F9C,#3F8FD0); }
+.top-nav-links a[href="rn.html"]         { background: linear-gradient(135deg,#16A34A,#34C56A); }
+.top-nav-links a[href="nclex.html"]      { background: linear-gradient(135deg,#6C5FD0,#8A7DE6); }
+.top-nav-links a[href="books.html"]      { background: linear-gradient(135deg,#A47B36,#C99A50); }
+/* Active program pill: keep its colour, add a ring instead of the tint default */
+.top-nav-links a[href="msn.html"].is-active,
+.top-nav-links a[href="post-basic.html"].is-active,
+.top-nav-links a[href="rn.html"].is-active,
+.top-nav-links a[href="nclex.html"].is-active,
+.top-nav-links a[href="books.html"].is-active {
+  color: #fff;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px currentColor;
+}
+.top-nav-links { gap: 8px; }
