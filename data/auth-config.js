@@ -7,8 +7,8 @@
    the site behaves exactly as it does today (progress saved locally in the browser).
    Everything remains FREE — accounts only let users save progress across devices. */
 window.PulseAuthConfig = {
-  supabaseUrl:     "REPLACE_WITH_YOUR_SUPABASE_URL",
-  supabaseAnonKey: "REPLACE_WITH_YOUR_SUPABASE_ANON_KEY",
+  supabaseUrl:     "https://kggkdxfszgougikcjhzn.supabase.co",
+  supabaseAnonKey: "sb_publishable_3ktqBX14e6B4Pi70vZxWEw_564oRbMf",
 
   /* Soft prompt: after a visitor finishes this many quizzes anonymously,
      show a one-time, dismissible banner inviting them to save their progress. */
