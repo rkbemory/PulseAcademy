@@ -4407,3 +4407,39 @@ section.block .section-title::after,
   font-size: 0.68rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
 }
 .jobs-empty-slim { margin-top: 12px; padding: 18px 22px; font-size: 0.88rem; }
+
+/* ════════════════════════════════════════════════════════════════
+   JOBS v3 — excel-style listings table
+   ════════════════════════════════════════════════════════════════ */
+.job-table-wrap {
+  border: 1px solid var(--line-cool); border-radius: var(--radius-md);
+  background: var(--surface); box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+.job-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 640px; }
+.job-table thead th {
+  text-align: left; font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  color: #fff; background: var(--primary);
+  padding: 11px 14px; white-space: nowrap;
+}
+.job-table tbody td {
+  padding: 12px 14px; border-top: 1px solid var(--line-cool);
+  vertical-align: top; color: var(--text);
+}
+.job-table tbody tr:nth-child(even) { background: var(--bg-cool); }
+.job-table tbody tr:hover { background: var(--primary-tint); }
+.jt-sl { width: 44px; text-align: center; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.jt-post a { font-weight: 600; color: var(--primary); }
+.jt-post a:hover { text-decoration: underline; }
+.jt-org { white-space: nowrap; color: var(--lead-ink); }
+.jt-date { white-space: nowrap; color: var(--lead-ink); font-variant-numeric: tabular-nums; }
+.jt-link { text-align: right; }
+.jt-apply {
+  display: inline-block; font-weight: 700; font-size: 0.8rem; color: #fff;
+  background: var(--primary); padding: 6px 13px; border-radius: 999px;
+  white-space: nowrap;
+}
+.jt-apply:hover { background: var(--primary-deep); color: #fff; }
+tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
+.jobs-count { color: var(--primary); font-size: 1rem; }

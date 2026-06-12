@@ -43,55 +43,36 @@
     return true;
   }
 
-  // Bdjobs has no public feed (JS-only site), so it lives as a permanent
-  // pinned row: one tap opens their always-current "nurse" search.
-  var BDJOBS_ROW =
-    '<a class="job-row job-row-pinned" href="https://bdjobs.com/h/jobs?qOT=&txtsearch=nurse&lang=en" target="_blank" rel="noopener">' +
-      '<span class="job-row-main">' +
-        '<span class="job-row-title">All current “nurse” vacancies on Bdjobs</span>' +
-        '<span class="job-row-org">Bdjobs — largest job portal in Bangladesh · <em>hospital &amp; clinic posts land here first</em></span>' +
-      '</span>' +
-      '<span class="job-row-side">' +
-        '<span class="job-badge job-badge-live">🔴 Live search</span>' +
-        '<span class="job-row-apply">Open →</span>' +
-      '</span>' +
-    '</a>';
-
   function render() {
     var visible = allJobs.filter(matches);
-    if (!allJobs.length) {
-      grid.innerHTML = '<div class="job-list">' + BDJOBS_ROW + "</div>" +
-        '<div class="jobs-empty jobs-empty-slim">' +
-          '<p>No feed listings right now — new icddr,b / UNICEF / NGO openings appear here automatically.</p>' +
-        '</div>';
+    if (!allJobs.length || !visible.length) {
+      grid.innerHTML =
+        '<div class="jobs-empty jobs-empty-slim"><p>' +
+        (!allJobs.length
+          ? "No feed listings right now — new icddr,b / UNICEF / NGO openings appear here automatically. The job sites below always have the latest posts."
+          : "<strong>No listings match your search.</strong> Try clearing the search or choosing “All”.") +
+        "</p></div>";
       return;
     }
-    if (!visible.length) {
-      grid.innerHTML = '<div class="job-list">' + BDJOBS_ROW + "</div>" +
-        '<div class="jobs-empty jobs-empty-slim">' +
-        '<p><strong>No listings match your search.</strong> Try clearing the search or choosing “All”.</p></div>';
-      return;
-    }
-    grid.innerHTML = '<div class="job-list">' + BDJOBS_ROW + visible.map(function (j) {
+    var rows = visible.map(function (j, i) {
       var dl = daysUntil(j.deadline);
-      var badge = "";
-      if (dl !== null && dl <= 7 && dl >= 0) badge = '<span class="job-badge job-badge-soon">⏳ Closing soon</span>';
-      var deadlineTxt = j.deadline
-        ? '<span class="job-row-deadline">📅 Apply by ' + esc(fmtDate(j.deadline)) + "</span>"
-        : '<span class="job-row-deadline job-row-open">Open until filled</span>';
+      var soon = dl !== null && dl <= 7 && dl >= 0;
       return (
-        '<a class="job-row" href="' + esc(j.url) + '" target="_blank" rel="noopener">' +
-          '<span class="job-row-main">' +
-            '<span class="job-row-title">' + esc(j.title) + "</span>" +
-            '<span class="job-row-org">' + esc(j.org) + ' · <em>via ' + esc(j.source) + "</em></span>" +
-          "</span>" +
-          '<span class="job-row-side">' +
-            badge + deadlineTxt +
-            '<span class="job-row-apply">Apply →</span>' +
-          "</span>" +
-        "</a>"
+        "<tr" + (soon ? ' class="jt-soon"' : "") + ">" +
+          '<td class="jt-sl">' + (i + 1) + "</td>" +
+          '<td class="jt-post"><a href="' + esc(j.url) + '" target="_blank" rel="noopener">' + esc(j.title) + "</a></td>" +
+          '<td class="jt-org">' + esc(j.org) + "</td>" +
+          '<td class="jt-date">' + (j.posted ? esc(fmtDate(j.posted)) : "—") + "</td>" +
+          '<td class="jt-date">' + (j.deadline ? esc(fmtDate(j.deadline)) + (soon ? ' <span class="job-badge job-badge-soon">⏳</span>' : "") : "Open") + "</td>" +
+          '<td class="jt-link"><a class="jt-apply" href="' + esc(j.url) + '" target="_blank" rel="noopener">View →</a></td>' +
+        "</tr>"
       );
-    }).join("") + "</div>";
+    }).join("");
+    grid.innerHTML =
+      '<div class="job-table-wrap"><table class="job-table">' +
+        "<thead><tr>" +
+          '<th class="jt-sl">SL</th><th>Post Name</th><th>Organization</th><th>Post Date</th><th>Deadline</th><th class="jt-link">Link</th>' +
+        "</tr></thead><tbody>" + rows + "</tbody></table></div>";
   }
 
   function setStatus(data) {
@@ -103,11 +84,11 @@
         when.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
       : "";
     if (allJobs.length) {
-      statusEl.textContent = allJobs.length + " live listing" + (allJobs.length === 1 ? "" : "s") +
-        (okSources.length ? " from " + okSources.map(function (s) { return s.label; }).join(" & ") : "") +
+      statusEl.innerHTML = '<strong class="jobs-count">' + allJobs.length + " post" + (allJobs.length === 1 ? "" : "s") + " available today</strong>" +
+        (okSources.length ? " · from " + okSources.map(function (s) { return s.label; }).join(" & ") : "") +
         (whenTxt ? " · updated " + whenTxt : "") + (data.stale ? " (cached)" : "");
     } else {
-      statusEl.textContent = "Live feeds are quiet right now — they refresh automatically.";
+      statusEl.textContent = "0 posts in the feeds right now — they refresh automatically. The job sites below always have the latest.";
     }
   }
 

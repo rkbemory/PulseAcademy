@@ -16,7 +16,7 @@
      function still works (fetches live on every call).
 */
 
-const CACHE_KEY = "jobs:v2"; // bump when the data shape changes so stale blobs are ignored
+const CACHE_KEY = "jobs:v3"; // bump when the data shape changes so stale blobs are ignored
 const CACHE_HOURS = 6;
 
 const headers = {
@@ -90,13 +90,18 @@ async function fetchIcddrb() {
   // Row shape (href is unquoted in their markup):
   //   <a href=https://career.icddrb.org/vacancy-preview/32235>Title…</a><br />Posted on: June 11,  2026
   //   </td><td>Fixed Term</td><td>June 22,  2026</td>
-  const re = /<a\s+href=["']?(https:\/\/career\.icddrb\.org\/vacancy-preview\/\d+)["']?\s*>([^<]+)<\/a>[\s\S]*?<\/td>\s*<td>([^<]*)<\/td>\s*<td>([^<]*)<\/td>/g;
+  const re = /<a\s+href=["']?(https:\/\/career\.icddrb\.org\/vacancy-preview\/\d+)["']?\s*>([^<]+)<\/a>\s*(?:<br\s*\/?>\s*Posted on:\s*([^<]*))?[\s\S]*?<\/td>\s*<td>([^<]*)<\/td>\s*<td>([^<]*)<\/td>/g;
   let m;
   while ((m = re.exec(html)) !== null) {
     const title = m[2].replace(/\s+/g, " ").trim().replace(/\.$/, "");
     if (!looksHealthRelated(title)) continue; // nurse-relevant roles only
+    let posted = null;
+    if (m[3]) {
+      const p = Date.parse(m[3].replace(/\s+/g, " ").trim());
+      if (!isNaN(p)) posted = new Date(p).toISOString().slice(0, 10);
+    }
     let deadline = null;
-    const parsed = Date.parse(m[4].replace(/\s+/g, " ").trim());
+    const parsed = Date.parse(m[5].replace(/\s+/g, " ").trim());
     if (!isNaN(parsed)) deadline = new Date(parsed).toISOString().slice(0, 10);
     jobs.push({
       id: "icddrb-" + (m[1].match(/(\d+)$/) || [0, m[1]])[1],
@@ -104,6 +109,7 @@ async function fetchIcddrb() {
       org: "icddr,b",
       orgType: "ngo",
       location: "Bangladesh",
+      posted: posted,
       deadline: deadline,
       url: m[1],
       source: "icddr,b Careers",
