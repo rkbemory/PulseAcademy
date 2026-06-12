@@ -4484,3 +4484,9 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
   .app-icon { width: 46px; height: 46px; font-size: 1.05rem; border-radius: 13px; }
   .app-name { font-size: 0.84rem; }
 }
+
+/* 2x5 fixed grid for the 10 job-site tiles */
+.app-grid-10 { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 920px) { .app-grid-10 { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 720px) { .app-grid-10 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .app-grid-10 { grid-template-columns: repeat(2, 1fr); } }

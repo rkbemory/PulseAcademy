@@ -42,55 +42,51 @@
     <div class="jobs-hero-inner">
       <div class="section-eyebrow eyebrow-on-dark">⬡ Nursing Jobs</div>
       <h1>Find your next nursing job.</h1>
-      <p class="jobs-hero-lead">Live openings update automatically, and every trusted source — government, hospitals, NGOs — is one tap away. Each listing links to the original posting, where you apply directly.</p>
+      <p class="jobs-hero-lead">Every trusted nursing-job source in Bangladesh and beyond, in one place. Tap any site to see its current openings — pre-filtered to nursing — and apply directly.</p>
     </div>
   </section>
 
-  <!-- ===== Live listings ===== -->
-  <section class="block" id="live">
-    <div class="section-eyebrow">⬡ Live Openings</div>
-    <h2 class="section-title">Current listings, updated automatically.</h2>
-    <p class="section-lead">Pulled from official career pages and filtered to nursing &amp; health roles — currently icddr,b, UNICEF and other NGO/international employers in Bangladesh. Government and hospital posts don't publish feeds — use the trusted sources below to search them live.</p>
-
-    <div class="jobs-toolbar" role="search">
-      <input id="jobs-search" class="jobs-search" type="search" placeholder="Search title or organization…" aria-label="Search live job listings">
-      <div class="jobs-chiprow" id="jobs-chips" role="group" aria-label="Filter by level">
-        <button class="jobs-chip is-on" data-qual="all-jobs" type="button">All</button>
-        <button class="jobs-chip" data-qual="rn" type="button">Staff Nurse / RN</button>
-        <button class="jobs-chip" data-qual="midwifery" type="button">Midwifery</button>
-      </div>
-    </div>
-
-    <p class="jobs-status" id="jobs-status" aria-live="polite">Loading live listings…</p>
-    <div class="job-grid" id="jobs-grid">
-      <div class="job-card job-skel" aria-hidden="true"></div>
-      <div class="job-card job-skel" aria-hidden="true"></div>
-      <div class="job-card job-skel" aria-hidden="true"></div>
-    </div>
-    <p class="jobs-disclaimer">All listings belong to their respective organizations. Pulse shows only basic facts (title, organization, deadline) and always sends you to the original posting to apply. We are not affiliated with any employer and never charge for job information.</p>
-  </section>
-
-  <!-- ===== Trusted sources hub ===== -->
-  <section class="block block-tint" id="sources">
-    <div class="section-eyebrow">⬡ Trusted Sources</div>
+  <!-- ===== Job-site tiles (the page's main content) ===== -->
+  <section class="block" id="sources">
+    <div class="section-eyebrow">⬡ Job Sites</div>
     <h2 class="section-title">Tap a site to search nurse jobs.</h2>
     <p class="section-lead">Each link opens that site's own listings, pre-filtered to nursing openings — always current, straight from the source.</p>
 
-    <div class="app-grid">
+    <div class="app-grid app-grid-10">
       <a class="app-tile" style="--tile:#1A8754" href="https://bdjobs.com/h/jobs?qOT=&amp;txtsearch=nurse&amp;lang=en" target="_blank" rel="noopener">
         <span class="app-icon">bd</span>
         <span class="app-name">Bdjobs</span>
         <span class="app-sub">Nurse jobs →</span>
+      </a>
+      <a class="app-tile" style="--tile:#3F51B5" href="https://www.niyog.co/jobs?search=nurse" target="_blank" rel="noopener">
+        <span class="app-icon">Ni</span>
+        <span class="app-name">Niyog</span>
+        <span class="app-sub">Nurse jobs →</span>
+      </a>
+      <a class="app-tile" style="--tile:#16A34A" href="https://alljobs.teletalk.com.bd/jobs?keyword=nurse&amp;orgid=1" target="_blank" rel="noopener">
+        <span class="app-icon">AJ</span>
+        <span class="app-name">Alljobs Teletalk</span>
+        <span class="app-sub">Nurse circulars →</span>
+      </a>
+      <a class="app-tile" style="--tile:#B4541E" href="https://career.icddrb.org/" target="_blank" rel="noopener">
+        <span class="app-icon">ic</span>
+        <span class="app-name">icddr,b</span>
+        <span class="app-sub">Clinical roles →</span>
       </a>
       <a class="app-tile" style="--tile:#1E5168" href="http://bpsc.teletalk.com.bd/" target="_blank" rel="noopener">
         <span class="app-icon">🏛️</span>
         <span class="app-name">BPSC</span>
         <span class="app-sub">Govt nurse posts →</span>
       </a>
-      <a class="app-tile" style="--tile:#16A34A" href="https://alljobs.teletalk.com.bd/jobs?keyword=nurse&amp;orgid=1" target="_blank" rel="noopener">
-        <span class="app-icon">AJ</span>
-        <span class="app-name">Alljobs Teletalk</span>
-        <span class="app-sub">Nurse circulars →</span>
+      <a class="app-tile" style="--tile:#2E9E72" href="https://app.shomvob.co/all-jobs?search=nurse" target="_blank" rel="noopener">
+        <span class="app-icon">Sh</span>
+        <span class="app-name">Shomvob</span>
+        <span class="app-sub">Nurse jobs →</span>
+      </a>
+      <a class="app-tile" style="--tile:#C99A50" href="https://reliefweb.int/jobs?advanced-search=%28C31%29&amp;search=nurse" target="_blank" rel="noopener">
+        <span class="app-icon">🌍</span>
+        <span class="app-name">ReliefWeb</span>
+        <span class="app-sub">UN &amp; NGO jobs →</span>
       </a>
       <a class="app-tile" style="--tile:#6C5FD0" href="https://www.evercarebd.com/en/dhaka/careers?department=medical" target="_blank" rel="noopener">
         <span class="app-icon">Ev</span>
@@ -102,24 +98,9 @@
         <span class="app-name">Square Hospital</span>
         <span class="app-sub">Hospital jobs →</span>
       </a>
-      <a class="app-tile" style="--tile:#B4541E" href="https://career.icddrb.org/" target="_blank" rel="noopener">
-        <span class="app-icon">ic</span>
-        <span class="app-name">icddr,b</span>
-        <span class="app-sub">Clinical roles →</span>
-      </a>
-      <a class="app-tile" style="--tile:#C99A50" href="https://reliefweb.int/jobs?search=nurse+bangladesh" target="_blank" rel="noopener">
-        <span class="app-icon">🌍</span>
-        <span class="app-name">ReliefWeb</span>
-        <span class="app-sub">UN &amp; NGO jobs →</span>
-      </a>
-      <a class="app-tile" style="--tile:#2E9E72" href="https://app.shomvob.co/all-jobs?search=nurse" target="_blank" rel="noopener">
-        <span class="app-icon">Sh</span>
-        <span class="app-name">Shomvob</span>
-        <span class="app-sub">Nurse jobs →</span>
-      </a>
-      <a class="app-tile" style="--tile:#3F51B5" href="https://www.niyog.co/jobs?search=nurse" target="_blank" rel="noopener">
-        <span class="app-icon">Ni</span>
-        <span class="app-name">Niyog</span>
+      <a class="app-tile" style="--tile:#009EDB" href="https://careers.un.org/jobopening?language=en&amp;data=%257B%2522keyword%2522:%2522Nurse%2522%257D" target="_blank" rel="noopener">
+        <span class="app-icon">UN</span>
+        <span class="app-name">UN Careers</span>
         <span class="app-sub">Nurse jobs →</span>
       </a>
     </div>
@@ -151,6 +132,5 @@
 <script src="data/auth-config.js"></script>
 <script src="auth.js"></script>
 <script src="scripts.js"></script>
-<script src="jobs.js"></script>
 </body>
 </html>
