@@ -43,24 +43,36 @@
     return true;
   }
 
+  // Bdjobs has no public feed (JS-only site), so it lives as a permanent
+  // pinned row: one tap opens their always-current "nurse" search.
+  var BDJOBS_ROW =
+    '<a class="job-row job-row-pinned" href="https://bdjobs.com/h/jobs?qOT=&txtsearch=nurse&lang=en" target="_blank" rel="noopener">' +
+      '<span class="job-row-main">' +
+        '<span class="job-row-title">All current “nurse” vacancies on Bdjobs</span>' +
+        '<span class="job-row-org">Bdjobs — largest job portal in Bangladesh · <em>hospital &amp; clinic posts land here first</em></span>' +
+      '</span>' +
+      '<span class="job-row-side">' +
+        '<span class="job-badge job-badge-live">🔴 Live search</span>' +
+        '<span class="job-row-apply">Open →</span>' +
+      '</span>' +
+    '</a>';
+
   function render() {
     var visible = allJobs.filter(matches);
     if (!allJobs.length) {
-      grid.innerHTML =
-        '<div class="jobs-empty">' +
-          '<span aria-hidden="true">🗂️</span>' +
-          '<p><strong>No live feed listings right now.</strong><br>' +
-          'New openings appear here automatically. Meanwhile, the trusted sources below always have the latest posts — especially Bdjobs and the government portals.</p>' +
+      grid.innerHTML = '<div class="job-list">' + BDJOBS_ROW + "</div>" +
+        '<div class="jobs-empty jobs-empty-slim">' +
+          '<p>No feed listings right now — new icddr,b / UNICEF / NGO openings appear here automatically.</p>' +
         '</div>';
       return;
     }
     if (!visible.length) {
-      grid.innerHTML =
-        '<div class="jobs-empty"><span aria-hidden="true">🔍</span>' +
-        '<p><strong>No listings match your search.</strong><br>Try clearing the search or choosing “All”.</p></div>';
+      grid.innerHTML = '<div class="job-list">' + BDJOBS_ROW + "</div>" +
+        '<div class="jobs-empty jobs-empty-slim">' +
+        '<p><strong>No listings match your search.</strong> Try clearing the search or choosing “All”.</p></div>';
       return;
     }
-    grid.innerHTML = '<div class="job-list">' + visible.map(function (j) {
+    grid.innerHTML = '<div class="job-list">' + BDJOBS_ROW + visible.map(function (j) {
       var dl = daysUntil(j.deadline);
       var badge = "";
       if (dl !== null && dl <= 7 && dl >= 0) badge = '<span class="job-badge job-badge-soon">⏳ Closing soon</span>';

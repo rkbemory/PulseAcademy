@@ -4394,3 +4394,16 @@ section.block .section-title::after,
   .src-row-name { min-width: 0; flex: 1 1 100%; }
   .src-row-hint { flex: 1 1 auto; }
 }
+
+/* Pinned Bdjobs live-search row inside the jobs list */
+.job-row-pinned {
+  background: linear-gradient(90deg, rgba(217,162,74,0.10), rgba(217,162,74,0.02));
+  border-left: 4px solid var(--accent);
+}
+.job-row-pinned:hover { background: linear-gradient(90deg, rgba(217,162,74,0.16), rgba(217,162,74,0.05)); }
+.job-badge-live {
+  background: rgba(22,163,74,0.10); color: #15803D;
+  border: 1px solid rgba(22,163,74,0.35);
+  font-size: 0.68rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+}
+.jobs-empty-slim { margin-top: 12px; padding: 18px 22px; font-size: 0.88rem; }
