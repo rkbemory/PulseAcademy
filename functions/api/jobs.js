@@ -39,7 +39,11 @@ function classify(title) {
 }
 
 function looksHealthRelated(title) {
-  return /nurs|midwif|health|medical|clinic|hospital|paramedic|vaccin|immuni[sz]|maternal|community/i.test(title || "");
+  return /nurs|midwif|health|medical|clinic|hospital|paramedic|vaccin|immuni[sz]|maternal|community|infect|disease|nutrition|epidemi|laborat|technologist|biomedical|pharma|physician|surg/i.test(title || "");
+}
+
+function looksNursing(title) {
+  return /nurs|midwif/i.test(title || "");
 }
 
 /* ---------- source: UNICEF Bangladesh (PageUp, server-rendered) ---------- */
@@ -58,6 +62,7 @@ async function fetchUnicef() {
     if (seen.has(url)) continue;
     seen.add(url);
     const title = m[2].replace(/\s+/g, " ").trim();
+    if (!looksHealthRelated(title)) continue; // nurse-relevant roles only
     jobs.push({
       id: "unicef-" + (m[1].match(/job\/(\d+)/) || [0, url])[1],
       title: title,
@@ -67,6 +72,42 @@ async function fetchUnicef() {
       deadline: null,
       url: url,
       source: "UNICEF Careers",
+      nursing: looksNursing(title),
+      qual: classify(title)
+    });
+  }
+  return jobs;
+}
+
+/* ---------- source: icddr,b (server-rendered "Current opportunities" table) ---------- */
+async function fetchIcddrb() {
+  const res = await fetch("https://career.icddrb.org/", {
+    headers: { "User-Agent": "Mozilla/5.0 (compatible; PulseForNurses/1.0; +https://pulsefornurses.com)" }
+  });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const html = await res.text();
+  const jobs = [];
+  // Row shape (href is unquoted in their markup):
+  //   <a href=https://career.icddrb.org/vacancy-preview/32235>Title…</a><br />Posted on: June 11,  2026
+  //   </td><td>Fixed Term</td><td>June 22,  2026</td>
+  const re = /<a\s+href=["']?(https:\/\/career\.icddrb\.org\/vacancy-preview\/\d+)["']?\s*>([^<]+)<\/a>[\s\S]*?<\/td>\s*<td>([^<]*)<\/td>\s*<td>([^<]*)<\/td>/g;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const title = m[2].replace(/\s+/g, " ").trim().replace(/\.$/, "");
+    if (!looksHealthRelated(title)) continue; // nurse-relevant roles only
+    let deadline = null;
+    const parsed = Date.parse(m[4].replace(/\s+/g, " ").trim());
+    if (!isNaN(parsed)) deadline = new Date(parsed).toISOString().slice(0, 10);
+    jobs.push({
+      id: "icddrb-" + (m[1].match(/(\d+)$/) || [0, m[1]])[1],
+      title: title,
+      org: "icddr,b",
+      orgType: "ngo",
+      location: "Bangladesh",
+      deadline: deadline,
+      url: m[1],
+      source: "icddr,b Careers",
+      nursing: looksNursing(title),
       qual: classify(title)
     });
   }
@@ -110,6 +151,7 @@ async function fetchReliefWeb() {
         deadline: (f.date && f.date.closing) || null,
         url: f.url_alias ? "https://reliefweb.int" + (f.url_alias.startsWith("/") ? f.url_alias : "/" + f.url_alias) : "https://reliefweb.int/jobs?search=nurse",
         source: "ReliefWeb",
+        nursing: looksNursing(f.title),
         qual: classify(f.title)
       };
     });
@@ -118,6 +160,7 @@ async function fetchReliefWeb() {
 /* ---------- orchestration ---------- */
 async function refreshAll() {
   const sources = [
+    { id: "icddrb", label: "icddr,b Careers", fn: fetchIcddrb },
     { id: "unicef", label: "UNICEF Careers", fn: fetchUnicef },
     { id: "reliefweb", label: "ReliefWeb", fn: fetchReliefWeb }
   ];

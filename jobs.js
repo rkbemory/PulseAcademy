@@ -60,28 +60,26 @@
         '<p><strong>No listings match your search.</strong><br>Try clearing the search or choosing “All”.</p></div>';
       return;
     }
-    grid.innerHTML = visible.map(function (j) {
+    grid.innerHTML = '<div class="job-list">' + visible.map(function (j) {
       var dl = daysUntil(j.deadline);
       var badge = "";
       if (dl !== null && dl <= 7 && dl >= 0) badge = '<span class="job-badge job-badge-soon">⏳ Closing soon</span>';
-      var deadlineLine = j.deadline
-        ? '<span class="job-meta-item">📅 Apply by ' + esc(fmtDate(j.deadline)) + "</span>"
-        : "";
+      var deadlineTxt = j.deadline
+        ? '<span class="job-row-deadline">📅 Apply by ' + esc(fmtDate(j.deadline)) + "</span>"
+        : '<span class="job-row-deadline job-row-open">Open until filled</span>';
       return (
-        '<article class="job-card">' +
-          '<div class="job-card-top">' +
-            '<span class="job-org">' + esc(j.org) + "</span>" + badge +
-          "</div>" +
-          '<h3 class="job-title">' + esc(j.title) + "</h3>" +
-          '<div class="job-meta">' +
-            '<span class="job-meta-item">📍 ' + esc(j.location || "Bangladesh") + "</span>" +
-            deadlineLine +
-            '<span class="job-meta-item job-via">via ' + esc(j.source) + "</span>" +
-          "</div>" +
-          '<a class="btn btn-primary job-apply" href="' + esc(j.url) + '" target="_blank" rel="noopener">View &amp; apply at source →</a>' +
-        "</article>"
+        '<a class="job-row" href="' + esc(j.url) + '" target="_blank" rel="noopener">' +
+          '<span class="job-row-main">' +
+            '<span class="job-row-title">' + esc(j.title) + "</span>" +
+            '<span class="job-row-org">' + esc(j.org) + ' · <em>via ' + esc(j.source) + "</em></span>" +
+          "</span>" +
+          '<span class="job-row-side">' +
+            badge + deadlineTxt +
+            '<span class="job-row-apply">Apply →</span>' +
+          "</span>" +
+        "</a>"
       );
-    }).join("");
+    }).join("") + "</div>";
   }
 
   function setStatus(data) {
@@ -106,8 +104,9 @@
     .then(function (data) {
       if (!data) throw new Error("bad response");
       allJobs = (data.jobs || []).slice();
-      // newest deadline-less last, soonest deadline first
+      // nursing/midwifery roles first, then soonest deadline (no-deadline last)
       allJobs.sort(function (a, b) {
+        if (!!b.nursing - !!a.nursing) return (!!b.nursing) - (!!a.nursing);
         var da = a.deadline ? Date.parse(a.deadline) : Infinity;
         var db = b.deadline ? Date.parse(b.deadline) : Infinity;
         return da - db;
