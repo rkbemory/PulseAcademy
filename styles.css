@@ -4443,3 +4443,44 @@ section.block .section-title::after,
 .jt-apply:hover { background: var(--primary-deep); color: #fff; }
 tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 .jobs-count { color: var(--primary); font-size: 1rem; }
+
+/* ════════════════════════════════════════════════════════════════
+   JOBS — app-style source tiles (tap a site → its nurse search)
+   ════════════════════════════════════════════════════════════════ */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+}
+.app-tile {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 8px; padding: 20px 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line-cool);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform .16s, box-shadow .2s, border-color .2s;
+}
+.app-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--tile, var(--accent));
+}
+.app-icon {
+  width: 54px; height: 54px; border-radius: 15px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--tile, var(--primary));
+  color: #fff; font-weight: 800; font-size: 1.25rem;
+  font-family: 'Inter', sans-serif; letter-spacing: -0.5px;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--tile, #1E5168) 40%, transparent);
+}
+.app-name { font-weight: 700; font-size: 0.95rem; color: var(--text); line-height: 1.2; }
+.app-sub {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.3px;
+  color: var(--tile, var(--primary-soft));
+}
+@media (max-width: 480px) {
+  .app-grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 10px; }
+  .app-icon { width: 46px; height: 46px; font-size: 1.05rem; border-radius: 13px; }
+  .app-name { font-size: 0.84rem; }
+}
