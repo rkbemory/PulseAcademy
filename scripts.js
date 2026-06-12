@@ -45,6 +45,7 @@
       '<a href="nclex.html" class="' + activeFor("nclex.html") + '">🌎 NCLEX-RN</a>',
       '<a href="index.html#consult">🧭 Consultation <span class="footer-soon">soon</span></a>',
       '<a href="books.html" class="' + activeFor("books.html") + '">📚 Books</a>',
+      '<a href="jobs.html" class="' + activeFor("jobs.html") + '">💼 Nursing Jobs</a>',
       '<a href="tests.html?program=msn">📝 All Tests</a>',
       '<a href="feedback.html" class="' + activeFor("feedback.html") + '">💬 Feedback &amp; Support</a>',
       '<a href="admin.html" class="' + activeFor("admin.html") + '">🔒 Admin</a>',

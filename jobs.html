@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nursing Jobs in Bangladesh — Pulse for Nurses</title>
+<meta name="description" content="Find nursing jobs in Bangladesh — live NGO and international openings updated automatically, plus direct links to every trusted source: BPSC, DGNM, Bdjobs, top hospitals, icddr,b, BRAC and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1E5168">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text">
+        <span class="brand-name">Pulse For Nurses</span>
+      </span>
+    </a>
+    <nav class="top-nav-links" aria-label="Primary">
+      <a href="msn.html">MSN</a>
+      <a href="post-basic.html">Post Basic</a>
+      <a href="rn.html">BNMC RN</a>
+      <a href="nclex.html">NCLEX</a>
+      <a href="books.html">Books</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="quiz.html?program=msn&amp;test=msn-mt-01" class="cta-mini">Free Mock →</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== Page hero strip ===== -->
+  <section class="jobs-hero">
+    <div class="jobs-hero-inner">
+      <div class="section-eyebrow eyebrow-on-dark">⬡ Nursing Jobs</div>
+      <h1>Find your next nursing job.</h1>
+      <p class="jobs-hero-lead">Live openings update automatically, and every trusted source — government, hospitals, NGOs — is one tap away. Each listing links to the original posting, where you apply directly.</p>
+    </div>
+  </section>
+
+  <!-- ===== Live listings ===== -->
+  <section class="block" id="live">
+    <div class="section-eyebrow">⬡ Live Openings</div>
+    <h2 class="section-title">Current listings, updated automatically.</h2>
+    <p class="section-lead">Pulled from official career feeds (currently NGO &amp; international organizations hiring in Bangladesh). Government and hospital posts don't publish feeds — use the trusted sources below to search them live.</p>
+
+    <div class="jobs-toolbar" role="search">
+      <input id="jobs-search" class="jobs-search" type="search" placeholder="Search title or organization…" aria-label="Search live job listings">
+      <div class="jobs-chiprow" id="jobs-chips" role="group" aria-label="Filter by level">
+        <button class="jobs-chip is-on" data-qual="all-jobs" type="button">All</button>
+        <button class="jobs-chip" data-qual="rn" type="button">Staff Nurse / RN</button>
+        <button class="jobs-chip" data-qual="midwifery" type="button">Midwifery</button>
+        <button class="jobs-chip" data-qual="msn" type="button">Advanced / MSN</button>
+      </div>
+    </div>
+
+    <p class="jobs-status" id="jobs-status" aria-live="polite">Loading live listings…</p>
+    <div class="job-grid" id="jobs-grid">
+      <div class="job-card job-skel" aria-hidden="true"></div>
+      <div class="job-card job-skel" aria-hidden="true"></div>
+      <div class="job-card job-skel" aria-hidden="true"></div>
+    </div>
+    <p class="jobs-disclaimer">All listings belong to their respective organizations. Pulse shows only basic facts (title, organization, deadline) and always sends you to the original posting to apply. We are not affiliated with any employer and never charge for job information.</p>
+  </section>
+
+  <!-- ===== Trusted sources hub ===== -->
+  <section class="block block-tint" id="sources">
+    <div class="section-eyebrow">⬡ Trusted Sources</div>
+    <h2 class="section-title">Search every major source, live.</h2>
+    <p class="section-lead">These buttons open each source's own website with the latest postings — always current, straight from the official site.</p>
+
+    <div class="src-group">
+      <h3 class="src-group-title">🏛️ Government</h3>
+      <div class="src-grid">
+        <a class="src-card" href="http://bpsc.teletalk.com.bd/" target="_blank" rel="noopener">
+          <span class="src-card-name">BPSC — Teletalk portal</span>
+          <span class="src-card-desc">Senior Staff Nurse &amp; other PSC recruitment. All government applications go through Teletalk.</span>
+          <span class="src-card-go">Open portal →</span>
+        </a>
+        <a class="src-card" href="https://dgnm.gov.bd/" target="_blank" rel="noopener">
+          <span class="src-card-name">DGNM</span>
+          <span class="src-card-desc">Directorate General of Nursing &amp; Midwifery — official circulars and notices.</span>
+          <span class="src-card-go">View notices →</span>
+        </a>
+        <a class="src-card" href="https://alljobs.teletalk.com.bd/" target="_blank" rel="noopener">
+          <span class="src-card-name">Alljobs Teletalk</span>
+          <span class="src-card-desc">Every live government application portal in one place.</span>
+          <span class="src-card-go">Browse →</span>
+        </a>
+        <a class="src-card" href="https://bnmc.gov.bd/" target="_blank" rel="noopener">
+          <span class="src-card-name">BNMC</span>
+          <span class="src-card-desc">Registration verification &amp; council notices — every applicant needs this.</span>
+          <span class="src-card-go">Visit BNMC →</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="src-group">
+      <h3 class="src-group-title">🏥 Private Hospitals</h3>
+      <div class="src-grid">
+        <a class="src-card src-card-major" href="https://bdjobs.com/h/jobs/?txtsearch=nurse" target="_blank" rel="noopener">
+          <span class="src-card-name">Bdjobs — "nurse" search</span>
+          <span class="src-card-desc">The largest job portal in Bangladesh. Most hospital posts land here first — this opens the live nurse search.</span>
+          <span class="src-card-go">Search Bdjobs →</span>
+        </a>
+        <a class="src-card" href="https://www.evercarebd.com/dhaka/careers" target="_blank" rel="noopener">
+          <span class="src-card-name">Evercare Hospital</span>
+          <span class="src-card-desc">Careers page — JCI-accredited, Dhaka &amp; Chattogram.</span>
+          <span class="src-card-go">View careers →</span>
+        </a>
+        <a class="src-card" href="https://www.squarehospital.com/" target="_blank" rel="noopener">
+          <span class="src-card-name">Square Hospitals</span>
+          <span class="src-card-desc">Career section on the official site; also posts on Bdjobs.</span>
+          <span class="src-card-go">Visit site →</span>
+        </a>
+        <a class="src-card" href="https://labaidgroup.com/career" target="_blank" rel="noopener">
+          <span class="src-card-name">Labaid Group</span>
+          <span class="src-card-desc">Hospital &amp; diagnostics careers across the group.</span>
+          <span class="src-card-go">View careers →</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="src-group">
+      <h3 class="src-group-title">🌍 NGO &amp; International</h3>
+      <div class="src-grid">
+        <a class="src-card" href="https://career.icddrb.org/" target="_blank" rel="noopener">
+          <span class="src-card-name">icddr,b</span>
+          <span class="src-card-desc">Clinical &amp; research nursing roles — often better pay than typical private hospitals.</span>
+          <span class="src-card-go">Open portal →</span>
+        </a>
+        <a class="src-card" href="https://careers.brac.net/" target="_blank" rel="noopener">
+          <span class="src-card-name">BRAC</span>
+          <span class="src-card-desc">Health programme and field nursing roles nationwide.</span>
+          <span class="src-card-go">View careers →</span>
+        </a>
+        <a class="src-card" href="https://reliefweb.int/jobs?search=nurse%20bangladesh" target="_blank" rel="noopener">
+          <span class="src-card-name">ReliefWeb</span>
+          <span class="src-card-desc">UN &amp; NGO humanitarian jobs — search nursing roles in Bangladesh.</span>
+          <span class="src-card-go">Search →</span>
+        </a>
+        <a class="src-card" href="https://www.linkedin.com/jobs/search/?keywords=nurse&amp;location=Bangladesh" target="_blank" rel="noopener">
+          <span class="src-card-name">LinkedIn</span>
+          <span class="src-card-desc">International-standard hospitals recruit specialty nurses (ICU, OT, dialysis) here.</span>
+          <span class="src-card-go">Search →</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Safety note -->
+    <div class="jobs-safety">
+      <h3>🛡️ Spot fake "government" circulars</h3>
+      <ul>
+        <li>Real government applications go through an official <strong>.gov.bd</strong> site or a <strong>Teletalk portal</strong> (like bpsc.teletalk.com.bd) — nothing else.</li>
+        <li>Application fees are paid <strong>only by SMS from a Teletalk number</strong> — never by bKash/Nagad transfer to a person.</li>
+        <li>No genuine recruiter ever asks for money to "confirm" a nursing job. If they do, walk away.</li>
+        <li>Verify your BNMC registration status yourself at <strong>bnmc.gov.bd</strong> — don't hand documents to middlemen.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span><a href="index.html">← Back to home</a> · <a href="feedback.html">Feedback &amp; Support</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/auth-config.js"></script>
+<script src="auth.js"></script>
+<script src="scripts.js"></script>
+<script src="jobs.js"></script>
+</body>
+</html>
