@@ -16,7 +16,7 @@
      function still works (fetches live on every call).
 */
 
-const CACHE_KEY = "jobs:v1";
+const CACHE_KEY = "jobs:v2"; // bump when the data shape changes so stale blobs are ignored
 const CACHE_HOURS = 6;
 
 const headers = {
@@ -200,8 +200,9 @@ export async function onRequest(context) {
   if (request.method !== "GET") return new Response(JSON.stringify({ error: "method" }), { status: 405, headers });
 
   const kv = env && env.PULSE_KV;
+  const forceRefresh = new URL(request.url).searchParams.get("refresh") === "1";
   try {
-    if (kv) {
+    if (kv && !forceRefresh) {
       const cached = await kv.get(CACHE_KEY, { type: "json" });
       if (cached && cached.updatedAt && (Date.now() - Date.parse(cached.updatedAt)) < CACHE_HOURS * 3600000) {
         return new Response(JSON.stringify(cached), { status: 200, headers });
