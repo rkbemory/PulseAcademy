@@ -3596,9 +3596,9 @@ body:has(.nav-drawer.is-open) .visitor-counter,
   filter: drop-shadow(0 0 3px rgba(127, 209, 232, 0.45));
 }
 /* softly glowing gold tip that rides the leading edge of the running line */
-.ecg-tip-glow { filter: drop-shadow(0 0 5px rgba(242, 182, 60, 0.4)) opacity(0.6); }
-.ecg-tip { filter: drop-shadow(0 0 4px rgba(244, 184, 60, 0.5)) opacity(0.7); }
-.ecg-tip-core { filter: drop-shadow(0 0 3px rgba(255, 246, 221, 0.6)) opacity(0.7); }
+.ecg-tip-glow { filter: drop-shadow(0 0 4px rgba(242, 182, 60, 0.28)) opacity(0.38); }
+.ecg-tip { filter: drop-shadow(0 0 3px rgba(244, 184, 60, 0.35)) opacity(0.45); }
+.ecg-tip-core { filter: drop-shadow(0 0 2px rgba(255, 246, 221, 0.4)) opacity(0.45); }
 
 /* ----------- Hero: service chips ----------- */
 .hero-service-chips {
