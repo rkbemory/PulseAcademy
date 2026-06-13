@@ -61,32 +61,32 @@
   <svg class="hero-ecg" viewBox="0 0 1200 80" aria-hidden="true">
     <defs>
       <radialGradient id="ecg-glow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#FFE9A6" stop-opacity="1" />
-        <stop offset="34%" stop-color="#F2B63C" stop-opacity="0.92" />
-        <stop offset="70%" stop-color="#E59E1C" stop-opacity="0.38" />
+        <stop offset="0%" stop-color="#FFE9A6" stop-opacity="0.75" />
+        <stop offset="34%" stop-color="#F2B63C" stop-opacity="0.5" />
+        <stop offset="70%" stop-color="#E59E1C" stop-opacity="0.18" />
         <stop offset="100%" stop-color="#E59E1C" stop-opacity="0" />
       </radialGradient>
     </defs>
     <!-- Slim line; drawn via SMIL on the same SVG timeline as the tip, so the
          gold tip stays locked to the leading edge. -->
     <path id="ecgPath" class="hero-ecg-line" pathLength="1000" stroke-dasharray="1000" stroke-dashoffset="1000" d="M0,56 L260,56 L290,56 L305,20 L320,72 L334,40 L348,56 L600,56 L630,56 L645,20 L660,72 L674,40 L688,56 L940,56 L970,56 L985,20 L1000,72 L1014,40 L1028,56 L1200,56">
-      <animate attributeName="stroke-dashoffset" dur="7s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1000;0;0;0" />
-      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
+      <animate attributeName="stroke-dashoffset" dur="11s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1000;0;0;0" />
+      <animate attributeName="opacity" dur="11s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
     </path>
     <!-- big soft gold glow riding the leading edge -->
     <circle class="ecg-tip-glow" r="22" fill="url(#ecg-glow)">
-      <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
-      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
+      <animateMotion dur="11s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
+      <animate attributeName="opacity" dur="11s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
     </circle>
     <!-- solid gold tip core -->
     <circle class="ecg-tip" r="6" fill="#F4B83C">
-      <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
-      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
+      <animateMotion dur="11s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
+      <animate attributeName="opacity" dur="11s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
     </circle>
     <!-- hot white-gold centre for sparkle -->
     <circle class="ecg-tip-core" r="2.2" fill="#FFF6DD">
-      <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
-      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
+      <animateMotion dur="11s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
+      <animate attributeName="opacity" dur="11s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.62;0.92;1" values="1;1;1;0" />
     </circle>
   </svg>
   <div class="home-hero-inner">

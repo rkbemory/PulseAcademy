@@ -3595,10 +3595,10 @@ body:has(.nav-drawer.is-open) .visitor-counter,
   stroke-linecap: round; stroke-linejoin: round;
   filter: drop-shadow(0 0 3px rgba(127, 209, 232, 0.45));
 }
-/* glowing gold tip that rides the leading edge of the running line */
-.ecg-tip-glow { filter: drop-shadow(0 0 9px rgba(242, 182, 60, 0.8)); }
-.ecg-tip { filter: drop-shadow(0 0 7px rgba(244, 184, 60, 0.95)) drop-shadow(0 0 15px rgba(242, 182, 60, 0.6)); }
-.ecg-tip-core { filter: drop-shadow(0 0 4px rgba(255, 246, 221, 0.95)); }
+/* softly glowing gold tip that rides the leading edge of the running line */
+.ecg-tip-glow { filter: drop-shadow(0 0 5px rgba(242, 182, 60, 0.4)) opacity(0.6); }
+.ecg-tip { filter: drop-shadow(0 0 4px rgba(244, 184, 60, 0.5)) opacity(0.7); }
+.ecg-tip-core { filter: drop-shadow(0 0 3px rgba(255, 246, 221, 0.6)) opacity(0.7); }
 
 /* ----------- Hero: service chips ----------- */
 .hero-service-chips {
