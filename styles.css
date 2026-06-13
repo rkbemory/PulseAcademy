@@ -3588,28 +3588,17 @@ body:has(.nav-drawer.is-open) .visitor-counter,
   width: 100%; height: auto; z-index: 1;
   pointer-events: none;
 }
-/* the line draws/runs forward, then holds and fades — the original effect */
+/* slim resting line — the draw/run + fade is driven by SMIL in the markup,
+   on the same SVG timeline as the gold tip so they stay perfectly in sync */
 .hero-ecg-line {
-  fill: none; stroke: rgba(127, 209, 232, 0.55); stroke-width: 2.2;
+  fill: none; stroke: rgba(140, 205, 235, 0.50); stroke-width: 1.3;
   stroke-linecap: round; stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px rgba(127, 209, 232, 0.55));
-  stroke-dasharray: 1000; stroke-dashoffset: 1000;
-  animation: ecg-draw 7s linear infinite;
-}
-@keyframes ecg-draw {
-  0%   { stroke-dashoffset: 1000; opacity: 1; }
-  62%  { stroke-dashoffset: 0; opacity: 1; }
-  82%  { stroke-dashoffset: 0; opacity: 1; }
-  94%  { stroke-dashoffset: 0; opacity: 0; }
-  100% { stroke-dashoffset: 0; opacity: 0; }
+  filter: drop-shadow(0 0 3px rgba(127, 209, 232, 0.45));
 }
 /* glowing gold tip that rides the leading edge of the running line */
-.ecg-tip-glow { filter: drop-shadow(0 0 10px rgba(242, 182, 60, 0.8)); }
-.ecg-tip { filter: drop-shadow(0 0 8px rgba(244, 184, 60, 0.95)) drop-shadow(0 0 16px rgba(242, 182, 60, 0.6)); }
+.ecg-tip-glow { filter: drop-shadow(0 0 9px rgba(242, 182, 60, 0.8)); }
+.ecg-tip { filter: drop-shadow(0 0 7px rgba(244, 184, 60, 0.95)) drop-shadow(0 0 15px rgba(242, 182, 60, 0.6)); }
 .ecg-tip-core { filter: drop-shadow(0 0 4px rgba(255, 246, 221, 0.95)); }
-@media (prefers-reduced-motion: reduce) {
-  .hero-ecg-line { animation: none; stroke-dashoffset: 0; }
-}
 
 /* ----------- Hero: service chips ----------- */
 .hero-service-chips {
