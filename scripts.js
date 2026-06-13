@@ -204,12 +204,17 @@
   function attachVisitorCounter() {
     if (location.pathname.includes("admin")) return;
 
-    const chip = injectCounterChip();
-    if (!chip) return;
-
+    // Raw "views" count every page load (a repeat visit counts again).
+    // "Today" + "All time" still count once per browser per UTC day.
     const today = new Date().toISOString().slice(0, 10);
     const lastVisit = localStorage.getItem("pulse:lastVisitDay");
-    const shouldIncrement = lastVisit !== today;
+    const newDay = lastVisit !== today;
+    // view = +1 to total views always; daily=1 also bumps Today + All-time once a day.
+    const incAction = newDay ? "view&daily=1" : "view";
+
+    // The stat chip is shown ONLY on the homepage (the initial display).
+    const page = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    const isHome = page === "" || page === "index.html";
 
     function fetchCounts(action) {
       return fetch("/api/visit?action=" + action, { cache: "no-store" })
@@ -221,9 +226,17 @@
         .catch(function () { return null; });
     }
 
-    fetchCounts(shouldIncrement ? "increment" : "read").then(function (data) {
+    // Always record the view (every page), so "total views" reflects the whole portal.
+    const firstCall = fetchCounts(incAction);
+    if (newDay) firstCall.then(function (d) { if (d) localStorage.setItem("pulse:lastVisitDay", today); });
+
+    if (!isHome) return; // count silently elsewhere; only render the chip on the homepage
+
+    const chip = injectCounterChip();
+    if (!chip) return;
+
+    firstCall.then(function (data) {
       if (!data) { chip.classList.add("is-error"); return; }
-      if (shouldIncrement) localStorage.setItem("pulse:lastVisitDay", today);
       updateChip(chip, data);
     });
 
@@ -243,8 +256,8 @@
     const el = document.createElement("button");
     el.type = "button";
     el.className = "visitor-counter";
-    // No aria-label: the visible Today/All-time text is the accessible name.
-    el.title = "Today's visitors · All-time visitors";
+    // No aria-label: the visible Today/All-time/Views text is the accessible name.
+    el.title = "Today · All-time visitors · Total views";
     el.innerHTML =
       '<span class="vc-pulse" aria-hidden="true"></span>' +
       '<span class="vc-icon" aria-hidden="true">👀</span>' +
@@ -256,6 +269,11 @@
       '<span class="vc-stat">' +
         '<span class="vc-stat-label">All time</span>' +
         '<span class="vc-stat-value vc-total" aria-live="polite">—</span>' +
+      '</span>' +
+      '<span class="vc-divider" aria-hidden="true"></span>' +
+      '<span class="vc-stat">' +
+        '<span class="vc-stat-label">Views</span>' +
+        '<span class="vc-stat-value vc-views" aria-live="polite">—</span>' +
       '</span>';
     el.addEventListener("click", function () {
       fetch("/api/visit?action=read", { cache: "no-store" })
@@ -279,6 +297,10 @@
     if (typeof data.total === "number") {
       const el = chip.querySelector(".vc-total");
       if (el) animateCount(el, parseIntSafe(el.textContent), data.total);
+    }
+    if (typeof data.views === "number") {
+      const el = chip.querySelector(".vc-views");
+      if (el) animateCount(el, parseIntSafe(el.textContent), data.views);
     }
     chip.classList.add("is-loaded");
     chip.classList.remove("is-error");

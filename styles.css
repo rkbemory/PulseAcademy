@@ -2702,20 +2702,8 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   .home-hero::before { animation: none; }
 }
-/* Subtle ECG/pulse line ribbon behind title — references the brand */
-.home-hero::after {
-  content: "";
-  position: absolute;
-  left: -5%;
-  right: -5%;
-  top: 38%;
-  height: 80px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'><path d='M0,40 L240,40 L260,40 L280,15 L295,65 L310,20 L325,60 L340,40 L520,40 L540,15 L555,65 L570,20 L585,60 L600,40 L820,40 L840,15 L855,65 L870,20 L885,60 L900,40 L1200,40' fill='none' stroke='%23E6CFA3' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.35'/></svg>");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  opacity: 0.7;
-}
+/* (Mid-hero ECG ribbon removed — the heartbeat now lives as a clean
+   baseline at the hero's bottom edge via the .hero-ecg SVG element.) */
 .home-hero-inner { position: relative; z-index: 1; }
 .home-hero-title { position: relative; }
 .home-hero-title-pulse {
@@ -3586,25 +3574,41 @@ body:has(.nav-drawer.is-open) .visitor-counter,
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }
 
-/* ----------- Hero: animated ECG line ----------- */
-.hero-ecg {
-  position: absolute; left: 0; right: 0; bottom: 26px;
-  width: 100%; height: 90px; z-index: 1;
-  opacity: 0.5; pointer-events: none;
+/* ----------- Hero: logo emblem above the wordmark ----------- */
+.home-hero-emblem {
+  display: block; width: 180px; height: auto;
+  margin: 0 auto 16px; position: relative; z-index: 2;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.38));
 }
+@media (max-width: 600px) { .home-hero-emblem { width: 138px; margin-bottom: 12px; } }
+
+/* ----------- Hero: heartbeat baseline with a travelling gold pulse ----------- */
+.hero-ecg {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  width: 100%; height: auto; z-index: 1;
+  pointer-events: none;
+}
+/* the line draws/runs forward, then holds and fades — the original effect */
 .hero-ecg-line {
-  fill: none; stroke: var(--cyan-soft); stroke-width: 2.2;
+  fill: none; stroke: rgba(127, 209, 232, 0.55); stroke-width: 2.2;
   stroke-linecap: round; stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px rgba(127, 209, 232, 0.65));
-  stroke-dasharray: 2400;
-  stroke-dashoffset: 2400;
+  filter: drop-shadow(0 0 6px rgba(127, 209, 232, 0.55));
+  stroke-dasharray: 1000; stroke-dashoffset: 1000;
   animation: ecg-draw 7s linear infinite;
 }
 @keyframes ecg-draw {
-  0%   { stroke-dashoffset: 2400; }
-  62%  { stroke-dashoffset: 0; }
+  0%   { stroke-dashoffset: 1000; opacity: 1; }
+  62%  { stroke-dashoffset: 0; opacity: 1; }
   82%  { stroke-dashoffset: 0; opacity: 1; }
+  94%  { stroke-dashoffset: 0; opacity: 0; }
   100% { stroke-dashoffset: 0; opacity: 0; }
+}
+/* glowing gold tip that rides the leading edge of the running line */
+.ecg-tip-glow { filter: drop-shadow(0 0 10px rgba(242, 182, 60, 0.8)); }
+.ecg-tip { filter: drop-shadow(0 0 8px rgba(244, 184, 60, 0.95)) drop-shadow(0 0 16px rgba(242, 182, 60, 0.6)); }
+.ecg-tip-core { filter: drop-shadow(0 0 4px rgba(255, 246, 221, 0.95)); }
+@media (prefers-reduced-motion: reduce) {
+  .hero-ecg-line { animation: none; stroke-dashoffset: 0; }
 }
 
 /* ----------- Hero: service chips ----------- */
@@ -4498,3 +4502,63 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 }
 /* Jobs page now opens straight into the tile grid — give it breathing room below the nav */
 #sources.block { padding-top: 56px; }
+
+/* ----------- Hero: full logo on a white brand card ----------- */
+.home-hero-logo-card {
+  display: inline-block; background: #fff;
+  border-radius: 22px; padding: 22px 30px 18px;
+  margin: 0 auto 18px; position: relative; z-index: 2;
+  border-top: 6px solid var(--accent);
+  box-shadow: 0 18px 46px rgba(0,0,0,.34);
+}
+.home-hero-logo-card img { display: block; width: 270px; height: auto; }
+@media (max-width: 600px) {
+  .home-hero-logo-card { padding: 16px 22px 14px; border-radius: 18px; }
+  .home-hero-logo-card img { width: 210px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HERO — Emory-blue shifting background + Fraunces wordmark (option G)
+   Appended last so it wins over earlier .home-hero rules.
+   ════════════════════════════════════════════════════════════════ */
+.home-hero {
+  background: linear-gradient(150deg,
+    #000E2A 0%, #03205A 32%, #0C46A0 52%, #03205A 72%, #00102E 100%);
+  background-size: 260% 260%;
+  animation: hero-blue-shift 30s ease-in-out infinite;
+}
+@keyframes hero-blue-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* High-contrast depth: bright royal bloom centre, warm gold halo behind the
+   wordmark, deep near-black navy in the corners (vignette). */
+.home-hero::before {
+  background:
+    radial-gradient(ellipse 58% 46% at 50% 30%, rgba(58, 118, 245, 0.42), transparent 62%),
+    radial-gradient(ellipse 42% 34% at 50% 26%, rgba(224, 170, 80, 0.14), transparent 60%),
+    radial-gradient(circle at 92% 8%, rgba(96, 150, 255, 0.20), transparent 42%),
+    radial-gradient(circle at 8% 96%, rgba(0, 6, 26, 0.65), transparent 52%),
+    radial-gradient(circle at 100% 100%, rgba(0, 6, 26, 0.55), transparent 50%);
+}
+
+/* Wordmark → Fraunces, rich amber "Pulse" + cream italic "For Nurses" */
+.home-hero-title-pulse {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  background: linear-gradient(135deg, #F4D08A 0%, #D9A24A 52%, #B97E2E 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  filter: drop-shadow(0 6px 18px rgba(217, 162, 74, 0.35));
+}
+.home-hero-title-rest {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500; font-style: italic;
+  background: none;
+  -webkit-text-fill-color: #F1E2C4; color: #F1E2C4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero { animation: none; background-position: 0% 50%; }
+}

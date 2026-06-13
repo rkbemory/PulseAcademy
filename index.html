@@ -7,7 +7,7 @@
 <meta name="description" content="Bangladesh's complete nursing prep portal. MSN & Post Basic admission tests, BNMC RN licensing, NCLEX-RN preparation, printed guides, and higher-study consultation — For Nurses, By Nurses.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" type="image/png" href="pulse-icon.png">
 
@@ -58,10 +58,35 @@
 
 <!-- ========== HERO ========== -->
 <section class="home-hero">
-  <svg class="hero-ecg" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
-    <path class="hero-ecg-line" d="M0,60 L180,60 L210,60 L225,18 L240,96 L255,42 L270,60 L420,60 L450,60 L465,18 L480,96 L495,42 L510,60 L660,60 L690,60 L705,18 L720,96 L735,42 L750,60 L900,60 L930,60 L945,18 L960,96 L975,42 L990,60 L1200,60" />
+  <svg class="hero-ecg" viewBox="0 0 1200 80" aria-hidden="true">
+    <defs>
+      <radialGradient id="ecg-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFE9A6" stop-opacity="1" />
+        <stop offset="34%" stop-color="#F2B63C" stop-opacity="0.92" />
+        <stop offset="70%" stop-color="#E59E1C" stop-opacity="0.38" />
+        <stop offset="100%" stop-color="#E59E1C" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <!-- the line draws/runs forward via stroke-dashoffset (see .hero-ecg-line) -->
+    <path id="ecgPath" class="hero-ecg-line" pathLength="1000" d="M0,56 L260,56 L290,56 L305,20 L320,72 L334,40 L348,56 L600,56 L630,56 L645,20 L660,72 L674,40 L688,56 L940,56 L970,56 L985,20 L1000,72 L1014,40 L1028,56 L1200,56" />
+    <!-- big soft gold glow riding the leading edge of the drawing line -->
+    <circle class="ecg-tip-glow" r="26" fill="url(#ecg-glow)">
+      <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
+      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" values="1;1;1;0;0" keyTimes="0;0.62;0.82;0.94;1" />
+    </circle>
+    <!-- solid gold tip core (sits on top of the line's leading edge) -->
+    <circle class="ecg-tip" r="7" fill="#F4B83C">
+      <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
+      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" values="1;1;1;0;0" keyTimes="0;0.62;0.82;0.94;1" />
+    </circle>
+    <!-- hot white-gold centre for sparkle -->
+    <circle class="ecg-tip-core" r="2.6" fill="#FFF6DD">
+      <animateMotion dur="7s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.62;1"><mpath href="#ecgPath" /></animateMotion>
+      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" values="1;1;1;0;0" keyTimes="0;0.62;0.82;0.94;1" />
+    </circle>
   </svg>
   <div class="home-hero-inner">
+    <img class="home-hero-emblem" src="Photo & Logo/Pulse Emblem.png" alt="Pulse for Nurses emblem" width="180" height="73">
     <h1 class="home-hero-title home-hero-title-standalone">
       <span class="home-hero-title-pulse">Pulse</span>
       <span class="home-hero-title-rest">For Nurses</span>
