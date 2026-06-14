@@ -4663,3 +4663,64 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 .sc-eq { background: linear-gradient(135deg, var(--primary), var(--primary-soft)); color: #fff; border: none; font-weight: 800; }
 .sc-eq:hover { filter: brightness(1.06); background: linear-gradient(135deg, var(--primary), var(--primary-soft)); }
 .sc-card { max-width: 360px; }
+
+/* ---- Calculators: fit a desktop screen without scrolling ---- */
+@media (min-width: 761px) {
+  .calc-page { padding-top: 26px; padding-bottom: 26px; }
+  .calc-page .section-eyebrow { margin-bottom: 6px; }
+  .calc-page .section-title { font-size: 1.7rem; margin-bottom: 6px; }
+  .calc-page .section-title::after { margin-top: 8px; height: 3px; width: 52px; }
+  .calc-page .section-lead { font-size: 0.92rem; margin-bottom: 14px; }
+  .calc-page .calc-disclaimer { padding: 9px 14px; font-size: 0.82rem; margin: 0 0 16px; }
+  .calc-page .calc-nav { gap: 5px; top: 74px; }
+  .calc-page .calc-nav-item { padding: 8px 12px; font-size: 0.88rem; border-radius: 9px; }
+  /* keep the tallest right-hand panel (Simple Calculator) compact */
+  .calc-page .sc-display { min-height: 54px; padding: 12px 16px; font-size: 1.7rem; margin-bottom: 10px; }
+  .calc-page .sc-keys { gap: 7px; }
+  .calc-page .sc-key { padding: 12px 0; font-size: 1.15rem; }
+  .calc-page .calc-card { padding: 18px 20px 16px; }
+  .calc-page .calc-fields { margin-bottom: 12px; }
+}
+
+/* ---- Calculators: stronger single-screen fit (override base section padding) ---- */
+@media (min-width: 761px) {
+  .calc-page.block { padding-top: 22px; padding-bottom: 22px; }
+  .calc-page .section-title { font-size: 1.5rem; margin-bottom: 4px; }
+  .calc-page .section-title::after { display: none; }
+  .calc-page .section-eyebrow { margin-bottom: 4px; }
+  .calc-page .section-lead { margin-bottom: 12px; }
+  .calc-page .calc-disclaimer { margin-bottom: 14px; }
+  .calc-page .calc-nav { gap: 4px; }
+  .calc-page .calc-nav-item { padding: 6px 12px; font-size: 0.86rem; }
+}
+
+/* ---- Calculators: slim footer + final fit ---- */
+@media (min-width: 761px) {
+  .footer-slim { padding-top: 16px; }
+  .footer-slim::before { display: none; }
+  .footer-slim .footer-inner { padding: 0 24px 16px; }
+  .footer-slim .footer-bottom { border-top: none; padding-top: 0; }
+  .calc-page .calc-nav-item { padding: 5px 12px; }
+  .calc-page .sc-key { padding: 9px 0; font-size: 1.1rem; }
+  .calc-page .sc-display { min-height: 48px; padding: 10px 16px; font-size: 1.55rem; }
+}
+
+/* ---- Calculators: final footer slim (full padding override) ---- */
+.footer-slim { padding: 14px 0; }
+.footer-slim .footer-inner { padding: 0 24px; }
+
+/* ---- Calculators: final keypad shave for single-screen fit ---- */
+@media (min-width: 761px) {
+  .calc-page .sc-key { padding: 7px 0; }
+  .calc-page .sc-display { min-height: 44px; }
+  .calc-page .calc-card { padding: 16px 18px 14px; }
+}
+
+/* ---- Calculators: final nav compaction ---- */
+@media (min-width: 761px) {
+  .calc-page .calc-nav { gap: 3px; }
+  .calc-page .calc-nav-item { padding: 4px 11px; font-size: 0.83rem; }
+}
+
+/* ---- Calculators: zero out footer-bottom residual padding ---- */
+.footer-slim .footer-bottom { padding: 0; }
