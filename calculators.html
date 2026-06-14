@@ -170,13 +170,13 @@
             <div class="calc-fields calc-fields-2">
               <label class="calc-field"><span>Weight (kg)</span><input id="bmi-wt" type="number" inputmode="decimal" placeholder="e.g. 60"></label>
               <label class="calc-field"><span>Height in</span>
-                <select id="bmi-unit"><option value="cm">Centimetres</option><option value="ftin">Feet &amp; inches</option></select>
+                <select id="bmi-unit"><option value="ftin" selected>Feet &amp; inches</option><option value="cm">Centimetres</option></select>
               </label>
             </div>
-            <div class="calc-fields" id="bmi-cm-row">
+            <div class="calc-fields" id="bmi-cm-row" hidden>
               <label class="calc-field"><span>Height (cm)</span><input id="bmi-ht" type="number" inputmode="decimal" placeholder="e.g. 165"></label>
             </div>
-            <div class="calc-fields calc-fields-2" id="bmi-ftin-row" hidden>
+            <div class="calc-fields calc-fields-2" id="bmi-ftin-row">
               <label class="calc-field"><span>Feet</span><input id="bmi-ft" type="number" inputmode="numeric" placeholder="e.g. 5"></label>
               <label class="calc-field"><span>Inches</span><input id="bmi-in" type="number" inputmode="decimal" placeholder="e.g. 5"></label>
             </div>
