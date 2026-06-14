@@ -5,6 +5,25 @@
 
 (function () {
   /* ---------------------------------------------------------------
+     Google Analytics 4 (gtag.js) — loaded on every page from here.
+     Skips localhost so local testing never pollutes the data.
+     --------------------------------------------------------------- */
+  (function initAnalytics() {
+    var GA_ID = "G-9ZYS6JKEQ8";
+    var host = location.hostname;
+    if (host === "localhost" || host === "127.0.0.1" || host === "") return;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", GA_ID);
+  })();
+
+  /* ---------------------------------------------------------------
      0. Inject hamburger toggle into existing header
      --------------------------------------------------------------- */
   function injectToggle() {
