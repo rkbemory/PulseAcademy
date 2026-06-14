@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nursing Calculators — Pulse for Nurses</title>
+<meta name="description" content="Free everyday nursing calculators — IV drip rate, flow rate, infusion time, dosage, weight-based dose, temperature and weight conversions, and unit conversions. Works offline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14387A">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text"><span class="brand-name">Pulse For Nurses</span></span>
+    </a>
+    <nav class="top-nav-links" aria-label="Primary">
+      <a href="msn.html">MSN</a>
+      <a href="post-basic.html">Post Basic</a>
+      <a href="rn.html">BNMC RN</a>
+      <a href="nclex.html">NCLEX</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="quiz.html?program=msn&amp;test=msn-mt-01" class="cta-mini">Free Mock →</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="block">
+    <div class="section-eyebrow">⬡ Nursing Calculators</div>
+    <h1 class="section-title">Everyday bedside calculations.</h1>
+    <p class="section-lead">Quick, accurate tools for the maths you do every shift — drip rates, doses, conversions and more. Results update as you type, and the page works offline once loaded.</p>
+
+    <div class="calc-disclaimer">
+      ⚠️ <strong>A study &amp; practice aid.</strong> Always verify against your institution's protocol and double-check high-alert medications. Pulse is not responsible for clinical decisions.
+    </div>
+
+    <div class="calc-grid">
+
+      <!-- 1. IV drip rate -->
+      <div class="calc-card">
+        <h2 class="calc-title">💧 IV Drip Rate <span class="calc-unit">gtt/min</span></h2>
+        <p class="calc-formula">(Volume × Drop factor) ÷ Time</p>
+        <div class="calc-fields">
+          <label class="calc-field"><span>Volume (mL)</span><input id="dr-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
+          <label class="calc-field"><span>Time (minutes)</span><input id="dr-time" type="number" inputmode="decimal" placeholder="e.g. 480"></label>
+          <label class="calc-field"><span>Drop factor (gtt/mL)</span>
+            <select id="dr-df">
+              <option value="20">20 — macrodrip</option>
+              <option value="15">15 — macrodrip</option>
+              <option value="10">10 — macrodrip</option>
+              <option value="60">60 — microdrip</option>
+            </select>
+          </label>
+        </div>
+        <div class="calc-result" id="dr-out">Enter volume and time…</div>
+      </div>
+
+      <!-- 2. IV flow rate -->
+      <div class="calc-card">
+        <h2 class="calc-title">🩸 IV Flow Rate <span class="calc-unit">mL/hr</span></h2>
+        <p class="calc-formula">Volume ÷ Time</p>
+        <div class="calc-fields">
+          <label class="calc-field"><span>Volume (mL)</span><input id="fr-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
+          <label class="calc-field"><span>Time (hours)</span><input id="fr-time" type="number" inputmode="decimal" placeholder="e.g. 8"></label>
+        </div>
+        <div class="calc-result" id="fr-out">Enter volume and time…</div>
+      </div>
+
+      <!-- 3. IV infusion time -->
+      <div class="calc-card">
+        <h2 class="calc-title">⏱️ IV Infusion Time</h2>
+        <p class="calc-formula">Volume ÷ Flow rate</p>
+        <div class="calc-fields">
+          <label class="calc-field"><span>Volume (mL)</span><input id="it-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
+          <label class="calc-field"><span>Flow rate (mL/hr)</span><input id="it-rate" type="number" inputmode="decimal" placeholder="e.g. 125"></label>
+        </div>
+        <div class="calc-result" id="it-out">Enter volume and rate…</div>
+      </div>
+
+      <!-- 4. Dosage -->
+      <div class="calc-card">
+        <h2 class="calc-title">💊 Dosage (tablets / liquid)</h2>
+        <p class="calc-formula">(Desired ÷ Have) × Quantity</p>
+        <div class="calc-fields">
+          <label class="calc-field"><span>Desired dose</span><input id="do-d" type="number" inputmode="decimal" placeholder="e.g. 500"></label>
+          <label class="calc-field"><span>Stock strength (Have)</span><input id="do-h" type="number" inputmode="decimal" placeholder="e.g. 250"></label>
+          <label class="calc-field"><span>Stock quantity (per tablet/mL)</span><input id="do-q" type="number" inputmode="decimal" placeholder="e.g. 1" value="1"></label>
+        </div>
+        <div class="calc-result" id="do-out">Enter desired and stock…</div>
+      </div>
+
+      <!-- 5. Weight-based dose -->
+      <div class="calc-card">
+        <h2 class="calc-title">⚖️ Weight-Based Dose</h2>
+        <p class="calc-formula">Dose (mg/kg) × Weight (kg)</p>
+        <div class="calc-fields">
+          <label class="calc-field"><span>Dose (mg/kg)</span><input id="wb-dose" type="number" inputmode="decimal" placeholder="e.g. 10"></label>
+          <label class="calc-field"><span>Weight (kg)</span><input id="wb-wt" type="number" inputmode="decimal" placeholder="e.g. 12"></label>
+          <label class="calc-field"><span>Divide into (doses/day, optional)</span><input id="wb-div" type="number" inputmode="decimal" placeholder="e.g. 3"></label>
+        </div>
+        <div class="calc-result" id="wb-out">Enter dose and weight…</div>
+      </div>
+
+      <!-- 6. Temperature -->
+      <div class="calc-card">
+        <h2 class="calc-title">🌡️ Temperature</h2>
+        <p class="calc-formula">°F = (°C × 9/5) + 32</p>
+        <div class="calc-fields calc-fields-2">
+          <label class="calc-field"><span>Celsius (°C)</span><input id="tc-c" type="number" inputmode="decimal" placeholder="37"></label>
+          <label class="calc-field"><span>Fahrenheit (°F)</span><input id="tc-f" type="number" inputmode="decimal" placeholder="98.6"></label>
+        </div>
+        <div class="calc-result" id="tc-out">Type in either box to convert.</div>
+      </div>
+
+      <!-- 7. Weight -->
+      <div class="calc-card">
+        <h2 class="calc-title">🏋️ Weight</h2>
+        <p class="calc-formula">kg = lb ÷ 2.205</p>
+        <div class="calc-fields calc-fields-2">
+          <label class="calc-field"><span>Kilograms (kg)</span><input id="wt-kg" type="number" inputmode="decimal" placeholder="60"></label>
+          <label class="calc-field"><span>Pounds (lb)</span><input id="wt-lb" type="number" inputmode="decimal" placeholder="132.3"></label>
+        </div>
+        <div class="calc-result" id="wt-out">Type in either box to convert.</div>
+      </div>
+
+      <!-- 8. Unit converter -->
+      <div class="calc-card">
+        <h2 class="calc-title">🔄 Unit Converter</h2>
+        <p class="calc-sub-label">Mass</p>
+        <div class="calc-fields calc-fields-3">
+          <label class="calc-field"><span>Value</span><input id="mass-v" type="number" inputmode="decimal" placeholder="500"></label>
+          <label class="calc-field"><span>From</span><select id="mass-from"><option value="1">mcg</option><option value="1000" selected>mg</option><option value="1000000">g</option></select></label>
+          <label class="calc-field"><span>To</span><select id="mass-to"><option value="1">mcg</option><option value="1000">mg</option><option value="1000000" selected>g</option></select></label>
+        </div>
+        <div class="calc-result calc-result-sm" id="mass-out">—</div>
+        <p class="calc-sub-label" style="margin-top:14px;">Volume</p>
+        <div class="calc-fields calc-fields-3">
+          <label class="calc-field"><span>Value</span><input id="vol-v" type="number" inputmode="decimal" placeholder="1500"></label>
+          <label class="calc-field"><span>From</span><select id="vol-from"><option value="1" selected>mL</option><option value="1000">L</option></select></label>
+          <label class="calc-field"><span>To</span><select id="vol-to"><option value="1">mL</option><option value="1000" selected>L</option></select></label>
+        </div>
+        <div class="calc-result calc-result-sm" id="vol-out">—</div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span><a href="index.html">← Back to home</a> · <a href="feedback.html">Feedback &amp; Support</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/auth-config.js"></script>
+<script src="auth.js"></script>
+<script src="scripts.js"></script>
+<script src="calc.js"></script>
+</body>
+</html>
