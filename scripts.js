@@ -21,6 +21,13 @@
     window.gtag = gtag;
     gtag("js", new Date());
     gtag("config", GA_ID);
+
+    // Cloudflare Web Analytics (cookieless) — runs alongside GA.
+    var cf = document.createElement("script");
+    cf.defer = true;
+    cf.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    cf.setAttribute("data-cf-beacon", '{"token": "1cbd475365b846eabbe7746b90b8b6f8"}');
+    document.head.appendChild(cf);
   })();
 
   /* ---------------------------------------------------------------
