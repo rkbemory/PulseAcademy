@@ -4602,3 +4602,64 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 .calc-result b { display: block; font-size: 1.5rem; font-weight: 800; color: var(--primary); font-variant-numeric: tabular-nums; }
 .calc-result-sm b { font-size: 1.15rem; }
 .calc-work { display: block; font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+/* ---- Calculators: left options panel + right stage ---- */
+.calc-layout { display: grid; grid-template-columns: 270px 1fr; gap: 24px; align-items: start; }
+.calc-nav { display: flex; flex-direction: column; gap: 7px; position: sticky; top: 82px; }
+.calc-nav-item {
+  text-align: left; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.92rem;
+  color: var(--text); background: var(--surface); border: 1px solid var(--line-cool);
+  padding: 12px 14px; border-radius: 11px; cursor: pointer;
+  display: flex; align-items: center; gap: 9px;
+  transition: background .15s, color .15s, border-color .15s, transform .12s;
+}
+.calc-nav-item:hover { border-color: var(--primary-soft); background: var(--primary-tint); transform: translateX(2px); }
+.calc-nav-item.is-active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+  color: #fff; border-color: var(--primary);
+  box-shadow: 0 6px 16px rgba(20,56,122,0.28);
+}
+.calc-stage { min-width: 0; }
+.calc-panel { display: none; animation: calc-fade .22s ease-out; }
+.calc-panel.is-active { display: block; }
+@keyframes calc-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.calc-stage .calc-card { max-width: 560px; }
+
+@media (max-width: 760px) {
+  .calc-layout { grid-template-columns: 1fr; gap: 16px; }
+  .calc-nav { flex-direction: row; flex-wrap: wrap; gap: 8px; position: static; }
+  .calc-nav-item { flex: 0 0 auto; padding: 9px 13px; font-size: 0.86rem; }
+  .calc-nav-item:hover { transform: none; }
+  .calc-stage .calc-card { max-width: none; }
+}
+
+/* ---- Simple on-screen calculator ---- */
+.sc-display {
+  background: var(--primary-deep); color: #fff;
+  border-radius: 12px; padding: 18px 18px; margin-bottom: 14px;
+  font-size: 2rem; font-weight: 700; text-align: right;
+  font-variant-numeric: tabular-nums; min-height: 64px; overflow-x: auto;
+  white-space: nowrap; line-height: 1.4;
+}
+.sc-keys {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  grid-template-areas:
+    "c   back div mul"
+    "n7  n8   n9  sub"
+    "n4  n5   n6  add"
+    "n1  n2   n3  eq"
+    "n0  n0   dot eq";
+}
+.sc-key {
+  font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 600;
+  padding: 16px 0; border-radius: 12px; cursor: pointer;
+  background: var(--surface); color: var(--text); border: 1px solid var(--line-cool);
+  transition: background .12s, transform .08s;
+}
+.sc-key:hover { background: var(--bg-cool); }
+.sc-key:active { transform: scale(0.96); }
+.sc-op { color: var(--primary); font-weight: 800; background: var(--primary-tint); border-color: transparent; }
+.sc-fn { color: var(--coral); font-weight: 700; }
+.sc-eq { background: linear-gradient(135deg, var(--primary), var(--primary-soft)); color: #fff; border: none; font-weight: 800; }
+.sc-eq:hover { filter: brightness(1.06); background: linear-gradient(135deg, var(--primary), var(--primary-soft)); }
+.sc-card { max-width: 360px; }

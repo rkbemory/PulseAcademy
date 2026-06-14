@@ -36,120 +36,211 @@
   <section class="block">
     <div class="section-eyebrow">⬡ Nursing Calculators</div>
     <h1 class="section-title">Everyday bedside calculations.</h1>
-    <p class="section-lead">Quick, accurate tools for the maths you do every shift — drip rates, doses, conversions and more. Results update as you type, and the page works offline once loaded.</p>
+    <p class="section-lead">Pick a calculator on the left — it opens on the right with results that update as you type. Works offline once loaded.</p>
 
     <div class="calc-disclaimer">
       ⚠️ <strong>A study &amp; practice aid.</strong> Always verify against your institution's protocol and double-check high-alert medications. Pulse is not responsible for clinical decisions.
     </div>
 
-    <div class="calc-grid">
+    <div class="calc-layout">
+      <!-- LEFT: options -->
+      <aside class="calc-nav" role="tablist" aria-label="Choose a calculator">
+        <button class="calc-nav-item is-active" data-target="calc-simple" role="tab" aria-selected="true">🧮 Simple Calculator</button>
+        <button class="calc-nav-item" data-target="calc-bmi"   role="tab" aria-selected="false">📏 BMI</button>
+        <button class="calc-nav-item" data-target="calc-drip"  role="tab" aria-selected="false">💧 IV Drip Rate</button>
+        <button class="calc-nav-item" data-target="calc-flow"  role="tab" aria-selected="false">🩸 IV Flow Rate</button>
+        <button class="calc-nav-item" data-target="calc-time"  role="tab" aria-selected="false">⏱️ IV Infusion Time</button>
+        <button class="calc-nav-item" data-target="calc-dose"  role="tab" aria-selected="false">💊 Dosage (tablets/liquid)</button>
+        <button class="calc-nav-item" data-target="calc-wb"    role="tab" aria-selected="false">⚖️ Weight-Based Dose</button>
+        <button class="calc-nav-item" data-target="calc-temp"  role="tab" aria-selected="false">🌡️ Temperature °F → °C</button>
+        <button class="calc-nav-item" data-target="calc-wt"    role="tab" aria-selected="false">🏋️ Weight kg ⇄ lb</button>
+        <button class="calc-nav-item" data-target="calc-unit"  role="tab" aria-selected="false">🔄 Unit Converter</button>
+        <button class="calc-nav-item" data-target="calc-period" role="tab" aria-selected="false">🩷 Next Period</button>
+        <button class="calc-nav-item" data-target="calc-ov"    role="tab" aria-selected="false">🌸 Ovulation &amp; Fertile Days</button>
+      </aside>
 
-      <!-- 1. IV drip rate -->
-      <div class="calc-card">
-        <h2 class="calc-title">💧 IV Drip Rate <span class="calc-unit">gtt/min</span></h2>
-        <p class="calc-formula">(Volume × Drop factor) ÷ Time</p>
-        <div class="calc-fields">
-          <label class="calc-field"><span>Volume (mL)</span><input id="dr-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
-          <label class="calc-field"><span>Time (minutes)</span><input id="dr-time" type="number" inputmode="decimal" placeholder="e.g. 480"></label>
-          <label class="calc-field"><span>Drop factor (gtt/mL)</span>
-            <select id="dr-df">
-              <option value="20">20 — macrodrip</option>
-              <option value="15">15 — macrodrip</option>
-              <option value="10">10 — macrodrip</option>
-              <option value="60">60 — microdrip</option>
-            </select>
-          </label>
+      <!-- RIGHT: the selected calculator -->
+      <div class="calc-stage">
+
+        <div class="calc-panel is-active" id="calc-simple" role="tabpanel">
+          <div class="calc-card sc-card">
+            <h2 class="calc-title">🧮 Simple Calculator</h2>
+            <div class="sc-display" id="sc-disp">0</div>
+            <div class="sc-keys">
+              <button type="button" class="sc-key sc-fn"  data-act="clear" style="grid-area:c">C</button>
+              <button type="button" class="sc-key sc-fn"  data-act="back"  style="grid-area:back">⌫</button>
+              <button type="button" class="sc-key sc-op"  data-val="/"     style="grid-area:div">÷</button>
+              <button type="button" class="sc-key sc-op"  data-val="*"     style="grid-area:mul">×</button>
+              <button type="button" class="sc-key" data-val="7" style="grid-area:n7">7</button>
+              <button type="button" class="sc-key" data-val="8" style="grid-area:n8">8</button>
+              <button type="button" class="sc-key" data-val="9" style="grid-area:n9">9</button>
+              <button type="button" class="sc-key sc-op" data-val="-" style="grid-area:sub">−</button>
+              <button type="button" class="sc-key" data-val="4" style="grid-area:n4">4</button>
+              <button type="button" class="sc-key" data-val="5" style="grid-area:n5">5</button>
+              <button type="button" class="sc-key" data-val="6" style="grid-area:n6">6</button>
+              <button type="button" class="sc-key sc-op" data-val="+" style="grid-area:add">+</button>
+              <button type="button" class="sc-key" data-val="1" style="grid-area:n1">1</button>
+              <button type="button" class="sc-key" data-val="2" style="grid-area:n2">2</button>
+              <button type="button" class="sc-key" data-val="3" style="grid-area:n3">3</button>
+              <button type="button" class="sc-key sc-eq" data-act="eq" style="grid-area:eq">=</button>
+              <button type="button" class="sc-key" data-val="0" style="grid-area:n0">0</button>
+              <button type="button" class="sc-key" data-val="." style="grid-area:dot">.</button>
+            </div>
+          </div>
         </div>
-        <div class="calc-result" id="dr-out">Enter volume and time…</div>
+
+        <div class="calc-panel" id="calc-drip" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">💧 IV Drip Rate <span class="calc-unit">gtt/min</span></h2>
+            <p class="calc-formula">(Volume × Drop factor) ÷ Time</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Volume (mL)</span><input id="dr-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
+              <label class="calc-field"><span>Time (minutes)</span><input id="dr-time" type="number" inputmode="decimal" placeholder="e.g. 480"></label>
+              <label class="calc-field"><span>Drop factor (gtt/mL)</span>
+                <select id="dr-df">
+                  <option value="20">20 — macrodrip</option>
+                  <option value="15">15 — macrodrip</option>
+                  <option value="10">10 — macrodrip</option>
+                  <option value="60">60 — microdrip</option>
+                </select>
+              </label>
+            </div>
+            <div class="calc-result" id="dr-out">Enter volume and time…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-flow" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🩸 IV Flow Rate <span class="calc-unit">mL/hr</span></h2>
+            <p class="calc-formula">Volume ÷ Time</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Volume (mL)</span><input id="fr-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
+              <label class="calc-field"><span>Time (hours)</span><input id="fr-time" type="number" inputmode="decimal" placeholder="e.g. 8"></label>
+            </div>
+            <div class="calc-result" id="fr-out">Enter volume and time…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-time" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">⏱️ IV Infusion Time</h2>
+            <p class="calc-formula">Volume ÷ Flow rate</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Volume (mL)</span><input id="it-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
+              <label class="calc-field"><span>Flow rate (mL/hr)</span><input id="it-rate" type="number" inputmode="decimal" placeholder="e.g. 125"></label>
+            </div>
+            <div class="calc-result" id="it-out">Enter volume and rate…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-dose" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">💊 Dosage (tablets / liquid)</h2>
+            <p class="calc-formula">(Desired ÷ Have) × Quantity</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Desired dose</span><input id="do-d" type="number" inputmode="decimal" placeholder="e.g. 500"></label>
+              <label class="calc-field"><span>Stock strength (Have)</span><input id="do-h" type="number" inputmode="decimal" placeholder="e.g. 250"></label>
+              <label class="calc-field"><span>Stock quantity (per tablet/mL)</span><input id="do-q" type="number" inputmode="decimal" placeholder="e.g. 1" value="1"></label>
+            </div>
+            <div class="calc-result" id="do-out">Enter desired and stock…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-wb" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">⚖️ Weight-Based Dose</h2>
+            <p class="calc-formula">Dose (mg/kg) × Weight (kg)</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Dose (mg/kg)</span><input id="wb-dose" type="number" inputmode="decimal" placeholder="e.g. 10"></label>
+              <label class="calc-field"><span>Weight (kg)</span><input id="wb-wt" type="number" inputmode="decimal" placeholder="e.g. 12"></label>
+              <label class="calc-field"><span>Divide into (doses/day, optional)</span><input id="wb-div" type="number" inputmode="decimal" placeholder="e.g. 3"></label>
+            </div>
+            <div class="calc-result" id="wb-out">Enter dose and weight…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-bmi" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">📏 BMI <span class="calc-unit">kg/m²</span></h2>
+            <p class="calc-formula">Weight ÷ Height²</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>Weight (kg)</span><input id="bmi-wt" type="number" inputmode="decimal" placeholder="e.g. 60"></label>
+              <label class="calc-field"><span>Height (cm)</span><input id="bmi-ht" type="number" inputmode="decimal" placeholder="e.g. 165"></label>
+            </div>
+            <div class="calc-result" id="bmi-out">Enter weight and height…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-temp" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🌡️ Temperature <span class="calc-unit">°F → °C</span></h2>
+            <p class="calc-formula">°C = (°F − 32) × 5/9</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Fahrenheit (°F)</span><input id="tc-f" type="number" inputmode="decimal" placeholder="e.g. 98.6"></label>
+            </div>
+            <div class="calc-result" id="tc-out">Enter a Fahrenheit value…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-wt" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🏋️ Weight</h2>
+            <p class="calc-formula">kg = lb ÷ 2.205</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>Kilograms (kg)</span><input id="wt-kg" type="number" inputmode="decimal" placeholder="60"></label>
+              <label class="calc-field"><span>Pounds (lb)</span><input id="wt-lb" type="number" inputmode="decimal" placeholder="132.3"></label>
+            </div>
+            <div class="calc-result" id="wt-out">Type in either box to convert.</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-unit" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🔄 Unit Converter</h2>
+            <p class="calc-sub-label">Mass</p>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>Value</span><input id="mass-v" type="number" inputmode="decimal" placeholder="500"></label>
+              <label class="calc-field"><span>From</span><select id="mass-from"><option value="1">mcg</option><option value="1000" selected>mg</option><option value="1000000">g</option></select></label>
+              <label class="calc-field"><span>To</span><select id="mass-to"><option value="1">mcg</option><option value="1000">mg</option><option value="1000000" selected>g</option></select></label>
+            </div>
+            <div class="calc-result calc-result-sm" id="mass-out">—</div>
+            <p class="calc-sub-label" style="margin-top:16px;">Volume</p>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>Value</span><input id="vol-v" type="number" inputmode="decimal" placeholder="1500"></label>
+              <label class="calc-field"><span>From</span><select id="vol-from"><option value="1" selected>mL</option><option value="1000">L</option></select></label>
+              <label class="calc-field"><span>To</span><select id="vol-to"><option value="1">mL</option><option value="1000" selected>L</option></select></label>
+            </div>
+            <div class="calc-result calc-result-sm" id="vol-out">—</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-period" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🩷 Next Period</h2>
+            <p class="calc-formula">First day of last period + cycle length</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>First day of last period</span><input id="pd-lmp" type="date"></label>
+              <label class="calc-field"><span>Average cycle length (days)</span><input id="pd-cyc" type="number" inputmode="numeric" placeholder="28" value="28"></label>
+            </div>
+            <div class="calc-result" id="pd-out">Pick your last period date…</div>
+            <p class="calc-formula" style="margin:10px 0 0;">Estimate only — cycles naturally vary month to month.</p>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-ov" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🌸 Ovulation &amp; Fertile Days</h2>
+            <p class="calc-formula">Ovulation ≈ next period − 14 days</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>First day of last period</span><input id="ov-lmp" type="date"></label>
+              <label class="calc-field"><span>Average cycle length (days)</span><input id="ov-cyc" type="number" inputmode="numeric" placeholder="28" value="28"></label>
+            </div>
+            <div class="calc-result" id="ov-out">Pick your last period date…</div>
+            <p class="calc-formula" style="margin:10px 0 0;">Estimate only — not a contraceptive method.</p>
+          </div>
+        </div>
+
       </div>
-
-      <!-- 2. IV flow rate -->
-      <div class="calc-card">
-        <h2 class="calc-title">🩸 IV Flow Rate <span class="calc-unit">mL/hr</span></h2>
-        <p class="calc-formula">Volume ÷ Time</p>
-        <div class="calc-fields">
-          <label class="calc-field"><span>Volume (mL)</span><input id="fr-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
-          <label class="calc-field"><span>Time (hours)</span><input id="fr-time" type="number" inputmode="decimal" placeholder="e.g. 8"></label>
-        </div>
-        <div class="calc-result" id="fr-out">Enter volume and time…</div>
-      </div>
-
-      <!-- 3. IV infusion time -->
-      <div class="calc-card">
-        <h2 class="calc-title">⏱️ IV Infusion Time</h2>
-        <p class="calc-formula">Volume ÷ Flow rate</p>
-        <div class="calc-fields">
-          <label class="calc-field"><span>Volume (mL)</span><input id="it-vol" type="number" inputmode="decimal" placeholder="e.g. 1000"></label>
-          <label class="calc-field"><span>Flow rate (mL/hr)</span><input id="it-rate" type="number" inputmode="decimal" placeholder="e.g. 125"></label>
-        </div>
-        <div class="calc-result" id="it-out">Enter volume and rate…</div>
-      </div>
-
-      <!-- 4. Dosage -->
-      <div class="calc-card">
-        <h2 class="calc-title">💊 Dosage (tablets / liquid)</h2>
-        <p class="calc-formula">(Desired ÷ Have) × Quantity</p>
-        <div class="calc-fields">
-          <label class="calc-field"><span>Desired dose</span><input id="do-d" type="number" inputmode="decimal" placeholder="e.g. 500"></label>
-          <label class="calc-field"><span>Stock strength (Have)</span><input id="do-h" type="number" inputmode="decimal" placeholder="e.g. 250"></label>
-          <label class="calc-field"><span>Stock quantity (per tablet/mL)</span><input id="do-q" type="number" inputmode="decimal" placeholder="e.g. 1" value="1"></label>
-        </div>
-        <div class="calc-result" id="do-out">Enter desired and stock…</div>
-      </div>
-
-      <!-- 5. Weight-based dose -->
-      <div class="calc-card">
-        <h2 class="calc-title">⚖️ Weight-Based Dose</h2>
-        <p class="calc-formula">Dose (mg/kg) × Weight (kg)</p>
-        <div class="calc-fields">
-          <label class="calc-field"><span>Dose (mg/kg)</span><input id="wb-dose" type="number" inputmode="decimal" placeholder="e.g. 10"></label>
-          <label class="calc-field"><span>Weight (kg)</span><input id="wb-wt" type="number" inputmode="decimal" placeholder="e.g. 12"></label>
-          <label class="calc-field"><span>Divide into (doses/day, optional)</span><input id="wb-div" type="number" inputmode="decimal" placeholder="e.g. 3"></label>
-        </div>
-        <div class="calc-result" id="wb-out">Enter dose and weight…</div>
-      </div>
-
-      <!-- 6. Temperature -->
-      <div class="calc-card">
-        <h2 class="calc-title">🌡️ Temperature</h2>
-        <p class="calc-formula">°F = (°C × 9/5) + 32</p>
-        <div class="calc-fields calc-fields-2">
-          <label class="calc-field"><span>Celsius (°C)</span><input id="tc-c" type="number" inputmode="decimal" placeholder="37"></label>
-          <label class="calc-field"><span>Fahrenheit (°F)</span><input id="tc-f" type="number" inputmode="decimal" placeholder="98.6"></label>
-        </div>
-        <div class="calc-result" id="tc-out">Type in either box to convert.</div>
-      </div>
-
-      <!-- 7. Weight -->
-      <div class="calc-card">
-        <h2 class="calc-title">🏋️ Weight</h2>
-        <p class="calc-formula">kg = lb ÷ 2.205</p>
-        <div class="calc-fields calc-fields-2">
-          <label class="calc-field"><span>Kilograms (kg)</span><input id="wt-kg" type="number" inputmode="decimal" placeholder="60"></label>
-          <label class="calc-field"><span>Pounds (lb)</span><input id="wt-lb" type="number" inputmode="decimal" placeholder="132.3"></label>
-        </div>
-        <div class="calc-result" id="wt-out">Type in either box to convert.</div>
-      </div>
-
-      <!-- 8. Unit converter -->
-      <div class="calc-card">
-        <h2 class="calc-title">🔄 Unit Converter</h2>
-        <p class="calc-sub-label">Mass</p>
-        <div class="calc-fields calc-fields-3">
-          <label class="calc-field"><span>Value</span><input id="mass-v" type="number" inputmode="decimal" placeholder="500"></label>
-          <label class="calc-field"><span>From</span><select id="mass-from"><option value="1">mcg</option><option value="1000" selected>mg</option><option value="1000000">g</option></select></label>
-          <label class="calc-field"><span>To</span><select id="mass-to"><option value="1">mcg</option><option value="1000">mg</option><option value="1000000" selected>g</option></select></label>
-        </div>
-        <div class="calc-result calc-result-sm" id="mass-out">—</div>
-        <p class="calc-sub-label" style="margin-top:14px;">Volume</p>
-        <div class="calc-fields calc-fields-3">
-          <label class="calc-field"><span>Value</span><input id="vol-v" type="number" inputmode="decimal" placeholder="1500"></label>
-          <label class="calc-field"><span>From</span><select id="vol-from"><option value="1" selected>mL</option><option value="1000">L</option></select></label>
-          <label class="calc-field"><span>To</span><select id="vol-to"><option value="1">mL</option><option value="1000" selected>L</option></select></label>
-        </div>
-        <div class="calc-result calc-result-sm" id="vol-out">—</div>
-      </div>
-
     </div>
   </section>
 </main>

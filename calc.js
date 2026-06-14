@@ -3,6 +3,59 @@
    Pure client-side. Each result updates live and shows the working.
    ============================================================ */
 (function () {
+  /* Left-panel selector: show one calculator at a time in the right pane. */
+  (function initTabs() {
+    var items = [].slice.call(document.querySelectorAll(".calc-nav-item"));
+    var panels = [].slice.call(document.querySelectorAll(".calc-panel"));
+    if (!items.length) return;
+    function activate(id) {
+      items.forEach(function (it) {
+        var on = it.getAttribute("data-target") === id;
+        it.classList.toggle("is-active", on);
+        it.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach(function (p) { p.classList.toggle("is-active", p.id === id); });
+    }
+    items.forEach(function (it) {
+      it.addEventListener("click", function () { activate(it.getAttribute("data-target")); });
+    });
+  })();
+
+  /* Simple on-screen calculator */
+  (function initSimple() {
+    var disp = document.getElementById("sc-disp");
+    var keys = document.querySelector("#calc-simple .sc-keys");
+    if (!disp || !keys) return;
+    var expr = "";
+    function render() { disp.textContent = expr ? expr.replace(/\*/g, "×").replace(/\//g, "÷") : "0"; }
+    function isOp(c) { return /[+\-*/]/.test(c); }
+    keys.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      var act = b.getAttribute("data-act"), val = b.getAttribute("data-val");
+      if (act === "clear") { expr = ""; return render(); }
+      if (act === "back") { expr = expr.slice(0, -1); return render(); }
+      if (act === "eq") {
+        var s = expr.replace(/×/g, "*").replace(/÷/g, "/");
+        if (!s || !/^[-+*/.()\d\s]+$/.test(s)) return;
+        try {
+          var r = Function('"use strict";return (' + s + ")")();
+          if (!isFinite(r)) { disp.textContent = "Error"; expr = ""; return; }
+          expr = String(Math.round(r * 1e8) / 1e8);
+          render();
+        } catch (_) { disp.textContent = "Error"; expr = ""; }
+        return;
+      }
+      if (val != null) {
+        if (isOp(val)) {
+          if (expr === "" && val !== "-") return;
+          if (isOp(expr.slice(-1))) expr = expr.slice(0, -1);
+        }
+        expr += val; render();
+      }
+    });
+    render();
+  })();
+
   function $(id) { return document.getElementById(id); }
   function num(el) { if (!el) return null; var v = parseFloat(el.value); return isNaN(v) ? null : v; }
   function out(id, html) { var e = $(id); if (e) e.innerHTML = html; }
@@ -66,23 +119,52 @@
     out("wb-out", html);
   });
 
-  /* 6 — Temperature (two-way) */
-  (function () {
-    var c = $("tc-c"), f = $("tc-f");
-    if (!c || !f) return;
-    c.addEventListener("input", function () {
-      var v = num(c);
-      if (v === null) { f.value = ""; out("tc-out", "Type in either box to convert."); return; }
-      f.value = round(v * 9 / 5 + 32, 1);
-      out("tc-out", "<b>" + round(v, 1) + " °C = " + f.value + " °F</b>");
-    });
-    f.addEventListener("input", function () {
-      var v = num(f);
-      if (v === null) { c.value = ""; out("tc-out", "Type in either box to convert."); return; }
-      c.value = round((v - 32) * 5 / 9, 1);
-      out("tc-out", "<b>" + round(v, 1) + " °F = " + c.value + " °C</b>");
-    });
-  })();
+  /* 6 — Temperature (Fahrenheit → Celsius) */
+  on(["tc-f"], function () {
+    var f = num($("tc-f"));
+    if (f === null) return out("tc-out", "Enter a Fahrenheit value…");
+    out("tc-out", "<b>" + round((f - 32) * 5 / 9, 1) + " °C</b>" + work("(" + f + " °F − 32) × 5/9"));
+  });
+
+  /* BMI */
+  on(["bmi-wt", "bmi-ht"], function () {
+    var w = num($("bmi-wt")), h = num($("bmi-ht"));
+    if (w === null || h === null) return out("bmi-out", "Enter weight and height…");
+    if (w <= 0 || h <= 0) return out("bmi-out", "Values must be greater than zero.");
+    var m = h / 100, bmi = w / (m * m);
+    var cat = bmi < 18.5 ? "Underweight" : bmi < 25 ? "Normal weight" : bmi < 30 ? "Overweight" : "Obese";
+    out("bmi-out", "<b>" + round(bmi, 1) + " kg/m²</b><span class=\"calc-work\">" + cat + " — " + w + " kg ÷ (" + round(m, 2) + " m)²</span>");
+  });
+
+  /* Date helpers for menstrual-cycle tools */
+  function parseDate(v) {
+    if (!v) return null;
+    var p = v.split("-");
+    if (p.length !== 3) return null;
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function addDays(d, n) { var r = new Date(d.getTime()); r.setDate(r.getDate() + n); return r; }
+  function fmtDate(d) { return d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" }); }
+
+  /* Next Period */
+  on(["pd-lmp", "pd-cyc"], function () {
+    var lmp = parseDate($("pd-lmp").value), cyc = num($("pd-cyc"));
+    if (!lmp) return out("pd-out", "Pick your last period date…");
+    if (cyc === null || cyc < 20 || cyc > 45) return out("pd-out", "Enter a cycle length between 20 and 45 days.");
+    var next = addDays(lmp, cyc), after = addDays(lmp, cyc * 2);
+    out("pd-out", "<b>" + fmtDate(next) + "</b><span class=\"calc-work\">Following period: " + fmtDate(after) + " · cycle " + cyc + " days</span>");
+  });
+
+  /* Ovulation & fertile window */
+  on(["ov-lmp", "ov-cyc"], function () {
+    var lmp = parseDate($("ov-lmp").value), cyc = num($("ov-cyc"));
+    if (!lmp) return out("ov-out", "Pick your last period date…");
+    if (cyc === null || cyc < 20 || cyc > 45) return out("ov-out", "Enter a cycle length between 20 and 45 days.");
+    var ov = addDays(lmp, cyc - 14);
+    var fStart = addDays(ov, -5), fEnd = addDays(ov, 1);
+    out("ov-out", "<b>Ovulation: " + fmtDate(ov) + "</b><span class=\"calc-work\">Fertile window: " + fmtDate(fStart) + " → " + fmtDate(fEnd) + "</span>");
+  });
 
   /* 7 — Weight (two-way) */
   (function () {
