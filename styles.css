@@ -4724,3 +4724,37 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 
 /* ---- Calculators: zero out footer-bottom residual padding ---- */
 .footer-slim .footer-bottom { padding: 0; }
+
+/* ---- Calculators: balanced, polished desktop layout ---- */
+@media (min-width: 761px) {
+  .calc-layout { max-width: 880px; margin: 0 auto; grid-template-columns: 244px 1fr; gap: 28px; }
+  .calc-stage { display: flex; justify-content: center; }
+  .calc-stage .calc-card { width: 100%; max-width: 470px; margin: 0; }
+  .calc-stage .sc-card { max-width: 400px; }
+  /* squarer, app-like keypad */
+  .calc-page .sc-display { min-height: 60px; font-size: 1.8rem; padding: 14px 18px; margin-bottom: 12px; }
+  .calc-page .sc-keys { gap: 9px; }
+  .calc-page .sc-key { padding: 14px 0; font-size: 1.2rem; }
+}
+
+/* ---- Calculators: center the nav+card as one balanced unit ---- */
+@media (min-width: 761px) {
+  .calc-layout { grid-template-columns: 232px 468px; gap: 28px; justify-content: center; max-width: none; margin: 0; }
+  .calc-stage { display: flex; justify-content: center; }
+  .calc-stage .calc-card { width: 100%; max-width: 468px; }
+  .calc-stage .sc-card { max-width: 400px; }
+}
+
+/* ---- Calculators: fix card width within centered stage column ---- */
+@media (min-width: 761px) {
+  .calc-stage { display: block; }
+  .calc-stage .calc-panel { width: 100%; }
+  .calc-stage .calc-card { width: 100%; max-width: 468px; margin: 0 auto; }
+  .calc-stage .sc-card { max-width: 400px; }
+}
+
+/* ---- Calculators: balance keypad height vs single-screen fit ---- */
+@media (min-width: 761px) {
+  .calc-page .sc-key { padding: 11px 0; }
+  .calc-page .sc-display { min-height: 54px; font-size: 1.7rem; }
+}
