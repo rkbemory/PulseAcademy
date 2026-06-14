@@ -4794,3 +4794,20 @@ body > footer { flex-shrink: 0; }
 
 /* Ensure [hidden] wins over .calc-fields grid display */
 .calc-fields[hidden] { display: none !important; }
+
+/* ---- Quick Reference page: tables ---- */
+@media (min-width: 761px) {
+  .ref-page .calc-layout { grid-template-columns: 232px minmax(0, 620px); }
+  .ref-page .calc-stage .calc-card { max-width: 620px; }
+}
+.ref-card { overflow-x: auto; }
+.ref-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 4px; }
+.ref-table td, .ref-table th { padding: 7px 10px; border-bottom: 1px solid var(--line-cool); text-align: left; }
+.ref-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--lead-ink); white-space: nowrap; }
+.ref-table .ref-group td {
+  background: var(--primary-tint); color: var(--primary); font-weight: 700;
+  font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.5px; text-align: left;
+}
+.ref-table thead th { background: var(--primary); color: #fff; font-size: 0.78rem; white-space: nowrap; }
+.ref-table-vitals td, .ref-table-vitals th { text-align: center; }
+.ref-table-vitals td:first-child, .ref-table-vitals th:first-child { text-align: left; }

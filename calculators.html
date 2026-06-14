@@ -52,6 +52,7 @@
         <button class="calc-nav-item" data-target="calc-time"  role="tab" aria-selected="false">⏱️ IV Infusion Time</button>
         <button class="calc-nav-item" data-target="calc-dose"  role="tab" aria-selected="false">💊 Dosage (tablets/liquid)</button>
         <button class="calc-nav-item" data-target="calc-wb"    role="tab" aria-selected="false">⚖️ Weight-Based Dose</button>
+        <button class="calc-nav-item" data-target="calc-abg"   role="tab" aria-selected="false">🫁 ABG Interpreter</button>
         <button class="calc-nav-item" data-target="calc-temp"  role="tab" aria-selected="false">🌡️ Temperature °F → °C</button>
         <button class="calc-nav-item" data-target="calc-wt"    role="tab" aria-selected="false">🏋️ Weight kg ⇄ lb</button>
         <button class="calc-nav-item" data-target="calc-unit"  role="tab" aria-selected="false">🔄 Unit Converter</button>
@@ -156,6 +157,19 @@
               <label class="calc-field"><span>Divide into (doses/day, optional)</span><input id="wb-div" type="number" inputmode="decimal" placeholder="e.g. 3"></label>
             </div>
             <div class="calc-result" id="wb-out">Enter dose and weight…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-abg" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🫁 ABG Interpreter</h2>
+            <p class="calc-formula">Normal: pH 7.35–7.45 · PaCO₂ 35–45 · HCO₃⁻ 22–26</p>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>pH</span><input id="abg-ph" type="number" inputmode="decimal" step="0.01" placeholder="7.40"></label>
+              <label class="calc-field"><span>PaCO₂ (mmHg)</span><input id="abg-co2" type="number" inputmode="decimal" placeholder="40"></label>
+              <label class="calc-field"><span>HCO₃⁻ (mEq/L)</span><input id="abg-hco3" type="number" inputmode="decimal" placeholder="24"></label>
+            </div>
+            <div class="calc-result" id="abg-out">Enter pH, PaCO₂ and HCO₃⁻…</div>
           </div>
         </div>
 

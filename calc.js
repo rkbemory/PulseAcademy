@@ -173,6 +173,42 @@
     on(["bmi-wt", "bmi-ht", "bmi-ft", "bmi-in"], compute);
   })();
 
+  /* ABG interpreter */
+  function flagVal(v, lo, hi) { return v + " (" + (v < lo ? "low" : v > hi ? "high" : "normal") + ")"; }
+  function interpretABG(ph, co2, hco3) {
+    var acid = ph < 7.35, alk = ph > 7.45;
+    var co2Acid = co2 > 45, co2Alk = co2 < 35;
+    var hco3Acid = hco3 < 22, hco3Alk = hco3 > 26;
+    var title = "", comp = "";
+    if (acid) {
+      if (co2Acid && hco3Acid) title = "Mixed respiratory & metabolic acidosis";
+      else if (co2Acid) { title = "Respiratory acidosis"; comp = hco3Alk ? "partially compensated" : "uncompensated"; }
+      else if (hco3Acid) { title = "Metabolic acidosis"; comp = co2Alk ? "partially compensated" : "uncompensated"; }
+      else title = "Acidaemia — review values";
+    } else if (alk) {
+      if (co2Alk && hco3Alk) title = "Mixed respiratory & metabolic alkalosis";
+      else if (co2Alk) { title = "Respiratory alkalosis"; comp = hco3Acid ? "partially compensated" : "uncompensated"; }
+      else if (hco3Alk) { title = "Metabolic alkalosis"; comp = co2Acid ? "partially compensated" : "uncompensated"; }
+      else title = "Alkalaemia — review values";
+    } else {
+      if (!co2Acid && !co2Alk && !hco3Acid && !hco3Alk) title = "Normal ABG";
+      else {
+        var leanAcid = ph < 7.40;
+        if (leanAcid) title = co2Acid ? "Fully compensated respiratory acidosis" : hco3Acid ? "Fully compensated metabolic acidosis" : "Compensated disorder";
+        else title = co2Alk ? "Fully compensated respiratory alkalosis" : hco3Alk ? "Fully compensated metabolic alkalosis" : "Compensated disorder";
+      }
+    }
+    var detail = "pH " + flagVal(ph, 7.35, 7.45) + " · PaCO₂ " + flagVal(co2, 35, 45) + " · HCO₃⁻ " + flagVal(hco3, 22, 26);
+    if (comp) detail = comp.charAt(0).toUpperCase() + comp.slice(1) + " — " + detail;
+    return { title: title, detail: detail };
+  }
+  on(["abg-ph", "abg-co2", "abg-hco3"], function () {
+    var ph = num($("abg-ph")), co2 = num($("abg-co2")), hco3 = num($("abg-hco3"));
+    if (ph === null || co2 === null || hco3 === null) return out("abg-out", "Enter pH, PaCO₂ and HCO₃⁻…");
+    var r = interpretABG(ph, co2, hco3);
+    out("abg-out", "<b>" + r.title + "</b><span class=\"calc-work\">" + r.detail + "</span>");
+  });
+
   /* Date helpers for menstrual-cycle tools */
   function parseDate(v) {
     if (!v) return null;
