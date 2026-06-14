@@ -163,11 +163,33 @@
           <div class="calc-card">
             <h2 class="calc-title">📏 BMI <span class="calc-unit">kg/m²</span></h2>
             <p class="calc-formula">Weight ÷ Height²</p>
+            <div class="bmi-seg" role="group" aria-label="Sex">
+              <button type="button" class="bmi-toggle is-on" data-sex="male">♂ Male</button>
+              <button type="button" class="bmi-toggle" data-sex="female">♀ Female</button>
+            </div>
             <div class="calc-fields calc-fields-2">
               <label class="calc-field"><span>Weight (kg)</span><input id="bmi-wt" type="number" inputmode="decimal" placeholder="e.g. 60"></label>
+              <label class="calc-field"><span>Height in</span>
+                <select id="bmi-unit"><option value="cm">Centimetres</option><option value="ftin">Feet &amp; inches</option></select>
+              </label>
+            </div>
+            <div class="calc-fields" id="bmi-cm-row">
               <label class="calc-field"><span>Height (cm)</span><input id="bmi-ht" type="number" inputmode="decimal" placeholder="e.g. 165"></label>
             </div>
+            <div class="calc-fields calc-fields-2" id="bmi-ftin-row" hidden>
+              <label class="calc-field"><span>Feet</span><input id="bmi-ft" type="number" inputmode="numeric" placeholder="e.g. 5"></label>
+              <label class="calc-field"><span>Inches</span><input id="bmi-in" type="number" inputmode="decimal" placeholder="e.g. 5"></label>
+            </div>
             <div class="calc-result" id="bmi-out">Enter weight and height…</div>
+            <div class="bmi-scale" id="bmi-scale" hidden>
+              <div class="bmi-track">
+                <div class="bmi-bar">
+                  <span class="bmi-seg-u"></span><span class="bmi-seg-n"></span><span class="bmi-seg-o"></span><span class="bmi-seg-ob"></span>
+                </div>
+                <span class="bmi-marker" id="bmi-marker"></span>
+              </div>
+              <div class="bmi-legend"><span>Under<br>&lt;18.5</span><span>Normal<br>18.5–24.9</span><span>Over<br>25–29.9</span><span>Obese<br>30+</span></div>
+            </div>
           </div>
         </div>
 

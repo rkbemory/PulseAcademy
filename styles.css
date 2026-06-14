@@ -4758,3 +4758,39 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
   .calc-page .sc-key { padding: 11px 0; }
   .calc-page .sc-display { min-height: 54px; font-size: 1.7rem; }
 }
+
+/* ---- Sticky footer: keep footer at the bottom on short pages ---- */
+body { display: flex; flex-direction: column; min-height: 100vh; }
+body > main, main#main { flex: 1 0 auto; }
+body > footer { flex-shrink: 0; }
+
+/* ---- BMI: sex toggle + WHO category scale ---- */
+.bmi-seg { display: flex; gap: 8px; margin-bottom: 12px; }
+.bmi-toggle {
+  flex: 1; padding: 9px; border-radius: 10px; cursor: pointer;
+  border: 1.5px solid var(--line-cool); background: var(--surface);
+  font-weight: 600; font-size: 0.92rem; color: var(--text); transition: background .15s, color .15s, border-color .15s;
+}
+.bmi-toggle.is-on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.bmi-scale { margin-top: 14px; }
+.bmi-track { position: relative; padding-top: 4px; }
+.bmi-bar { display: flex; height: 14px; border-radius: 8px; overflow: hidden; }
+.bmi-bar > span { display: block; height: 100%; }
+.bmi-seg-u { width: 14%; background: #3F86E0; }
+.bmi-seg-n { width: 26%; background: #16A34A; }
+.bmi-seg-o { width: 20%; background: #E0A82E; }
+.bmi-seg-ob { width: 40%; background: #D9534F; }
+.bmi-marker {
+  position: absolute; top: 0; width: 4px; height: 22px;
+  background: var(--primary-deep); border: 2px solid #fff; border-radius: 3px;
+  transform: translateX(-50%); box-shadow: 0 1px 5px rgba(0,0,0,.35); transition: left .25s ease;
+}
+.bmi-legend { display: flex; margin-top: 6px; font-size: 0.66rem; color: var(--text-muted); line-height: 1.25; }
+.bmi-legend span { text-align: center; }
+.bmi-legend span:nth-child(1) { flex: 0 0 14%; }
+.bmi-legend span:nth-child(2) { flex: 0 0 26%; }
+.bmi-legend span:nth-child(3) { flex: 0 0 20%; }
+.bmi-legend span:nth-child(4) { flex: 0 0 40%; }
+
+/* Ensure [hidden] wins over .calc-fields grid display */
+.calc-fields[hidden] { display: none !important; }

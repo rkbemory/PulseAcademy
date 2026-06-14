@@ -126,15 +126,52 @@
     out("tc-out", "<b>" + round((f - 32) * 5 / 9, 1) + " °C</b>" + work("(" + f + " °F − 32) × 5/9"));
   });
 
-  /* BMI */
-  on(["bmi-wt", "bmi-ht"], function () {
-    var w = num($("bmi-wt")), h = num($("bmi-ht"));
-    if (w === null || h === null) return out("bmi-out", "Enter weight and height…");
-    if (w <= 0 || h <= 0) return out("bmi-out", "Values must be greater than zero.");
-    var m = h / 100, bmi = w / (m * m);
-    var cat = bmi < 18.5 ? "Underweight" : bmi < 25 ? "Normal weight" : bmi < 30 ? "Overweight" : "Obese";
-    out("bmi-out", "<b>" + round(bmi, 1) + " kg/m²</b><span class=\"calc-work\">" + cat + " — " + w + " kg ÷ (" + round(m, 2) + " m)²</span>");
-  });
+  /* BMI — sex, cm or ft/in height, WHO category + scale marker */
+  (function initBMI() {
+    if (!$("bmi-out")) return;
+    var sex = "male";
+    var seg = document.querySelector("#calc-bmi .bmi-seg");
+    if (seg) seg.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      sex = b.getAttribute("data-sex");
+      [].slice.call(seg.children).forEach(function (x) { x.classList.toggle("is-on", x === b); });
+      compute();
+    });
+    function heightCm() {
+      if ($("bmi-unit") && $("bmi-unit").value === "ftin") {
+        var f = num($("bmi-ft")) || 0, i = num($("bmi-in")) || 0;
+        var inches = f * 12 + i;
+        return inches > 0 ? inches * 2.54 : null;
+      }
+      return num($("bmi-ht"));
+    }
+    function cat(b) {
+      if (b < 18.5) return "Underweight";
+      if (b < 25) return "Normal weight";
+      if (b < 30) return "Overweight";
+      if (b < 35) return "Obese (class I)";
+      if (b < 40) return "Obese (class II)";
+      return "Obese (class III)";
+    }
+    function compute() {
+      var w = num($("bmi-wt")), hcm = heightCm(), scale = $("bmi-scale");
+      if (w === null || hcm === null) { out("bmi-out", "Enter weight and height…"); if (scale) scale.hidden = true; return; }
+      if (w <= 0 || hcm <= 0) { out("bmi-out", "Values must be greater than zero."); if (scale) scale.hidden = true; return; }
+      var m = hcm / 100, bmi = w / (m * m);
+      out("bmi-out", "<b>" + round(bmi, 1) + " kg/m²</b><span class=\"calc-work\">" + cat(bmi) + " (WHO) · " + (sex === "male" ? "♂ Male" : "♀ Female") + " · height " + round(hcm, 0) + " cm</span>");
+      var pos = Math.max(0, Math.min(100, (bmi - 15) / 25 * 100));
+      if ($("bmi-marker")) $("bmi-marker").style.left = pos + "%";
+      if (scale) scale.hidden = false;
+    }
+    function toggleUnit() {
+      var ft = $("bmi-unit") && $("bmi-unit").value === "ftin";
+      if ($("bmi-cm-row")) $("bmi-cm-row").hidden = ft;
+      if ($("bmi-ftin-row")) $("bmi-ftin-row").hidden = !ft;
+      compute();
+    }
+    if ($("bmi-unit")) $("bmi-unit").addEventListener("change", toggleUnit);
+    on(["bmi-wt", "bmi-ht", "bmi-ft", "bmi-in"], compute);
+  })();
 
   /* Date helpers for menstrual-cycle tools */
   function parseDate(v) {
