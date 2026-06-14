@@ -1,7 +1,7 @@
 {
   "name": "Pulse for Nurses",
   "short_name": "Pulse",
-  "description": "Admission preparation platform for MSN, Post Basic BSc & BNMC RN students. For Nurses, By Nurses.",
+  "description": "Bangladesh's complete nursing portal — MSN, Post Basic BSc & BNMC RN admission prep, NCLEX-RN, nursing jobs and books. For Nurses, By Nurses.",
   "start_url": "/",
   "scope": "/",
   "id": "https://pulsefornurses.com/",
@@ -9,7 +9,7 @@
   "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait-primary",
   "background_color": "#FAF7F2",
-  "theme_color": "#1E5168",
+  "theme_color": "#14387A",
   "lang": "en",
   "categories": ["education", "medical", "books"],
   "icons": [
