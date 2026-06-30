@@ -889,7 +889,7 @@ window.Academic.topics["diploma-nursing/medical-surgical-nursing"] = [
       { h: "Raised intracranial pressure (ICP)", list: [
         "The skull is a rigid box; if the brain swells or there is bleeding or a tumour, the pressure inside (ICP) rises and can damage or kill brain tissue.",
         "Early signs: a decreasing level of consciousness (the earliest sign), headache, vomiting (often without nausea) and restlessness.",
-        "Late signs (Cushing's triple response): rising blood pressure with a widening pulse pressure, a slow pulse (bradycardia) and irregular breathing; the pupils may become unequal or fixed.",
+        "Late signs (Cushing's triad): rising blood pressure with a widening pulse pressure, a slow pulse (bradycardia) and irregular breathing; the pupils may become unequal or fixed.",
         "Nursing care: keep the head of the bed raised about 30 degrees with the head in a neutral position, avoid anything that raises ICP further (straining, coughing), monitor neurological status closely and report deterioration urgently."
       ] },
       { h: "Stroke (cerebrovascular accident, CVA)", p: "A stroke is sudden damage to part of the brain caused by an interruption of its blood supply. There are two main types: ischaemic stroke (a clot blocks an artery — the more common type) and haemorrhagic stroke (an artery bursts and bleeds). The brain tissue is starved of oxygen and its function is lost. A stroke is a medical emergency — 'time is brain' — because fast treatment can save brain tissue.", figure: {
