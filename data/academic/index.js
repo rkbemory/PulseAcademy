@@ -44,11 +44,11 @@ window.Academic.programs = {
       2: {
         name: "2nd Year", totalMarks: 1000, totalHours: 1704,
         subjects: [
-          { id: "medical-surgical-nursing",  code: "D231", name: "Medical & Surgical Nursing",       type: "Professional", marks: 300, hours: 832 },
-          { id: "pharmacology",              code: "D222", name: "Pharmacology",                     type: "Foundation",   marks: 150, hours: 80 },
-          { id: "nutrition-dietetics",       code: "D223", name: "Nutrition & Dietetics",            type: "Foundation",   marks: 200, hours: 240 },
-          { id: "community-health-nursing",  code: "D234", name: "Community Health Nursing",         type: "Professional", marks: 200, hours: 292 },
-          { id: "pediatric-nursing",         code: "D235", name: "Pediatric Nursing",                type: "Professional", marks: 150, hours: 260 }
+          { id: "medical-surgical-nursing",  code: "D231", name: "Medical & Surgical Nursing",       type: "Professional", marks: 300, hours: 832, topicCount: 20, available: true },
+          { id: "pharmacology",              code: "D222", name: "Pharmacology",                     type: "Foundation",   marks: 150, hours: 80, topicCount: 15, available: true },
+          { id: "nutrition-dietetics",       code: "D223", name: "Nutrition & Dietetics",            type: "Foundation",   marks: 200, hours: 240, topicCount: 16, available: true },
+          { id: "community-health-nursing",  code: "D234", name: "Community Health Nursing",         type: "Professional", marks: 200, hours: 292, topicCount: 18, available: true },
+          { id: "pediatric-nursing",         code: "D235", name: "Pediatric Nursing",                type: "Professional", marks: 150, hours: 260, topicCount: 15, available: true }
         ]
       },
       3: {
