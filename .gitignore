@@ -35,3 +35,6 @@ yarn-error.log*
 
 # Logs
 *.log
+
+# Local reference docs (not for deploy)
+Syllabus & Curriculum/
