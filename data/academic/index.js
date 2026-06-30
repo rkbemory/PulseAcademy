@@ -54,11 +54,11 @@ window.Academic.programs = {
       3: {
         name: "3rd Year", totalMarks: 850, totalHours: 1752,
         subjects: [
-          { id: "midwifery",                 code: "D331", name: "Midwifery",                        type: "Professional", marks: 300, hours: 1192 },
-          { id: "psychiatric-nursing",       code: "D332", name: "Psychiatric Nursing",             type: "Professional", marks: 150, hours: 144 },
-          { id: "orthopedic-nursing",        code: "D333", name: "Orthopedic Nursing",              type: "Professional", marks: 150, hours: 240 },
-          { id: "leadership-management",     code: "D334", name: "Leadership & Management",          type: "Professional", marks: 150, hours: 96 },
-          { id: "research-methodology",      code: "D335", name: "Research Methodology",             type: "Professional", marks: 100, hours: 80 }
+          { id: "midwifery",                 code: "D331", name: "Midwifery",                        type: "Professional", marks: 300, hours: 1192, topicCount: 22, available: true },
+          { id: "psychiatric-nursing",       code: "D332", name: "Psychiatric Nursing",             type: "Professional", marks: 150, hours: 144, topicCount: 15, available: true },
+          { id: "orthopedic-nursing",        code: "D333", name: "Orthopedic Nursing",              type: "Professional", marks: 150, hours: 240, topicCount: 14, available: true },
+          { id: "leadership-management",     code: "D334", name: "Leadership & Management",          type: "Professional", marks: 150, hours: 96, topicCount: 12, available: true },
+          { id: "research-methodology",      code: "D335", name: "Research Methodology",             type: "Professional", marks: 100, hours: 80, topicCount: 12, available: true }
         ]
       }
     }
