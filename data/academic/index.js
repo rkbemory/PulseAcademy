@@ -37,7 +37,7 @@ window.Academic.programs = {
           { id: "anatomy-physiology",        code: "D123", name: "Anatomy & Physiology",             type: "Foundation",   marks: 250, hours: 256, topicCount: 20, available: true },
           { id: "microbiology-parasitology", code: "D124", name: "Microbiology & Parasitology",      type: "Foundation",   marks: 150, hours: 64, topicCount: 14, available: true },
           { id: "fundamentals-of-nursing",   code: "D135", name: "Fundamentals of Nursing",          type: "Professional", marks: 250, hours: 824, topicCount: 20, available: true },
-          { id: "communicative-english",     code: "D116", name: "Communicative English",            type: "General",      marks: 150, hours: 80 },
+          { id: "communicative-english",     code: "D116", name: "Communicative English",            type: "General",      marks: 150, hours: 80, topicCount: 10, available: true },
           { id: "computer-it",               code: "D117", name: "Computer & Information Technology", type: "General",      marks: 150, hours: 64 }
         ]
       },
