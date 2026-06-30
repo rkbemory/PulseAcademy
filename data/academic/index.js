@@ -33,7 +33,7 @@ window.Academic.programs = {
         name: "1st Year", totalMarks: 1250, totalHours: 1656,
         subjects: [
           { id: "behavioral-science",        code: "D111", name: "Behavioral Science",               type: "General",      marks: 150, hours: 240 },
-          { id: "basic-science",             code: "D112", name: "Basic Science",                    type: "General",      marks: 150, hours: 128 },
+          { id: "basic-science",             code: "D112", name: "Basic Science",                    type: "General",      marks: 150, hours: 128, topicCount: 17, available: true },
           { id: "anatomy-physiology",        code: "D123", name: "Anatomy & Physiology",             type: "Foundation",   marks: 250, hours: 256, topicCount: 20, available: true },
           { id: "microbiology-parasitology", code: "D124", name: "Microbiology & Parasitology",      type: "Foundation",   marks: 150, hours: 64 },
           { id: "fundamentals-of-nursing",   code: "D135", name: "Fundamentals of Nursing",          type: "Professional", marks: 250, hours: 824 },
