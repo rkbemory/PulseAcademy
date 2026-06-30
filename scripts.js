@@ -66,6 +66,7 @@
       '<a href="msn.html" class="' + activeFor("msn.html") + '">🩺 MSN Admission</a>',
       '<a href="post-basic.html" class="' + activeFor("post-basic.html") + '">📘 Post Basic BSc</a>',
       '<a href="rn.html" class="' + activeFor("rn.html") + '">🎓 BNMC RN</a>',
+      '<a href="academic.html" class="' + activeFor("academic.html") + '">📚 Academic Programs</a>',
       '<div class="nav-drawer-sep"></div>',
       '<span class="nav-drawer-section">Explore</span>',
       '<a href="nclex.html" class="' + activeFor("nclex.html") + '">🌎 NCLEX-RN</a>',

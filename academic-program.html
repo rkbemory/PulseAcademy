@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Program — Academic Programs · Pulse for Nurses</title>
+<meta name="description" content="Year-wise subjects for a nursing/midwifery academic program — study notes, video lectures, quizzes and exam prep. Pulse for Nurses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14387A">
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text"><span class="brand-name">Pulse For Nurses</span></span>
+    </a>
+    <nav class="top-nav-links" aria-label="Primary">
+      <a href="msn.html">MSN</a>
+      <a href="post-basic.html">Post Basic</a>
+      <a href="rn.html">BNMC RN</a>
+      <a href="nclex.html">NCLEX</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="quiz.html?program=msn&amp;test=msn-mt-01" class="cta-mini">Free Mock →</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="block dip-page">
+    <div id="academic-program-root"><p class="dip-muted">Loading program…</p></div>
+  </section>
+</main>
+
+<footer class="footer-slim">
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span><a href="academic.html">← All programs</a> · <a href="feedback.html">Feedback &amp; Support</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/auth-config.js"></script>
+<script src="auth.js"></script>
+<script src="scripts.js"></script>
+<script src="data/academic/index.js"></script>
+<script src="academic.js"></script>
+<script>window.AcademicUI && window.AcademicUI.initProgram();</script>
+</body>
+</html>
