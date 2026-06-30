@@ -3289,12 +3289,12 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "type": "mcq",
         "q": "Pressure is defined as:",
         "options": [
-          "Force x area",
           "Force ÷ area",
+          "Force x area",
           "Area ÷ force",
           "Mass x area"
         ],
-        "answer": 1,
+        "answer": 0,
         "rationale": "Pressure = force ÷ area; a smaller area gives higher pressure."
       },
       {
@@ -3302,11 +3302,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "A sharp needle pierces skin easily because its small tip produces:",
         "options": [
           "Low pressure",
-          "High pressure",
           "No pressure",
+          "High pressure",
           "Negative pressure"
         ],
-        "answer": 1,
+        "answer": 2,
         "rationale": "A small contact area concentrates the force into a high pressure."
       },
       {
@@ -3314,11 +3314,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Atmospheric pressure at sea level is about:",
         "options": [
           "120 mmHg",
-          "760 mmHg",
+          "1000 mmHg",
           "37 mmHg",
-          "1000 mmHg"
+          "760 mmHg"
         ],
-        "answer": 1,
+        "answer": 3,
         "rationale": "Atmospheric pressure at sea level is approximately 760 mmHg (101 kPa)."
       },
       {
@@ -3337,12 +3337,12 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "type": "mcq",
         "q": "Blood pressure is measured in:",
         "options": [
-          "Pascals",
           "mmHg",
+          "Pascals",
           "Newtons",
           "Litres"
         ],
-        "answer": 1,
+        "answer": 0,
         "rationale": "Clinically blood pressure is recorded in millimetres of mercury (mmHg)."
       },
       {
@@ -3350,11 +3350,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Boyle's law states that, at constant temperature, gas pressure and volume are:",
         "options": [
           "Directly proportional",
-          "Inversely proportional",
           "Unrelated",
+          "Inversely proportional",
           "Always equal"
         ],
-        "answer": 1,
+        "answer": 2,
         "rationale": "Boyle's law: pressure and volume are inversely related at constant temperature."
       },
       {
@@ -3362,11 +3362,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Removing secretions with a suction machine uses:",
         "options": [
           "High positive pressure",
-          "Negative (below-atmospheric) pressure",
+          "Atmospheric pressure",
           "Hydrostatic pressure",
-          "Atmospheric pressure"
+          "Negative (below-atmospheric) pressure"
         ],
-        "answer": 1,
+        "answer": 3,
         "rationale": "Suction creates negative pressure to draw secretions or fluid out."
       },
       {
@@ -3385,12 +3385,12 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "type": "mcq",
         "q": "Pulling back a syringe plunger draws fluid in because it:",
         "options": [
-          "Increases pressure inside",
           "Increases volume and lowers pressure inside",
+          "Increases pressure inside",
           "Heats the fluid",
           "Adds force to the fluid"
         ],
-        "answer": 1,
+        "answer": 0,
         "rationale": "Increasing the syringe volume lowers internal pressure, so fluid is pushed in by atmospheric pressure (Boyle's law)."
       },
       {
@@ -3398,11 +3398,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Medical oxygen is stored in cylinders under:",
         "options": [
           "Low pressure",
-          "High pressure",
           "No pressure",
+          "High pressure",
           "Negative pressure"
         ],
-        "answer": 1,
+        "answer": 2,
         "rationale": "Oxygen is stored compressed at high pressure; a regulator reduces it for delivery."
       },
       {
@@ -4100,12 +4100,12 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "type": "mcq",
         "q": "The bending of light as it passes from one medium to another is:",
         "options": [
-          "Reflection",
           "Refraction",
+          "Reflection",
           "Diffusion",
           "Dispersion"
         ],
-        "answer": 1,
+        "answer": 0,
         "rationale": "Refraction is the bending of light between media of different density; reflection is bouncing back."
       },
       {
@@ -4113,11 +4113,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "A convex lens:",
         "options": [
           "Diverges light rays",
-          "Converges light rays to a focus",
           "Blocks light",
+          "Converges light rays to a focus",
           "Reflects light"
         ],
-        "answer": 1,
+        "answer": 2,
         "rationale": "A convex (converging) lens brings parallel rays to a focal point."
       },
       {
@@ -4125,11 +4125,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Myopia (short-sight) is corrected with a:",
         "options": [
           "Convex lens",
-          "Concave lens",
+          "Prism",
           "Plane mirror",
-          "Prism"
+          "Concave lens"
         ],
-        "answer": 1,
+        "answer": 3,
         "rationale": "A concave (diverging) lens corrects myopia; a convex lens corrects hyperopia."
       },
       {
@@ -4148,12 +4148,12 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "type": "mcq",
         "q": "Endoscopy is made possible by carrying light along:",
         "options": [
-          "Copper wires",
           "Optical (glass) fibres",
+          "Copper wires",
           "Water tubes",
           "Mirrors only"
         ],
-        "answer": 1,
+        "answer": 0,
         "rationale": "Fibre-optics carry light by internal reflection along flexible glass fibres."
       },
       {
@@ -4161,11 +4161,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Phototherapy for neonatal jaundice mainly uses:",
         "options": [
           "Red light",
-          "Blue light",
           "X-rays",
+          "Blue light",
           "Infrared only"
         ],
-        "answer": 1,
+        "answer": 2,
         "rationale": "Blue light breaks down bilirubin in the skin, treating neonatal jaundice."
       },
       {
@@ -4173,11 +4173,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "A pulse oximeter measures oxygen saturation by shining ______ through the finger.",
         "options": [
           "Sound waves",
-          "Red and infrared light",
+          "Ultraviolet light",
           "X-rays",
-          "Ultraviolet light"
+          "Red and infrared light"
         ],
-        "answer": 1,
+        "answer": 3,
         "rationale": "It passes red and infrared light through tissue to estimate SpO2."
       },
       {
@@ -4196,12 +4196,12 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "type": "mcq",
         "q": "Which light can sterilise surfaces and also damage skin and eyes?",
         "options": [
-          "Infrared",
           "Ultraviolet (UV)",
+          "Infrared",
           "Red light",
           "Visible light"
         ],
-        "answer": 1,
+        "answer": 0,
         "rationale": "UV light is germicidal but harmful to skin and eyes."
       },
       {
@@ -4209,11 +4209,11 @@ window.Academic.topics["diploma-nursing/basic-science"] = [
         "q": "Unlike sound, light can travel:",
         "options": [
           "Only through air",
-          "Through a vacuum",
           "Only through water",
+          "Through a vacuum",
           "Only in curves"
         ],
-        "answer": 1,
+        "answer": 2,
         "rationale": "Light (electromagnetic) needs no medium and travels through a vacuum."
       },
       {
