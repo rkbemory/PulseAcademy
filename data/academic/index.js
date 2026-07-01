@@ -101,9 +101,9 @@ window.Academic.programs = {
       3: {
         name: "3rd Year", totalMarks: 700,
         subjects: [
-          { id: "newborn-complications",    code: "DM 331", name: "Newborn Complications",                        type: "Professional", marks: 150, hours: 420 },
-          { id: "complexities-maternity",   code: "DM 332", name: "Complexities of Maternity Experience",         type: "Professional", marks: 200, hours: 576 },
-          { id: "transition-registered",    code: "DM 333", name: "Transition to Registered Midwifery",           type: "Professional", marks: 150, hours: 384 },
+          { id: "newborn-complications",    code: "DM 331", name: "Newborn Complications",                        type: "Professional", marks: 150, hours: 420, topicCount: 16, available: true },
+          { id: "complexities-maternity",   code: "DM 332", name: "Complexities of Maternity Experience",         type: "Professional", marks: 200, hours: 576, topicCount: 16, available: true },
+          { id: "transition-registered",    code: "DM 333", name: "Transition to Registered Midwifery",           type: "Professional", marks: 150, hours: 384, topicCount: 12, available: true },
           { id: "midwifery-practicum",      code: "DM 334", name: "Midwifery Practicum (clinical skills)",         type: "Clinical",     marks: 200, hours: 384, available: false }
         ]
       }
