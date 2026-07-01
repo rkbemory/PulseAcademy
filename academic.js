@@ -122,7 +122,7 @@
       var yr = prog.years[y];
       html += '<section class="dip-year"><div class="dip-year-head"><span class="dip-folder">📂</span>' +
         "<h2>" + esc(yr.name) + "</h2>" +
-        '<span class="dip-year-meta">' + yr.subjects.length + ' subjects · ' + yr.totalMarks.toLocaleString() + ' marks</span></div>';
+        '<span class="dip-year-meta">' + yr.subjects.length + ' subjects' + (yr.totalMarks ? ' · ' + yr.totalMarks.toLocaleString() + ' marks' : '') + '</span></div>';
       html += '<div class="dip-subject-grid">';
       yr.subjects.forEach(function (s) {
         var avail = !!s.available;

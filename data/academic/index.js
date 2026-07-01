@@ -68,14 +68,46 @@ window.Academic.programs = {
     id: "diploma-midwifery",
     name: "Diploma in Midwifery",
     short: "Diploma in Midwifery",
-    authority: "Bangladesh Nursing & Midwifery Council",
+    authority: "Bangladesh Nursing & Midwifery Council (2020 Curriculum · ICM standard)",
     durationYears: 3,
     color: "#831843",
     accent: "#F472B6",
     icon: "🤱",
-    available: false,
-    note: "Curriculum being added — the official Diploma in Midwifery syllabus will be structured here next.",
-    years: {}
+    available: true,
+    years: {
+      1: {
+        name: "1st Year", totalMarks: 1250,
+        subjects: [
+          { id: "behavioural-science",      code: "DM 111", name: "Behavioural Science",                          type: "General",      marks: 100, hours: 70,  topicCount: 14, available: true },
+          { id: "basic-science",            code: "DM 112", name: "Basic Science",                               type: "General",      marks: 100, hours: 88,  topicCount: 16, available: true },
+          { id: "anatomy-physiology",       code: "DM 123", name: "Anatomy & Physiology",                        type: "Foundation",   marks: 200, hours: 234, topicCount: 20, available: true },
+          { id: "professional-framework",   code: "DM 124", name: "Professional Framework & Communication in Midwifery", type: "Professional", marks: 150, hours: 142, topicCount: 14, available: true },
+          { id: "fundamentals-of-midwifery",code: "DM 135", name: "Fundamentals of Midwifery",                   type: "Professional", marks: 250, hours: 496, topicCount: 20, available: true },
+          { id: "midwifery-pharmacology",   code: "DM 126", name: "Midwifery Pharmacology",                      type: "Foundation",   marks: 100, hours: 86,  topicCount: 12, available: true },
+          { id: "english-ict",              code: "DM 118", name: "Communicative English & ICT",                 type: "General",      marks: 150, hours: 186, topicCount: 14, available: true },
+          { id: "midwifery-practice-1",     code: "DM 137", name: "Midwifery Practice-I (clinical skills)",       type: "Clinical",     marks: 200, hours: 234, available: false, note: "Clinical placement course — a skills & competency reference is being added." }
+        ]
+      },
+      2: {
+        name: "2nd Year", totalMarks: 1000,
+        subjects: [
+          { id: "research-evidence-based",  code: "DM 221", name: "Research & Evidence-Based Midwifery",          type: "Professional", marks: 200, hours: 172 },
+          { id: "art-science-midwifery",    code: "DM 232", name: "The Art & Science of Midwifery",               type: "Professional", marks: 200, hours: 440 },
+          { id: "womens-health",            code: "DM 233", name: "Women's Health",                               type: "Professional", marks: 200, hours: 358 },
+          { id: "complicated-maternity",    code: "DM 234", name: "Complicated Maternity Experience",             type: "Professional", marks: 200, hours: 486 },
+          { id: "midwifery-practice-2",     code: "DM 235", name: "Midwifery Practice-II (clinical skills)",       type: "Clinical",     marks: 200, hours: 200, available: false }
+        ]
+      },
+      3: {
+        name: "3rd Year", totalMarks: 700,
+        subjects: [
+          { id: "newborn-complications",    code: "DM 331", name: "Newborn Complications",                        type: "Professional", marks: 150, hours: 420 },
+          { id: "complexities-maternity",   code: "DM 332", name: "Complexities of Maternity Experience",         type: "Professional", marks: 200, hours: 576 },
+          { id: "transition-registered",    code: "DM 333", name: "Transition to Registered Midwifery",           type: "Professional", marks: 150, hours: 384 },
+          { id: "midwifery-practicum",      code: "DM 334", name: "Midwifery Practicum (clinical skills)",         type: "Clinical",     marks: 200, hours: 384, available: false }
+        ]
+      }
+    }
   },
 
   "bsc-nursing": {
