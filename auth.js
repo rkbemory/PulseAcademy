@@ -21,6 +21,7 @@
     openModal: function () {},
     signOut: function () {},
     saveResult: function () { return Promise.resolve(null); },
+    fetchResults: function () { return Promise.resolve([]); },
     onChange: function () {},
     noteQuizFinished: function () {}
   };
@@ -57,6 +58,7 @@
     window.PulseAuth.openModal = openModal;
     window.PulseAuth.signOut = signOut;
     window.PulseAuth.saveResult = saveResult;
+    window.PulseAuth.fetchResults = fetchResults;
     window.PulseAuth.onChange = function (cb) { if (typeof cb === "function") listeners.push(cb); };
     window.PulseAuth.noteQuizFinished = noteQuizFinished;
 
@@ -108,6 +110,7 @@
         '</button>' +
         '<div class="pulse-acct-menu" hidden>' +
           '<div class="pulse-acct-email">' + esc(label) + '</div>' +
+          '<a class="pulse-acct-item" href="dashboard.html">📊 My Dashboard</a>' +
           '<a class="pulse-acct-item" href="results.html">My last result</a>' +
           '<button class="pulse-acct-item pulse-acct-signout" type="button">Sign out</button>' +
         '</div>';
@@ -279,6 +282,18 @@
       detail: result.perSubject || {}
     };
     return supa.from("quiz_results").insert(row).then(function (r) { return r; }).catch(function () { return null; });
+  }
+
+  /* Read the signed-in user's saved quiz results (for the dashboard, cross-device). */
+  function fetchResults() {
+    if (!window.PulseAuth.user) return Promise.resolve([]);
+    return supa.from("quiz_results")
+      .select("program_id,test_id,test_title,test_type,score,correct,total,pass_probability,submitted_at")
+      .eq("user_id", window.PulseAuth.user.id)
+      .order("submitted_at", { ascending: false })
+      .limit(300)
+      .then(function (r) { return (r && r.data) || []; })
+      .catch(function () { return []; });
   }
 
   /* When a user signs in, push any results saved locally while anonymous. */

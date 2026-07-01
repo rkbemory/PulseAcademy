@@ -1,0 +1,318 @@
+/* Pulse for Nurses — personal Dashboard.
+   Shows the signed-in (or local) learner: their chosen programs (editable
+   anytime), where they are now vs previously, a visual progress/performance
+   scoreboard, and a feedback box. Reads progress from localStorage
+   (pulse:academic:progress + pulse:history) and, when signed in, merges the
+   account's saved quiz results (Supabase) for cross-device performance.
+   Fully graceful: works offline and when not signed in (device-local). */
+(function () {
+  "use strict";
+
+  var WEB3FORMS_KEY = "9a9d33e7-bd31-42a5-b5e3-3f8b29a320a4";
+  var LS_PROGRESS = "pulse:academic:progress";
+  var LS_HISTORY  = "pulse:history";
+  var LS_INTERESTS = "pulse:interests";
+
+  /* The trackable learning programs. */
+  var PROGRAMS = [
+    { id: "msn",              name: "MSN Admission",        kind: "exam",     href: "msn.html",         color: "#1E3A8A", icon: "🩺" },
+    { id: "post-basic",       name: "Post Basic Admission", kind: "exam",     href: "post-basic.html",  color: "#1E5F9C", icon: "📘" },
+    { id: "rn",               name: "BNMC RN",              kind: "exam",     href: "rn.html",          color: "#16A34A", icon: "🎓" },
+    { id: "nclex",            name: "NCLEX-RN",             kind: "exam",     href: "nclex.html",       color: "#2E9E72", icon: "🌎" },
+    { id: "diploma-nursing",  name: "Diploma in Nursing",   kind: "academic", href: "academic-program.html?program=diploma-nursing",  color: "#7C2D12", icon: "🏥" },
+    { id: "diploma-midwifery",name: "Diploma in Midwifery", kind: "academic", href: "academic-program.html?program=diploma-midwifery",color: "#831843", icon: "🤱" },
+    { id: "bsc-nursing",      name: "B.Sc. in Nursing",     kind: "academic", href: "academic-program.html?program=bsc-nursing",       color: "#0F4C3A", icon: "📗" }
+  ];
+  function prog(id) { for (var i = 0; i < PROGRAMS.length; i++) if (PROGRAMS[i].id === id) return PROGRAMS[i]; return null; }
+
+  /* ---------- helpers ---------- */
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]; }); }
+  function readJSON(k, d) { try { return JSON.parse(localStorage.getItem(k) || d); } catch (e) { return JSON.parse(d); } }
+  function fmtDate(ts) {
+    if (!ts) return "";
+    var d = new Date(ts); if (isNaN(d)) return "";
+    var days = Math.floor((Date.now() - d.getTime()) / 86400000);
+    if (days <= 0) return "today";
+    if (days === 1) return "yesterday";
+    if (days < 30) return days + " days ago";
+    return d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+  }
+
+  function getInterests() {
+    var raw = localStorage.getItem(LS_INTERESTS);
+    if (raw == null) return null;              // never chosen
+    try { var a = JSON.parse(raw); return Array.isArray(a) ? a : null; } catch (e) { return null; }
+  }
+  function setInterests(arr) { try { localStorage.setItem(LS_INTERESTS, JSON.stringify(arr)); } catch (e) {} }
+
+  /* ---------- progress computation ---------- */
+  function academicTotal(pid) {
+    var p = window.Academic && window.Academic.programs && window.Academic.programs[pid];
+    if (!p || !p.years) return 0;
+    var n = 0;
+    for (var y in p.years) { if (!p.years.hasOwnProperty(y)) continue; (p.years[y].subjects || []).forEach(function (s) { if (s.available && s.topicCount) n += s.topicCount; }); }
+    return n;
+  }
+  function subjectName(pid, sid) {
+    if (window.Academic && window.Academic.findSubject) { var s = window.Academic.findSubject(pid, sid); if (s) return s.name; }
+    return sid;
+  }
+  function academicActivity(pid) {
+    var pr = readJSON(LS_PROGRESS, "{}"), entries = [];
+    for (var k in pr) {
+      if (!pr.hasOwnProperty(k) || k.indexOf(pid + "/") !== 0) continue;
+      var parts = k.split("/");
+      entries.push({ subject: parts[1], topic: parts[2], ts: (pr[k] && pr[k].ts) || 0, score: pr[k] && pr[k].score });
+    }
+    entries.sort(function (a, b) { return b.ts - a.ts; });
+    return entries;
+  }
+  function examActivity(pid, hist) {
+    var items = hist.filter(function (h) { return h.programId === pid; });
+    items.sort(function (a, b) { return new Date(b.submittedAt || 0) - new Date(a.submittedAt || 0); });
+    var scores = items.map(scoreOf);
+    return {
+      attempts: items.length,
+      best: scores.length ? Math.max.apply(null, scores) : 0,
+      avg: scores.length ? Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length) : 0,
+      items: items
+    };
+  }
+  function scoreOf(h) {
+    if (typeof h.score === "number") return Math.round(h.score);
+    if (h.total) return Math.round((h.correct || 0) / h.total * 100);
+    return 0;
+  }
+
+  function getHistory() { var a = readJSON(LS_HISTORY, "[]"); return Array.isArray(a) ? a : []; }
+  function mergeRemote(local, rows) {
+    var seen = {}, out = [];
+    function push(h) { var key = (h.testId || "") + "|" + (h.submittedAt || ""); if (seen[key]) return; seen[key] = 1; out.push(h); }
+    local.forEach(push);
+    rows.forEach(function (r) {
+      push({ programId: r.program_id, testId: r.test_id, testTitle: r.test_title, score: r.score, correct: r.correct, total: r.total, submittedAt: r.submitted_at });
+    });
+    return out;
+  }
+
+  /* ---------- effective (interested) programs ---------- */
+  function activePrograms() {
+    var chosen = getInterests();
+    if (chosen && chosen.length) return PROGRAMS.filter(function (p) { return chosen.indexOf(p.id) >= 0; });
+    // none chosen yet → show programs that have any activity; else all
+    var withActivity = PROGRAMS.filter(function (p) { return hasActivity(p); });
+    return withActivity.length ? withActivity : PROGRAMS.slice();
+  }
+  function hasActivity(p, hist) {
+    hist = hist || STATE.history;
+    if (p.kind === "academic") return academicActivity(p.id).length > 0;
+    return hist.some(function (h) { return h.programId === p.id; });
+  }
+
+  var STATE = { history: [] };
+
+  /* ============================================================ RENDER */
+  function render() {
+    var root = document.getElementById("dashboard-root");
+    if (!root) return;
+    var u = window.PulseAuth && window.PulseAuth.user;
+    var html = "";
+    html += head(u);
+    html += interestsSection();
+    html += continueSection();
+    html += scoreboardSection();
+    html += performanceSection();
+    html += feedbackSection(u);
+    root.innerHTML = html;
+    wire(root);
+  }
+
+  function head(u) {
+    var name = u ? esc((u.email || "").split("@")[0] || "there") : "there";
+    var sub = u
+      ? '<p class="dash-sub">Signed in as <strong>' + esc(u.email) + '</strong> — your progress syncs to your account.</p>'
+      : '<p class="dash-sub">You\'re studying as a guest — progress is saved on this device. <button class="dash-link-btn" data-act="signin">Sign in</button> to sync it across devices.</p>';
+    return '<div class="dash-head"><h1 class="section-title">Hi, ' + name + ' 👋</h1>' + sub + '</div>';
+  }
+
+  /* 1 — Program interests */
+  function interestsSection() {
+    var chosen = getInterests() || [];
+    var never = getInterests() === null;
+    var chips = PROGRAMS.map(function (p) {
+      var on = chosen.indexOf(p.id) >= 0;
+      return '<label class="dash-int' + (on ? " is-on" : "") + '" style="--pc:' + p.color + '">' +
+        '<input type="checkbox" data-int="' + p.id + '"' + (on ? " checked" : "") + '>' +
+        '<span class="dash-int-ic">' + p.icon + '</span><span class="dash-int-name">' + esc(p.name) + '</span>' +
+        '<span class="dash-int-tick">✓</span></label>';
+    }).join("");
+    return '<section class="dash-section">' +
+      '<h2 class="dash-h2">🎯 My programs</h2>' +
+      '<p class="dash-note">' + (never
+        ? "Tick the program(s) you’re preparing for. Your dashboard will focus on these — you can change this any time."
+        : "Tick to include a program, untick to hide it. Change any time.") + '</p>' +
+      '<div class="dash-interests">' + chips + '</div>' +
+      '</section>';
+  }
+
+  /* 2 — Continue where you left off */
+  function continueSection() {
+    var cards = activePrograms().map(function (p) {
+      if (p.kind === "academic") return academicCard(p);
+      return examCard(p);
+    }).join("");
+    if (!cards) cards = '<p class="dash-empty">No programs selected yet — tick one above to get started.</p>';
+    return '<section class="dash-section"><h2 class="dash-h2">📍 Continue where you left off</h2>' +
+      '<div class="dash-cont-grid">' + cards + '</div></section>';
+  }
+  function academicCard(p) {
+    var acts = academicActivity(p.id), total = academicTotal(p.id), studied = acts.length;
+    var pct = total ? Math.round(studied / total * 100) : 0;
+    var now = acts[0], prev = acts[1];
+    var cont = now
+      ? "academic-topic.html?program=" + p.id + "&subject=" + encodeURIComponent(now.subject) + "&topic=" + encodeURIComponent(now.topic)
+      : p.href;
+    var lines = now
+      ? '<p class="dash-cont-line"><span>Now</span> ' + esc(subjectName(p.id, now.subject)) + ' <em>· ' + fmtDate(now.ts) + '</em></p>' +
+        (prev ? '<p class="dash-cont-line dash-cont-prev"><span>Before</span> ' + esc(subjectName(p.id, prev.subject)) + ' <em>· ' + fmtDate(prev.ts) + '</em></p>' : "")
+      : '<p class="dash-cont-line dash-cont-prev">Not started yet.</p>';
+    return card(p, pct, studied + " / " + total + " topics", lines, cont, now ? "Continue →" : "Start →");
+  }
+  function examCard(p) {
+    var e = examActivity(p.id, STATE.history);
+    var now = e.items[0], prev = e.items[1];
+    var pct = e.best;
+    var lines = now
+      ? '<p class="dash-cont-line"><span>Last</span> ' + esc(now.testTitle || "Test") + ' — <strong>' + scoreOf(now) + '%</strong> <em>· ' + fmtDate(now.submittedAt) + '</em></p>' +
+        (prev ? '<p class="dash-cont-line dash-cont-prev"><span>Before</span> ' + scoreOf(prev) + '% <em>· ' + fmtDate(prev.submittedAt) + '</em></p>' : "")
+      : '<p class="dash-cont-line dash-cont-prev">No attempts yet.</p>';
+    var sub = e.attempts ? (e.attempts + " attempts · best " + e.best + "%") : "Practice tests";
+    return card(p, pct, sub, lines, p.href, e.attempts ? "Practice →" : "Start →");
+  }
+  function card(p, pct, metric, lines, href, cta) {
+    return '<div class="dash-cont-card" style="--pc:' + p.color + '">' +
+      '<div class="dash-cont-top"><span class="dash-cont-ic">' + p.icon + '</span>' +
+        '<div><h3>' + esc(p.name) + '</h3><span class="dash-cont-metric">' + esc(metric) + '</span></div></div>' +
+      '<div class="dash-bar"><span style="width:' + Math.max(2, Math.min(100, pct)) + '%"></span></div>' +
+      '<div class="dash-cont-lines">' + lines + '</div>' +
+      '<a class="btn btn-primary dash-cont-btn" href="' + href + '">' + cta + '</a></div>';
+  }
+
+  /* 3 — Visual scoreboard (overall) */
+  function scoreboardSection() {
+    var pr = readJSON(LS_PROGRESS, "{}"), studied = Object.keys(pr).length;
+    var hist = STATE.history, scores = hist.map(scoreOf);
+    var avg = scores.length ? Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length) : 0;
+    var best = scores.length ? Math.max.apply(null, scores) : 0;
+    var stat = function (n, l) { return '<div class="dash-stat"><span class="dash-stat-num">' + n + '</span><span class="dash-stat-label">' + l + '</span></div>'; };
+    var stats = stat(studied, "Topics studied") + stat(hist.length, "Quizzes taken") + stat(avg + "%", "Average score") + stat(best + "%", "Best score");
+    // per-program bars
+    var bars = activePrograms().map(function (p) {
+      var pct, label;
+      if (p.kind === "academic") { var t = academicTotal(p.id), s = academicActivity(p.id).length; pct = t ? Math.round(s / t * 100) : 0; label = s + "/" + t + " topics"; }
+      else { var e = examActivity(p.id, hist); pct = e.best; label = e.attempts ? ("best " + e.best + "%") : "—"; }
+      return '<div class="dash-scorerow"><span class="dash-scorerow-name">' + p.icon + " " + esc(p.name) + '</span>' +
+        '<div class="dash-bar" style="--pc:' + p.color + '"><span style="width:' + Math.max(2, Math.min(100, pct)) + '%"></span></div>' +
+        '<span class="dash-scorerow-val">' + esc(label) + '</span></div>';
+    }).join("");
+    return '<section class="dash-section"><h2 class="dash-h2">📊 Your scoreboard</h2>' +
+      '<div class="dash-stats">' + stats + '</div>' +
+      (bars ? '<div class="dash-scorelist">' + bars + '</div>' : "") +
+      '</section>';
+  }
+
+  /* Performance trend — last quiz scores */
+  function performanceSection() {
+    var hist = STATE.history.slice().sort(function (a, b) { return new Date(a.submittedAt || 0) - new Date(b.submittedAt || 0); });
+    var recent = hist.slice(-12);
+    if (!recent.length) {
+      return '<section class="dash-section"><h2 class="dash-h2">📈 Performance trend</h2>' +
+        '<p class="dash-empty">Take a model test or self-check and your score trend will appear here.</p></section>';
+    }
+    var W = 640, H = 200, pad = 30, n = recent.length;
+    var bw = (W - pad * 2) / n;
+    var bars = recent.map(function (h, i) {
+      var v = scoreOf(h), x = pad + i * bw + bw * 0.15, bh = (H - pad * 2) * (v / 100), y = H - pad - bh;
+      var col = v >= 60 ? "#16A34A" : (v >= 40 ? "#E89B2C" : "#DC2626");
+      return '<g><rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw * 0.7).toFixed(1) + '" height="' + Math.max(1, bh).toFixed(1) + '" rx="3" fill="' + col + '"></rect>' +
+        '<text x="' + (x + bw * 0.35).toFixed(1) + '" y="' + (y - 5).toFixed(1) + '" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#475569">' + v + '</text></g>';
+    }).join("");
+    var gl = [0, 50, 100].map(function (g) { var y = H - pad - (H - pad * 2) * (g / 100); return '<line x1="' + pad + '" y1="' + y + '" x2="' + (W - pad) + '" y2="' + y + '" stroke="#E2E8F0" stroke-width="1"></line><text x="' + (pad - 6) + '" y="' + (y + 3) + '" text-anchor="end" font-family="sans-serif" font-size="9" fill="#94A3B8">' + g + '</text>'; }).join("");
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="dash-chart" role="img" aria-label="Recent quiz scores">' + gl + bars + '</svg>';
+    return '<section class="dash-section"><h2 class="dash-h2">📈 Performance trend</h2>' +
+      '<p class="dash-note">Your last ' + recent.length + ' quiz score(s). Green ≥ 60%, amber 40–59%, red below 40%.</p>' +
+      '<div class="dash-chart-wrap">' + svg + '</div></section>';
+  }
+
+  /* 4 — Feedback */
+  function feedbackSection(u) {
+    return '<section class="dash-section"><h2 class="dash-h2">💬 Feedback</h2>' +
+      '<p class="dash-note">Tell us what would make Pulse better for you — it goes straight to the team.</p>' +
+      '<form class="dash-feedback" novalidate>' +
+        '<input type="hidden" name="access_key" value="' + WEB3FORMS_KEY + '">' +
+        '<input type="hidden" name="subject" value="Dashboard feedback — Pulse for Nurses">' +
+        '<input type="hidden" name="from_name" value="Pulse Dashboard">' +
+        '<input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">' +
+        '<textarea class="dash-fb-msg" name="message" rows="3" placeholder="Your feedback, ideas or a problem you hit…" required></textarea>' +
+        '<input class="dash-fb-contact" name="email" type="email" placeholder="Email (optional, for a reply)" value="' + (u ? esc(u.email) : "") + '" autocomplete="email">' +
+        '<button type="submit" class="btn btn-primary dash-fb-send">Send feedback →</button>' +
+        '<p class="dash-fb-done" hidden>✅ Thank you! Your feedback was sent.</p>' +
+      '</form></section>';
+  }
+
+  /* ---------- wiring ---------- */
+  function wire(root) {
+    // sign-in link
+    var si = root.querySelector('[data-act="signin"]');
+    if (si) si.addEventListener("click", function () { if (window.PulseAuth) window.PulseAuth.openModal("signin"); });
+
+    // interests toggles
+    root.querySelectorAll("input[data-int]").forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        var cur = getInterests() || [];
+        var id = cb.getAttribute("data-int");
+        if (cb.checked) { if (cur.indexOf(id) < 0) cur.push(id); }
+        else { cur = cur.filter(function (x) { return x !== id; }); }
+        setInterests(cur);
+        render();
+      });
+    });
+
+    // feedback submit (Web3Forms)
+    var form = root.querySelector(".dash-feedback");
+    if (form) form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var btn = form.querySelector(".dash-fb-send"), done = form.querySelector(".dash-fb-done");
+      btn.disabled = true; btn.textContent = "Sending…";
+      fetch("https://api.web3forms.com/submit", { method: "POST", body: new FormData(form) })
+        .then(function (r) { return r.json(); })
+        .then(function () { form.querySelector(".dash-fb-msg").value = ""; done.hidden = false; btn.textContent = "Sent ✓"; })
+        .catch(function () { btn.disabled = false; btn.textContent = "Send feedback →"; alert("Could not send — please check your connection."); });
+    });
+  }
+
+  /* ---------- boot ---------- */
+  function init() {
+    STATE.history = getHistory();
+    render();
+    // Cross-device: pull the account's saved results, merge, re-render.
+    if (window.PulseAuth) {
+      window.PulseAuth.onChange(function () {
+        STATE.history = getHistory();
+        pullRemote();
+        render();
+      });
+      pullRemote();
+    }
+  }
+  function pullRemote() {
+    if (window.PulseAuth && window.PulseAuth.user && window.PulseAuth.fetchResults) {
+      window.PulseAuth.fetchResults().then(function (rows) {
+        if (rows && rows.length) { STATE.history = mergeRemote(getHistory(), rows); render(); }
+      });
+    }
+  }
+
+  if (document.readyState !== "loading") init();
+  else document.addEventListener("DOMContentLoaded", init);
+})();
