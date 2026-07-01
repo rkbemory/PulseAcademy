@@ -91,10 +91,10 @@ window.Academic.programs = {
       2: {
         name: "2nd Year", totalMarks: 1000,
         subjects: [
-          { id: "research-evidence-based",  code: "DM 221", name: "Research & Evidence-Based Midwifery",          type: "Professional", marks: 200, hours: 172 },
-          { id: "art-science-midwifery",    code: "DM 232", name: "The Art & Science of Midwifery",               type: "Professional", marks: 200, hours: 440 },
-          { id: "womens-health",            code: "DM 233", name: "Women's Health",                               type: "Professional", marks: 200, hours: 358 },
-          { id: "complicated-maternity",    code: "DM 234", name: "Complicated Maternity Experience",             type: "Professional", marks: 200, hours: 486 },
+          { id: "research-evidence-based",  code: "DM 221", name: "Research & Evidence-Based Midwifery",          type: "Professional", marks: 200, hours: 172, topicCount: 14, available: true },
+          { id: "art-science-midwifery",    code: "DM 232", name: "The Art & Science of Midwifery",               type: "Professional", marks: 200, hours: 440, topicCount: 20, available: true },
+          { id: "womens-health",            code: "DM 233", name: "Women's Health",                               type: "Professional", marks: 200, hours: 358, topicCount: 16, available: true },
+          { id: "complicated-maternity",    code: "DM 234", name: "Complicated Maternity Experience",             type: "Professional", marks: 200, hours: 486, topicCount: 18, available: true },
           { id: "midwifery-practice-2",     code: "DM 235", name: "Midwifery Practice-II (clinical skills)",       type: "Clinical",     marks: 200, hours: 200, available: false }
         ]
       },
