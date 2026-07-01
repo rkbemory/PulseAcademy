@@ -228,6 +228,21 @@
 
       if (topic.placeholder) { root.innerHTML = head + comingSoonPanel(topic.title); return; }
 
+      // Clinical skills/competency reference topics have no quiz/video/exam — show Notes + Feedback only.
+      if (topic.reference) {
+        setStudied(programId, subjectId, topic.id);
+        var rtabs = '<div class="dip-tabs" role="tablist">' +
+          tabBtn("notes", "📋 Skills & Competencies", true) +
+          tabBtn("feedback", "💬 Feedback") + "</div>";
+        root.innerHTML = head + rtabs + '<div class="dip-stage">' +
+          panel("notes", renderNotes(topic) + renderRefs(topic), true) +
+          panel("feedback", renderFeedback(topic)) + "</div>" +
+          renderPrevNext(topics, idx, programId, subjectId);
+        wireTabs(root);
+        wireFeedback(root, programId, subjectId, topic);
+        return;
+      }
+
       var tabs = '<div class="dip-tabs" role="tablist">' +
         tabBtn("notes", "📖 Notes", true) + tabBtn("video", "📺 Video") +
         tabBtn("quiz", "✍️ Self-Check") + tabBtn("exam", "❓ Exam Prep") +

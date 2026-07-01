@@ -85,7 +85,7 @@ window.Academic.programs = {
           { id: "fundamentals-of-midwifery",code: "DM 135", name: "Fundamentals of Midwifery",                   type: "Professional", marks: 250, hours: 496, topicCount: 20, available: true },
           { id: "midwifery-pharmacology",   code: "DM 126", name: "Midwifery Pharmacology",                      type: "Foundation",   marks: 100, hours: 86,  topicCount: 12, available: true },
           { id: "english-ict",              code: "DM 118", name: "Communicative English & ICT",                 type: "General",      marks: 150, hours: 186, topicCount: 14, available: true },
-          { id: "midwifery-practice-1",     code: "DM 137", name: "Midwifery Practice-I (clinical skills)",       type: "Clinical",     marks: 200, hours: 234, available: false, note: "Clinical placement course — a skills & competency reference is being added." }
+          { id: "midwifery-practice-1",     code: "DM 137", name: "Midwifery Practice-I (clinical skills)",       type: "Clinical",     marks: 200, hours: 234, topicCount: 6, available: true }
         ]
       },
       2: {
@@ -95,7 +95,7 @@ window.Academic.programs = {
           { id: "art-science-midwifery",    code: "DM 232", name: "The Art & Science of Midwifery",               type: "Professional", marks: 200, hours: 440, topicCount: 20, available: true },
           { id: "womens-health",            code: "DM 233", name: "Women's Health",                               type: "Professional", marks: 200, hours: 358, topicCount: 16, available: true },
           { id: "complicated-maternity",    code: "DM 234", name: "Complicated Maternity Experience",             type: "Professional", marks: 200, hours: 486, topicCount: 18, available: true },
-          { id: "midwifery-practice-2",     code: "DM 235", name: "Midwifery Practice-II (clinical skills)",       type: "Clinical",     marks: 200, hours: 200, available: false }
+          { id: "midwifery-practice-2",     code: "DM 235", name: "Midwifery Practice-II (clinical skills)",       type: "Clinical",     marks: 200, hours: 200, topicCount: 5, available: true }
         ]
       },
       3: {
@@ -104,7 +104,7 @@ window.Academic.programs = {
           { id: "newborn-complications",    code: "DM 331", name: "Newborn Complications",                        type: "Professional", marks: 150, hours: 420, topicCount: 16, available: true },
           { id: "complexities-maternity",   code: "DM 332", name: "Complexities of Maternity Experience",         type: "Professional", marks: 200, hours: 576, topicCount: 16, available: true },
           { id: "transition-registered",    code: "DM 333", name: "Transition to Registered Midwifery",           type: "Professional", marks: 150, hours: 384, topicCount: 12, available: true },
-          { id: "midwifery-practicum",      code: "DM 334", name: "Midwifery Practicum (clinical skills)",         type: "Clinical",     marks: 200, hours: 384, available: false }
+          { id: "midwifery-practicum",      code: "DM 334", name: "Midwifery Practicum (clinical skills)",         type: "Clinical",     marks: 200, hours: 384, topicCount: 5, available: true }
         ]
       }
     }
