@@ -72,6 +72,7 @@
       '<a href="academic.html" class="' + activeFor("academic.html") + '">📖 Academic Programs</a>',
       '<a href="academic-program.html?program=diploma-nursing">🏥 Diploma in Nursing</a>',
       '<a href="academic-program.html?program=diploma-midwifery">🤱 Diploma in Midwifery</a>',
+      '<a href="academic-program.html?program=bsc-nursing">📗 B.Sc. in Nursing</a>',
       '<div class="nav-drawer-sep"></div>',
       '<span class="nav-drawer-section">Explore &amp; Tools</span>',
       '<a href="jobs.html" class="' + activeFor("jobs.html") + '">💼 Nursing Jobs</a>',
