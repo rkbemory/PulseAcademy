@@ -114,14 +114,60 @@ window.Academic.programs = {
     id: "bsc-nursing",
     name: "B.Sc. in Nursing",
     short: "B.Sc. in Nursing",
-    authority: "Bangladesh Nursing & Midwifery Council",
+    authority: "Bangladesh Nursing & Midwifery Council (2018 Curriculum · 4 years)",
     durationYears: 4,
+    internshipMonths: 6,
+    totalMarks: 3800,
+    totalHours: 5832,
     color: "#0F4C3A",
     accent: "#4ADE80",
     icon: "🎓",
-    available: false,
-    note: "Curriculum being added — the 4-year B.Sc. in Nursing syllabus will be structured here next.",
-    years: {}
+    available: true,
+    years: {
+      1: {
+        name: "1st Year", totalMarks: 1000,
+        subjects: [
+          { id: "communicative-english", code: "B111-I",  name: "Communicative English",          type: "General",      marks: 100, hours: 60,  topicCount: 14, available: true },
+          { id: "computer-ict",          code: "B111-II", name: "Computer & ICT",                 type: "General",      marks: 100, hours: 48,  topicCount: 12, available: true },
+          { id: "behavioral-science",    code: "B112",    name: "Behavioral Science",             type: "General",      marks: 150, hours: 112, topicCount: 16, available: true },
+          { id: "anatomy",               code: "B123-I",  name: "Anatomy",                        type: "Foundation",   marks: 150, hours: 96,  topicCount: 16, available: true },
+          { id: "physiology",            code: "B123-II", name: "Physiology",                     type: "Foundation",   marks: 150, hours: 96,  topicCount: 16, available: true },
+          { id: "fundamentals-1",        code: "B134-I",  name: "Fundamentals of Nursing-1",      type: "Professional", marks: 250, hours: 200, topicCount: 18, available: true },
+          { id: "microbiology",          code: "B134-II", name: "Microbiology",                   type: "Foundation",   marks: 100, hours: 72,  topicCount: 14, available: true }
+        ]
+      },
+      2: {
+        name: "2nd Year", totalMarks: 1000,
+        subjects: [
+          { id: "fundamentals-2",        code: "B231-I",  name: "Fundamentals of Nursing-2 & Health Assessment", type: "Professional", marks: 150, hours: 108 },
+          { id: "nutrition-dietetics",   code: "B231-II", name: "Nutrition & Dietetics",          type: "Foundation",   marks: 150, hours: 72 },
+          { id: "pediatric-nursing",     code: "B232",    name: "Pediatric Nursing",              type: "Professional", marks: 200, hours: 96 },
+          { id: "medical-surgical-1",    code: "B233-I",  name: "Medical & Surgical Nursing-1",   type: "Professional", marks: 200, hours: 84 },
+          { id: "pharmacology",          code: "B233-II", name: "Pharmacology",                   type: "Foundation",   marks: 100, hours: 72 },
+          { id: "orthopedic-nursing",    code: "B234",    name: "Orthopedic Nursing",             type: "Professional", marks: 200, hours: 72 }
+        ]
+      },
+      3: {
+        name: "3rd Year", totalMarks: 900,
+        subjects: [
+          { id: "pathophysiology",       code: "B331-I",  name: "Pathophysiology",                type: "Foundation",   marks: 150, hours: 112 },
+          { id: "gerontological-nursing",code: "B331-II", name: "Gerontological Nursing",         type: "Professional", marks: 150, hours: 64 },
+          { id: "community-health",      code: "B332",    name: "Community Health Nursing",       type: "Professional", marks: 200, hours: 132 },
+          { id: "psychiatric-nursing",   code: "B333",    name: "Psychiatric Nursing",            type: "Professional", marks: 200, hours: 80 },
+          { id: "emergency-critical-care",code: "B334",   name: "Emergency & Critical Care Nursing", type: "Professional", marks: 200, hours: 80 }
+        ]
+      },
+      4: {
+        name: "4th Year", totalMarks: 900,
+        subjects: [
+          { id: "midwifery",             code: "B431-I",  name: "Midwifery",                      type: "Professional", marks: 200, hours: 144 },
+          { id: "gynae-obstetrical",     code: "B431-II", name: "Gynaecological & Obstetrical Nursing", type: "Professional", marks: 200, hours: 80 },
+          { id: "nursing-education",     code: "B432-I",  name: "Nursing Education",              type: "Professional", marks: 150, hours: 72 },
+          { id: "leadership-management", code: "B432-II", name: "Leadership & Management",         type: "Professional", marks: 150, hours: 72 },
+          { id: "research-nursing",      code: "B433",    name: "Research in Nursing",            type: "Professional", marks: 200, hours: 80 }
+        ]
+      }
+    }
   }
 };
 
