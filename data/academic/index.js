@@ -139,12 +139,12 @@ window.Academic.programs = {
       2: {
         name: "2nd Year", totalMarks: 1000,
         subjects: [
-          { id: "fundamentals-2",        code: "B231-I",  name: "Fundamentals of Nursing-2 & Health Assessment", type: "Professional", marks: 150, hours: 108 },
-          { id: "nutrition-dietetics",   code: "B231-II", name: "Nutrition & Dietetics",          type: "Foundation",   marks: 150, hours: 72 },
-          { id: "pediatric-nursing",     code: "B232",    name: "Pediatric Nursing",              type: "Professional", marks: 200, hours: 96 },
-          { id: "medical-surgical-1",    code: "B233-I",  name: "Medical & Surgical Nursing-1",   type: "Professional", marks: 200, hours: 84 },
-          { id: "pharmacology",          code: "B233-II", name: "Pharmacology",                   type: "Foundation",   marks: 100, hours: 72 },
-          { id: "orthopedic-nursing",    code: "B234",    name: "Orthopedic Nursing",             type: "Professional", marks: 200, hours: 72 }
+          { id: "fundamentals-2",        code: "B231-I",  name: "Fundamentals of Nursing-2 & Health Assessment", type: "Professional", marks: 150, hours: 108, topicCount: 16, available: true },
+          { id: "nutrition-dietetics",   code: "B231-II", name: "Nutrition & Dietetics",          type: "Foundation",   marks: 150, hours: 72, topicCount: 16, available: true },
+          { id: "pediatric-nursing",     code: "B232",    name: "Pediatric Nursing",              type: "Professional", marks: 200, hours: 96, topicCount: 16, available: true },
+          { id: "medical-surgical-1",    code: "B233-I",  name: "Medical & Surgical Nursing-1",   type: "Professional", marks: 200, hours: 84, topicCount: 20, available: true },
+          { id: "pharmacology",          code: "B233-II", name: "Pharmacology",                   type: "Foundation",   marks: 100, hours: 72, topicCount: 16, available: true },
+          { id: "orthopedic-nursing",    code: "B234",    name: "Orthopedic Nursing",             type: "Professional", marks: 200, hours: 72, topicCount: 14, available: true }
         ]
       },
       3: {
