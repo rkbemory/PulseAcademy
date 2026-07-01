@@ -5175,3 +5175,15 @@ body > footer { flex-shrink: 0; }
 .dash-fb-msg { resize: vertical; }
 .dash-fb-send { align-self: flex-start; }
 .dash-fb-done { color: #15803D; font-weight: 600; font-size: 0.9rem; }
+
+/* Dashboard — two-panel layout (left: programs + feedback, right: progress + performance) */
+.dash-grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 26px; align-items: start; margin-top: 20px; }
+@media (max-width: 880px) { .dash-grid { grid-template-columns: 1fr; gap: 0; } }
+.dash-col-left .dash-section:first-child, .dash-col-right .dash-section:first-child { margin-top: 0; }
+.dash-col-left .dash-section { margin-top: 24px; }
+/* left column: interest chips stack + compact */
+.dash-col-left .dash-interests { grid-template-columns: 1fr; gap: 8px; }
+.dash-col-left .dash-int { padding: 11px 13px; }
+.dash-col-left .dash-feedback { max-width: none; }
+/* right column: cards & stats fit the wide panel */
+.dash-col-right .dash-cont-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }

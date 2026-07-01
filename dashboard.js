@@ -118,11 +118,10 @@
     var u = window.PulseAuth && window.PulseAuth.user;
     var html = "";
     html += head(u);
-    html += interestsSection();
-    html += continueSection();
-    html += scoreboardSection();
-    html += performanceSection();
-    html += feedbackSection(u);
+    html += '<div class="dash-grid">';
+    html +=   '<aside class="dash-col dash-col-left">' + interestsSection() + feedbackSection(u) + '</aside>';
+    html +=   '<div class="dash-col dash-col-right">' + scoreboardSection() + performanceSection() + continueSection() + '</div>';
+    html += '</div>';
     root.innerHTML = html;
     wire(root);
   }
@@ -221,26 +220,54 @@
       '</section>';
   }
 
-  /* Performance trend — last quiz scores */
+  /* Performance trend — line chart of recent quiz scores over time */
   function performanceSection() {
     var hist = STATE.history.slice().sort(function (a, b) { return new Date(a.submittedAt || 0) - new Date(b.submittedAt || 0); });
-    var recent = hist.slice(-12);
+    var recent = hist.slice(-15);
     if (!recent.length) {
       return '<section class="dash-section"><h2 class="dash-h2">📈 Performance trend</h2>' +
         '<p class="dash-empty">Take a model test or self-check and your score trend will appear here.</p></section>';
     }
-    var W = 640, H = 200, pad = 30, n = recent.length;
-    var bw = (W - pad * 2) / n;
-    var bars = recent.map(function (h, i) {
-      var v = scoreOf(h), x = pad + i * bw + bw * 0.15, bh = (H - pad * 2) * (v / 100), y = H - pad - bh;
-      var col = v >= 60 ? "#16A34A" : (v >= 40 ? "#E89B2C" : "#DC2626");
-      return '<g><rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw * 0.7).toFixed(1) + '" height="' + Math.max(1, bh).toFixed(1) + '" rx="3" fill="' + col + '"></rect>' +
-        '<text x="' + (x + bw * 0.35).toFixed(1) + '" y="' + (y - 5).toFixed(1) + '" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#475569">' + v + '</text></g>';
+    var W = 640, H = 260, padL = 34, padR = 16, padT = 16, padB = 40, n = recent.length;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var xAt = function (i) { return padL + (n === 1 ? iw / 2 : iw * i / (n - 1)); };
+    var yAt = function (v) { return padT + ih * (1 - Math.max(0, Math.min(100, v)) / 100); };
+    var band = function (v) { return v >= 60 ? "#16A34A" : (v >= 40 ? "#E89B2C" : "#DC2626"); };
+
+    // horizontal gridlines + y labels
+    var grid = [0, 25, 50, 75, 100].map(function (g) {
+      var y = yAt(g);
+      return '<line x1="' + padL + '" y1="' + y.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + y.toFixed(1) + '" stroke="#EDF1F5" stroke-width="1"></line>' +
+        '<text x="' + (padL - 7) + '" y="' + (y + 3).toFixed(1) + '" text-anchor="end" font-family="sans-serif" font-size="9" fill="#94A3B8">' + g + '</text>';
     }).join("");
-    var gl = [0, 50, 100].map(function (g) { var y = H - pad - (H - pad * 2) * (g / 100); return '<line x1="' + pad + '" y1="' + y + '" x2="' + (W - pad) + '" y2="' + y + '" stroke="#E2E8F0" stroke-width="1"></line><text x="' + (pad - 6) + '" y="' + (y + 3) + '" text-anchor="end" font-family="sans-serif" font-size="9" fill="#94A3B8">' + g + '</text>'; }).join("");
-    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="dash-chart" role="img" aria-label="Recent quiz scores">' + gl + bars + '</svg>';
+    // pass line at 60%
+    var passY = yAt(60);
+    var passLine = '<line x1="' + padL + '" y1="' + passY.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + passY.toFixed(1) + '" stroke="#16A34A" stroke-width="1" stroke-dasharray="4 4" opacity="0.6"></line>' +
+      '<text x="' + (W - padR) + '" y="' + (passY - 5).toFixed(1) + '" text-anchor="end" font-family="sans-serif" font-size="9" fill="#16A34A">pass 60%</text>';
+
+    var pts = recent.map(function (h, i) { return { x: xAt(i), y: yAt(scoreOf(h)), v: scoreOf(h), h: h }; });
+    var linePath = pts.map(function (p, i) { return (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1); }).join(" ");
+    var areaPath = "M" + pts[0].x.toFixed(1) + " " + (padT + ih).toFixed(1) + " " +
+      pts.map(function (p) { return "L" + p.x.toFixed(1) + " " + p.y.toFixed(1); }).join(" ") +
+      " L" + pts[n - 1].x.toFixed(1) + " " + (padT + ih).toFixed(1) + " Z";
+    var dots = pts.map(function (p, i) {
+      var lbl = (n <= 10 || i === 0 || i === n - 1 || i % 2 === 0)
+        ? '<text x="' + p.x.toFixed(1) + '" y="' + (p.y - 9).toFixed(1) + '" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="#334155">' + p.v + '</text>' : "";
+      return '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3.5" fill="' + band(p.v) + '" stroke="#fff" stroke-width="1.5"></circle>' + lbl;
+    }).join("");
+    // x-axis date labels: first & last
+    function shortDate(ts) { var d = new Date(ts); return isNaN(d) ? "" : d.toLocaleDateString(undefined, { day: "numeric", month: "short" }); }
+    var xlabels = '<text x="' + xAt(0).toFixed(1) + '" y="' + (H - 14) + '" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#94A3B8">' + shortDate(recent[0].submittedAt) + '</text>' +
+      (n > 1 ? '<text x="' + xAt(n - 1).toFixed(1) + '" y="' + (H - 14) + '" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#94A3B8">' + shortDate(recent[n - 1].submittedAt) + '</text>' : "");
+
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="dash-chart" role="img" aria-label="Line chart of recent quiz scores over time">' +
+      '<defs><linearGradient id="dashArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#14387A" stop-opacity="0.18"/><stop offset="100%" stop-color="#14387A" stop-opacity="0"/></linearGradient></defs>' +
+      grid + passLine +
+      '<path d="' + areaPath + '" fill="url(#dashArea)"></path>' +
+      '<path d="' + linePath + '" fill="none" stroke="#14387A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>' +
+      dots + xlabels + '</svg>';
     return '<section class="dash-section"><h2 class="dash-h2">📈 Performance trend</h2>' +
-      '<p class="dash-note">Your last ' + recent.length + ' quiz score(s). Green ≥ 60%, amber 40–59%, red below 40%.</p>' +
+      '<p class="dash-note">Your last ' + n + ' quiz score(s) over time. Dots: green ≥ 60%, amber 40–59%, red below 40%.</p>' +
       '<div class="dash-chart-wrap">' + svg + '</div></section>';
   }
 
