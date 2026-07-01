@@ -274,6 +274,7 @@
         if (cb.checked) { if (cur.indexOf(id) < 0) cur.push(id); }
         else { cur = cur.filter(function (x) { return x !== id; }); }
         setInterests(cur);
+        if (window.PulseAuth && window.PulseAuth.user && window.PulseAuth.savePrefs) window.PulseAuth.savePrefs(cur);
         render();
       });
     });
@@ -306,7 +307,16 @@
     }
   }
   function pullRemote() {
-    if (window.PulseAuth && window.PulseAuth.user && window.PulseAuth.fetchResults) {
+    if (!(window.PulseAuth && window.PulseAuth.user)) return;
+    // cross-device program interests: account is source of truth once signed in
+    if (window.PulseAuth.getPrefs) {
+      window.PulseAuth.getPrefs().then(function (pf) {
+        if (pf && Array.isArray(pf.programs)) { setInterests(pf.programs); render(); }
+        else { var local = getInterests(); if (local && local.length && window.PulseAuth.savePrefs) window.PulseAuth.savePrefs(local); }
+      });
+    }
+    // cross-device performance
+    if (window.PulseAuth.fetchResults) {
       window.PulseAuth.fetchResults().then(function (rows) {
         if (rows && rows.length) { STATE.history = mergeRemote(getHistory(), rows); render(); }
       });

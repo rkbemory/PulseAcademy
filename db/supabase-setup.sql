@@ -38,3 +38,35 @@ create policy "own results - insert"
 create policy "own results - delete"
   on public.quiz_results for delete
   using (auth.uid() = user_id);
+
+
+-- ============================================================
+-- USER PREFERENCES — the learner's chosen programs (for the Dashboard).
+-- One row per user; `programs` is a JSON array of program ids, e.g.
+--   ["diploma-nursing","nclex","msn"]
+-- Without this table the Dashboard still works (interests stay device-local);
+-- adding it makes the program selection sync across devices.
+-- ============================================================
+create table if not exists public.user_prefs (
+  user_id     uuid primary key references auth.users (id) on delete cascade,
+  programs    jsonb not null default '[]'::jsonb,
+  updated_at  timestamptz not null default now()
+);
+
+alter table public.user_prefs enable row level security;
+
+-- A signed-in user can read only their own preferences.
+create policy "own prefs - select"
+  on public.user_prefs for select
+  using (auth.uid() = user_id);
+
+-- A signed-in user can create their own preferences row.
+create policy "own prefs - insert"
+  on public.user_prefs for insert
+  with check (auth.uid() = user_id);
+
+-- A signed-in user can update their own preferences row (needed for upsert).
+create policy "own prefs - update"
+  on public.user_prefs for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);

@@ -22,6 +22,8 @@
     signOut: function () {},
     saveResult: function () { return Promise.resolve(null); },
     fetchResults: function () { return Promise.resolve([]); },
+    getPrefs: function () { return Promise.resolve(null); },
+    savePrefs: function () { return Promise.resolve(null); },
     onChange: function () {},
     noteQuizFinished: function () {}
   };
@@ -59,6 +61,8 @@
     window.PulseAuth.signOut = signOut;
     window.PulseAuth.saveResult = saveResult;
     window.PulseAuth.fetchResults = fetchResults;
+    window.PulseAuth.getPrefs = getPrefs;
+    window.PulseAuth.savePrefs = savePrefs;
     window.PulseAuth.onChange = function (cb) { if (typeof cb === "function") listeners.push(cb); };
     window.PulseAuth.noteQuizFinished = noteQuizFinished;
 
@@ -294,6 +298,24 @@
       .limit(300)
       .then(function (r) { return (r && r.data) || []; })
       .catch(function () { return []; });
+  }
+
+  /* Per-user preferences (e.g. chosen programs) — cross-device, table `user_prefs`.
+     Degrades gracefully: if the table doesn't exist yet, resolves null and the
+     dashboard keeps using device-local storage. */
+  function getPrefs() {
+    if (!window.PulseAuth.user) return Promise.resolve(null);
+    return supa.from("user_prefs").select("programs").eq("user_id", window.PulseAuth.user.id).maybeSingle()
+      .then(function (r) { return (r && r.data) || null; })
+      .catch(function () { return null; });
+  }
+  function savePrefs(programs) {
+    if (!window.PulseAuth.user) return Promise.resolve(null);
+    return supa.from("user_prefs").upsert({
+      user_id: window.PulseAuth.user.id,
+      programs: programs || [],
+      updated_at: new Date().toISOString()
+    }, { onConflict: "user_id" }).then(function (r) { return r; }).catch(function () { return null; });
   }
 
   /* When a user signs in, push any results saved locally while anonymous. */
