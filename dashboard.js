@@ -125,7 +125,7 @@
     var html = "";
     html += head(u);
     html += '<div class="dash-top">';
-    html +=   '<div class="dash-col dash-programs">' + interestsSection() + '</div>';
+    html +=   '<div class="dash-col dash-programs">' + interestsSection() + toolsSection() + '</div>';
     html +=   '<div class="dash-col dash-main">' + statsSection() + continueSection() + '</div>';
     html += '</div>';
     html += '<div class="dash-metrics">' + progressSection() + performanceSection() + '</div>';
@@ -299,6 +299,22 @@
     return '<section class="dash-section"><h2 class="dash-h2">📈 Performance trend</h2>' +
       '<p class="dash-note">Your last ' + n + ' quiz score(s) over time. Dots: green ≥ 60%, amber 40–59%, red below 40%.</p>' +
       '<div class="dash-chart-wrap">' + svg + '</div></section>';
+  }
+
+  /* Explore & tools — quick links to non-tracked resources */
+  function toolsSection() {
+    var links = [
+      { href: "ielts.html", ic: "📝", name: "IELTS Prep" },
+      { href: "resources.html", ic: "🔗", name: "Resource Hub" },
+      { href: "jobs.html", ic: "💼", name: "Nursing Jobs" },
+      { href: "books.html", ic: "📚", name: "Books" },
+      { href: "calculators.html", ic: "🧮", name: "Calculators" },
+      { href: "reference.html", ic: "🧪", name: "Quick Reference" }
+    ];
+    return '<section class="dash-section"><h2 class="dash-h2">🧰 Explore &amp; tools</h2>' +
+      '<div class="dash-tools">' + links.map(function (l) {
+        return '<a class="dash-tool" href="' + l.href + '"><span class="dash-tool-ic">' + l.ic + '</span>' + esc(l.name) + '</a>';
+      }).join("") + '</div></section>';
   }
 
   /* 4 — Feedback */

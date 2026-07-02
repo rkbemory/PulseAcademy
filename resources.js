@@ -8,7 +8,7 @@
 
   var CATEGORIES = [
     {
-      id: "regulatory", name: "Regulatory & Professional Bodies", icon: "🏛️",
+      id: "regulatory", chip: "Regulatory", name: "Regulatory & Professional Bodies", icon: "🏛️",
       blurb: "The councils and associations that register nurses & midwives and set standards.",
       links: [
         { name: "Bangladesh Nursing & Midwifery Council (BNMC)", url: "http://www.bnmc.gov.bd", desc: "The national regulator — registration, licensing, curriculum and exam authority for Bangladesh.", tags: ["Official", "BD"] },
@@ -20,7 +20,7 @@
       ]
     },
     {
-      id: "exams", name: "Licensing & Registration Exams", icon: "🎓",
+      id: "exams", chip: "Licensing", name: "Licensing & Registration Exams", icon: "🎓",
       blurb: "Official bodies for NCLEX and international nurse licensure & credential verification.",
       links: [
         { name: "NCSBN — NCLEX", url: "https://www.ncsbn.org/nclex.htm", desc: "The council that owns the NCLEX-RN/PN — the official test plan, candidate bulletin, and rules.", tags: ["Official", "Global"] },
@@ -30,8 +30,8 @@
       ]
     },
     {
-      id: "research", name: "Free Research Databases", icon: "🔬",
-      blurb: "Search peer-reviewed evidence — most are free and open to everyone.",
+      id: "research", chip: "Databases", name: "Research Databases", icon: "🔬",
+      blurb: "Search peer-reviewed literature. Many are free; some (Embase, Scopus, Web of Science) need an institutional login.",
       links: [
         { name: "PubMed", url: "https://pubmed.ncbi.nlm.nih.gov", desc: "The primary biomedical literature database (35M+ citations) from the US NLM.", tags: ["Free", "Global"] },
         { name: "PubMed Central (PMC)", url: "https://www.ncbi.nlm.nih.gov/pmc/", desc: "Free full-text archive of biomedical and life-science journal articles.", tags: ["Free", "Global"] },
@@ -40,11 +40,14 @@
         { name: "Research4Life (HINARI)", url: "https://www.research4life.org", desc: "WHO programme giving low-income countries free/low-cost access to health research.", tags: ["Free", "Global"] },
         { name: "Europe PMC", url: "https://europepmc.org", desc: "Free life-sciences literature with full text and linked data.", tags: ["Free", "Global"] },
         { name: "Google Scholar", url: "https://scholar.google.com", desc: "Broad scholarly search across disciplines with citation tracking.", tags: ["Free", "Global"] },
-        { name: "TRIP Database", url: "https://www.tripdatabase.com", desc: "Clinical search engine for evidence-based answers to practice questions.", tags: ["Free", "Global"] }
+        { name: "TRIP Database", url: "https://www.tripdatabase.com", desc: "Clinical search engine for evidence-based answers to practice questions.", tags: ["Free", "Global"] },
+        { name: "Embase (Elsevier)", url: "https://www.embase.com", desc: "Biomedical database strong on pharmacology and European journals (institutional login).", tags: ["Subscription", "Global"] },
+        { name: "Scopus", url: "https://www.scopus.com", desc: "Large abstract & citation database across science and health (institutional login).", tags: ["Subscription", "Global"] },
+        { name: "Web of Science", url: "https://www.webofscience.com", desc: "Citation index for tracking influential research and journal impact (institutional login).", tags: ["Subscription", "Global"] }
       ]
     },
     {
-      id: "statistics", name: "Statistics & Data-Skills Learning", icon: "📊",
+      id: "statistics", chip: "Statistics", name: "Statistics & Data-Skills Learning", icon: "📊",
       blurb: "Learn biostatistics and run analyses — free courses and free software.",
       links: [
         { name: "Khan Academy — Statistics & Probability", url: "https://www.khanacademy.org/math/statistics-probability", desc: "Free, structured video course from the basics to inferential statistics.", tags: ["Free", "Global"] },
@@ -55,7 +58,7 @@
       ]
     },
     {
-      id: "guidelines", name: "Evidence & Clinical Guidelines", icon: "📋",
+      id: "guidelines", chip: "Evidence", name: "Evidence & Clinical Guidelines", icon: "📋",
       blurb: "Trusted guidelines and evidence-based practice resources.",
       links: [
         { name: "JBI (Joanna Briggs Institute)", url: "https://jbi.global", desc: "Evidence-based healthcare, systematic-review methods, and best-practice tools.", tags: ["Official", "Global"] },
@@ -66,13 +69,36 @@
       ]
     },
     {
-      id: "journals", name: "Open-Access Nursing Journals", icon: "📰",
+      id: "journals", chip: "Journals", name: "Open-Access Nursing Journals", icon: "📰",
       blurb: "Read and publish nursing research — open-access titles.",
       links: [
         { name: "BMC Nursing", url: "https://bmcnurs.biomedcentral.com", desc: "Peer-reviewed open-access journal covering all areas of nursing.", tags: ["Free", "Global"] },
         { name: "Nursing Open (Wiley)", url: "https://onlinelibrary.wiley.com/journal/20541058", desc: "Open-access journal for nursing and midwifery research.", tags: ["Free", "Global"] },
         { name: "PLOS ONE", url: "https://journals.plos.org/plosone/", desc: "Multidisciplinary open-access journal — widely cited health research.", tags: ["Free", "Global"] },
         { name: "Journal of Advanced Nursing", url: "https://onlinelibrary.wiley.com/journal/13652648", desc: "Leading international nursing research journal (some open-access content).", tags: ["Global"] }
+      ]
+    },
+    {
+      id: "organizations", chip: "Organizations", name: "Global Health Organizations", icon: "🌍",
+      blurb: "Major health bodies and condition-focused organizations for guidance, data and patient/caregiver resources.",
+      links: [
+        { name: "UNICEF", url: "https://www.unicef.org", desc: "UN agency for child health, immunization, nutrition and maternal-newborn care.", tags: ["Official", "Global"] },
+        { name: "CDC", url: "https://www.cdc.gov", desc: "US Centers for Disease Control — infection control, immunization and health data.", tags: ["Official", "Global"] },
+        { name: "Alzheimer's Association", url: "https://www.alz.org", desc: "Leading dementia charity — caregiving resources, staging tools and research.", tags: ["Global"] },
+        { name: "Alzheimer's Disease International (ADI)", url: "https://www.alzint.org", desc: "Global federation of Alzheimer associations — the World Alzheimer Reports.", tags: ["Global"] },
+        { name: "International Diabetes Federation", url: "https://www.idf.org", desc: "Global diabetes body — the IDF Diabetes Atlas and clinical guidance.", tags: ["Global"] }
+      ]
+    },
+    {
+      id: "applications", chip: "Applications", name: "Study Abroad & Application Portals", icon: "🌐",
+      blurb: "Central application systems and national portals for studying nursing abroad.",
+      links: [
+        { name: "NursingCAS", url: "https://nursingcas.liaisoncas.com", desc: "The centralized application service for nursing programs across the USA.", tags: ["Official", "Global"] },
+        { name: "Common App", url: "https://www.commonapp.org", desc: "Apply to hundreds of US colleges with a single application.", tags: ["Official", "Global"] },
+        { name: "University Admissions — Sweden", url: "https://www.universityadmissions.se", desc: "Official portal to apply to Swedish universities (English-taught programmes).", tags: ["Official", "Global"] },
+        { name: "Study in Hungary (Stipendium Hungaricum)", url: "https://stipendiumhungaricum.hu", desc: "Hungary's government scholarship & application portal for international students.", tags: ["Official", "Global"] },
+        { name: "Study in Norway", url: "https://www.studyinnorway.no", desc: "Official guide to studying in Norway, with application guidance.", tags: ["Official", "Global"] },
+        { name: "DAAD — Study in Germany", url: "https://www.daad.de/en/", desc: "German Academic Exchange Service — programmes, scholarships and how to apply.", tags: ["Official", "Global"] }
       ]
     }
   ];
@@ -114,7 +140,7 @@
     var bar = document.getElementById("resource-chips");
     if (!bar) return;
     var all = '<button class="res-chip is-active" data-cat="all">All</button>';
-    var rest = CATEGORIES.map(function (c) { return '<button class="res-chip" data-cat="' + c.id + '">' + c.icon + " " + esc(c.name.split(" ")[0]) + "</button>"; }).join("");
+    var rest = CATEGORIES.map(function (c) { return '<button class="res-chip" data-cat="' + c.id + '">' + c.icon + " " + esc(c.chip || c.name.split(" ")[0]) + "</button>"; }).join("");
     bar.innerHTML = all + rest;
   }
 

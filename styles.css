@@ -4261,6 +4261,21 @@ section.block .section-title::after,
   color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px currentColor;
 }
 
+/* Nav pill colour for IELTS (violet) */
+.top-nav-links a[href="ielts.html"] {
+  color: #fff; padding: 8px 16px; border-radius: 999px; font-weight: 600;
+  background: linear-gradient(135deg, #6D28D9, #8B5CF6);
+  box-shadow: 0 3px 10px rgba(10, 35, 80,0.14);
+  transition: transform .16s, box-shadow .2s, filter .2s;
+}
+.top-nav-links a[href="ielts.html"]:hover {
+  color: #fff; transform: translateY(-1px); filter: brightness(1.08);
+  box-shadow: 0 6px 16px rgba(10, 35, 80,0.22);
+}
+.top-nav-links a[href="ielts.html"].is-active {
+  color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px currentColor;
+}
+
 /* Nav pill colour for Academic Programs (teal — distinct from RN green / NCLEX purple) */
 .top-nav-links a[href="academic.html"] {
   color: #fff; padding: 8px 16px; border-radius: 999px; font-weight: 600;
@@ -5224,6 +5239,11 @@ body > footer { flex-shrink: 0; }
 .dash-main .dash-cont-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 /* feedback: compact and full-width below the metrics */
 .dash-feedback { max-width: 640px; }
+/* Explore & tools quick links (left column) */
+.dash-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dash-tool { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-cool); text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.85rem; transition: transform .15s, box-shadow .2s, border-color .2s; }
+.dash-tool:hover { border-color: var(--primary-soft, #2E63B8); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.dash-tool-ic { font-size: 1.05rem; }
 
 /* ════════════════════════════════════════════════════════════════
    RESOURCE HUB (resources.html)
@@ -5263,6 +5283,7 @@ body > footer { flex-shrink: 0; }
 .res-tag-official { background: #E8EEFA; color: #1E3A8A; }
 .res-tag-bd { background: #FCE8E6; color: #B4231C; }
 .res-tag-global { background: #F1ECFB; color: #6D28D9; }
+.res-tag-subscription { background: #FDF1DD; color: #9A6B12; }
 .res-empty { color: var(--text-muted); font-size: 0.95rem; padding: 26px; text-align: center; background: var(--surface); border: 1px dashed var(--line-cool); border-radius: 12px; }
 @media (max-width: 560px) { .res-grid { grid-template-columns: 1fr; } }
 
@@ -5304,6 +5325,18 @@ body > footer { flex-shrink: 0; }
 .ielts-timer.is-done { background: #15803D; }
 .ielts-block { margin-bottom: 30px; }
 .ielts-passage { background: var(--surface); border: 1px solid var(--line-cool); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+/* Reading side-by-side: passage (sticky, scrollable) | questions */
+.ielts-split { display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; align-items: start; }
+.ielts-split .ielts-passage { position: sticky; top: 96px; max-height: calc(100vh - 120px); overflow-y: auto; margin-bottom: 0; }
+.ielts-split .ielts-passage p { font-size: 0.86rem; line-height: 1.6; }
+.ielts-split .ielts-passage h3 { font-size: 1.05rem; }
+.ielts-split .ielts-q { padding: 10px 12px; }
+.ielts-split .ielts-q-text { font-size: 0.88rem; }
+.ielts-split .ielts-opt { font-size: 0.86rem; }
+@media (max-width: 820px) {
+  .ielts-split { grid-template-columns: 1fr; gap: 14px; }
+  .ielts-split .ielts-passage { position: static; max-height: 320px; }
+}
 .ielts-passage h3 { font-size: 1.15rem; color: var(--text); margin-bottom: 10px; }
 .ielts-passage p { font-size: 0.95rem; line-height: 1.7; color: var(--text); margin-bottom: 8px; }
 .ielts-section-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }

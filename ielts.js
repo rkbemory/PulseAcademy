@@ -98,20 +98,25 @@
     html += '<div class="ielts-timer" id="ielts-timer" data-min="' + (m.timeMin || 60) + '">⏱️ <span id="ielts-clock">' + (m.timeMin || 60) + ":00</span></div>";
     html += '<form id="ielts-form">';
     blocks.forEach(function (b, bi) {
-      html += '<section class="ielts-block">';
       if (kind === "reading") {
-        html += '<div class="ielts-passage"><h3>' + esc(b.title || ("Passage " + (bi + 1))) + "</h3>" +
+        // Side-by-side: passage pane (sticky, scrollable) | questions pane
+        var passage = '<div class="ielts-passage ielts-split-pane"><h3>' + esc(b.title || ("Passage " + (bi + 1))) + "</h3>" +
           (b.paragraphs || []).map(function (p, i) { return "<p><strong>" + String.fromCharCode(65 + i) + "</strong>  " + esc(p) + "</p>"; }).join("") + "</div>";
+        var qhtml = "";
+        (b.questions || []).forEach(function (q) { n++; qhtml += renderQ(q, n); });
+        html += '<section class="ielts-block ielts-split">' + passage +
+          '<div class="ielts-qs-pane"><div class="ielts-qs">' + qhtml + "</div></div></section>";
       } else {
+        html += '<section class="ielts-block">';
         html += '<div class="ielts-section-head"><h3>' + esc(b.title || ("Section " + (bi + 1))) + "</h3>" +
           '<button type="button" class="ielts-audio-btn" data-audio="' + bi + '">▶ Play audio</button>' +
           '<button type="button" class="ielts-audio-btn ielts-stop" data-stop="1">⏹ Stop</button>' +
           '<button type="button" class="ielts-transcript-btn" data-tr="' + bi + '">Show transcript</button></div>' +
           '<div class="ielts-transcript" id="tr-' + bi + '" hidden>' + (b.script || []).map(function (l) { return "<p>" + (l.speaker ? "<strong>" + esc(l.speaker) + ":</strong> " : "") + esc(l.text || l) + "</p>"; }).join("") + "</div>";
+        var qh = "";
+        (b.questions || []).forEach(function (q) { n++; qh += renderQ(q, n); });
+        html += '<div class="ielts-qs">' + qh + "</div></section>";
       }
-      html += '<div class="ielts-qs">';
-      (b.questions || []).forEach(function (q) { n++; html += renderQ(q, n); });
-      html += "</div></section>";
     });
     html += '<div class="ielts-submit-row"><button type="submit" class="btn btn-primary">Submit &amp; see score</button></div>';
     html += "</form><div id=\"ielts-result\"></div>";
