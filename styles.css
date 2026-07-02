@@ -3805,7 +3805,7 @@ section.block-tint > * {
 }
 .nclex-card-1 { top: 6%; left: 4%; width: 64%; animation-delay: 0s; }
 .nclex-card-2 { top: 42%; right: 2%; width: 44%; animation-delay: 1.2s; }
-.nclex-card-3 { bottom: 4%; left: 12%; width: 38%; animation-delay: 2.3s; }
+.nclex-card-3 { bottom: 4%; left: 10%; width: 48%; animation-delay: 2.3s; }
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-12px); }
