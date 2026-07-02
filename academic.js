@@ -168,11 +168,11 @@
       html += '<p class="section-lead">' + subj.marks + " marks · " + subj.hours + " teaching hours" +
               (topics ? " · " + topics.length + " topics" : "") + ".</p>";
 
-      if (!topics) { html += comingSoonPanel(subj.name); root.innerHTML = html; return; }
+      if (!topics || !topics.length) { html += comingSoonPanel(subj.name); root.innerHTML = html; return; }
 
       var done = studiedCount(programId, subjectId), total = topics.length;
       html += '<div class="dip-progress-bar"><div class="dip-progress-fill" style="width:' +
-              Math.round(done / total * 100) + '%"></div></div>';
+              (total ? Math.round(done / total * 100) : 0) + '%"></div></div>';
       html += '<p class="dip-progress-label">' + done + " of " + total + " topics studied</p>";
 
       var curUnit = null;

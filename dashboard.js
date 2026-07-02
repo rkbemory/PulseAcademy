@@ -27,7 +27,10 @@
 
   /* ---------- helpers ---------- */
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]; }); }
-  function readJSON(k, d) { try { return JSON.parse(localStorage.getItem(k) || d); } catch (e) { return JSON.parse(d); } }
+  function readJSON(k, d) {
+    try { var v = JSON.parse(localStorage.getItem(k) || d); return (v && typeof v === "object") ? v : JSON.parse(d); }
+    catch (e) { return JSON.parse(d); }
+  }
   function fmtDate(ts) {
     if (!ts) return "";
     var d = new Date(ts); if (isNaN(d)) return "";
@@ -87,7 +90,10 @@
   function getHistory() { var a = readJSON(LS_HISTORY, "[]"); return Array.isArray(a) ? a : []; }
   function mergeRemote(local, rows) {
     var seen = {}, out = [];
-    function push(h) { var key = (h.testId || "") + "|" + (h.submittedAt || ""); if (seen[key]) return; seen[key] = 1; out.push(h); }
+    // Local history stores submittedAt as an epoch number; remote rows store an
+    // ISO string. Normalize both so the same quiz dedups instead of doubling.
+    function normTs(v) { var n = typeof v === "number" ? v : Date.parse(v); return isNaN(n) ? String(v) : n; }
+    function push(h) { var key = (h.testId || "") + "|" + normTs(h.submittedAt); if (seen[key]) return; seen[key] = 1; out.push(h); }
     local.forEach(push);
     rows.forEach(function (r) {
       push({ programId: r.program_id, testId: r.test_id, testTitle: r.test_title, score: r.score, correct: r.correct, total: r.total, submittedAt: r.submitted_at });

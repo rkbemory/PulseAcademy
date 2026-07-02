@@ -38,16 +38,17 @@
   function saveAccounts(a) { localStorage.setItem(LS_ACCOUNTS, JSON.stringify(a)); }
 
   /* Check a plaintext password against either a localStorage-overridden value
-     or, if not overridden, the default SHA-256 hash. */
+     (stored as a SHA-256 hash) or, if not overridden, the default SHA-256 hash. */
   async function checkPassword(role, plaintext) {
     if (!plaintext) return false;
     const stored = loadAccounts();
+    const hash = await sha256(plaintext);
     if (stored && stored[role]) {
-      // User has set an explicit password — exact match
-      return stored[role] === plaintext;
+      // Custom password: compare hashes. Accept a legacy plaintext value too so
+      // admins who set one before hashing was added are not locked out.
+      return stored[role] === hash || stored[role] === plaintext;
     }
     // Fall back to default hash check
-    const hash = await sha256(plaintext);
     return hash === DEFAULT_HASHES[role];
   }
   function loadSession() {
@@ -583,18 +584,18 @@
         (mainSet || deputySet ? '<button id="acc-reset" class="btn btn-secondary">Reset to defaults</button>' : '') +
       '</div>';
 
-    $("#acc-save").addEventListener("click", function () {
+    $("#acc-save").addEventListener("click", async function () {
       const main = ($("#acc-main").value || "").trim();
       const deputy = ($("#acc-deputy").value || "").trim();
-      // Build the new accounts object based on what changed.
-      const next = Object.assign({}, accounts);
-      if (main) next.main = main;
-      if (deputy) next.deputy = deputy;
-      // Validation: if both end up set, they must differ
-      if (next.main && next.deputy && next.main === next.deputy) {
+      if (!main && !deputy) return alert("Enter at least one new password to save.");
+      // Validation: if both are entered here, they must differ
+      if (main && deputy && main === deputy) {
         return alert("Main and Deputy passwords must be different.");
       }
-      if (!main && !deputy) return alert("Enter at least one new password to save.");
+      // Store as SHA-256 hashes — never keep the plaintext password in localStorage.
+      const next = Object.assign({}, accounts);
+      if (main) next.main = await sha256(main);
+      if (deputy) next.deputy = await sha256(deputy);
       saveAccounts(next);
       alert("Saved. Your current session stays valid; next sign-in uses the new password(s).");
       switchView("accounts");

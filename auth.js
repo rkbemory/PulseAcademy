@@ -43,6 +43,18 @@
 
   /* After a fresh sign-in, land the learner on their dashboard (but never
      redirect a page-load session-restore, and never loop when already there). */
+  /* Bind the "click outside to close the account menu" handler ONCE — renderNavControl
+     runs on every auth-state change, so binding it there leaked a listener each time. */
+  var navOutsideBound = false;
+  function bindOutsideClose() {
+    if (navOutsideBound) return;
+    navOutsideBound = true;
+    document.addEventListener("click", function (e) {
+      var w = document.querySelector(".pulse-acct"), mn = document.querySelector(".pulse-acct-menu");
+      if (mn && w && !w.contains(e.target)) { mn.hidden = true; document.body.classList.remove("pulse-acct-open"); }
+    });
+  }
+
   function onDashboard() { return /(?:^|\/)dashboard\.html$/.test(location.pathname); }
   function goDash() { if (!onDashboard()) location.href = "dashboard.html"; }
   function maybeGoDashAfterAuth(u) {
@@ -134,7 +146,7 @@
       var menu = wrap.querySelector(".pulse-acct-menu");
       function syncMenu() { document.body.classList.toggle("pulse-acct-open", !menu.hidden); }
       btn.addEventListener("click", function () { menu.hidden = !menu.hidden; syncMenu(); });
-      document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) { menu.hidden = true; syncMenu(); } });
+      bindOutsideClose();
       wrap.querySelector(".pulse-acct-signout").addEventListener("click", signOut);
     } else {
       wrap.innerHTML = '<button class="pulse-acct-signin" type="button">Sign in</button>';

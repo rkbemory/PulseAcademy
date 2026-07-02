@@ -243,7 +243,8 @@
     // Raw "views" count every page load (a repeat visit counts again).
     // "Today" + "All time" still count once per browser per UTC day.
     const today = new Date().toISOString().slice(0, 10);
-    const lastVisit = localStorage.getItem("pulse:lastVisitDay");
+    let lastVisit = null;
+    try { lastVisit = localStorage.getItem("pulse:lastVisitDay"); } catch (e) { /* storage blocked (private mode) — degrade gracefully */ }
     const newDay = lastVisit !== today;
     // view = +1 to total views always; daily=1 also bumps Today + All-time once a day.
     const incAction = newDay ? "view&daily=1" : "view";
@@ -264,7 +265,7 @@
 
     // Always record the view (every page), so "total views" reflects the whole portal.
     const firstCall = fetchCounts(incAction);
-    if (newDay) firstCall.then(function (d) { if (d) localStorage.setItem("pulse:lastVisitDay", today); });
+    if (newDay) firstCall.then(function (d) { if (d) { try { localStorage.setItem("pulse:lastVisitDay", today); } catch (e) {} } });
 
     if (!isHome) return; // count silently elsewhere; only render the chip on the homepage
 
