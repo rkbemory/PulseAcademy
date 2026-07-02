@@ -120,9 +120,9 @@
     html += head(u);
     html += '<div class="dash-top">';
     html +=   '<div class="dash-col dash-programs">' + interestsSection() + '</div>';
-    html +=   '<div class="dash-col dash-continue">' + continueSection() + '</div>';
+    html +=   '<div class="dash-col dash-main">' + statsSection() + continueSection() + '</div>';
     html += '</div>';
-    html += '<div class="dash-metrics">' + scoreboardSection() + performanceSection() + '</div>';
+    html += '<div class="dash-metrics">' + progressSection() + performanceSection() + '</div>';
     html += feedbackSection(u);
     root.innerHTML = html;
     wire(root);
@@ -216,15 +216,21 @@
       '<a class="btn btn-primary dash-cont-btn" href="' + href + '">' + cta + '</a></div>';
   }
 
-  /* 3 — Visual scoreboard (overall) */
-  function scoreboardSection() {
+  /* 3a — Headline stat tiles (overall) */
+  function statsSection() {
     var pr = readJSON(LS_PROGRESS, "{}"), studied = Object.keys(pr).length;
     var hist = STATE.history, scores = hist.map(scoreOf);
     var avg = scores.length ? Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length) : 0;
     var best = scores.length ? Math.max.apply(null, scores) : 0;
     var stat = function (n, l) { return '<div class="dash-stat"><span class="dash-stat-num">' + n + '</span><span class="dash-stat-label">' + l + '</span></div>'; };
     var stats = stat(studied, "Topics studied") + stat(hist.length, "Quizzes taken") + stat(avg + "%", "Average score") + stat(best + "%", "Best score");
-    // per-program bars
+    return '<section class="dash-section"><h2 class="dash-h2">📊 Your scoreboard</h2>' +
+      '<div class="dash-stats">' + stats + '</div></section>';
+  }
+
+  /* 3b — Per-program progress bars */
+  function progressSection() {
+    var hist = STATE.history;
     var bars = activePrograms().map(function (p) {
       var pct, label;
       if (p.kind === "academic") { var t = academicTotal(p.id), s = academicActivity(p.id).length; pct = t ? Math.round(s / t * 100) : 0; label = s + "/" + t + " topics"; }
@@ -233,9 +239,8 @@
         '<div class="dash-bar" style="--pc:' + p.color + '"><span style="width:' + Math.max(2, Math.min(100, pct)) + '%"></span></div>' +
         '<span class="dash-scorerow-val">' + esc(label) + '</span></div>';
     }).join("");
-    return '<section class="dash-section"><h2 class="dash-h2">📊 Your scoreboard</h2>' +
-      '<div class="dash-stats">' + stats + '</div>' +
-      (bars ? '<div class="dash-scorelist">' + bars + '</div>' : "") +
+    return '<section class="dash-section"><h2 class="dash-h2">📶 Your progress</h2>' +
+      (bars ? '<div class="dash-scorelist">' + bars + '</div>' : '<p class="dash-empty">Pick a program above to see progress here.</p>') +
       '</section>';
   }
 

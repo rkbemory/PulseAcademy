@@ -5206,9 +5206,10 @@ body > footer { flex-shrink: 0; }
    Row 1: [My programs | Continue where you left off]
    Row 2: [Your scoreboard | Performance trend]
    Row 3: Feedback (compact, full width). */
-.dash-top { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 18px; }
-.dash-metrics { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 22px; align-items: start; margin-top: 22px; }
+.dash-top { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 18px; }
+.dash-metrics { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 22px; }
 .dash-top .dash-section, .dash-metrics .dash-section { margin-top: 0; }
+.dash-main > .dash-section + .dash-section { margin-top: 22px; }
 @media (max-width: 900px) {
   .dash-top { grid-template-columns: 1fr; gap: 22px; }
   .dash-metrics { grid-template-columns: 1fr; gap: 22px; }
@@ -5216,9 +5217,10 @@ body > footer { flex-shrink: 0; }
 /* programs stack compactly in the left column */
 .dash-programs .dash-interests { grid-template-columns: 1fr; gap: 8px; }
 .dash-programs .dash-int { padding: 11px 13px; }
-/* continue cards fit the right panel (2-up when there's room) */
-.dash-continue .dash-cont-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
-/* scoreboard stat tiles fit the narrower metrics column */
-.dash-metrics .dash-stats { grid-template-columns: repeat(2, 1fr); }
+/* stat tiles: 4 across the main column (2×2 on small screens) */
+.dash-main .dash-stats { grid-template-columns: repeat(4, 1fr); margin-bottom: 0; gap: 12px; }
+@media (max-width: 620px) { .dash-main .dash-stats { grid-template-columns: repeat(2, 1fr); } }
+/* continue cards fit the main panel (2-up when there's room) */
+.dash-main .dash-cont-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 /* feedback: compact and full-width below the metrics */
 .dash-feedback { max-width: 640px; }
