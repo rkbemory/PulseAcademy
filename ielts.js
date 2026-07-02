@@ -93,9 +93,7 @@
   function renderQA(root, head, m, t, test, kind) {
     var n = 0; // global question number
     var blocks = (kind === "reading" ? test.passages : test.sections) || [];
-    var html = head;
-    if (test.instructions) html += '<p class="ielts-instr">' + esc(test.instructions) + "</p>";
-    html += '<div class="ielts-timer" id="ielts-timer" data-min="' + (m.timeMin || 60) + '">⏱️ <span id="ielts-clock">' + (m.timeMin || 60) + ":00</span></div>";
+    var html = head + moduleIntro(kind);
     html += '<form id="ielts-form">';
     blocks.forEach(function (b, bi) {
       var cc = "ielts-c" + ((bi % 4) + 1);   // per-passage / per-section colour
@@ -130,7 +128,8 @@
     root.innerHTML = html;
 
     wireAudio(root, blocks);
-    wireTimer(root);
+    if (kind === "reading") wireTimerControl(root);
+    else wireListening(root, blocks);
     var form = root.querySelector("#ielts-form");
     form.addEventListener("submit", function (e) { e.preventDefault(); grade(root, blocks, kind, m, t); });
   }
@@ -229,33 +228,96 @@
     });
   }
 
-  function wireTimer(root) {
-    var el = root.querySelector("#ielts-timer"), clock = root.querySelector("#ielts-clock");
-    if (!el || !clock) return;
-    var left = (parseInt(el.getAttribute("data-min"), 10) || 60) * 60;
+  /* ---- Per-module instruction + start-gated timer / listening control ---- */
+  function fmtSecs(s) { var m = Math.floor(s / 60), r = s % 60; return m + ":" + (r < 10 ? "0" : "") + r; }
+
+  function timerControl(min) {
+    return '<div class="ielts-timer-wrap">' +
+      '<button type="button" class="ielts-timer-start" data-min="' + min + '">▶ Start the ' + min + '-minute timer</button>' +
+      '<span class="ielts-timer" hidden>⏱️ <span class="ielts-clock">' + min + ':00</span></span>' +
+      '<span class="ielts-timeup" hidden>⏰ Time is up — stop writing.</span></div>';
+  }
+
+  function moduleIntro(kind) {
+    if (kind === "reading") {
+      return '<div class="ielts-instr">📖 <strong>Academic Reading.</strong> Read the 3 passages and answer all 40 questions in <strong>60 minutes</strong>. Press start to run the clock — when it reaches zero you\'ll be told to stop. Then submit to see your score and estimated band.</div>' + timerControl(60);
+    }
+    return '<div class="ielts-instr">🎧 <strong>Listening.</strong> You will hear <strong>4 sections</strong>, once. Press start and the audio plays straight through (your browser reads it aloud) — answer as you listen. When the audio ends you get about 2 minutes to check your answers. You can also replay a section or show its transcript to practise.</div>' +
+      '<div class="ielts-listen-wrap"><button type="button" id="ielts-listen-start" class="ielts-timer-start">▶ Start listening test</button> <span class="ielts-listen-status" id="ielts-listen-status" hidden></span></div>';
+  }
+
+  function wireTimerControl(root) {
+    root.querySelectorAll(".ielts-timer-start[data-min]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var wrap = btn.closest(".ielts-timer-wrap");
+        var timer = wrap.querySelector(".ielts-timer"), clock = wrap.querySelector(".ielts-clock"), up = wrap.querySelector(".ielts-timeup");
+        btn.hidden = true; timer.hidden = false;
+        var left = (parseInt(btn.getAttribute("data-min"), 10) || 60) * 60;
+        var iv = setInterval(function () {
+          left--;
+          if (left <= 0) { clearInterval(iv); timer.hidden = true; up.hidden = false; return; }
+          clock.textContent = fmtSecs(left);
+        }, 1000);
+      });
+    });
+  }
+
+  /* Listening: play all sections straight through, then a review countdown */
+  function wireListening(root, blocks) {
+    var startBtn = root.querySelector("#ielts-listen-start"), status = root.querySelector("#ielts-listen-status");
+    if (!startBtn) return;
+    if (!("speechSynthesis" in window)) { startBtn.textContent = "Audio unavailable — use the transcripts"; startBtn.disabled = true; return; }
+    startBtn.addEventListener("click", function () {
+      startBtn.disabled = true; startBtn.hidden = true; status.hidden = false;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      var total = blocks.length, utters = [];
+      blocks.forEach(function (b, bi) {
+        var h = new SpeechSynthesisUtterance("Section " + (bi + 1) + ".");
+        h.rate = 0.95; h.lang = "en-GB";
+        h.onstart = function () { status.textContent = "🔊 Playing Section " + (bi + 1) + " of " + total + "…"; };
+        try { window.speechSynthesis.speak(h); } catch (e) {}
+        (b.script || []).forEach(function (l) {
+          var u = new SpeechSynthesisUtterance(l.text || l); u.rate = 0.95; u.lang = "en-GB";
+          try { window.speechSynthesis.speak(u); } catch (e) {}
+          utters.push(u);
+        });
+      });
+      var last = utters[utters.length - 1];
+      if (last) last.onend = function () { reviewCountdown(status, 120); };
+      else reviewCountdown(status, 120);
+    });
+  }
+  function reviewCountdown(status, secs) {
+    var left = secs;
+    status.textContent = "✅ Audio finished — " + fmtSecs(left) + " to check your answers.";
     var iv = setInterval(function () {
       left--;
-      if (left <= 0) { clearInterval(iv); clock.textContent = "0:00"; el.classList.add("is-up"); return; }
-      var mm = Math.floor(left / 60), ss = left % 60;
-      clock.textContent = mm + ":" + (ss < 10 ? "0" : "") + ss;
+      if (left <= 0) { clearInterval(iv); status.textContent = "⏰ Time is up — please submit your answers."; status.classList.add("is-up"); return; }
+      status.textContent = "✅ Audio finished — " + fmtSecs(left) + " to check your answers.";
     }, 1000);
   }
 
   /* ---- Writing (show tasks + live word counter; AI score = Pro) ---- */
   function renderWriting(root, head, test) {
     function task(t, key, label) {
-      var chart = t.figure ? '<figure class="ielts-fig">' + t.figure + "</figure>" : "";
-      return '<section class="ielts-wtask"><div class="ielts-wtask-head"><h3>' + label + '</h3><span class="ielts-wtask-min">Write at least ' + t.minWords + " words · " + t.timeSuggest + "</span></div>" +
-        '<p class="ielts-wtask-prompt">' + esc(t.prompt) + "</p>" + chart +
-        '<textarea class="ielts-wbox" data-min="' + t.minWords + '" placeholder="Type your answer here…"></textarea>' +
+      var box = '<div class="ielts-wbox-wrap"><textarea class="ielts-wbox" data-min="' + t.minWords + '" placeholder="Type your answer here…"></textarea>' +
         '<div class="ielts-wfoot"><span class="ielts-wc" data-key="' + key + '">0 words</span>' +
-        '<button type="button" class="btn btn-secondary ielts-pro-btn" disabled title="Coming in the Pro version">🔒 Get AI band score (Pro)</button></div></section>';
+        '<button type="button" class="btn btn-secondary ielts-pro-btn" disabled title="Coming in the Pro version">🔒 Get AI band score (Pro)</button></div></div>';
+      var head2 = '<div class="ielts-wtask-head"><h3>' + label + '</h3><span class="ielts-wtask-min">Write at least ' + t.minWords + " words · " + t.timeSuggest + "</span></div>";
+      var prompt = '<p class="ielts-wtask-prompt">' + esc(t.prompt) + "</p>";
+      if (t.figure) {
+        // Task 1: figure (smaller) beside the answer box so both stay in view
+        return '<section class="ielts-wtask">' + head2 + prompt +
+          '<div class="ielts-wsplit"><figure class="ielts-fig">' + t.figure + "</figure>" + box + "</div></section>";
+      }
+      return '<section class="ielts-wtask">' + head2 + prompt + box + "</section>";
     }
     root.innerHTML = head +
-      '<p class="ielts-instr">Academic Writing has two tasks in 60 minutes. Spend ~20 min on Task 1 and ~40 min on Task 2. Practise below with a live word counter; detailed AI band feedback arrives in the Pro version.</p>' +
+      '<div class="ielts-instr">✍️ <strong>Academic Writing.</strong> Complete <strong>both</strong> tasks in <strong>60 minutes</strong> — about 20 min on Task 1 (150+ words) and 40 min on Task 2 (250+ words). Press start to run the clock; the live word counter tracks your length. Detailed AI band feedback arrives in the Pro version.</div>' +
+      timerControl(60) +
       task(test.task1, "t1", "Task 1") + task(test.task2, "t2", "Task 2");
     root.querySelectorAll(".ielts-wbox").forEach(function (box) {
-      var out = box.parentElement.querySelector(".ielts-wc");
+      var out = box.closest(".ielts-wbox-wrap").querySelector(".ielts-wc");
       box.addEventListener("input", function () {
         var w = (box.value.trim().match(/\S+/g) || []).length;
         var min = parseInt(box.getAttribute("data-min"), 10);
@@ -263,6 +325,7 @@
         out.classList.toggle("is-ok", w >= min);
       });
     });
+    wireTimerControl(root);
   }
 
   /* ---- Speaking (show examiner's questions; AI eval = Pro) ---- */

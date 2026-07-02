@@ -5340,6 +5340,24 @@ body > footer { flex-shrink: 0; }
 .ielts-timer { position: sticky; top: 62px; z-index: 20; display: inline-block; background: var(--primary, #14387A); color: #fff; font-weight: 700; font-size: 0.95rem; padding: 6px 14px; border-radius: 999px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
 .ielts-timer.is-up { background: var(--coral, #DC2626); }
 .ielts-timer.is-done { background: #15803D; }
+.ielts-timer-wrap { margin-bottom: 16px; }
+.ielts-timer-start {
+  font: inherit; font-weight: 600; font-size: 0.9rem; cursor: pointer;
+  background: var(--primary, #14387A); color: #fff; border: none;
+  padding: 9px 18px; border-radius: 999px; box-shadow: var(--shadow-sm);
+}
+.ielts-timer-start:hover { filter: brightness(1.06); }
+.ielts-timer-start[disabled] { opacity: .6; cursor: default; }
+.ielts-timeup { display: inline-block; background: var(--coral, #DC2626); color: #fff; font-weight: 700; font-size: 0.95rem; padding: 7px 16px; border-radius: 999px; }
+.ielts-listen-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.ielts-listen-status { font-weight: 600; font-size: 0.92rem; color: var(--primary, #14387A); }
+.ielts-listen-status.is-up { color: var(--coral, #DC2626); }
+/* Writing Task 1: figure (smaller) beside the answer box */
+.ielts-wsplit { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 18px; align-items: start; }
+.ielts-wsplit .ielts-fig { margin: 0; position: sticky; top: 70px; }
+.ielts-wbox-wrap { display: flex; flex-direction: column; }
+.ielts-wsplit .ielts-wbox { min-height: 240px; }
+@media (max-width: 760px) { .ielts-wsplit { grid-template-columns: 1fr; } .ielts-wsplit .ielts-fig { position: static; } }
 .ielts-block { margin-bottom: 30px; }
 .ielts-passage { background: var(--surface); border: 1px solid var(--line-cool); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
 /* Reading side-by-side: passage (sticky, scrollable) | questions */
