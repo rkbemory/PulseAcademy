@@ -150,11 +150,11 @@ window.Academic.programs = {
       3: {
         name: "3rd Year", totalMarks: 900,
         subjects: [
-          { id: "pathophysiology",       code: "B331-I",  name: "Pathophysiology",                type: "Foundation",   marks: 150, hours: 112 },
-          { id: "gerontological-nursing",code: "B331-II", name: "Gerontological Nursing",         type: "Professional", marks: 150, hours: 64 },
-          { id: "community-health",      code: "B332",    name: "Community Health Nursing",       type: "Professional", marks: 200, hours: 132 },
-          { id: "psychiatric-nursing",   code: "B333",    name: "Psychiatric Nursing",            type: "Professional", marks: 200, hours: 80 },
-          { id: "emergency-critical-care",code: "B334",   name: "Emergency & Critical Care Nursing", type: "Professional", marks: 200, hours: 80 }
+          { id: "pathophysiology",       code: "B331-I",  name: "Pathophysiology",                type: "Foundation",   marks: 150, hours: 112, topicCount: 16, available: true },
+          { id: "gerontological-nursing",code: "B331-II", name: "Gerontological Nursing",         type: "Professional", marks: 150, hours: 64, topicCount: 12, available: true },
+          { id: "community-health",      code: "B332",    name: "Community Health Nursing",       type: "Professional", marks: 200, hours: 132, topicCount: 18, available: true },
+          { id: "psychiatric-nursing",   code: "B333",    name: "Psychiatric Nursing",            type: "Professional", marks: 200, hours: 80, topicCount: 16, available: true },
+          { id: "emergency-critical-care",code: "B334",   name: "Emergency & Critical Care Nursing", type: "Professional", marks: 200, hours: 80, topicCount: 16, available: true }
         ]
       },
       4: {
