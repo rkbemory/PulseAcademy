@@ -92,6 +92,7 @@
 
       '<h2 class="ielts-h2">Practise each module</h2>' +
       '<div class="ielts-mod-grid">' + cards + "</div>" +
+      '<a class="ielts-samples-link" href="ielts-samples.html">📝 See band 6–9 sample answers for Writing →</a>' +
 
       '<div class="ielts-about">' +
         '<h2 class="ielts-h2">Useful resources</h2>' +
@@ -383,9 +384,42 @@
         '<p class="ielts-sp-topic">' + esc(p3.topic) + "</p><ul>" + p3.questions.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul></section>";
   }
 
+  /* ---- Writing sample answers (band 6/7/8/9) ---- */
+  function initSamples() {
+    var root = document.getElementById("ielts-root");
+    if (!root) return;
+    var list = (window.IELTS.data && window.IELTS.data.samples) || [];
+    if (!list.length) { root.innerHTML = '<p class="ielts-empty">Sample answers are being finalised.</p>'; return; }
+    var html = '<nav class="ielts-crumb"><a href="ielts.html">IELTS</a> › <span>Writing sample answers</span></nav>' +
+      '<h1 class="section-title ielts-test-title">✍️ Writing — band 6–9 sample answers</h1>' +
+      '<p class="ielts-instr">Compare four model answers — <strong>Band 6, 7, 8 and 9</strong> — for the <em>same</em> task. Watch how range, accuracy, organisation and precision improve as the band rises. Each answer has an examiner note on what earns that band. (Original teaching samples.)</p>';
+    list.forEach(function (s, si) {
+      var cc = "ielts-c" + ((si % 4) + 1);
+      var tabs = s.bands.map(function (b, i) { return '<button type="button" class="ielts-sb-tab' + (i === 0 ? " is-on" : "") + '" data-s="' + si + '" data-b="' + b.band + '">Band ' + b.band + "</button>"; }).join("");
+      var panels = s.bands.map(function (b, i) {
+        return '<div class="ielts-sb-panel' + (i === 0 ? " is-on" : "") + '" data-s="' + si + '" data-b="' + b.band + '">' +
+          '<p class="ielts-sb-note">📝 <strong>Band ' + b.band + '</strong> — ' + esc(b.note) + ' <span class="ielts-sb-wc">' + b.words + " words</span></p>" +
+          '<div class="ielts-sb-answer">' + esc(b.answer).replace(/\n/g, "<br>") + "</div></div>";
+      }).join("");
+      html += '<section class="ielts-sample ' + cc + '"><span class="ielts-block-tag">' + esc(s.task) + (s.chart ? " · " + esc(s.chart) : "") + "</span>" +
+        '<p class="ielts-sample-prompt">' + esc(s.prompt) + "</p>" +
+        (s.figureData ? '<p class="ielts-sample-data"><strong>Data:</strong> ' + esc(s.figureData) + "</p>" : "") +
+        '<div class="ielts-sb-tabs">' + tabs + "</div>" + panels + "</section>";
+    });
+    root.innerHTML = html;
+    root.querySelectorAll(".ielts-sb-tab").forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var si = tab.getAttribute("data-s"), b = tab.getAttribute("data-b");
+        root.querySelectorAll('.ielts-sb-tab[data-s="' + si + '"]').forEach(function (t) { t.classList.toggle("is-on", t === tab); });
+        root.querySelectorAll('.ielts-sb-panel[data-s="' + si + '"]').forEach(function (p) { p.classList.toggle("is-on", p.getAttribute("data-b") === b); });
+      });
+    });
+  }
+
   /* ---------------- boot ---------------- */
   function boot() {
     if (document.getElementById("ielts-hub")) initHub();
+    else if (document.getElementById("ielts-samples")) initSamples();
     else if (document.getElementById("ielts-player")) initTest();
   }
   if (document.readyState !== "loading") boot();

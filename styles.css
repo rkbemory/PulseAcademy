@@ -5348,6 +5348,19 @@ body > footer { flex-shrink: 0; }
 .ielts-res-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .ielts-res-group h4 { font-size: 0.95rem; color: var(--text); margin-bottom: 6px; }
 .ielts-res-group a { display: block; font-size: 0.9rem; color: var(--primary, #14387A); font-weight: 600; padding: 3px 0; }
+.ielts-samples-link { display: inline-block; margin: 4px 0 20px; font-weight: 700; color: var(--primary, #14387A); font-size: 0.98rem; }
+/* Sample-answer viewer (bands 6-9) */
+.ielts-sample { background: var(--surface); border: 1px solid var(--line-cool); border-left: 4px solid var(--pc, #14387A); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
+.ielts-sample-prompt { font-size: 0.98rem; color: var(--text); line-height: 1.55; margin: 8px 0; font-weight: 500; }
+.ielts-sample-data { font-size: 0.85rem; color: var(--text-muted); background: var(--bg); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; line-height: 1.5; }
+.ielts-sb-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.ielts-sb-tab { font: inherit; font-weight: 600; font-size: 0.85rem; cursor: pointer; padding: 6px 15px; border-radius: 999px; border: 1.5px solid var(--line-cool); background: var(--surface); color: var(--text-soft); }
+.ielts-sb-tab.is-on { background: var(--pc, #14387A); border-color: var(--pc, #14387A); color: #fff; }
+.ielts-sb-panel { display: none; }
+.ielts-sb-panel.is-on { display: block; }
+.ielts-sb-note { font-size: 0.88rem; color: #6B5A2E; background: #FBF7EC; border: 1px solid #EBDBB4; border-radius: 8px; padding: 9px 12px; margin-bottom: 10px; line-height: 1.5; }
+.ielts-sb-wc { color: var(--text-muted); font-weight: 600; margin-left: 6px; white-space: nowrap; }
+.ielts-sb-answer { font-size: 0.95rem; line-height: 1.75; color: var(--text); }
 @media (max-width: 480px) { .ielts-band-row { grid-template-columns: 30px 1fr; } .ielts-band-name, .ielts-band-desc { grid-column: 2; } }
 
 /* Test player */
