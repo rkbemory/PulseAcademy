@@ -23,7 +23,12 @@ window.IELTS.modules = {
       { id: "reading-2", title: "Academic Reading — Test 2" },
       { id: "reading-3", title: "Academic Reading — Test 3" },
       { id: "reading-4", title: "Academic Reading — Test 4" },
-      { id: "reading-5", title: "Academic Reading — Test 5" }
+      { id: "reading-5", title: "Academic Reading — Test 5" },
+      { id: "reading-6", title: "Academic Reading — Test 6" },
+      { id: "reading-7", title: "Academic Reading — Test 7" },
+      { id: "reading-8", title: "Academic Reading — Test 8" },
+      { id: "reading-9", title: "Academic Reading — Test 9" },
+      { id: "reading-10", title: "Academic Reading — Test 10" }
     ]
   },
   listening: {
@@ -34,7 +39,12 @@ window.IELTS.modules = {
       { id: "listening-2", title: "Listening — Test 2" },
       { id: "listening-3", title: "Listening — Test 3" },
       { id: "listening-4", title: "Listening — Test 4" },
-      { id: "listening-5", title: "Listening — Test 5" }
+      { id: "listening-5", title: "Listening — Test 5" },
+      { id: "listening-6", title: "Listening — Test 6" },
+      { id: "listening-7", title: "Listening — Test 7" },
+      { id: "listening-8", title: "Listening — Test 8" },
+      { id: "listening-9", title: "Listening — Test 9" },
+      { id: "listening-10", title: "Listening — Test 10" }
     ]
   },
   writing: {
@@ -45,7 +55,12 @@ window.IELTS.modules = {
       { id: "writing-2", title: "Academic Writing — Set 2" },
       { id: "writing-3", title: "Academic Writing — Set 3" },
       { id: "writing-4", title: "Academic Writing — Set 4" },
-      { id: "writing-5", title: "Academic Writing — Set 5" }
+      { id: "writing-5", title: "Academic Writing — Set 5" },
+      { id: "writing-6", title: "Academic Writing — Set 6" },
+      { id: "writing-7", title: "Academic Writing — Set 7" },
+      { id: "writing-8", title: "Academic Writing — Set 8" },
+      { id: "writing-9", title: "Academic Writing — Set 9" },
+      { id: "writing-10", title: "Academic Writing — Set 10" }
     ]
   },
   speaking: {
@@ -56,7 +71,12 @@ window.IELTS.modules = {
       { id: "speaking-2", title: "Speaking — Set 2" },
       { id: "speaking-3", title: "Speaking — Set 3" },
       { id: "speaking-4", title: "Speaking — Set 4" },
-      { id: "speaking-5", title: "Speaking — Set 5" }
+      { id: "speaking-5", title: "Speaking — Set 5" },
+      { id: "speaking-6", title: "Speaking — Set 6" },
+      { id: "speaking-7", title: "Speaking — Set 7" },
+      { id: "speaking-8", title: "Speaking — Set 8" },
+      { id: "speaking-9", title: "Speaking — Set 9" },
+      { id: "speaking-10", title: "Speaking — Set 10" }
     ]
   }
 };
