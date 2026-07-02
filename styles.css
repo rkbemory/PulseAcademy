@@ -5331,6 +5331,24 @@ body > footer { flex-shrink: 0; }
 .ielts-official { font-size: 0.9rem; color: var(--lead-ink); margin: 14px 0; }
 .ielts-official a { color: var(--primary, #14387A); font-weight: 600; margin-left: 8px; }
 .ielts-disclaimer { font-size: 0.8rem; color: var(--text-muted); background: var(--bg); border: 1px dashed var(--line-cool); border-radius: 10px; padding: 12px 14px; margin-top: 14px; }
+.ielts-about { margin-bottom: 26px; }
+/* Exam structure strip */
+.ielts-struct { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 10px; margin: 6px 0 10px; }
+.ielts-struct-row { display: flex; flex-direction: column; gap: 2px; background: var(--surface); border: 1px solid var(--line-cool); border-left: 3px solid var(--primary, #14387A); border-radius: 10px; padding: 10px 14px; }
+.ielts-struct-name { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+.ielts-struct-time { font-size: 0.85rem; color: var(--primary, #14387A); font-weight: 600; }
+.ielts-struct-detail { font-size: 0.82rem; color: var(--text-muted); }
+/* Band scale */
+.ielts-bands { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 12px; }
+.ielts-band-row { display: grid; grid-template-columns: 34px 96px 1fr; align-items: center; gap: 10px; }
+.ielts-band-n { width: 30px; height: 30px; border-radius: 8px; background: var(--primary, #14387A); color: #fff; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
+.ielts-band-name { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+.ielts-band-desc { font-size: 0.88rem; color: var(--lead-ink); }
+/* Resource groups */
+.ielts-res-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.ielts-res-group h4 { font-size: 0.95rem; color: var(--text); margin-bottom: 6px; }
+.ielts-res-group a { display: block; font-size: 0.9rem; color: var(--primary, #14387A); font-weight: 600; padding: 3px 0; }
+@media (max-width: 480px) { .ielts-band-row { grid-template-columns: 30px 1fr; } .ielts-band-name, .ielts-band-desc { grid-column: 2; } }
 
 /* Test player */
 .ielts-crumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }

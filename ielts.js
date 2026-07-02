@@ -53,20 +53,59 @@
 
     root.innerHTML =
       '<div class="ielts-about">' +
-        '<h2 class="ielts-h2">What is IELTS?</h2>' +
-        '<p>The International English Language Testing System measures English for study, work and migration. It is scored in <strong>bands 1–9</strong>. There are three versions:</p>' +
+        '<h2 class="ielts-h2">About IELTS</h2>' +
+        '<p>The International English Language Testing System is the world\'s most popular English test for study, work and migration. It reports a score from <strong>band 1 to band 9</strong> for each of four skills, plus an overall band. There are three versions:</p>' +
         '<div class="ielts-type-grid">' +
-          typeCard("Academic", "For university and professional registration (including nursing councils like the NMC).") +
+          typeCard("Academic", "For university study and professional registration — including nursing councils such as the UK NMC.") +
           typeCard("General Training", "For work experience, training programmes and migration to English-speaking countries.") +
           typeCard("UKVI", "IELTS for UK Visas & Immigration — the same test, taken at a UKVI-approved centre for UK visa purposes.") +
         "</div>" +
-        '<p class="ielts-modline">Every version tests the same four modules: <strong>Listening</strong>, <strong>Reading</strong>, <strong>Writing</strong> and <strong>Speaking</strong>.</p>' +
       "</div>" +
+
+      '<div class="ielts-about">' +
+        '<h2 class="ielts-h2">Exam structure</h2>' +
+        '<div class="ielts-struct">' +
+          structRow("🎧 Listening", "~30 min", "4 sections · 40 questions") +
+          structRow("📖 Reading", "60 min", "3 passages · 40 questions") +
+          structRow("✍️ Writing", "60 min", "2 tasks · 150 + 250 words") +
+          structRow("🎤 Speaking", "11–14 min", "3 parts · face-to-face") +
+        "</div>" +
+        '<p class="ielts-modline">The whole test takes about <strong>2 hours 45 minutes</strong>. Listening, Reading and Writing are sat together; Speaking may be the same day or within a few days.</p>' +
+      "</div>" +
+
+      '<div class="ielts-about">' +
+        '<h2 class="ielts-h2">Understanding band scores</h2>' +
+        '<p>Each skill is marked 1–9. Your <strong>overall band</strong> is the average of the four skill scores, rounded to the nearest whole or half band (for example 6.25 → 6.5 and 6.1 → 6.0).</p>' +
+        '<div class="ielts-bands">' +
+          bandRow("9", "Expert", "Full operational command — accurate, fluent and complete.") +
+          bandRow("8", "Very good", "Fully operational command; only occasional slips.") +
+          bandRow("7", "Good", "Operational command; occasional inaccuracies.") +
+          bandRow("6", "Competent", "Effective command despite some errors.") +
+          bandRow("5", "Modest", "Partial command; copes with overall meaning.") +
+          bandRow("4", "Limited", "Basic competence in familiar situations only.") +
+        "</div>" +
+        '<p class="ielts-official">' +
+          '<a href="https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail" target="_blank" rel="noopener noreferrer">IELTS scoring in detail ↗</a>' +
+          '<a href="https://ieltsliz.com/ielts-band-scores/" target="_blank" rel="noopener noreferrer">IELTS Liz — band scores ↗</a>' +
+        "</p>" +
+      "</div>" +
+
+      '<h2 class="ielts-h2">Practise each module</h2>' +
       '<div class="ielts-mod-grid">' + cards + "</div>" +
-      '<div class="ielts-official">Official test sites: ' + official + "</div>" +
+
+      '<div class="ielts-about">' +
+        '<h2 class="ielts-h2">Useful resources</h2>' +
+        '<div class="ielts-res-groups">' +
+          resGroup("Official test sites", [["IDP IELTS", "https://ielts.idp.com"], ["British Council — Take IELTS", "https://takeielts.britishcouncil.org"], ["IELTS.org", "https://ielts.org"]]) +
+          resGroup("Scores & free preparation", [["IELTS scoring in detail", "https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail"], ["IELTS Liz", "https://ieltsliz.com"], ["IELTS Buddy", "https://www.ielts-buddy.com"], ["Road to IELTS (British Council)", "https://www.roadtoielts.com"]]) +
+        "</div>" +
+      "</div>" +
       '<p class="ielts-disclaimer">' + esc(meta.note) + " AI evaluation of Writing &amp; Speaking is coming in the Pro version.</p>";
   }
   function typeCard(name, desc) { return '<div class="ielts-type"><h4>' + esc(name) + "</h4><p>" + esc(desc) + "</p></div>"; }
+  function structRow(name, time, detail) { return '<div class="ielts-struct-row"><span class="ielts-struct-name">' + name + '</span><span class="ielts-struct-time">' + time + '</span><span class="ielts-struct-detail">' + detail + "</span></div>"; }
+  function bandRow(n, name, desc) { return '<div class="ielts-band-row"><span class="ielts-band-n">' + n + '</span><span class="ielts-band-name">' + esc(name) + '</span><span class="ielts-band-desc">' + esc(desc) + "</span></div>"; }
+  function resGroup(title, links) { return '<div class="ielts-res-group"><h4>' + esc(title) + "</h4>" + links.map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + " ↗</a>"; }).join("") + "</div>"; }
   function moduleColor(mid) { return ({ reading: "#1E5F9C", listening: "#0E7490", writing: "#B4541E", speaking: "#6D28D9" })[mid] || "#14387A"; }
 
   /* ---------------- TEST PLAYER ---------------- */
