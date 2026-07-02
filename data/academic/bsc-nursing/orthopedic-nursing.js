@@ -424,7 +424,7 @@ window.Academic.topics["bsc-nursing/orthopedic-nursing"] = [
         'Immobilize prior to surgery (temporary stabilization).'
       ] },
       { h: 'Types by method of pull', list: [
-        'Skin traction — the pull is applied to the skin via adhesive strapping, foam or a boot, transmitted to the bone. It is temporary, uses light weights (usually up to 2–3 kg / max ~5 kg), and is non-invasive. Examples: Buck\'s, Russell\'s, Bryant\'s, Gallow\'s (pelvic/cervical).',
+        'Skin traction — the pull is applied to the skin via adhesive strapping, foam or a boot, transmitted to the bone. It is temporary, uses light weights (usually up to 2–3 kg / max ~5 kg), and is non-invasive. Examples: Buck\'s, Russell\'s, Bryant\'s (Gallow\'s) for infants, and pelvic and cervical skin traction.',
         'Skeletal traction — the pull is applied directly to bone through a metal pin or wire (Steinmann pin, Kirschner wire) inserted under aseptic surgical conditions. It allows heavier, sustained weights (5–20 kg+) for longer periods. Examples: pin through the tibial tuberosity, calcaneum or olecranon.',
         'Skull (cervical) traction — applied to the skull for cervical spine injuries via Crutchfield/Gardner-Wells tongs or a halo device.'
       ] },

@@ -801,7 +801,7 @@ window.Academic.topics["bsc-nursing/physiology"] = [
       },
       {
         "h": "Erythrocytes — structure and function",
-        "p": "Red cells are biconcave discs (~7–8 µm) without a nucleus or mitochondria, packed with about 640 million haemoglobin molecules, and living about 120 days. The biconcave shape maximises surface area for gas exchange and gives the flexibility to squeeze through capillaries. Lacking a nucleus, they cannot repair or divide; worn cells are removed by macrophages in the spleen and liver, and their iron is recycled while haem becomes bilirubin. Normal counts are ~4.5–6.5 ×10¹²/L (men) and ~3.8–5.8 ×10¹²/L (women)."
+        "p": "Red cells are biconcave discs (~7–8 µm) without a nucleus or mitochondria, packed with about 270 million haemoglobin molecules, and living about 120 days. The biconcave shape maximises surface area for gas exchange and gives the flexibility to squeeze through capillaries. Lacking a nucleus, they cannot repair or divide; worn cells are removed by macrophages in the spleen and liver, and their iron is recycled while haem becomes bilirubin. Normal counts are ~4.5–6.5 ×10¹²/L (men) and ~3.8–5.8 ×10¹²/L (women)."
       },
       {
         "h": "Haemoglobin and oxygen carriage",
