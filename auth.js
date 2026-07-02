@@ -279,7 +279,11 @@
   }
 
   function signOut() {
-    supa.auth.signOut().then(function () { var m = document.querySelector(".pulse-acct-menu"); if (m) m.hidden = true; });
+    supa.auth.signOut().then(function () {
+      var m = document.querySelector(".pulse-acct-menu"); if (m) m.hidden = true;
+      document.body.classList.remove("pulse-acct-open");
+      location.href = "index.html";   // return to the general homepage after signing out
+    });
   }
 
   /* ============================================================
