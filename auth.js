@@ -8,6 +8,7 @@
 (function () {
   "use strict";
 
+  var listeners = [];
   var cfg = window.PulseAuthConfig || {};
   var configured =
     cfg.supabaseUrl && cfg.supabaseAnonKey &&
@@ -24,7 +25,7 @@
     fetchResults: function () { return Promise.resolve([]); },
     getPrefs: function () { return Promise.resolve(null); },
     savePrefs: function () { return Promise.resolve(null); },
-    onChange: function () {},
+    onChange: function (cb) { if (typeof cb === "function") listeners.push(cb); },
     noteQuizFinished: function () {}
   };
 
@@ -32,7 +33,6 @@
 
   var SDK_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
   var supa = null;
-  var listeners = [];
 
   function ready(fn) {
     if (document.readyState !== "loading") fn();
@@ -40,6 +40,16 @@
   }
   function el(tag, cls, html) { var n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]; }); }
+
+  /* After a fresh sign-in, land the learner on their dashboard (but never
+     redirect a page-load session-restore, and never loop when already there). */
+  function onDashboard() { return /(?:^|\/)dashboard\.html$/.test(location.pathname); }
+  function goDash() { if (!onDashboard()) location.href = "dashboard.html"; }
+  function maybeGoDashAfterAuth(u) {
+    if (!u) return;
+    var flag; try { flag = sessionStorage.getItem("pulse:goDash"); } catch (e) { flag = null; }
+    if (flag) { try { sessionStorage.removeItem("pulse:goDash"); } catch (e) {} goDash(); }
+  }
 
   /* ---- Load the Supabase SDK, then boot ---- */
   function loadSdk() {
@@ -63,14 +73,17 @@
     window.PulseAuth.fetchResults = fetchResults;
     window.PulseAuth.getPrefs = getPrefs;
     window.PulseAuth.savePrefs = savePrefs;
-    window.PulseAuth.onChange = function (cb) { if (typeof cb === "function") listeners.push(cb); };
     window.PulseAuth.noteQuizFinished = noteQuizFinished;
 
     supa.auth.getSession().then(function (res) {
-      setUser(res && res.data && res.data.session ? res.data.session.user : null);
+      var u = res && res.data && res.data.session ? res.data.session.user : null;
+      setUser(u);
+      maybeGoDashAfterAuth(u);
     });
     supa.auth.onAuthStateChange(function (_event, session) {
-      setUser(session ? session.user : null);
+      var u = session ? session.user : null;
+      setUser(u);
+      maybeGoDashAfterAuth(u);
     });
 
     ready(function () {
@@ -115,13 +128,13 @@
         '<div class="pulse-acct-menu" hidden>' +
           '<div class="pulse-acct-email">' + esc(label) + '</div>' +
           '<a class="pulse-acct-item" href="dashboard.html">📊 My Dashboard</a>' +
-          '<a class="pulse-acct-item" href="results.html">My last result</a>' +
           '<button class="pulse-acct-item pulse-acct-signout" type="button">Sign out</button>' +
         '</div>';
       var btn = wrap.querySelector(".pulse-acct-btn");
       var menu = wrap.querySelector(".pulse-acct-menu");
-      btn.addEventListener("click", function () { menu.hidden = !menu.hidden; });
-      document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) menu.hidden = true; });
+      function syncMenu() { document.body.classList.toggle("pulse-acct-open", !menu.hidden); }
+      btn.addEventListener("click", function () { menu.hidden = !menu.hidden; syncMenu(); });
+      document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) { menu.hidden = true; syncMenu(); } });
       wrap.querySelector(".pulse-acct-signout").addEventListener("click", signOut);
     } else {
       wrap.innerHTML = '<button class="pulse-acct-signin" type="button">Sign in</button>';
@@ -209,6 +222,7 @@
     toggle.addEventListener("click", function () { setMode(mode === "signup" ? "signin" : "signup"); });
 
     modal.querySelector(".pulse-auth-google").addEventListener("click", function () {
+      try { sessionStorage.setItem("pulse:goDash", "1"); } catch (e) {}
       supa.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo: window.location.origin + window.location.pathname }
@@ -246,6 +260,7 @@
           return;
         }
         closeModal();
+        goDash();
       });
     });
   }

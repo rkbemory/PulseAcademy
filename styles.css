@@ -3505,6 +3505,15 @@ p a:hover {
 body:has(.nav-drawer.is-open) .visitor-counter,
 .nav-drawer.is-open ~ .visitor-counter { display: none; }
 
+/* When the account dropdown is open, gracefully clear the floating counter
+   so the menu never appears to "cover" the visitor stats. */
+body.pulse-acct-open .visitor-counter {
+  opacity: 0 !important;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
 
 /* ================================================================
    PULSE 2026 - VIBRANT PORTAL LAYER
@@ -4249,6 +4258,21 @@ section.block .section-title::after,
   box-shadow: 0 6px 16px rgba(10, 35, 80,0.22);
 }
 .top-nav-links a[href="jobs.html"].is-active {
+  color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px currentColor;
+}
+
+/* Nav pill colour for Academic Programs (teal — distinct from RN green / NCLEX purple) */
+.top-nav-links a[href="academic.html"] {
+  color: #fff; padding: 8px 16px; border-radius: 999px; font-weight: 600;
+  background: linear-gradient(135deg, #0E7490, #16A6B6);
+  box-shadow: 0 3px 10px rgba(10, 35, 80,0.14);
+  transition: transform .16s, box-shadow .2s, filter .2s;
+}
+.top-nav-links a[href="academic.html"]:hover {
+  color: #fff; transform: translateY(-1px); filter: brightness(1.08);
+  box-shadow: 0 6px 16px rgba(10, 35, 80,0.22);
+}
+.top-nav-links a[href="academic.html"].is-active {
   color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 4px currentColor;
 }
 
@@ -5114,8 +5138,10 @@ body > footer { flex-shrink: 0; }
 /* ============================================================
    Personal Dashboard (dashboard.html)
    ============================================================ */
-.dash-page { max-width: 1000px; margin: 0 auto; }
+.dash-page { max-width: 1040px; margin: 0 auto; }
 .dash-head { margin-bottom: 8px; }
+.dash-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 0.92rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; letter-spacing: .01em; }
+.dash-head .section-title { margin: 0; }
 .dash-sub { color: var(--lead-ink); font-size: 1rem; margin-top: 6px; }
 .dash-link-btn { background: none; border: none; color: var(--primary-soft, #2E63B8); font-weight: 700; cursor: pointer; padding: 0; text-decoration: underline; font-size: inherit; }
 .dash-section { margin-top: 34px; }
@@ -5176,14 +5202,23 @@ body > footer { flex-shrink: 0; }
 .dash-fb-send { align-self: flex-start; }
 .dash-fb-done { color: #15803D; font-weight: 600; font-size: 0.9rem; }
 
-/* Dashboard — two-panel layout (left: programs + feedback, right: progress + performance) */
-.dash-grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 26px; align-items: start; margin-top: 20px; }
-@media (max-width: 880px) { .dash-grid { grid-template-columns: 1fr; gap: 0; } }
-.dash-col-left .dash-section:first-child, .dash-col-right .dash-section:first-child { margin-top: 0; }
-.dash-col-left .dash-section { margin-top: 24px; }
-/* left column: interest chips stack + compact */
-.dash-col-left .dash-interests { grid-template-columns: 1fr; gap: 8px; }
-.dash-col-left .dash-int { padding: 11px 13px; }
-.dash-col-left .dash-feedback { max-width: none; }
-/* right column: cards & stats fit the wide panel */
-.dash-col-right .dash-cont-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+/* Dashboard — single-window layout.
+   Row 1: [My programs | Continue where you left off]
+   Row 2: [Your scoreboard | Performance trend]
+   Row 3: Feedback (compact, full width). */
+.dash-top { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 22px; align-items: start; margin-top: 18px; }
+.dash-metrics { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 22px; align-items: start; margin-top: 22px; }
+.dash-top .dash-section, .dash-metrics .dash-section { margin-top: 0; }
+@media (max-width: 900px) {
+  .dash-top { grid-template-columns: 1fr; gap: 22px; }
+  .dash-metrics { grid-template-columns: 1fr; gap: 22px; }
+}
+/* programs stack compactly in the left column */
+.dash-programs .dash-interests { grid-template-columns: 1fr; gap: 8px; }
+.dash-programs .dash-int { padding: 11px 13px; }
+/* continue cards fit the right panel (2-up when there's room) */
+.dash-continue .dash-cont-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+/* scoreboard stat tiles fit the narrower metrics column */
+.dash-metrics .dash-stats { grid-template-columns: repeat(2, 1fr); }
+/* feedback: compact and full-width below the metrics */
+.dash-feedback { max-width: 640px; }

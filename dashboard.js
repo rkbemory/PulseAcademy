@@ -118,20 +118,39 @@
     var u = window.PulseAuth && window.PulseAuth.user;
     var html = "";
     html += head(u);
-    html += '<div class="dash-grid">';
-    html +=   '<aside class="dash-col dash-col-left">' + interestsSection() + feedbackSection(u) + '</aside>';
-    html +=   '<div class="dash-col dash-col-right">' + scoreboardSection() + performanceSection() + continueSection() + '</div>';
+    html += '<div class="dash-top">';
+    html +=   '<div class="dash-col dash-programs">' + interestsSection() + '</div>';
+    html +=   '<div class="dash-col dash-continue">' + continueSection() + '</div>';
     html += '</div>';
+    html += '<div class="dash-metrics">' + scoreboardSection() + performanceSection() + '</div>';
+    html += feedbackSection(u);
     root.innerHTML = html;
     wire(root);
   }
 
+  function greeting() {
+    var h = new Date().getHours();
+    if (h < 12) return { t: "Good morning", ic: "☀️" };
+    if (h < 17) return { t: "Good afternoon", ic: "🌤️" };
+    if (h < 21) return { t: "Good evening", ic: "🌆" };
+    return { t: "Good evening", ic: "🌙" };
+  }
+  function firstName(u) {
+    if (!u) return "there";
+    var local = (u.email || "").split("@")[0] || "";
+    var tok = (local.split(/[.\-_+0-9]+/).filter(Boolean)[0] || local || "there");
+    return tok.charAt(0).toUpperCase() + tok.slice(1);
+  }
+
   function head(u) {
-    var name = u ? esc((u.email || "").split("@")[0] || "there") : "there";
+    var g = greeting();
+    var name = esc(firstName(u));
     var sub = u
       ? '<p class="dash-sub">Signed in as <strong>' + esc(u.email) + '</strong> — your progress syncs to your account.</p>'
       : '<p class="dash-sub">You\'re studying as a guest — progress is saved on this device. <button class="dash-link-btn" data-act="signin">Sign in</button> to sync it across devices.</p>';
-    return '<div class="dash-head"><h1 class="section-title">Hi, ' + name + ' 👋</h1>' + sub + '</div>';
+    return '<div class="dash-head">' +
+      '<span class="dash-eyebrow">' + g.ic + ' ' + g.t + '</span>' +
+      '<h1 class="section-title">Hi, ' + name + ' 👋</h1>' + sub + '</div>';
   }
 
   /* 1 — Program interests */
