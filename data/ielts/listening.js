@@ -277,5 +277,418 @@ window.IELTS.data.listening = {
         ]
       }
     ]
+  },
+  "listening-3": {
+    instructions: "You will hear four recordings. Answer all 40 questions. For gap answers, write the exact word or number you hear. Answers are auto-checked.",
+    sections: [
+      {
+        title: "Section 1 — Renting a holiday cottage",
+        script: [
+          { speaker: "Agent", text: "Good afternoon, Lakeview Holiday Lettings, this is Emma speaking." },
+          { speaker: "Caller", text: "Hi, I'd like to enquire about renting one of your cottages." },
+          { speaker: "Agent", text: "Of course. May I take your name, please?" },
+          { speaker: "Caller", text: "Yes, it's James Whitfield. Whitfield is W-H-I-T-F-I-E-L-D." },
+          { speaker: "Agent", text: "Thank you, Mr Whitfield. How many people will be staying?" },
+          { speaker: "Caller", text: "There will be six of us in total." },
+          { speaker: "Agent", text: "We have a lovely place called Rose Cottage that sleeps six. When would you like to come?" },
+          { speaker: "Caller", text: "We'd like to arrive on the twentieth of August." },
+          { speaker: "Agent", text: "And how many nights are you planning to stay?" },
+          { speaker: "Caller", text: "Seven nights, so a full week." },
+          { speaker: "Agent", text: "The rate for that week is nine hundred pounds, and that includes all your bedding." },
+          { speaker: "Caller", text: "That sounds reasonable. Is there parking?" },
+          { speaker: "Agent", text: "Yes, there's a private driveway with space for two cars." },
+          { speaker: "Caller", text: "Great. Are pets allowed? We have a small dog." },
+          { speaker: "Agent", text: "Yes, we do allow pets, but there is a cleaning charge of thirty pounds." },
+          { speaker: "Caller", text: "No problem. What time can we check in?" },
+          { speaker: "Agent", text: "Check-in is from three o'clock in the afternoon." },
+          { speaker: "Caller", text: "And how do we get the key?" },
+          { speaker: "Agent", text: "There's a key safe by the front door. The code is four, eight, one, five." },
+          { speaker: "Caller", text: "Perfect. To confirm the booking, do I pay a deposit?" },
+          { speaker: "Agent", text: "Yes, a deposit of two hundred pounds secures the dates." },
+          { speaker: "Caller", text: "Wonderful, I'll transfer that today. Thank you, Emma." }
+        ],
+        questions: [
+          { type: "gap", q: "Caller surname: ____", accept: ["Whitfield"] },
+          { type: "gap", q: "Number of guests: ____", accept: ["6", "six"] },
+          { type: "gap", q: "Name of the property: ____ Cottage.", accept: ["Rose"] },
+          { type: "gap", q: "Arrival date: the ____ of August.", accept: ["20th", "20", "twentieth"] },
+          { type: "gap", q: "Length of stay: ____ nights.", accept: ["7", "seven"] },
+          { type: "gap", q: "Weekly rate: ____ pounds.", accept: ["900", "nine hundred"] },
+          { type: "gap", q: "The driveway has space for ____ cars.", accept: ["2", "two"] },
+          { type: "gap", q: "Pet cleaning charge: ____ pounds.", accept: ["30", "thirty"] },
+          { type: "gap", q: "The key safe code is 4, 8, 1, ____.", accept: ["5", "five"] },
+          { type: "gap", q: "Deposit required: ____ pounds.", accept: ["200", "two hundred"] }
+        ]
+      },
+      {
+        title: "Section 2 — Announcement about a museum",
+        script: [
+          { speaker: "Curator", text: "Welcome, everyone, to the Harborough Maritime Museum. Let me tell you about your visit." },
+          { speaker: "Curator", text: "The museum was founded in nineteen seventy-eight by a group of retired sailors." },
+          { speaker: "Curator", text: "We are open every day except Monday, from nine in the morning until half past five." },
+          { speaker: "Curator", text: "Entry is free for children, while adults pay a small fee of eight pounds." },
+          { speaker: "Curator", text: "The museum is spread across four galleries, each on a different theme." },
+          { speaker: "Curator", text: "The ground-floor gallery focuses on early wooden ships and how they were built." },
+          { speaker: "Curator", text: "The east wing is devoted to navigation, with old maps and compasses." },
+          { speaker: "Curator", text: "The west wing tells the story of fishing communities along our coast." },
+          { speaker: "Curator", text: "Upstairs, the top gallery covers modern shipping and container trade." },
+          { speaker: "Curator", text: "The most popular exhibit is undoubtedly the full-size lifeboat in the main hall." },
+          { speaker: "Curator", text: "We run a guided tour at eleven o'clock, which lasts about an hour." },
+          { speaker: "Curator", text: "Please note that photography is allowed, but flash is strictly forbidden." },
+          { speaker: "Curator", text: "Finally, our gift shop by the exit sells handmade model boats, perfect as souvenirs." }
+        ],
+        questions: [
+          { type: "mcq", q: "The museum was founded in:", options: ["1968", "1972", "1978", "1988"], answer: 2 },
+          { type: "mcq", q: "The museum is closed on:", options: ["Sunday", "Monday", "Tuesday", "Saturday"], answer: 1 },
+          { type: "mcq", q: "The adult entry fee is:", options: ["£5", "£6", "£8", "£10"], answer: 2 },
+          { type: "mcq", q: "The most popular exhibit is:", options: ["an old map collection", "a full-size lifeboat", "a model ship", "a ship's engine"], answer: 1 },
+          { type: "mcq", q: "The guided tour starts at:", options: ["ten o'clock", "eleven o'clock", "noon", "two o'clock"], answer: 1 },
+          { type: "match", q: "Ground-floor gallery", options: ["A Early wooden ships", "B Navigation", "C Fishing communities", "D Modern shipping"], answer: 0 },
+          { type: "match", q: "East wing", options: ["A Early wooden ships", "B Navigation", "C Fishing communities", "D Modern shipping"], answer: 1 },
+          { type: "match", q: "West wing", options: ["A Early wooden ships", "B Navigation", "C Fishing communities", "D Modern shipping"], answer: 2 },
+          { type: "match", q: "Top gallery", options: ["A Early wooden ships", "B Navigation", "C Fishing communities", "D Modern shipping"], answer: 3 },
+          { type: "gap", q: "Inside the museum, ____ photography is strictly forbidden.", accept: ["flash"] }
+        ]
+      },
+      {
+        title: "Section 3 — Discussing a field-trip report",
+        script: [
+          { speaker: "Tutor", text: "Priya, Sam, let's talk through your report on the coastal field trip." },
+          { speaker: "Priya", text: "Sure. The trip focused on how erosion is changing the cliffs at Blackrock Bay." },
+          { speaker: "Sam", text: "We measured the cliff at three points and compared them with last year's figures." },
+          { speaker: "Tutor", text: "What was the clearest result?" },
+          { speaker: "Priya", text: "The cliff had retreated by almost two metres in a single year, which was dramatic." },
+          { speaker: "Sam", text: "We expected some change, but not that much. The winter storms were the main cause." },
+          { speaker: "Tutor", text: "Did you face any difficulties collecting the data?" },
+          { speaker: "Priya", text: "The main problem was the weather, as heavy rain made the ground very slippery." },
+          { speaker: "Sam", text: "Next time we'd bring better waterproof equipment to protect the instruments." },
+          { speaker: "Tutor", text: "Sensible. Now, let's divide up the report. Who's writing the aims?" },
+          { speaker: "Priya", text: "I'll write the aims, since I planned the trip's objectives." },
+          { speaker: "Sam", text: "I'll do the equipment section, because I looked after all the tools." },
+          { speaker: "Tutor", text: "And the data analysis?" },
+          { speaker: "Priya", text: "Sam is stronger at statistics, so he should take the analysis." },
+          { speaker: "Sam", text: "Then Priya, you write the recommendations at the end." },
+          { speaker: "Priya", text: "Agreed, I'll do the recommendations." },
+          { speaker: "Tutor", text: "Great. I'd like the finished report on my desk by the fifteenth." }
+        ],
+        questions: [
+          { type: "mcq", q: "The field trip focused on erosion at:", options: ["Blackrock Bay", "Whitesand Cove", "Redcliff Point", "Greystone Beach"], answer: 0 },
+          { type: "mcq", q: "The cliff had retreated by almost:", options: ["one metre", "two metres", "three metres", "five metres"], answer: 1 },
+          { type: "mcq", q: "The main cause of the change was:", options: ["human activity", "winter storms", "rising sea levels", "an earthquake"], answer: 1 },
+          { type: "mcq", q: "The main difficulty during data collection was:", options: ["broken equipment", "the weather", "lack of time", "access to the site"], answer: 1 },
+          { type: "mcq", q: "The finished report is due by the:", options: ["tenth", "twelfth", "fifteenth", "twentieth"], answer: 2 },
+          { type: "match", q: "Aims", options: ["A Priya", "B Sam"], answer: 0 },
+          { type: "match", q: "Equipment section", options: ["A Priya", "B Sam"], answer: 1 },
+          { type: "match", q: "Data analysis", options: ["A Priya", "B Sam"], answer: 1 },
+          { type: "match", q: "Recommendations", options: ["A Priya", "B Sam"], answer: 0 },
+          { type: "gap", q: "They measured the cliff at ____ points along the bay.", accept: ["3", "three"] }
+        ]
+      },
+      {
+        title: "Section 4 — Lecture: The history of coffee",
+        script: [
+          { speaker: "Lecturer", text: "Today we explore the history of coffee, a drink now enjoyed all over the world." },
+          { speaker: "Lecturer", text: "According to legend, coffee was first discovered in Ethiopia by a goat herder." },
+          { speaker: "Lecturer", text: "He noticed that his goats became lively after eating the bright red berries of a certain plant." },
+          { speaker: "Lecturer", text: "The active ingredient in these berries is a stimulant we now call caffeine." },
+          { speaker: "Lecturer", text: "By the fifteenth century, coffee was being grown and traded in the region of Yemen." },
+          { speaker: "Lecturer", text: "The first coffee houses appeared in the great city of Constantinople, and they spread quickly." },
+          { speaker: "Lecturer", text: "These coffee houses became centres of conversation, and were sometimes called schools of wisdom." },
+          { speaker: "Lecturer", text: "When coffee reached Europe in the sixteen hundreds, some people wanted it banned." },
+          { speaker: "Lecturer", text: "However, its popularity only grew, especially among writers and merchants." },
+          { speaker: "Lecturer", text: "Today, the two main commercial species are known as Arabica and Robusta." },
+          { speaker: "Lecturer", text: "Arabica is prized for its smooth flavour, while Robusta contains more caffeine." },
+          { speaker: "Lecturer", text: "The largest producer of coffee in the modern world is the country of Brazil." },
+          { speaker: "Lecturer", text: "To conclude, coffee has shaped trade, culture, and daily life for over five centuries." }
+        ],
+        questions: [
+          { type: "gap", q: "Coffee was first discovered in ____, according to legend.", accept: ["Ethiopia"] },
+          { type: "gap", q: "The stimulant found in coffee berries is called ____.", accept: ["caffeine"] },
+          { type: "gap", q: "By the fifteenth century, coffee was traded in the region of ____.", accept: ["Yemen"] },
+          { type: "gap", q: "The first coffee houses appeared in the city of ____.", accept: ["Constantinople"] },
+          { type: "gap", q: "Coffee houses were sometimes called schools of ____.", accept: ["wisdom"] },
+          { type: "gap", q: "The two main commercial species are Arabica and ____.", accept: ["Robusta"] },
+          { type: "gap", q: "Arabica is prized for its smooth ____.", accept: ["flavour", "flavor"] },
+          { type: "gap", q: "The species with more caffeine is ____.", accept: ["Robusta"] },
+          { type: "gap", q: "The largest modern producer of coffee is ____.", accept: ["Brazil"] },
+          { type: "tfng", q: "The lecturer says coffee has shaped culture for over five centuries.", answer: 0 }
+        ]
+      }
+    ]
+  },
+  "listening-4": {
+    instructions: "You will hear four recordings. Answer all 40 questions. For gap answers, write the exact word or number you hear. Answers are auto-checked.",
+    sections: [
+      {
+        title: "Section 1 — Joining a public library",
+        script: [
+          { speaker: "Librarian", text: "Hello, welcome to Northgate Public Library. How can I help you?" },
+          { speaker: "Visitor", text: "Hi, I'd like to sign up for a library membership, please." },
+          { speaker: "Librarian", text: "Wonderful. Could I start with your full name?" },
+          { speaker: "Visitor", text: "It's Laura Bennett. Bennett is B-E-N-N-E-T-T." },
+          { speaker: "Librarian", text: "Thank you. And what's your date of birth?" },
+          { speaker: "Visitor", text: "The third of September, two thousand and one." },
+          { speaker: "Librarian", text: "Great. What's your current home address?" },
+          { speaker: "Visitor", text: "It's nineteen Chestnut Road, in the district of Elmwood." },
+          { speaker: "Librarian", text: "And a contact number?" },
+          { speaker: "Visitor", text: "Sure, it's oh one, two, two, five, seven, seven, three, one, oh." },
+          { speaker: "Librarian", text: "Perfect. Membership itself is completely free." },
+          { speaker: "Visitor", text: "That's good to hear. How many books can I borrow at once?" },
+          { speaker: "Librarian", text: "You may borrow up to ten items at a time." },
+          { speaker: "Visitor", text: "And how long can I keep them?" },
+          { speaker: "Librarian", text: "The standard loan period is three weeks, and you can renew online." },
+          { speaker: "Visitor", text: "What happens if I return something late?" },
+          { speaker: "Librarian", text: "There's a small fine of twenty pence per day for each late item." },
+          { speaker: "Visitor", text: "Understood. Do you have computers I can use?" },
+          { speaker: "Librarian", text: "Yes, free computer access is available on the first floor." },
+          { speaker: "Visitor", text: "Excellent. When does the library close?" },
+          { speaker: "Librarian", text: "We close at eight in the evening on weekdays." },
+          { speaker: "Visitor", text: "Thank you so much for your help." }
+        ],
+        questions: [
+          { type: "gap", q: "Member surname: ____", accept: ["Bennett"] },
+          { type: "gap", q: "Date of birth: the ____ of September 2001.", accept: ["3rd", "3", "third"] },
+          { type: "gap", q: "Address: 19 ____ Road.", accept: ["Chestnut"] },
+          { type: "gap", q: "District: ____", accept: ["Elmwood"] },
+          { type: "gap", q: "Phone number ends in the digits three, one, ____.", accept: ["0", "oh", "zero"] },
+          { type: "gap", q: "Members may borrow up to ____ items at once.", accept: ["10", "ten"] },
+          { type: "gap", q: "The standard loan period is ____ weeks.", accept: ["3", "three"] },
+          { type: "gap", q: "The late fine is ____ pence per day.", accept: ["20", "twenty"] },
+          { type: "gap", q: "Free computer access is on the ____ floor.", accept: ["first", "1st"] },
+          { type: "gap", q: "On weekdays the library closes at ____ in the evening.", accept: ["8", "eight"] }
+        ]
+      },
+      {
+        title: "Section 2 — Talk about a recycling scheme",
+        script: [
+          { speaker: "Officer", text: "Good evening, and thanks for coming to hear about our new town recycling scheme." },
+          { speaker: "Officer", text: "The scheme was launched in twenty twenty-two to cut the amount of waste sent to landfill." },
+          { speaker: "Officer", text: "So far, we've reduced household waste by nearly forty per cent, which is a real success." },
+          { speaker: "Officer", text: "The system uses four coloured bins, and it's important to use the right one." },
+          { speaker: "Officer", text: "The green bin is for garden waste, such as grass clippings and leaves." },
+          { speaker: "Officer", text: "The blue bin is for paper and cardboard, flattened where possible." },
+          { speaker: "Officer", text: "The brown bin is strictly for food scraps, which we turn into compost." },
+          { speaker: "Officer", text: "The grey bin is for general waste that cannot be recycled at all." },
+          { speaker: "Officer", text: "Collections happen once a fortnight, always on a Wednesday." },
+          { speaker: "Officer", text: "Please put your bins out by seven in the morning on collection day." },
+          { speaker: "Officer", text: "One common mistake is putting glass in the blue bin, so please take glass to the bottle bank." },
+          { speaker: "Officer", text: "The biggest benefit for residents is a reduction in the annual waste charge." },
+          { speaker: "Officer", text: "Next month we'll be handing out free kitchen caddies to help with food waste." }
+        ],
+        questions: [
+          { type: "mcq", q: "The recycling scheme was launched in:", options: ["2018", "2020", "2022", "2024"], answer: 2 },
+          { type: "mcq", q: "Household waste has been reduced by nearly:", options: ["twenty per cent", "thirty per cent", "forty per cent", "fifty per cent"], answer: 2 },
+          { type: "mcq", q: "Bins are collected:", options: ["every week", "once a fortnight", "once a month", "twice a week"], answer: 1 },
+          { type: "mcq", q: "Bins must be put out by:", options: ["six in the morning", "seven in the morning", "eight in the morning", "the night before"], answer: 1 },
+          { type: "mcq", q: "The biggest benefit for residents is:", options: ["free bins", "a cleaner park", "a lower waste charge", "a prize draw"], answer: 2 },
+          { type: "match", q: "Green bin", options: ["A Garden waste", "B Paper and cardboard", "C Food scraps", "D General waste"], answer: 0 },
+          { type: "match", q: "Blue bin", options: ["A Garden waste", "B Paper and cardboard", "C Food scraps", "D General waste"], answer: 1 },
+          { type: "match", q: "Brown bin", options: ["A Garden waste", "B Paper and cardboard", "C Food scraps", "D General waste"], answer: 2 },
+          { type: "match", q: "Grey bin", options: ["A Garden waste", "B Paper and cardboard", "C Food scraps", "D General waste"], answer: 3 },
+          { type: "gap", q: "Glass should be taken to the ____ bank, not the blue bin.", accept: ["bottle"] }
+        ]
+      },
+      {
+        title: "Section 3 — Reviewing a psychology experiment",
+        script: [
+          { speaker: "Tutor", text: "Nadia, Chris, let's review your psychology experiment on memory and music." },
+          { speaker: "Nadia", text: "Yes. We tested whether background music affects how well people remember word lists." },
+          { speaker: "Chris", text: "We recruited forty volunteers and split them into two equal groups." },
+          { speaker: "Tutor", text: "And what did you find?" },
+          { speaker: "Nadia", text: "The group in silence remembered more words than the group with music playing." },
+          { speaker: "Chris", text: "The difference was bigger than we predicted, which was quite exciting." },
+          { speaker: "Tutor", text: "Were there any weaknesses in your design?" },
+          { speaker: "Nadia", text: "The main weakness was the small sample size, so the results may not generalise." },
+          { speaker: "Chris", text: "If we repeated it, we'd test many more participants to be confident." },
+          { speaker: "Tutor", text: "Good reflection. Let's assign the write-up. Who's doing the hypothesis?" },
+          { speaker: "Nadia", text: "I'll write the hypothesis, since I designed the research question." },
+          { speaker: "Chris", text: "I'll cover the procedure, because I ran most of the test sessions." },
+          { speaker: "Tutor", text: "And the discussion?" },
+          { speaker: "Nadia", text: "Chris reads more widely, so he should write the discussion." },
+          { speaker: "Chris", text: "Then Nadia, you can handle the references at the end." },
+          { speaker: "Nadia", text: "Fine, I'll compile the references." },
+          { speaker: "Tutor", text: "Perfect. I'll expect your draft by next Tuesday." }
+        ],
+        questions: [
+          { type: "mcq", q: "The experiment tested the effect of background music on:", options: ["reaction time", "memory", "mood", "reading speed"], answer: 1 },
+          { type: "mcq", q: "How many volunteers took part?", options: ["twenty", "thirty", "forty", "sixty"], answer: 2 },
+          { type: "mcq", q: "The best results came from the group that worked in:", options: ["silence", "loud music", "quiet music", "conversation"], answer: 0 },
+          { type: "mcq", q: "The main weakness of the study was:", options: ["biased questions", "the small sample size", "poor equipment", "a short time limit"], answer: 1 },
+          { type: "mcq", q: "The draft is due by:", options: ["next Monday", "next Tuesday", "next Friday", "the end of term"], answer: 1 },
+          { type: "match", q: "Hypothesis", options: ["A Nadia", "B Chris"], answer: 0 },
+          { type: "match", q: "Procedure", options: ["A Nadia", "B Chris"], answer: 1 },
+          { type: "match", q: "Discussion", options: ["A Nadia", "B Chris"], answer: 1 },
+          { type: "match", q: "References", options: ["A Nadia", "B Chris"], answer: 0 },
+          { type: "gap", q: "The volunteers were split into ____ equal groups.", accept: ["2", "two"] }
+        ]
+      },
+      {
+        title: "Section 4 — Lecture: The water cycle",
+        script: [
+          { speaker: "Lecturer", text: "In this session we'll look at the water cycle, the process that moves water around our planet." },
+          { speaker: "Lecturer", text: "The cycle is powered by energy from the sun, which drives everything that follows." },
+          { speaker: "Lecturer", text: "The first stage is evaporation, when heat turns liquid water into an invisible gas called vapour." },
+          { speaker: "Lecturer", text: "Plants add to this through a related process known as transpiration, releasing water from their leaves." },
+          { speaker: "Lecturer", text: "As the vapour rises and cools, it changes back into tiny droplets in a stage called condensation." },
+          { speaker: "Lecturer", text: "These droplets gather together to form the clouds we see in the sky." },
+          { speaker: "Lecturer", text: "When the droplets grow heavy enough, they fall as precipitation, such as rain or snow." },
+          { speaker: "Lecturer", text: "Some of this water soaks into the ground, where it is stored in underground layers called aquifers." },
+          { speaker: "Lecturer", text: "The rest flows across the surface as runoff, eventually returning to rivers and the sea." },
+          { speaker: "Lecturer", text: "The whole system is a closed loop, so the total amount of water on Earth stays roughly constant." },
+          { speaker: "Lecturer", text: "Human activity, however, is disturbing the balance, mainly through pollution and climate change." },
+          { speaker: "Lecturer", text: "Understanding this cycle is essential for managing our most precious resource, fresh water." },
+          { speaker: "Lecturer", text: "To sum up, the water cycle connects the ocean, the atmosphere, and the land in one continuous flow." }
+        ],
+        questions: [
+          { type: "gap", q: "The water cycle is powered by energy from the ____.", accept: ["sun"] },
+          { type: "gap", q: "The stage where heat turns water into gas is called ____.", accept: ["evaporation"] },
+          { type: "gap", q: "Plants release water from their leaves through ____.", accept: ["transpiration"] },
+          { type: "gap", q: "When vapour cools into droplets, the stage is called ____.", accept: ["condensation"] },
+          { type: "gap", q: "Water droplets gather to form ____.", accept: ["clouds"] },
+          { type: "gap", q: "Rain and snow are both forms of ____.", accept: ["precipitation"] },
+          { type: "gap", q: "Underground layers that store water are called ____.", accept: ["aquifers", "aquifer"] },
+          { type: "gap", q: "Water flowing across the surface is called ____.", accept: ["runoff", "run-off"] },
+          { type: "gap", q: "The lecturer describes the water cycle as a closed ____.", accept: ["loop"] },
+          { type: "ynng", q: "The lecturer says human activity is disturbing the water balance.", answer: 0 }
+        ]
+      }
+    ]
+  },
+  "listening-5": {
+    instructions: "You will hear four recordings. Answer all 40 questions. For gap answers, write the exact word or number you hear. Answers are auto-checked.",
+    sections: [
+      {
+        title: "Section 1 — Reporting a lost bag",
+        script: [
+          { speaker: "Staff", text: "Good morning, Central Station Lost Property, how can I help you?" },
+          { speaker: "Passenger", text: "Hi, I think I left my bag on a train this morning." },
+          { speaker: "Staff", text: "I'm sorry to hear that. Let me take some details. What's your name?" },
+          { speaker: "Passenger", text: "It's Oliver Grant. Grant is G-R-A-N-T." },
+          { speaker: "Staff", text: "Thank you, Mr Grant. Which train were you on?" },
+          { speaker: "Passenger", text: "The eight fifteen service heading to Riverton." },
+          { speaker: "Staff", text: "And can you describe the bag?" },
+          { speaker: "Passenger", text: "It's a medium backpack, dark green, with a broken side zip." },
+          { speaker: "Staff", text: "Do you remember which coach you were sitting in?" },
+          { speaker: "Passenger", text: "Yes, coach C, near the doors." },
+          { speaker: "Staff", text: "What was inside the bag?" },
+          { speaker: "Passenger", text: "Mainly a laptop, a set of keys, and a blue umbrella." },
+          { speaker: "Staff", text: "Is there anything with your name on it inside?" },
+          { speaker: "Passenger", text: "Yes, there's a notebook with my name written on the first page." },
+          { speaker: "Staff", text: "That helps. What's a good contact number for you?" },
+          { speaker: "Passenger", text: "It's oh seven, nine, nine, three, one, two, four, four, eight." },
+          { speaker: "Staff", text: "I'll log this as reference number two, seven, six." },
+          { speaker: "Passenger", text: "How long do you keep lost items?" },
+          { speaker: "Staff", text: "We hold unclaimed property for thirty days before donating it." },
+          { speaker: "Passenger", text: "Thank you. When should I check back?" },
+          { speaker: "Staff", text: "Please call again on Friday, and we should have news by then." }
+        ],
+        questions: [
+          { type: "gap", q: "Passenger surname: ____", accept: ["Grant"] },
+          { type: "gap", q: "Train destination: ____", accept: ["Riverton"] },
+          { type: "gap", q: "Bag colour: dark ____", accept: ["green"] },
+          { type: "gap", q: "The passenger was sitting in coach ____.", accept: ["C"] },
+          { type: "gap", q: "Item in the bag: a ____ umbrella.", accept: ["blue"] },
+          { type: "gap", q: "The passenger's name is written in a ____ inside the bag.", accept: ["notebook"] },
+          { type: "gap", q: "Contact number ends in the digits four, four, ____.", accept: ["8", "eight"] },
+          { type: "gap", q: "Reference number: two, seven, ____.", accept: ["6", "six"] },
+          { type: "gap", q: "Lost items are kept for ____ days.", accept: ["30", "thirty"] },
+          { type: "gap", q: "The passenger should call back on ____.", accept: ["Friday"] }
+        ]
+      },
+      {
+        title: "Section 2 — Guide to a nature reserve",
+        script: [
+          { speaker: "Ranger", text: "Welcome, everyone, to Willow Marsh Nature Reserve. I'm your ranger for today." },
+          { speaker: "Ranger", text: "The reserve was created in two thousand and five to protect local wetland birds." },
+          { speaker: "Ranger", text: "It covers around three hundred hectares, so there's plenty to explore." },
+          { speaker: "Ranger", text: "There are several marked trails, and I'll point out where each one leads." },
+          { speaker: "Ranger", text: "The red trail is the shortest, taking you straight to the main bird hide." },
+          { speaker: "Ranger", text: "The yellow trail loops around the lake and is perfect for spotting ducks." },
+          { speaker: "Ranger", text: "The blue trail climbs the hill and offers the best views across the whole marsh." },
+          { speaker: "Ranger", text: "The green trail runs through the woodland, where you might see deer at dawn." },
+          { speaker: "Ranger", text: "Our most famous resident is the rare bittern, a shy brown bird that is hard to see." },
+          { speaker: "Ranger", text: "The visitor centre serves hot drinks and closes at four in the afternoon." },
+          { speaker: "Ranger", text: "For safety, please stay on the paths, as parts of the marsh are very deep." },
+          { speaker: "Ranger", text: "Dogs are welcome, but they must be kept on a lead at all times." },
+          { speaker: "Ranger", text: "We also run a free guided walk every Saturday morning at ten." }
+        ],
+        questions: [
+          { type: "mcq", q: "The reserve was created in:", options: ["2000", "2005", "2010", "2015"], answer: 1 },
+          { type: "mcq", q: "The reserve covers around:", options: ["one hundred hectares", "two hundred hectares", "three hundred hectares", "five hundred hectares"], answer: 2 },
+          { type: "mcq", q: "The most famous resident of the reserve is the:", options: ["deer", "duck", "bittern", "swan"], answer: 2 },
+          { type: "mcq", q: "The visitor centre closes at:", options: ["three o'clock", "four o'clock", "five o'clock", "six o'clock"], answer: 1 },
+          { type: "mcq", q: "The free guided walk takes place:", options: ["every Saturday at ten", "every Sunday at nine", "on weekdays", "twice a day"], answer: 0 },
+          { type: "match", q: "Red trail", options: ["A To the main bird hide", "B Around the lake", "C Up the hill for views", "D Through the woodland"], answer: 0 },
+          { type: "match", q: "Yellow trail", options: ["A To the main bird hide", "B Around the lake", "C Up the hill for views", "D Through the woodland"], answer: 1 },
+          { type: "match", q: "Blue trail", options: ["A To the main bird hide", "B Around the lake", "C Up the hill for views", "D Through the woodland"], answer: 2 },
+          { type: "match", q: "Green trail", options: ["A To the main bird hide", "B Around the lake", "C Up the hill for views", "D Through the woodland"], answer: 3 },
+          { type: "gap", q: "For safety, visitors must stay on the ____.", accept: ["paths", "path"] }
+        ]
+      },
+      {
+        title: "Section 3 — Planning a business assignment",
+        script: [
+          { speaker: "Tutor", text: "Right, Hana and Marcus, let's plan your business assignment on a local cafe." },
+          { speaker: "Hana", text: "We've chosen a small cafe called The Corner Cup that opened last year." },
+          { speaker: "Marcus", text: "Our task is to suggest ways it could increase its customer numbers." },
+          { speaker: "Tutor", text: "Have you identified its main problem?" },
+          { speaker: "Hana", text: "Yes, the biggest issue is that very few people visit in the afternoons." },
+          { speaker: "Marcus", text: "We think a loyalty card scheme could bring customers back more often." },
+          { speaker: "Tutor", text: "That's a practical idea. How will you gather your evidence?" },
+          { speaker: "Hana", text: "We'll interview the owner and also survey some of the regular customers." },
+          { speaker: "Marcus", text: "We thought about using online reviews, but they were too few to rely on." },
+          { speaker: "Tutor", text: "Sensible. Now, who's writing which part? Start with the company background." },
+          { speaker: "Hana", text: "I'll write the background, as I've already visited the cafe twice." },
+          { speaker: "Marcus", text: "I'll do the market research section, since I designed the survey." },
+          { speaker: "Tutor", text: "And the recommendations?" },
+          { speaker: "Hana", text: "Marcus is more creative, so he should write the recommendations." },
+          { speaker: "Marcus", text: "Then Hana, you take the final summary." },
+          { speaker: "Hana", text: "Agreed, I'll write the summary." },
+          { speaker: "Tutor", text: "Great. Please email me your plan by Wednesday." }
+        ],
+        questions: [
+          { type: "mcq", q: "The business they chose is a:", options: ["bookshop", "cafe", "gym", "bakery"], answer: 1 },
+          { type: "mcq", q: "The cafe's biggest problem is that few people visit in the:", options: ["mornings", "afternoons", "evenings", "weekends"], answer: 1 },
+          { type: "mcq", q: "Their main suggested solution is a:", options: ["price cut", "loyalty card scheme", "new menu", "bigger sign"], answer: 1 },
+          { type: "mcq", q: "They decided NOT to rely on:", options: ["interviews", "surveys", "online reviews", "the owner"], answer: 2 },
+          { type: "mcq", q: "The plan must be emailed by:", options: ["Monday", "Tuesday", "Wednesday", "Thursday"], answer: 2 },
+          { type: "match", q: "Company background", options: ["A Hana", "B Marcus"], answer: 0 },
+          { type: "match", q: "Market research section", options: ["A Hana", "B Marcus"], answer: 1 },
+          { type: "match", q: "Recommendations", options: ["A Hana", "B Marcus"], answer: 1 },
+          { type: "match", q: "Final summary", options: ["A Hana", "B Marcus"], answer: 0 },
+          { type: "gap", q: "The cafe they chose is called The Corner ____.", accept: ["Cup"] }
+        ]
+      },
+      {
+        title: "Section 4 — Lecture: Honey bees and pollination",
+        script: [
+          { speaker: "Lecturer", text: "Today's lecture is about honey bees and the vital role they play in pollination." },
+          { speaker: "Lecturer", text: "A single honey bee colony can contain up to sixty thousand individual insects." },
+          { speaker: "Lecturer", text: "At the heart of the colony is one queen, whose main job is to lay eggs." },
+          { speaker: "Lecturer", text: "The vast majority of bees are workers, and they are all female." },
+          { speaker: "Lecturer", text: "Workers gather a sugary liquid from flowers, which we call nectar." },
+          { speaker: "Lecturer", text: "As they move from bloom to bloom, they transfer pollen and so fertilise the plants." },
+          { speaker: "Lecturer", text: "Remarkably, bees communicate the location of food through a movement known as the waggle dance." },
+          { speaker: "Lecturer", text: "This dance tells other workers both the direction and the distance of the flowers." },
+          { speaker: "Lecturer", text: "It is estimated that bees help to pollinate about a third of the food we eat." },
+          { speaker: "Lecturer", text: "In recent years, however, bee numbers have been falling in many parts of the world." },
+          { speaker: "Lecturer", text: "One major cause of this decline is the widespread use of chemical pesticides." },
+          { speaker: "Lecturer", text: "Scientists warn that losing bees would seriously threaten our food supply." },
+          { speaker: "Lecturer", text: "To conclude, protecting bees is one of the simplest ways to protect global agriculture." }
+        ],
+        questions: [
+          { type: "gap", q: "A single colony can contain up to ____ thousand insects.", accept: ["60", "sixty"] },
+          { type: "gap", q: "The main job of the queen bee is to lay ____.", accept: ["eggs"] },
+          { type: "gap", q: "Most bees in the colony are workers, and they are all ____.", accept: ["female"] },
+          { type: "gap", q: "The sugary liquid workers gather from flowers is called ____.", accept: ["nectar"] },
+          { type: "gap", q: "Bees fertilise plants by transferring ____.", accept: ["pollen"] },
+          { type: "gap", q: "Bees share the location of food through the waggle ____.", accept: ["dance"] },
+          { type: "gap", q: "The dance shows both the direction and the ____ of the flowers.", accept: ["distance"] },
+          { type: "gap", q: "Bees help pollinate about a ____ of the food we eat.", accept: ["third"] },
+          { type: "gap", q: "A major cause of bee decline is the use of chemical ____.", accept: ["pesticides", "pesticide"] },
+          { type: "tfng", q: "The lecturer warns that losing bees would threaten our food supply.", answer: 0 }
+        ]
+      }
+    ]
   }
 };

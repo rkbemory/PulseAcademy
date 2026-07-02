@@ -98,23 +98,30 @@
     html += '<div class="ielts-timer" id="ielts-timer" data-min="' + (m.timeMin || 60) + '">⏱️ <span id="ielts-clock">' + (m.timeMin || 60) + ":00</span></div>";
     html += '<form id="ielts-form">';
     blocks.forEach(function (b, bi) {
+      var cc = "ielts-c" + ((bi % 4) + 1);   // per-passage / per-section colour
+      var startN = n + 1;
       if (kind === "reading") {
-        // Side-by-side: passage pane (sticky, scrollable) | questions pane
-        var passage = '<div class="ielts-passage ielts-split-pane"><h3>' + esc(b.title || ("Passage " + (bi + 1))) + "</h3>" +
-          (b.paragraphs || []).map(function (p, i) { return "<p><strong>" + String.fromCharCode(65 + i) + "</strong>  " + esc(p) + "</p>"; }).join("") + "</div>";
+        // count this passage's questions first so we can label the range
         var qhtml = "";
         (b.questions || []).forEach(function (q) { n++; qhtml += renderQ(q, n); });
-        html += '<section class="ielts-block ielts-split">' + passage +
+        var tag = "Passage " + (bi + 1) + " · Questions " + startN + "–" + n;
+        var passage = '<div class="ielts-passage ielts-split-pane">' +
+          '<span class="ielts-block-tag">' + tag + "</span>" +
+          (b.title ? "<h3>" + esc(b.title) + "</h3>" : "") +
+          (b.paragraphs || []).map(function (p, i) { return "<p><strong>" + String.fromCharCode(65 + i) + "</strong>  " + esc(p) + "</p>"; }).join("") + "</div>";
+        html += '<section class="ielts-block ielts-split ' + cc + '">' + passage +
           '<div class="ielts-qs-pane"><div class="ielts-qs">' + qhtml + "</div></div></section>";
       } else {
-        html += '<section class="ielts-block">';
-        html += '<div class="ielts-section-head"><h3>' + esc(b.title || ("Section " + (bi + 1))) + "</h3>" +
+        var qh = "";
+        (b.questions || []).forEach(function (q) { n++; qh += renderQ(q, n); });
+        var stag = "Section " + (bi + 1) + " · Questions " + startN + "–" + n;
+        html += '<section class="ielts-block ' + cc + '">';
+        html += '<div class="ielts-section-head"><span class="ielts-block-tag">' + stag + "</span>" +
+          (b.title ? '<h3>' + esc(b.title) + "</h3>" : "") +
           '<button type="button" class="ielts-audio-btn" data-audio="' + bi + '">▶ Play audio</button>' +
           '<button type="button" class="ielts-audio-btn ielts-stop" data-stop="1">⏹ Stop</button>' +
           '<button type="button" class="ielts-transcript-btn" data-tr="' + bi + '">Show transcript</button></div>' +
           '<div class="ielts-transcript" id="tr-' + bi + '" hidden>' + (b.script || []).map(function (l) { return "<p>" + (l.speaker ? "<strong>" + esc(l.speaker) + ":</strong> " : "") + esc(l.text || l) + "</p>"; }).join("") + "</div>";
-        var qh = "";
-        (b.questions || []).forEach(function (q) { n++; qh += renderQ(q, n); });
         html += '<div class="ielts-qs">' + qh + "</div></section>";
       }
     });

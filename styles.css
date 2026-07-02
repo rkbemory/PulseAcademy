@@ -5354,6 +5354,19 @@ body > footer { flex-shrink: 0; }
   .ielts-split { grid-template-columns: 1fr; gap: 14px; }
   .ielts-split .ielts-passage { position: static; max-height: 320px; }
 }
+/* Per-passage / per-section colour coding for easy navigation */
+.ielts-c1 { --pc: #1E5F9C; }
+.ielts-c2 { --pc: #0E7490; }
+.ielts-c3 { --pc: #6D28D9; }
+.ielts-c4 { --pc: #B4541E; }
+.ielts-block-tag {
+  display: inline-block; background: var(--pc, #14387A); color: #fff;
+  font-weight: 700; font-size: 0.78rem; letter-spacing: .02em;
+  padding: 4px 12px; border-radius: 999px; margin-bottom: 10px;
+}
+.ielts-c1 .ielts-passage, .ielts-c2 .ielts-passage, .ielts-c3 .ielts-passage, .ielts-c4 .ielts-passage { border-left: 4px solid var(--pc); }
+.ielts-c1 .ielts-q-num, .ielts-c2 .ielts-q-num, .ielts-c3 .ielts-q-num, .ielts-c4 .ielts-q-num { background: var(--pc); }
+.ielts-c1 .ielts-timer, .ielts-c2 .ielts-timer, .ielts-c3 .ielts-timer, .ielts-c4 .ielts-timer { background: var(--pc); }
 .ielts-passage h3 { font-size: 1.15rem; color: var(--text); margin-bottom: 10px; }
 .ielts-passage p { font-size: 0.95rem; line-height: 1.7; color: var(--text); margin-bottom: 8px; }
 .ielts-section-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }

@@ -53,5 +53,83 @@ window.IELTS.data.speaking = {
         "What role should schools play in teaching health and first aid?"
       ]
     }
+  },
+  "speaking-3": {
+    part1: {
+      topic: "Hometown & travel",
+      questions: [
+        "Where is your hometown, and what is it like?",
+        "What do you like most about it?",
+        "Has your hometown changed much in recent years?",
+        "Do you enjoy travelling? Why or why not?",
+        "What kind of places do you like to visit?",
+        "Would you prefer to travel alone or with others?"
+      ]
+    },
+    part2: {
+      cueCard: "Describe a place you would like to work in the future.",
+      bullets: ["where it is", "what kind of work you would do there", "why you would like to work there", "and explain how you would prepare for it"]
+    },
+    part3: {
+      topic: "Work, migration and opportunity",
+      questions: [
+        "Why do many people move abroad for work?",
+        "What are the advantages and disadvantages of working in another country?",
+        "Should governments do more to keep skilled workers, such as nurses, at home?",
+        "How might working abroad change a person?"
+      ]
+    }
+  },
+  "speaking-4": {
+    part1: {
+      topic: "Technology & learning",
+      questions: [
+        "How often do you use a computer or smartphone?",
+        "What do you mainly use the internet for?",
+        "Do you prefer learning online or in a classroom? Why?",
+        "Has technology changed the way you study?",
+        "Are there any apps you find especially useful?",
+        "Do you think you spend too much time on screens?"
+      ]
+    },
+    part2: {
+      cueCard: "Describe a skill you learned that has been useful to you.",
+      bullets: ["what the skill is", "how and when you learned it", "how difficult it was to learn", "and explain why it has been useful"]
+    },
+    part3: {
+      topic: "Skills, education and the future",
+      questions: [
+        "Which skills do you think will be most important in the future?",
+        "Is it better to learn practical skills or academic knowledge?",
+        "How has technology changed the way people learn new skills?",
+        "Should schools teach more life skills? Why?"
+      ]
+    }
+  },
+  "speaking-5": {
+    part1: {
+      topic: "Free time & people",
+      questions: [
+        "What do you usually do in your free time?",
+        "Do you prefer spending time indoors or outdoors?",
+        "Who do you usually spend your free time with?",
+        "Has the way you spend free time changed since childhood?",
+        "Do you think people have enough free time these days?",
+        "What is a hobby you would like to try?"
+      ]
+    },
+    part2: {
+      cueCard: "Describe a person you admire.",
+      bullets: ["who this person is", "how you know about them", "what qualities they have", "and explain why you admire them"]
+    },
+    part3: {
+      topic: "Role models and society",
+      questions: [
+        "Who do young people usually see as role models today?",
+        "Do you think celebrities make good role models? Why or why not?",
+        "How can ordinary people be role models in their communities?",
+        "Is it important for children to have role models? Why?"
+      ]
+    }
   }
 };
