@@ -3634,6 +3634,23 @@ body.pulse-acct-open .visitor-counter {
   background: var(--accent); color: var(--primary-deep);
 }
 
+/* Hero grouped nav — 4 categories, each with clickable items */
+.hero-groups {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px 18px; max-width: 1080px; margin: 34px auto 0;
+  position: relative; z-index: 2; text-align: left;
+}
+.hero-group { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+.hero-group-label {
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent, #F4B83C); margin-bottom: 2px; padding-left: 4px;
+}
+.hero-group .service-chip { justify-content: flex-start; width: 100%; }
+span.service-chip.is-soon { opacity: 0.7; cursor: default; }
+span.service-chip.is-soon:hover { transform: none; background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+@media (max-width: 860px) { .hero-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; } }
+@media (max-width: 520px) { .hero-groups { grid-template-columns: 1fr; } }
+
 /* ----------- Tinted alternate section band ----------- */
 section.block-tint {
   position: relative; max-width: none;
