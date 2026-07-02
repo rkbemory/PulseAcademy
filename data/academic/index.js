@@ -160,11 +160,11 @@ window.Academic.programs = {
       4: {
         name: "4th Year", totalMarks: 900,
         subjects: [
-          { id: "midwifery",             code: "B431-I",  name: "Midwifery",                      type: "Professional", marks: 200, hours: 144 },
-          { id: "gynae-obstetrical",     code: "B431-II", name: "Gynaecological & Obstetrical Nursing", type: "Professional", marks: 200, hours: 80 },
-          { id: "nursing-education",     code: "B432-I",  name: "Nursing Education",              type: "Professional", marks: 150, hours: 72 },
-          { id: "leadership-management", code: "B432-II", name: "Leadership & Management",         type: "Professional", marks: 150, hours: 72 },
-          { id: "research-nursing",      code: "B433",    name: "Research in Nursing",            type: "Professional", marks: 200, hours: 80 }
+          { id: "midwifery",             code: "B431-I",  name: "Midwifery",                      type: "Professional", marks: 200, hours: 144, topicCount: 20, available: true },
+          { id: "gynae-obstetrical",     code: "B431-II", name: "Gynaecological & Obstetrical Nursing", type: "Professional", marks: 200, hours: 80, topicCount: 16, available: true },
+          { id: "nursing-education",     code: "B432-I",  name: "Nursing Education",              type: "Professional", marks: 150, hours: 72, topicCount: 12, available: true },
+          { id: "leadership-management", code: "B432-II", name: "Leadership & Management",         type: "Professional", marks: 150, hours: 72, topicCount: 12, available: true },
+          { id: "research-nursing",      code: "B433",    name: "Research in Nursing",            type: "Professional", marks: 200, hours: 80, topicCount: 14, available: true }
         ]
       }
     }
