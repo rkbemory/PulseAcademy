@@ -5362,6 +5362,20 @@ body > footer { flex-shrink: 0; }
 .ielts-sb-wc { color: var(--text-muted); font-weight: 600; margin-left: 6px; white-space: nowrap; }
 .ielts-sb-answer { font-size: 0.95rem; line-height: 1.75; color: var(--text); }
 @media (max-width: 480px) { .ielts-band-row { grid-template-columns: 30px 1fr; } .ielts-band-name, .ielts-band-desc { grid-column: 2; } }
+/* Hub info chip-tabs (About / Structure / Bands / Resources) */
+.ielts-hub-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 16px; }
+.ielts-hub-chip { font: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--line-cool); background: var(--surface); color: var(--text-soft); transition: background .15s, border-color .15s, color .15s; }
+.ielts-hub-chip:hover { border-color: var(--primary-soft, #2E63B8); color: var(--primary); }
+.ielts-hub-chip.is-on { background: var(--primary, #14387A); border-color: var(--primary, #14387A); color: #fff; }
+.ielts-hub-panels { margin-bottom: 26px; }
+.ielts-hub-panel { display: none; }
+.ielts-hub-panel.is-on { display: block; }
+/* 2x2 module grid */
+.ielts-mod-2x2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 620px) { .ielts-mod-2x2 { grid-template-columns: 1fr; } }
+/* sample-answers link inside the Writing card */
+.ielts-samples-inline { background: #F1ECFB; border-color: #C9BEEC !important; color: #5B32B0 !important; font-weight: 700; }
+.ielts-samples-inline:hover { border-color: #6D28D9 !important; transform: translateX(2px); }
 
 /* Test player */
 .ielts-crumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
