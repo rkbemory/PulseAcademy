@@ -75,7 +75,7 @@
       '<a href="academic-program.html?program=bsc-nursing">📗 B.Sc. in Nursing</a>',
       '<div class="nav-drawer-sep"></div>',
       '<span class="nav-drawer-section">Explore &amp; Tools</span>',
-      '<a href="ielts.html" class="' + activeFor("ielts.html") + '">📝 IELTS Prep</a>',
+      '<a href="ielts.html" class="' + activeFor("ielts.html") + '">📝 IELTS Preparation</a>',
       '<a href="jobs.html" class="' + activeFor("jobs.html") + '">💼 Nursing Jobs</a>',
       '<a href="books.html" class="' + activeFor("books.html") + '">📚 Books</a>',
       '<a href="calculators.html" class="' + activeFor("calculators.html") + '">🧮 Calculators</a>',

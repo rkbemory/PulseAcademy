@@ -19,6 +19,7 @@
     { id: "post-basic",       name: "Post Basic Admission", kind: "exam",     href: "post-basic.html",  color: "#1E5F9C", icon: "📘" },
     { id: "rn",               name: "BNMC RN",              kind: "exam",     href: "rn.html",          color: "#16A34A", icon: "🎓" },
     { id: "nclex",            name: "NCLEX-RN",             kind: "exam",     href: "nclex.html",       color: "#2E9E72", icon: "🌎" },
+    { id: "ielts",            name: "IELTS Preparation",    kind: "ielts",    href: "ielts.html",       color: "#6D28D9", icon: "📝" },
     { id: "diploma-nursing",  name: "Diploma in Nursing",   kind: "academic", href: "academic-program.html?program=diploma-nursing",  color: "#7C2D12", icon: "🏥" },
     { id: "diploma-midwifery",name: "Diploma in Midwifery", kind: "academic", href: "academic-program.html?program=diploma-midwifery",color: "#831843", icon: "🤱" },
     { id: "bsc-nursing",      name: "B.Sc. in Nursing",     kind: "academic", href: "academic-program.html?program=bsc-nursing",       color: "#0F4C3A", icon: "📗" }
@@ -87,6 +88,29 @@
     return 0;
   }
 
+  /* IELTS Preparation — best raw scores are stored in pulse:ielts:progress,
+     keyed "<module>/<test>" → best raw /40 (Reading & Listening auto-score). */
+  function ieltsActivity() {
+    var pr = readJSON("pulse:ielts:progress", "{}"), attempts = 0, bestRaw = 0, bestKey = null;
+    for (var k in pr) {
+      if (!pr.hasOwnProperty(k)) continue;
+      var v = pr[k], raw = (typeof v === "number") ? v : (v && typeof v.best === "number" ? v.best : null);
+      if (raw == null) continue;
+      attempts++;
+      if (raw > bestRaw) { bestRaw = raw; bestKey = k; }
+    }
+    return { attempts: attempts, bestRaw: bestRaw, bestModule: bestKey ? ieltsModuleName(bestKey.split("/")[0]) : "" };
+  }
+  function ieltsTotal() {
+    var M = window.IELTS && window.IELTS.modules, n = 0;
+    if (M) ["reading", "listening"].forEach(function (mid) { if (M[mid] && M[mid].tests) n += M[mid].tests.length; });
+    return n || 20;
+  }
+  function ieltsModuleName(mid) {
+    var M = window.IELTS && window.IELTS.modules;
+    return (M && M[mid] && M[mid].name) ? M[mid].name : (mid.charAt(0).toUpperCase() + mid.slice(1));
+  }
+
   function getHistory() { var a = readJSON(LS_HISTORY, "[]"); return Array.isArray(a) ? a : []; }
   function mergeRemote(local, rows) {
     var seen = {}, out = [];
@@ -112,6 +136,7 @@
   function hasActivity(p, hist) {
     hist = hist || STATE.history;
     if (p.kind === "academic") return academicActivity(p.id).length > 0;
+    if (p.kind === "ielts") return ieltsActivity().attempts > 0;
     return hist.some(function (h) { return h.programId === p.id; });
   }
 
@@ -152,7 +177,7 @@
     var g = greeting();
     var name = esc(firstName(u));
     var sub = u
-      ? '<p class="dash-sub">Signed in as <strong>' + esc(u.email) + '</strong> — your progress syncs to your account.</p>'
+      ? '<p class="dash-sub">Signed in as <strong>' + esc(u.email) + '</strong> — your quiz results sync across your devices.</p>'
       : '<p class="dash-sub">You\'re studying as a guest — progress is saved on this device. <button class="dash-link-btn" data-act="signin">Sign in</button> to sync it across devices.</p>';
     return '<div class="dash-head">' +
       '<span class="dash-eyebrow">' + g.ic + ' ' + g.t + '</span>' +
@@ -183,6 +208,7 @@
   function continueSection() {
     var cards = activePrograms().map(function (p) {
       if (p.kind === "academic") return academicCard(p);
+      if (p.kind === "ielts") return ieltsCard(p);
       return examCard(p);
     }).join("");
     if (!cards) cards = '<p class="dash-empty">No programs selected yet — tick one above to get started.</p>';
@@ -213,6 +239,16 @@
     var sub = e.attempts ? (e.attempts + " attempts · best " + e.best + "%") : "Practice tests";
     return card(p, pct, sub, lines, p.href, e.attempts ? "Practice →" : "Start →");
   }
+  function ieltsCard(p) {
+    var a = ieltsActivity(), total = ieltsTotal();
+    var pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0;
+    var lines = a.attempts
+      ? '<p class="dash-cont-line"><span>Best</span> ' + esc(a.bestModule) + ' — <strong>' + a.bestRaw + '/40</strong></p>' +
+        '<p class="dash-cont-line dash-cont-prev"><span>Done</span> ' + a.attempts + ' auto-scored test' + (a.attempts === 1 ? "" : "s") + '</p>'
+      : '<p class="dash-cont-line dash-cont-prev">Reading · Listening · Writing · Speaking — not started yet.</p>';
+    var metric = a.attempts ? (a.attempts + " / " + total + " scored tests · best " + a.bestRaw + "/40") : "Academic Reading, Listening, Writing & Speaking";
+    return card(p, pct, metric, lines, p.href, a.attempts ? "Continue →" : "Start →");
+  }
   function card(p, pct, metric, lines, href, cta) {
     return '<div class="dash-cont-card" style="--pc:' + p.color + '">' +
       '<div class="dash-cont-top"><span class="dash-cont-ic">' + p.icon + '</span>' +
@@ -240,6 +276,7 @@
     var bars = activePrograms().map(function (p) {
       var pct, label;
       if (p.kind === "academic") { var t = academicTotal(p.id), s = academicActivity(p.id).length; pct = t ? Math.round(s / t * 100) : 0; label = s + "/" + t + " topics"; }
+      else if (p.kind === "ielts") { var a = ieltsActivity(); pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0; label = a.attempts ? ("best " + a.bestRaw + "/40") : "—"; }
       else { var e = examActivity(p.id, hist); pct = e.best; label = e.attempts ? ("best " + e.best + "%") : "—"; }
       return '<div class="dash-scorerow"><span class="dash-scorerow-name">' + p.icon + " " + esc(p.name) + '</span>' +
         '<div class="dash-bar" style="--pc:' + p.color + '"><span style="width:' + Math.max(2, Math.min(100, pct)) + '%"></span></div>' +
@@ -304,7 +341,6 @@
   /* Explore & tools — quick links to non-tracked resources */
   function toolsSection() {
     var links = [
-      { href: "ielts.html", ic: "📝", name: "IELTS Prep" },
       { href: "resources.html", ic: "🔗", name: "Resource Hub" },
       { href: "jobs.html", ic: "💼", name: "Nursing Jobs" },
       { href: "books.html", ic: "📚", name: "Books" },

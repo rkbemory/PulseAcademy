@@ -113,7 +113,7 @@ header.top-nav {
     radial-gradient(ellipse at 80% 50%, rgba(232, 155, 44, 0.18) 0%, transparent 50%),
     radial-gradient(ellipse at 100% 100%, rgba(107, 36, 36, 0.12) 0%, transparent 60%),
     var(--bg);
-  padding: 60px 24px 80px;
+  padding: 44px 24px 56px;
 }
 .hero::before {
   content: "";
@@ -123,7 +123,7 @@ header.top-nav {
 }
 .hero-inner {
   max-width: 1200px; margin: 0 auto;
-  display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px;
   align-items: center; position: relative;
 }
 .breadcrumb {
@@ -168,7 +168,7 @@ header.top-nav {
 }
 .btn-secondary:hover { background: var(--amber); color: white; }
 .stat-strip {
-  margin-top: 48px; padding-top: 28px;
+  margin-top: 30px; padding-top: 20px;
   border-top: 1px solid var(--line);
   display: flex; gap: 40px; flex-wrap: wrap;
 }
@@ -274,13 +274,13 @@ header.top-nav {
 .subnav a:hover { background: var(--bg-warm); color: var(--maroon); border-color: var(--line); }
 
 /* ===== SECTION DEFAULTS ===== */
-section.block { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
+section.block { max-width: 1200px; margin: 0 auto; padding: 54px 24px; }
 .section-eyebrow {
   font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
   color: var(--amber); text-transform: uppercase; margin-bottom: 12px;
 }
 .section-title { margin-bottom: 14px; }
-.section-lead { color: var(--text-soft); font-size: 1.05rem; max-width: 640px; margin-bottom: 48px; }
+.section-lead { color: var(--text-soft); font-size: 1.05rem; max-width: 640px; margin-bottom: 26px; }
 
 /* ===== ABOUT GRID (3 columns) ===== */
 .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -304,8 +304,8 @@ section.block { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
 }
 
 /* ===== HEXAGON SUBJECT MAP ===== */
-.hex-section { background: var(--bg-warm); padding: 80px 24px; }
-.hex-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.hex-section { background: var(--bg-warm); padding: 54px 24px; }
+.hex-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 @media (max-width: 900px) { .hex-inner { grid-template-columns: 1fr; } }
 .hex-grid {
   position: relative; width: 100%; max-width: 460px; aspect-ratio: 1;
@@ -376,7 +376,7 @@ section.block { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
 .stars span { color: var(--text-soft); margin-left: 4px; font-family: 'Inter', sans-serif; }
 
 /* ===== MOCK SECTION ===== */
-.mock-shell { background: var(--bg-warm); padding: 80px 0; }
+.mock-shell { background: var(--bg-warm); padding: 54px 0; }
 .mock-shell .mock-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 .mock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 40px; }
 @media (max-width: 768px) { .mock-grid { grid-template-columns: 1fr; } }
@@ -492,7 +492,7 @@ section.block { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
 }
 
 /* ===== FACULTY ===== */
-.faculty-shell { background: var(--bg-warm); padding: 80px 0; }
+.faculty-shell { background: var(--bg-warm); padding: 54px 0; }
 .faculty-shell .faculty-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 .faculty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 @media (max-width: 900px) { .faculty-grid { grid-template-columns: 1fr; } }
@@ -537,7 +537,7 @@ section.block { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
 /* ===== FINAL CTA ===== */
 .final-cta {
   background: linear-gradient(135deg, var(--maroon-deep) 0%, var(--maroon) 50%, var(--navy) 100%);
-  color: white; padding: 80px 24px; text-align: center;
+  color: white; padding: 54px 24px; text-align: center;
   position: relative; overflow: hidden;
 }
 .final-cta::before {
@@ -559,7 +559,7 @@ footer {
   font-size: 0.9rem;
 }
 .footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 28px; margin-bottom: 32px; }
 @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 .footer-col h5 { color: white; font-family: 'Inter', sans-serif; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
 .footer-col ul { list-style: none; }
@@ -633,7 +633,7 @@ footer {
 .beyond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 @media (max-width: 768px) { .beyond-grid { grid-template-columns: 1fr; } }
 .beyond-card {
-  border-radius: 20px; padding: 48px 36px; color: white;
+  border-radius: 20px; padding: 34px 30px; color: white;
   position: relative; overflow: hidden; transition: transform 0.3s;
   min-height: 280px; display: flex; flex-direction: column; justify-content: flex-end;
 }
@@ -676,8 +676,8 @@ footer {
 /* Lead-magnet block */
 .leadmag {
   background: linear-gradient(135deg, var(--bg-warm) 0%, #FFF8EE 100%);
-  border-radius: 20px; padding: 56px 40px;
-  display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center;
+  border-radius: 20px; padding: 38px 32px;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: center;
 }
 @media (max-width: 768px) { .leadmag { grid-template-columns: 1fr; padding: 36px 24px; } }
 .leadmag h2 { margin-bottom: 14px; }
@@ -725,7 +725,7 @@ footer {
 /* Community band */
 .community-band {
   background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
-  color: white; padding: 56px 24px; text-align: center;
+  color: white; padding: 40px 24px; text-align: center;
 }
 .community-band h2 { color: white; margin-bottom: 12px; }
 .community-band p { opacity: 0.92; margin-bottom: 24px; max-width: 580px; margin-left: auto; margin-right: auto; }
@@ -1438,7 +1438,7 @@ footer {
 .book-shelf-callout h4 { font-family: 'Playfair Display', serif; }
 
 /* Program page hero variants */
-.hero-program { padding: 50px 24px 70px; }
+.hero-program { padding: 38px 24px 50px; }
 .hero-msn::before { background-image: none; }
 .hero-postbasic {
   background:
@@ -1555,7 +1555,7 @@ footer {
 .topic-hero-summary { font-size: 1.05rem; opacity: 0.95; max-width: 720px; margin-top: 18px; }
 .topic-hero-inner { max-width: 1100px; margin: 0 auto; }
 .topic-article {
-  max-width: 800px; margin: 0 auto; padding: 60px 24px 80px;
+  max-width: 800px; margin: 0 auto; padding: 44px 24px 56px;
 }
 .topic-section {
   margin-bottom: 36px; padding-bottom: 22px;
@@ -1996,14 +1996,15 @@ header.top-nav.is-scrolled {
 
 /* Refined nav links */
 .top-nav-links {
-  display: flex; gap: 4px; align-items: center;
-  font-size: 0.94rem; font-weight: 500;
+  display: flex; gap: 3px; align-items: center;
+  font-size: 0.92rem; font-weight: 500;
 }
 .top-nav-links a {
   color: var(--text);
-  padding: 9px 14px;
+  padding: 8px 12px;
   border-radius: 10px;
   text-decoration: none;
+  white-space: nowrap;
   transition: background .18s, color .18s;
 }
 .top-nav-links a:hover { background: var(--primary-tint); color: var(--primary); }
@@ -2367,8 +2368,8 @@ h2.section-title { color: var(--primary-deep); }
   .hero-ctas .btn { width: 100%; justify-content: center; }
 
   /* Section padding */
-  section.block { padding: 56px 18px; }
-  .hex-section { padding: 56px 18px; }
+  section.block { padding: 40px 16px; }
+  .hex-section { padding: 40px 16px; }
   .home-hero { padding: 68px 18px 76px; }
 
   /* Programs grid full width */
@@ -4654,8 +4655,8 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
    line within one viewport (appended last so it wins the cascade).
    ════════════════════════════════════════════════════════════════ */
 .home-hero {
-  padding: 36px 24px 68px;               /* was 90 / 130; bottom clears the ECG line */
-  min-height: calc(100svh - 70px);       /* top nav ≈ 69px → hero fills the rest */
+  padding: 32px 24px 66px;               /* was 90 / 130; bottom clears the ECG line */
+  min-height: calc(100svh - 90px);       /* top nav ≈ 88px → hero fills the rest */
   display: flex; flex-direction: column; justify-content: center;
 }
 .home-hero-inner { width: 100%; }
