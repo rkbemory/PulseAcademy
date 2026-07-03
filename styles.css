@@ -5587,3 +5587,44 @@ body > footer { flex-shrink: 0; }
 .whatsnew-item em { display: block; font-style: normal; font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; margin-top: 1px; }
 @media (prefers-reduced-motion: reduce) { .whatsnew:not(.is-seen) .whatsnew-btn::after { animation: none; display: none; } }
 @media print { .whatsnew { display: none !important; } }
+
+/* ════════════════════════════════════════════════════════════════
+   QUIET NAV RIBBON — program pills muted to soft tints of their own
+   hue so attention goes to the page content. Full colour is reserved
+   for the Sign-in button and the CURRENT page's pill (solid).
+   (Appended last: overrides the earlier solid-gradient pill rules.)
+   ════════════════════════════════════════════════════════════════ */
+.top-nav-links a[href="msn.html"],
+.top-nav-links a[href="post-basic.html"],
+.top-nav-links a[href="rn.html"],
+.top-nav-links a[href="nclex.html"],
+.top-nav-links a[href="books.html"],
+.top-nav-links a[href="jobs.html"],
+.top-nav-links a[href="ielts.html"],
+.top-nav-links a[href="academic.html"] { box-shadow: none; font-weight: 600; }
+.top-nav-links a[href="msn.html"]        { background: #E9EDF8; color: #1E3A8A; }
+.top-nav-links a[href="post-basic.html"] { background: #E6F0F9; color: #175A94; }
+.top-nav-links a[href="rn.html"]         { background: #E5F5EC; color: #0F7A38; }
+.top-nav-links a[href="ielts.html"]      { background: #F0EAFB; color: #6D28D9; }
+.top-nav-links a[href="nclex.html"]      { background: #ECEAFA; color: #5749B8; }
+.top-nav-links a[href="books.html"]      { background: #F5EEE0; color: #8A6527; }
+.top-nav-links a[href="jobs.html"]       { background: #F9ECE3; color: #A34A18; }
+.top-nav-links a[href="academic.html"]   { background: #E4F2F5; color: #0E7490; }
+/* hover: same hue, one shade deeper — still calm */
+.top-nav-links a[href="msn.html"]:hover        { background: #DCE3F4; color: #1E3A8A; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="post-basic.html"]:hover { background: #D8E8F6; color: #175A94; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="rn.html"]:hover         { background: #D6EFE1; color: #0F7A38; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="ielts.html"]:hover      { background: #E6DCF8; color: #6D28D9; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="nclex.html"]:hover      { background: #E0DCF6; color: #5749B8; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="books.html"]:hover      { background: #EFE4CE; color: #8A6527; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="jobs.html"]:hover       { background: #F4E0D2; color: #A34A18; transform: translateY(-1px); box-shadow: none; filter: none; }
+.top-nav-links a[href="academic.html"]:hover   { background: #D5EAEF; color: #0E7490; transform: translateY(-1px); box-shadow: none; filter: none; }
+/* current page: its pill goes solid — one clear "you are here" accent */
+.top-nav-links a[href="msn.html"].is-active        { background: #1E3A8A; color: #fff; box-shadow: none; }
+.top-nav-links a[href="post-basic.html"].is-active { background: #1E5F9C; color: #fff; box-shadow: none; }
+.top-nav-links a[href="rn.html"].is-active         { background: #16A34A; color: #fff; box-shadow: none; }
+.top-nav-links a[href="ielts.html"].is-active      { background: #6D28D9; color: #fff; box-shadow: none; }
+.top-nav-links a[href="nclex.html"].is-active      { background: #6C5FD0; color: #fff; box-shadow: none; }
+.top-nav-links a[href="books.html"].is-active      { background: #A47B36; color: #fff; box-shadow: none; }
+.top-nav-links a[href="jobs.html"].is-active       { background: #B4541E; color: #fff; box-shadow: none; }
+.top-nav-links a[href="academic.html"].is-active   { background: #0E7490; color: #fff; box-shadow: none; }
