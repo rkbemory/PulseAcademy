@@ -360,7 +360,34 @@
   }
 
   /* ---------------------------------------------------------------
-     8. Register service worker (PWA / offline support)
+     8. "What's new" floating widget (homepage) — pulses until the
+        visitor opens it once, then stays quiet (localStorage flag).
+     --------------------------------------------------------------- */
+  function attachWhatsNew() {
+    var w = document.getElementById("whatsnew");
+    if (!w) return;
+    var KEY = "pulse:whatsnew:v1";   // bump the suffix when the list changes to re-alert visitors
+    var btn = w.querySelector(".whatsnew-btn");
+    var panel = w.querySelector(".whatsnew-panel");
+    var seen = false;
+    try { seen = localStorage.getItem(KEY) === "1"; } catch (e) {}
+    if (seen) w.classList.add("is-seen");
+    function setOpen(open) {
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        w.classList.add("is-seen");
+        try { localStorage.setItem(KEY, "1"); } catch (e) {}
+      }
+    }
+    btn.addEventListener("click", function () { setOpen(panel.hidden); });
+    w.querySelector(".whatsnew-close").addEventListener("click", function () { setOpen(false); });
+    document.addEventListener("click", function (e) { if (!w.contains(e.target) && !panel.hidden) setOpen(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) setOpen(false); });
+  }
+
+  /* ---------------------------------------------------------------
+     9. Register service worker (PWA / offline support)
      --------------------------------------------------------------- */
   function registerServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
@@ -383,6 +410,7 @@
     attachFAQ();
     attachActiveLink();
     attachVisitorCounter();
+    attachWhatsNew();
     registerServiceWorker();
   });
 })();
