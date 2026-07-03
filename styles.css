@@ -5317,12 +5317,18 @@ body > footer { flex-shrink: 0; }
 .ielts-type p { font-size: 0.88rem; color: var(--lead-ink); line-height: 1.5; }
 .ielts-modline { color: var(--lead-ink); }
 .ielts-mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
-.ielts-mod-card { background: var(--surface); border: 1px solid var(--line-cool); border-top: 3px solid var(--mc, #14387A); border-radius: 16px; padding: 18px; box-shadow: var(--shadow-sm); }
-.ielts-mod-top { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
-.ielts-mod-ic { font-size: 1.8rem; }
+.ielts-mod-card { background: var(--surface); border: 1px solid var(--line-cool); border-top: 3px solid var(--mc, #14387A); border-radius: 16px; padding: 18px; box-shadow: var(--shadow-sm); align-self: start; }
+.ielts-mod-top { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; cursor: pointer; border-radius: 10px; }
+.ielts-mod-top:focus-visible { outline: 2px solid var(--mc, #14387A); outline-offset: 3px; }
+.ielts-mod-ic { font-size: 1.8rem; flex: none; }
+.ielts-mod-h { flex: 1 1 auto; min-width: 0; }
 .ielts-mod-top h3 { font-size: 1.15rem; color: var(--text); margin: 0; }
-.ielts-mod-meta { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
+.ielts-mod-meta { display: block; font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; }
+.ielts-chev { flex: none; font-size: 1.05rem; color: var(--mc, #14387A); transition: transform .18s ease; }
+.ielts-mod-card:not(.is-collapsed) .ielts-chev { transform: rotate(180deg); }
+.ielts-mod-card.is-collapsed .ielts-mod-top { margin-bottom: 0; }
 .ielts-test-list { display: flex; flex-direction: column; gap: 8px; }
+.ielts-mod-card.is-collapsed .ielts-test-list { display: none; }
 .ielts-test-link { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line-cool); text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.92rem; transition: all .15s; }
 .ielts-test-link:hover { border-color: var(--mc, #14387A); transform: translateX(2px); }
 .ielts-test-link > span:first-child { flex: 1; }

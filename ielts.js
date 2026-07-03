@@ -44,10 +44,12 @@
       var extra = (mid === "writing")
         ? '<a class="ielts-test-link ielts-samples-inline" href="ielts-samples.html"><span>📝 Band 6–9 sample answers</span><span class="ielts-arrow">→</span></a>'
         : "";
-      return '<div class="ielts-mod-card" style="--mc:' + moduleColor(mid) + '">' +
-        '<div class="ielts-mod-top"><span class="ielts-mod-ic">' + m.icon + "</span>" +
-        "<div><h3>" + esc(m.name) + "</h3><span class='ielts-mod-meta'>" + esc(m.blurb) + "</span></div></div>" +
-        '<div class="ielts-test-list">' + tests + extra + "</div></div>";
+      return '<div class="ielts-mod-card is-collapsed" style="--mc:' + moduleColor(mid) + '">' +
+        '<div class="ielts-mod-top" role="button" tabindex="0" aria-expanded="false">' +
+        '<span class="ielts-mod-ic">' + m.icon + "</span>" +
+        "<div class='ielts-mod-h'><h3>" + esc(m.name) + "</h3><span class='ielts-mod-meta'>" + esc(m.blurb) + "</span></div>" +
+        '<span class="ielts-chev" aria-hidden="true">▾</span></div>' +
+        '<div class="ielts-test-list">' + extra + tests + "</div></div>";
     }).join("");
 
     var aboutHTML =
@@ -104,6 +106,19 @@
         var p = chip.getAttribute("data-panel");
         root.querySelectorAll(".ielts-hub-chip").forEach(function (c) { c.classList.toggle("is-on", c === chip); });
         root.querySelectorAll(".ielts-hub-panel").forEach(function (pn) { pn.classList.toggle("is-on", pn.getAttribute("data-panel") === p); });
+      });
+    });
+
+    // Module cards act as accordions: collapsed by default, open to reveal tests.
+    root.querySelectorAll(".ielts-mod-top").forEach(function (head) {
+      function toggle() {
+        var card = head.parentNode;
+        var collapsed = card.classList.toggle("is-collapsed");
+        head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      }
+      head.addEventListener("click", toggle);
+      head.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); toggle(); }
       });
     });
   }
