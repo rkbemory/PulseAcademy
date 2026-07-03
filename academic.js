@@ -29,8 +29,13 @@
   function isStudied(p, s, t) { return !!getProgress()[key(p, s, t)]; }
   function setStudied(p, s, t, score) {
     var pr = getProgress();
-    pr[key(p, s, t)] = { studied: true, score: (score == null ? null : score), ts: Date.now() };
+    var v = { studied: true, score: (score == null ? null : score), ts: Date.now() };
+    pr[key(p, s, t)] = v;
     try { localStorage.setItem(LS_PROGRESS, JSON.stringify(pr)); } catch (e) {}
+    // Signed in → mirror to the account so it follows the learner across devices.
+    if (window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress) {
+      window.PulseAuth.saveProgress("academic", key(p, s, t), v);
+    }
   }
   function studiedCount(p, s) {
     var pr = getProgress(), n = 0, prefix = p + "/" + s + "/";

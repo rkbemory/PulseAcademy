@@ -9,7 +9,18 @@
   function qs(n) { return new URLSearchParams(location.search).get(n); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]; }); }
   function readJSON(k, d) { try { var v = JSON.parse(localStorage.getItem(k) || d); return (v && typeof v === "object") ? v : JSON.parse(d); } catch (e) { return JSON.parse(d); } }
-  function save(mid, tid, score) { try { var p = readJSON(LS, "{}"); var k = mid + "/" + tid; if (!p[k] || score > p[k]) p[k] = score; localStorage.setItem(LS, JSON.stringify(p)); } catch (e) {} }
+  function save(mid, tid, score) {
+    try {
+      var p = readJSON(LS, "{}"), k = mid + "/" + tid;
+      var improved = !p[k] || score > p[k];
+      if (improved) p[k] = score;
+      localStorage.setItem(LS, JSON.stringify(p));
+      // Signed in → mirror the new best to the account (cross-device).
+      if (improved && window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress) {
+        window.PulseAuth.saveProgress("ielts", k, score);
+      }
+    } catch (e) {}
+  }
 
   /* Approx Academic band from raw /40 (Reading & Listening differ slightly; close enough for practice). */
   function band(raw) {

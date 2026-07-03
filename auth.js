@@ -25,6 +25,9 @@
     fetchResults: function () { return Promise.resolve([]); },
     getPrefs: function () { return Promise.resolve(null); },
     savePrefs: function () { return Promise.resolve(null); },
+    saveProgress: function () { return Promise.resolve(null); },
+    fetchProgress: function () { return Promise.resolve([]); },
+    syncProgress: function () { return Promise.resolve(false); },
     onChange: function (cb) { if (typeof cb === "function") listeners.push(cb); },
     noteQuizFinished: function () {}
   };
@@ -85,6 +88,9 @@
     window.PulseAuth.fetchResults = fetchResults;
     window.PulseAuth.getPrefs = getPrefs;
     window.PulseAuth.savePrefs = savePrefs;
+    window.PulseAuth.saveProgress = saveProgress;
+    window.PulseAuth.fetchProgress = fetchProgress;
+    window.PulseAuth.syncProgress = syncProgress;
     window.PulseAuth.noteQuizFinished = noteQuizFinished;
 
     supa.auth.getSession().then(function (res) {
@@ -112,6 +118,7 @@
       // Once signed in, push any locally-stored history up and hide the prompt.
       hidePrompt();
       syncLocalHistory();
+      syncProgress(false);   // academic & IELTS progress: fetch-merge-push (once per session)
     }
   }
 
@@ -347,6 +354,84 @@
       programs: programs || [],
       updated_at: new Date().toISOString()
     }, { onConflict: "user_id" }).then(function (r) { return r; }).catch(function () { return null; });
+  }
+
+  /* ============================================================
+     ACADEMIC & IELTS PROGRESS — cross-device sync (table `learning_progress`).
+     One row per (user, kind, key); `value` is jsonb:
+       kind 'academic': {studied:true, score, ts}   kind 'ielts': best raw /40.
+     Degrades gracefully: if the table doesn't exist yet, every call resolves
+     empty and progress simply stays device-local. */
+  function saveProgress(kind, key, value) {
+    if (!window.PulseAuth.user) return Promise.resolve(null);
+    return supa.from("learning_progress").upsert({
+      user_id: window.PulseAuth.user.id,
+      kind: kind, key: key, value: value,
+      updated_at: new Date().toISOString()
+    }, { onConflict: "user_id,kind,key" }).then(function (r) { return r; }).catch(function () { return null; });
+  }
+  function fetchProgress(kind) {
+    if (!window.PulseAuth.user) return Promise.resolve([]);
+    return supa.from("learning_progress").select("key,value")
+      .eq("user_id", window.PulseAuth.user.id).eq("kind", kind)
+      .limit(2000)
+      .then(function (r) { return (r && r.data) || []; })
+      .catch(function () { return []; });
+  }
+
+  /* Two-way merge: remote rows fill local gaps; where local is newer (academic,
+     by ts) or better (IELTS, higher best score) it wins and is pushed back up.
+     Runs once per browser session on sign-in; the dashboard forces a fresh pass.
+     Resolves true when localStorage changed (callers re-render). */
+  function syncProgress(force) {
+    if (!window.PulseAuth.user) return Promise.resolve(false);
+    if (!force) {
+      try { if (sessionStorage.getItem("pulse:progressSynced") === "1") return Promise.resolve(false); } catch (e) {}
+    }
+    try { sessionStorage.setItem("pulse:progressSynced", "1"); } catch (e) {}
+    return Promise.all([
+      syncKind("academic", "pulse:academic:progress"),
+      syncKind("ielts", "pulse:ielts:progress")
+    ]).then(function (r) { return r[0] || r[1]; });
+  }
+  function syncKind(kind, lsKey) {
+    function numOf(v) { if (typeof v === "number") return v; if (v && typeof v.best === "number") return v.best; return null; }
+    function tsOf(v) { return (v && typeof v.ts === "number") ? v.ts : 0; }
+    function row(k, value) {
+      return { user_id: window.PulseAuth.user.id, kind: kind, key: k, value: value, updated_at: new Date().toISOString() };
+    }
+    return fetchProgress(kind).then(function (rows) {
+      var local;
+      try { local = JSON.parse(localStorage.getItem(lsKey) || "{}"); } catch (e) { local = {}; }
+      if (!local || typeof local !== "object") local = {};
+      var remote = {};
+      rows.forEach(function (r) { if (r && r.key != null) remote[r.key] = r.value; });
+      var changedLocal = false, pushRows = [], k;
+      for (k in remote) {                     // remote → local
+        if (!remote.hasOwnProperty(k)) continue;
+        if (kind === "ielts") {
+          var rv = numOf(remote[k]), lv = numOf(local[k]);
+          if (rv != null && (lv == null || rv > lv)) { local[k] = rv; changedLocal = true; }
+        } else if (local[k] == null || tsOf(remote[k]) > tsOf(local[k])) {
+          local[k] = remote[k]; changedLocal = true;
+        }
+      }
+      for (k in local) {                      // local → remote
+        if (!local.hasOwnProperty(k)) continue;
+        if (kind === "ielts") {
+          var lv2 = numOf(local[k]), rv2 = numOf(remote[k]);
+          if (lv2 != null && (rv2 == null || lv2 > rv2)) pushRows.push(row(k, lv2));
+        } else if (remote[k] == null || tsOf(local[k]) > tsOf(remote[k])) {
+          pushRows.push(row(k, local[k]));
+        }
+      }
+      if (changedLocal) { try { localStorage.setItem(lsKey, JSON.stringify(local)); } catch (e) {} }
+      if (pushRows.length) {
+        supa.from("learning_progress").upsert(pushRows, { onConflict: "user_id,kind,key" })
+          .then(function () {}).catch(function () {});
+      }
+      return changedLocal;
+    });
   }
 
   /* When a user signs in, push any results saved locally while anonymous. */

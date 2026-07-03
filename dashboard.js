@@ -177,7 +177,7 @@
     var g = greeting();
     var name = esc(firstName(u));
     var sub = u
-      ? '<p class="dash-sub">Signed in as <strong>' + esc(u.email) + '</strong> — your quiz results sync across your devices.</p>'
+      ? '<p class="dash-sub">Signed in as <strong>' + esc(u.email) + '</strong> — your progress syncs across your devices.</p>'
       : '<p class="dash-sub">You\'re studying as a guest — progress is saved on this device. <button class="dash-link-btn" data-act="signin">Sign in</button> to sync it across devices.</p>';
     return '<div class="dash-head">' +
       '<span class="dash-eyebrow">' + g.ic + ' ' + g.t + '</span>' +
@@ -429,6 +429,10 @@
       window.PulseAuth.fetchResults().then(function (rows) {
         if (rows && rows.length) { STATE.history = mergeRemote(getHistory(), rows); render(); }
       });
+    }
+    // cross-device academic & IELTS progress: fetch-merge(-push), re-render if changed
+    if (window.PulseAuth.syncProgress) {
+      window.PulseAuth.syncProgress(true).then(function (changed) { if (changed) render(); });
     }
   }
 

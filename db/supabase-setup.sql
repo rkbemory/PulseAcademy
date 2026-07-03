@@ -70,3 +70,44 @@ create policy "own prefs - update"
   on public.user_prefs for update
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+
+-- ============================================================
+-- LEARNING PROGRESS — Academic topics studied & IELTS best scores,
+-- synced across devices. One row per (user, kind, key):
+--   kind='academic'  key='<program>/<subject>/<topic>'  value={"studied":true,"score":1,"ts":1730000000000}
+--   kind='ielts'     key='<module>/<test>'              value=34   (best raw score /40)
+-- Without this table the site still works exactly as before
+-- (academic & IELTS progress simply stays device-local).
+-- ============================================================
+create table if not exists public.learning_progress (
+  user_id     uuid not null references auth.users (id) on delete cascade,
+  kind        text not null check (kind in ('academic','ielts')),
+  key         text not null,
+  value       jsonb not null default '{}'::jsonb,
+  updated_at  timestamptz not null default now(),
+  primary key (user_id, kind, key)
+);
+
+alter table public.learning_progress enable row level security;
+
+-- A signed-in user can read only their own progress.
+create policy "own progress - select"
+  on public.learning_progress for select
+  using (auth.uid() = user_id);
+
+-- A signed-in user can insert progress only for themselves.
+create policy "own progress - insert"
+  on public.learning_progress for insert
+  with check (auth.uid() = user_id);
+
+-- A signed-in user can update their own progress rows (needed for upsert).
+create policy "own progress - update"
+  on public.learning_progress for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+-- (Optional) allow users to clear their own progress.
+create policy "own progress - delete"
+  on public.learning_progress for delete
+  using (auth.uid() = user_id);
