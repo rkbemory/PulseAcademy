@@ -4650,6 +4650,31 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 }
 
 /* ════════════════════════════════════════════════════════════════
+   SINGLE-SCREEN HERO — fit title → 4-category grid + ECG heartbeat
+   line within one viewport (appended last so it wins the cascade).
+   ════════════════════════════════════════════════════════════════ */
+.home-hero {
+  padding: 36px 24px 68px;               /* was 90 / 130; bottom clears the ECG line */
+  min-height: calc(100svh - 70px);       /* top nav ≈ 69px → hero fills the rest */
+  display: flex; flex-direction: column; justify-content: center;
+}
+.home-hero-inner { width: 100%; }
+.home-hero-title-standalone { margin: 0 auto 10px; }
+.home-hero-title-pulse { font-size: clamp(2.8rem, 6.4vw, 4.6rem); }
+.home-hero-title-rest { font-size: clamp(1.5rem, 3.4vw, 2.4rem); margin-top: 2px; }
+.home-hero-badge { margin: 2px auto 10px; padding: 6px 18px; }
+.home-hero-tagline { margin: 2px 0 6px; font-size: 1.06rem; }
+.home-hero .lead { margin: 0 auto 15px; font-size: 1.02rem; max-width: 590px; line-height: 1.45; }
+.home-hero .hero-ctas { margin-bottom: 0; }
+.hero-groups { margin-top: 16px; gap: 14px 18px; }
+.hero-group { gap: 6px; }
+.hero-group-label { margin-bottom: 0; }
+.home-hero .service-chip { padding: 6px 13px; font-size: 0.82rem; }
+@media (max-width: 860px) {
+  .home-hero { min-height: 0; padding: 34px 18px 64px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
    NURSING CALCULATORS
    ════════════════════════════════════════════════════════════════ */
 .calc-disclaimer {
