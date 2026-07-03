@@ -7,6 +7,18 @@ window.IELTS.data.samples = [
     "chart": "Line graph",
     "prompt": "The line graph shows the number of jobs (in millions) in four sectors of the economy of one country between 1960 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
     "figureData": "Line graph. Jobs in millions, years 1960 / 1980 / 2000 / 2020. Manufacturing: 15, 20, 17, 13. Retail: 6, 10, 15, 16. Agriculture: 6, 3, 3, 2. Healthcare: 2, 5, 11, 16.",
+    "figure": {
+      "type": "line",
+      "yLabel": "Jobs (millions)",
+      "yMax": 20,
+      "xLabels": ["1960", "1980", "2000", "2020"],
+      "series": [
+        { "name": "Manufacturing", "color": "#1E5F9C", "values": [15, 20, 17, 13] },
+        { "name": "Retail", "color": "#B4541E", "values": [6, 10, 15, 16] },
+        { "name": "Agriculture", "color": "#0E7490", "values": [6, 3, 3, 2] },
+        { "name": "Healthcare", "color": "#6D28D9", "values": [2, 5, 11, 16] }
+      ]
+    },
     "task": "Task 1",
     "id": "t1-line-jobs",
     "bands": [
@@ -40,6 +52,26 @@ window.IELTS.data.samples = [
     "chart": "Pie chart + table",
     "prompt": "The pie chart shows the categories of people who used a university library, and the table shows how satisfied those users were with five aspects of the library's service. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
     "figureData": "Pie (user categories): Full-time undergraduate 44%, Full-time postgraduate 25%, Part-time postgraduate 16%, Distance learning 8%, Academic staff 7%. Table (satisfaction %, Very / Fairly / Not satisfied): Opening hours 65/35/0; Helpfulness of staff 95/5/0; Availability of books 50/40/10; Availability of journals 45/35/20; Reliability of wi-fi 48/33/19.",
+    "figure": {
+      "type": "pie-table",
+      "pieTitle": "Library users by category",
+      "slices": [
+        { "label": "FT undergraduate", "value": 44, "color": "#1E5F9C" },
+        { "label": "FT postgraduate", "value": 25, "color": "#0E7490" },
+        { "label": "PT postgraduate", "value": 16, "color": "#B4541E" },
+        { "label": "Distance learning", "value": 8, "color": "#6D28D9" },
+        { "label": "Academic staff", "value": 7, "color": "#B45309" }
+      ],
+      "tableTitle": "Satisfaction (%)",
+      "tableCols": ["Very", "Fairly", "Not"],
+      "tableRows": [
+        ["Opening hours", 65, 35, 0],
+        ["Helpfulness of staff", 95, 5, 0],
+        ["Availability of books", 50, 40, 10],
+        ["Availability of journals", 45, 35, 20],
+        ["Reliability of wi-fi", 48, 33, 19]
+      ]
+    },
     "task": "Task 1",
     "id": "t1-pie-library",
     "bands": [

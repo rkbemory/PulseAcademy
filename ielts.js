@@ -35,21 +35,32 @@
     var prog = readJSON(LS, "{}");
     var cards = Object.keys(M).map(function (mid) {
       var m = M[mid];
-      var tests = m.tests.map(function (t) {
+      var links = m.tests.map(function (t) {
         var best = prog[mid + "/" + t.id];
         var badge = (typeof best === "number") ? '<span class="ielts-best">Best ' + best + "/40</span>" : "";
         return '<a class="ielts-test-link" href="ielts-test.html?module=' + mid + "&test=" + t.id + '">' +
           "<span>" + esc(t.title) + "</span>" + badge + "<span class='ielts-arrow'>→</span></a>";
-      }).join("");
+      });
       var extra = (mid === "writing")
         ? '<a class="ielts-test-link ielts-samples-inline" href="ielts-samples.html"><span>📝 Band 6–9 sample answers</span><span class="ielts-arrow">→</span></a>'
         : "";
+      var count = m.tests.length;
+      var noun = (mid === "speaking") ? "sets" : "exams";
+      var moreLabel = "Show all " + count + " " + noun;
+      var preview = extra + links.slice(0, 2).join("");
+      var rest = links.slice(2).join("");
+      var moreBtn = rest ? '<button type="button" class="ielts-more" data-more="' + moreLabel + '">' + moreLabel + " ▾</button>" : "";
       return '<div class="ielts-mod-card is-collapsed" style="--mc:' + moduleColor(mid) + '">' +
         '<div class="ielts-mod-top" role="button" tabindex="0" aria-expanded="false">' +
         '<span class="ielts-mod-ic">' + m.icon + "</span>" +
         "<div class='ielts-mod-h'><h3>" + esc(m.name) + "</h3><span class='ielts-mod-meta'>" + esc(m.blurb) + "</span></div>" +
         '<span class="ielts-chev" aria-hidden="true">▾</span></div>' +
-        '<div class="ielts-test-list">' + extra + tests + "</div></div>";
+        '<p class="ielts-mod-count">🎓 <strong>' + count + " full practice " + noun + "</strong> inside — two shown here; open the module to see all " + count + ".</p>" +
+        '<div class="ielts-test-list">' +
+          '<div class="ielts-test-preview">' + preview + "</div>" +
+          '<div class="ielts-test-rest">' + rest + "</div>" +
+          moreBtn +
+        "</div></div>";
     }).join("");
 
     var aboutHTML =
@@ -109,17 +120,25 @@
       });
     });
 
-    // Module cards act as accordions: collapsed by default, open to reveal tests.
-    root.querySelectorAll(".ielts-mod-top").forEach(function (head) {
-      function toggle() {
-        var card = head.parentNode;
-        var collapsed = card.classList.toggle("is-collapsed");
-        head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    // Module cards act as accordions: two tests previewed, open to reveal the rest.
+    function setCard(card, collapsed) {
+      card.classList.toggle("is-collapsed", collapsed);
+      var head = card.querySelector(".ielts-mod-top");
+      if (head) head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      var more = card.querySelector(".ielts-more");
+      if (more) more.textContent = collapsed ? (more.getAttribute("data-more") + " ▾") : "Show fewer ▴";
+    }
+    root.querySelectorAll(".ielts-mod-card").forEach(function (card) {
+      function toggle() { setCard(card, !card.classList.contains("is-collapsed")); }
+      var head = card.querySelector(".ielts-mod-top");
+      if (head) {
+        head.addEventListener("click", toggle);
+        head.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); toggle(); }
+        });
       }
-      head.addEventListener("click", toggle);
-      head.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); toggle(); }
-      });
+      var more = card.querySelector(".ielts-more");
+      if (more) more.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
     });
   }
   function hubChip(id, label, on) { return '<button type="button" class="ielts-hub-chip' + (on ? " is-on" : "") + '" data-panel="' + id + '">' + label + "</button>"; }
@@ -406,6 +425,69 @@
   }
 
   /* ---- Writing sample answers (band 6/7/8/9) ---- */
+  /* Build a clean SVG chart for a Task-1 sample figure. */
+  function rnd(x) { return Math.round(x * 10) / 10; }
+  function buildSampleFigure(f) {
+    if (f.type === "line") return figLine(f);
+    if (f.type === "pie-table") return figPieTable(f);
+    return "";
+  }
+  function figLine(f) {
+    var W = 560, H = 300, padL = 46, padR = 16, padT = 18, padB = 46;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var yMax = f.yMax || 20, n = f.xLabels.length, ticks = 5;
+    function xx(i) { return padL + (n === 1 ? 0 : plotW * i / (n - 1)); }
+    function yy(v) { return padT + plotH * (1 - v / yMax); }
+    var svg = '<svg viewBox="0 0 ' + W + " " + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line graph of the data">';
+    for (var g = 0; g <= ticks; g++) {
+      var v = yMax * g / ticks, y = yy(v);
+      svg += '<line x1="' + padL + '" y1="' + rnd(y) + '" x2="' + (W - padR) + '" y2="' + rnd(y) + '" stroke="#E5E7EB" stroke-width="1"/>' +
+        '<text x="' + (padL - 8) + '" y="' + rnd(y + 4) + '" text-anchor="end" font-size="12" fill="#6B7280">' + Math.round(v) + "</text>";
+    }
+    f.xLabels.forEach(function (lb, i) {
+      svg += '<text x="' + rnd(xx(i)) + '" y="' + (H - padB + 22) + '" text-anchor="middle" font-size="12" fill="#374151">' + esc(lb) + "</text>";
+    });
+    if (f.yLabel) {
+      var my = padT + plotH / 2;
+      svg += '<text x="14" y="' + rnd(my) + '" transform="rotate(-90 14 ' + rnd(my) + ')" text-anchor="middle" font-size="12" fill="#6B7280">' + esc(f.yLabel) + "</text>";
+    }
+    f.series.forEach(function (s) {
+      var d = s.values.map(function (v, i) { return (i ? "L" : "M") + rnd(xx(i)) + " " + rnd(yy(v)); }).join(" ");
+      svg += '<path d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="2.5" stroke-linejoin="round"/>';
+      s.values.forEach(function (v, i) { svg += '<circle cx="' + rnd(xx(i)) + '" cy="' + rnd(yy(v)) + '" r="3.4" fill="' + s.color + '"/>'; });
+    });
+    svg += "</svg>";
+    var legend = '<ul class="ielts-fig-legend">' + f.series.map(function (s) {
+      return '<li><span class="ielts-fig-swatch" style="background:' + s.color + '"></span>' + esc(s.name) + "</li>";
+    }).join("") + "</ul>";
+    return svg + legend;
+  }
+  function figPieTable(f) {
+    var cx = 92, cy = 96, r = 82, total = f.slices.reduce(function (a, s) { return a + s.value; }, 0), ang = -Math.PI / 2;
+    var svg = '<svg viewBox="0 0 190 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pie chart of user categories">';
+    f.slices.forEach(function (s) {
+      var a2 = ang + 2 * Math.PI * s.value / total;
+      var x1 = cx + r * Math.cos(ang), y1 = cy + r * Math.sin(ang), x2 = cx + r * Math.cos(a2), y2 = cy + r * Math.sin(a2);
+      var large = (a2 - ang) > Math.PI ? 1 : 0;
+      svg += '<path d="M' + cx + " " + cy + " L" + rnd(x1) + " " + rnd(y1) + " A" + r + " " + r + " 0 " + large + " 1 " + rnd(x2) + " " + rnd(y2) + ' Z" fill="' + s.color + '" stroke="#fff" stroke-width="1.5"/>';
+      if (s.value >= 6) {
+        var mid = (ang + a2) / 2, lr = r * 0.62, lx = cx + lr * Math.cos(mid), ly = cy + lr * Math.sin(mid);
+        svg += '<text x="' + rnd(lx) + '" y="' + rnd(ly + 4) + '" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">' + s.value + "%</text>";
+      }
+      ang = a2;
+    });
+    svg += "</svg>";
+    var legend = '<ul class="ielts-fig-legend">' + f.slices.map(function (s) {
+      return '<li><span class="ielts-fig-swatch" style="background:' + s.color + '"></span>' + esc(s.label) + " (" + s.value + "%)</li>";
+    }).join("") + "</ul>";
+    var thead = "<tr><th>" + esc(f.tableTitle || "") + "</th>" + f.tableCols.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") + "</tr>";
+    var tbody = f.tableRows.map(function (row) {
+      return "<tr><td>" + esc(row[0]) + "</td>" + row.slice(1).map(function (c) { return "<td>" + c + "</td>"; }).join("") + "</tr>";
+    }).join("");
+    return '<div class="ielts-fig-pierow">' + svg + legend + "</div>" +
+      '<table class="ielts-fig-table">' + thead + tbody + "</table>";
+  }
+
   function initSamples() {
     var root = document.getElementById("ielts-root");
     if (!root) return;
@@ -422,9 +504,13 @@
           '<p class="ielts-sb-note">📝 <strong>Band ' + b.band + '</strong> — ' + esc(b.note) + ' <span class="ielts-sb-wc">' + b.words + " words</span></p>" +
           '<div class="ielts-sb-answer">' + esc(b.answer).replace(/\n/g, "<br>") + "</div></div>";
       }).join("");
+      var figBlock = s.figure
+        ? '<figure class="ielts-sample-fig">' + buildSampleFigure(s.figure) +
+            (s.figureData ? '<figcaption>' + esc(s.figureData) + "</figcaption>" : "") + "</figure>"
+        : (s.figureData ? '<p class="ielts-sample-data"><strong>Data:</strong> ' + esc(s.figureData) + "</p>" : "");
       html += '<section class="ielts-sample ' + cc + '"><span class="ielts-block-tag">' + esc(s.task) + (s.chart ? " · " + esc(s.chart) : "") + "</span>" +
         '<p class="ielts-sample-prompt">' + esc(s.prompt) + "</p>" +
-        (s.figureData ? '<p class="ielts-sample-data"><strong>Data:</strong> ' + esc(s.figureData) + "</p>" : "") +
+        figBlock +
         '<div class="ielts-sb-tabs">' + tabs + "</div>" + panels + "</section>";
     });
     root.innerHTML = html;
