@@ -431,7 +431,13 @@
 
   /* ---- Free AI band estimate — sign-in gated, saves drafts, band-descriptor feedback ---- */
   function wireEval(root, test) {
-    var enabled = false, perDay = 8;
+    var enabled = false, perDay = 8, pendingBtn = null;
+    // After the writer signs in from the gate, resume the evaluation they wanted.
+    if (window.PulseAuth && window.PulseAuth.onChange) {
+      window.PulseAuth.onChange(function (user) {
+        if (user && pendingBtn) { var b = pendingBtn; pendingBtn = null; evaluate(b); }
+      });
+    }
     fetch("/api/ielts-eval?action=status").then(function (r) { return r.json(); }).then(function (s) {
       enabled = !!(s && s.enabled); perDay = (s && s.perDay) || 8;
       if (!enabled) {
@@ -446,7 +452,7 @@
         "<span>It's free — and your result is saved to your dashboard so you can track your progress.</span></p>" +
         '<button type="button" class="btn btn-primary ielts-eval-signin-btn">Sign in / Create free account</button></div>';
       var b = out.querySelector(".ielts-eval-signin-btn");
-      if (b) b.addEventListener("click", function () { if (window.PulseAuth && window.PulseAuth.openModal) window.PulseAuth.openModal("signin"); });
+      if (b) b.addEventListener("click", function () { if (window.PulseAuth && window.PulseAuth.openModal) window.PulseAuth.openModal("signin", { stay: true }); });
     }
 
     function evaluate(btn) {
@@ -459,8 +465,8 @@
       var retry = wrap.querySelector(".ielts-retry-btn");
       var wc = (essay.trim().match(/\S+/g) || []).length;
       out.hidden = false;
-      // Ask the writer to sign in first (so the result saves to their account)
-      if (window.PulseAuth && window.PulseAuth.enabled && !window.PulseAuth.user) { signInPrompt(out); return; }
+      // Ask the writer to sign in first (so the result saves to their account); resume automatically after.
+      if (window.PulseAuth && window.PulseAuth.enabled && !window.PulseAuth.user) { pendingBtn = btn; signInPrompt(out); return; }
       if (wc < 40) { out.innerHTML = '<p class="ielts-eval-msg">✍️ Write at least 40 words first — the examiner needs something to mark!</p>'; return; }
       try { localStorage.setItem(draftKey(tk), essay); } catch (e) {}   // save the draft with every check
       var old = btn.textContent; btn.disabled = true; btn.textContent = "Evaluating… ⏳";

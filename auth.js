@@ -279,13 +279,18 @@
           return;
         }
         closeModal();
-        goDash();
+        if (stayAfterAuth) { stayAfterAuth = false; }   // opened from an in-page gate → don't leave the page
+        else goDash();
       });
     });
   }
 
-  function openModal(mode) {
+  /* When true, a successful sign-in stays on the current page instead of
+     redirecting to the dashboard (used by in-page gates like IELTS eval). */
+  var stayAfterAuth = false;
+  function openModal(mode, opts) {
     if (!modal) return;
+    stayAfterAuth = !!(opts && opts.stay);
     modal.hidden = false;
     document.body.style.overflow = "hidden";
     if (modal._setMode) modal._setMode(mode === "signup" ? "signup" : "signin");
