@@ -15,7 +15,7 @@
    is ever absent the function still works, just without server-side limits. */
 
 const MODEL_DEFAULT = "gemini-2.5-flash";   // 2.0-flash is off the free tier now; 2.5-flash grades better anyway
-const PER_IP_DAILY = 4;
+const PER_IP_DAILY = 8;
 const GLOBAL_DAILY = 1200;
 
 const headers = {
