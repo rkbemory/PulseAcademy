@@ -367,17 +367,24 @@
     var w = document.getElementById("whatsnew");
     if (!w) return;
     var KEY = "pulse:whatsnew:v1";   // bump the suffix when the list changes to re-alert visitors
-    var btn = w.querySelector(".whatsnew-btn");
-    var panel = w.querySelector(".whatsnew-panel");
     var seen = false;
     try { seen = localStorage.getItem(KEY) === "1"; } catch (e) {}
-    if (seen) w.classList.add("is-seen");
+    if (seen) { if (w.parentNode) w.parentNode.removeChild(w); return; }   // already viewed → gone
+    var btn = w.querySelector(".whatsnew-btn");
+    var panel = w.querySelector(".whatsnew-panel");
+    var viewed = false;
+    function vanish() {
+      w.classList.add("is-gone");
+      setTimeout(function () { if (w.parentNode) w.parentNode.removeChild(w); }, 350);
+    }
     function setOpen(open) {
       panel.hidden = !open;
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
-        w.classList.add("is-seen");
+        viewed = true;
         try { localStorage.setItem(KEY, "1"); } catch (e) {}
+      } else if (viewed) {
+        vanish();   // closed after viewing → the whole widget disappears
       }
     }
     btn.addEventListener("click", function () { setOpen(panel.hidden); });

@@ -5548,7 +5548,8 @@ body > footer { flex-shrink: 0; }
    WHAT'S-NEW floating widget (homepage) — gold pill bottom-right,
    pulse ring + red dot until opened once, then quiet.
    ════════════════════════════════════════════════════════════════ */
-.whatsnew { position: fixed; right: 18px; bottom: 18px; z-index: 950; }
+.whatsnew { position: fixed; right: 18px; bottom: 18px; z-index: 950; transition: opacity .3s ease, transform .3s ease; }
+.whatsnew.is-gone { opacity: 0; transform: translateY(12px); pointer-events: none; }
 .whatsnew-btn {
   position: relative; display: inline-flex; align-items: center; gap: 7px;
   font: inherit; font-size: 0.9rem; font-weight: 700; color: var(--primary-deep, #0A2350);
