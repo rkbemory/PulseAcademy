@@ -5451,11 +5451,13 @@ body > footer { flex-shrink: 0; }
 .ielts-listen-status { font-weight: 600; font-size: 0.92rem; color: var(--primary, #14387A); }
 .ielts-listen-status.is-up { color: var(--coral, #DC2626); }
 /* Writing Task 1: figure (smaller) beside the answer box */
-.ielts-wsplit { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 18px; align-items: start; }
-.ielts-wsplit .ielts-fig { margin: 0; position: sticky; top: 70px; }
+.ielts-wsplit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); gap: 20px; align-items: stretch; }
+.ielts-wsplit .ielts-fig { margin: 0; display: flex; flex-direction: column; justify-content: center; padding: 16px; }
+.ielts-wsplit .ielts-fig svg { max-width: 100%; }
 .ielts-wbox-wrap { display: flex; flex-direction: column; }
-.ielts-wsplit .ielts-wbox { min-height: 240px; }
-@media (max-width: 760px) { .ielts-wsplit { grid-template-columns: 1fr; } .ielts-wsplit .ielts-fig { position: static; } }
+.ielts-wsplit .ielts-wbox-wrap { height: 100%; }
+.ielts-wsplit .ielts-wbox { flex: 1 1 auto; min-height: 360px; }
+@media (max-width: 760px) { .ielts-wsplit { grid-template-columns: 1fr; align-items: start; } .ielts-wsplit .ielts-wbox { min-height: 260px; } }
 .ielts-block { margin-bottom: 30px; }
 .ielts-passage { background: var(--surface); border: 1px solid var(--line-cool); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
 /* Reading side-by-side: passage (sticky, scrollable) | questions */
@@ -5525,7 +5527,7 @@ body > footer { flex-shrink: 0; }
 .ielts-wtask-prompt { font-size: 0.95rem; line-height: 1.6; color: var(--text); margin: 8px 0; }
 .ielts-fig { background: var(--bg); border: 1px solid var(--line-cool); border-radius: 10px; padding: 12px; margin: 10px 0; }
 .ielts-fig svg { width: 100%; height: auto; display: block; }
-.ielts-wbox { width: 100%; min-height: 160px; font: inherit; font-size: 0.95rem; line-height: 1.6; padding: 12px 14px; border: 1.5px solid var(--line-cool); border-radius: 10px; background: var(--bg); resize: vertical; }
+.ielts-wbox { width: 100%; min-height: 260px; font: inherit; font-size: 0.95rem; line-height: 1.6; padding: 12px 14px; border: 1.5px solid var(--line-cool); border-radius: 10px; background: var(--bg); resize: vertical; }
 .ielts-wbox:focus { outline: none; border-color: var(--primary-soft, #2E63B8); background: #fff; }
 .ielts-wfoot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; gap: 12px; flex-wrap: wrap; }
 .ielts-wc { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
@@ -5669,4 +5671,13 @@ body > footer { flex-shrink: 0; }
 .ielts-eval-list { margin: 0; padding-left: 20px; }
 .ielts-eval-list li { font-size: 0.86rem; color: var(--text-soft); line-height: 1.5; margin: 3px 0; }
 .ielts-eval-disc { font-size: 0.75rem; color: var(--text-muted); margin: 12px 0 0; border-top: 1px dashed var(--line-cool); padding-top: 8px; }
+.ielts-eval-prev { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin: 0 0 8px; }
 @media (max-width: 640px) { .ielts-eval-row { grid-template-columns: 1fr 44px; } .ielts-eval-note2 { grid-column: 1 / -1; } }
+/* Writing action buttons (Save / Try again) + sign-in prompt */
+.ielts-wactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ielts-save-btn, .ielts-retry-btn { font: inherit; font-size: 0.85rem; font-weight: 600; padding: 8px 15px; border-radius: 999px; cursor: pointer; border: 1.5px solid var(--line-cool); background: var(--surface); color: var(--text-soft); transition: border-color .2s, color .2s, background .2s; }
+.ielts-save-btn:hover, .ielts-retry-btn:hover { border-color: var(--primary-soft, #2E63B8); color: var(--primary, #14387A); }
+.ielts-save-btn.is-saved { border-color: #16A34A; color: #16A34A; background: #ECFDF3; }
+.ielts-eval-signin { text-align: center; padding: 8px 4px; }
+.ielts-eval-signin p { margin: 0 0 12px; font-size: 0.96rem; color: var(--text); line-height: 1.55; }
+.ielts-eval-signin p span { font-size: 0.85rem; color: var(--text-soft); }

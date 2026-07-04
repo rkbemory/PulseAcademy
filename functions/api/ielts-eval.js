@@ -37,28 +37,74 @@ function halfBand(n) {
   return Math.max(1, Math.min(9, Math.round(n * 2) / 2));
 }
 
+/* Condensed from the official IELTS Writing Band Descriptors (public, IELTS.org,
+   updated May 2023). Bands 5-9 essences per criterion — the working range for
+   almost all candidates; anything weaker maps to band 4 or below. */
+const DESC_TA = [
+  "9: All task requirements fully and appropriately satisfied; only extremely rare lapses.",
+  "8: Covers all requirements appropriately, relevantly and sufficiently; key features skilfully selected, clearly presented, highlighted and illustrated.",
+  "7: Covers the requirements; presents a CLEAR OVERVIEW with main trends/differences identified and data appropriately categorised, but key features could be more fully or appropriately illustrated.",
+  "6: Focuses on the requirements; key features covered and ADEQUATELY highlighted; a relevant overview is attempted; some irrelevant/inaccurate detail may occur; some details may be missing or excessive.",
+  "5: Generally addresses the task but key features are NOT adequately covered; recounting of detail is mainly mechanical; there may be no data to support the description; tends to focus on detail without the bigger picture."
+];
+const DESC_TR = [
+  "9: Prompt appropriately addressed and explored in depth; a clear, fully developed position; ideas fully extended and well supported.",
+  "8: Prompt appropriately and sufficiently addressed; a clear, well-developed position; ideas relevant, well extended and supported.",
+  "7: Main parts of the prompt appropriately addressed; a clear developed position; main ideas extended and supported but may over-generalise or lack focus/precision in support.",
+  "6: Main parts addressed (some more fully than others); a relevant position but conclusions may be unclear/unjustified/repetitive; main ideas relevant but some insufficiently developed or lacking clarity.",
+  "5: Main parts only INCOMPLETELY addressed; a position is expressed but development is not always clear; main ideas limited, not sufficiently developed, possibly with irrelevant detail or repetition."
+];
+const DESC_CC = [
+  "9: Message followed effortlessly; cohesion rarely attracts attention; paragraphing skilfully managed.",
+  "8: Followed with ease; logically sequenced; cohesion well managed; paragraphing sufficient and appropriate; only occasional lapses.",
+  "7: Logically organised with clear progression; a range of cohesive devices used flexibly but with some inaccuracy or over/under-use; paragraphing generally effective.",
+  "6: Generally coherent with clear overall progression, BUT cohesive devices may be faulty or mechanical (misuse/overuse/omission); reference and substitution may lack flexibility; paragraphing may not always be logical.",
+  "5: Organisation evident but not wholly logical; may lack overall progression; sentences not fluently linked; limited or overused cohesive devices; repetitive; paragraphing may be inadequate or missing."
+];
+const DESC_LR = [
+  "9: Full flexibility and precise use; wide range used accurately and appropriately with sophisticated control; errors extremely rare.",
+  "8: Wide resource fluently and flexibly used for precise meaning; skilful use of uncommon/idiomatic items; only occasional inaccuracies.",
+  "7: Resource sufficient for some flexibility and precision; some less common/idiomatic items; awareness of style and collocation though inappropriacies occur; only a few spelling/word-formation errors.",
+  "6: Generally adequate and appropriate; meaning generally clear despite a restricted range or lack of precision; some spelling/word-formation errors but they do not impede communication.",
+  "5: Limited but minimally adequate; simple vocabulary used accurately but little variation; frequent lapses in word choice; noticeable spelling/word-formation errors that may cause the reader some difficulty."
+];
+const DESC_GRA = [
+  "9: Wide range of structures with full flexibility and control; error-free; punctuation appropriate throughout.",
+  "8: Wide range flexibly and accurately used; majority of sentences error-free; punctuation well managed.",
+  "7: A variety of complex structures with some flexibility and accuracy; generally well controlled; error-free sentences frequent; a few errors persist but do not impede.",
+  "6: A mix of simple and complex forms but flexibility is limited; complex structures less accurate than simple ones; errors occur but rarely impede communication.",
+  "5: Range limited and repetitive; complex sentences attempted but faulty; greatest accuracy on simple sentences; grammatical errors may be frequent and cause the reader difficulty; punctuation may be faulty."
+];
+
 function rubricPrompt(task, taskPrompt, essay) {
   const isT1 = task === "t1";
   const crit1 = isT1 ? "Task Achievement" : "Task Response";
+  const desc1 = isT1 ? DESC_TA : DESC_TR;
   return [
-    "You are a certified IELTS Academic Writing examiner. Assess the candidate essay below strictly against the official IELTS Writing band descriptors.",
+    "You are a certified, experienced IELTS Academic Writing examiner. Mark the candidate essay STRICTLY and CONSISTENTLY against the official IELTS Writing band descriptors (May 2023), quoted below. Award the band whose positive features the script FULLY fits; a single bolded-style negative feature limits the rating.",
     "",
-    "TASK TYPE: Academic Writing " + (isT1 ? "Task 1 (report on visual data / process, minimum 150 words)" : "Task 2 (essay, minimum 250 words)"),
-    "TASK PROMPT GIVEN TO THE CANDIDATE:",
+    "TASK: Academic Writing " + (isT1 ? "Task 1 (summarise visual data / a process; minimum 150 words)" : "Task 2 (discursive essay; minimum 250 words)"),
+    "TASK PROMPT SHOWN TO THE CANDIDATE:",
     taskPrompt,
     "",
-    "CANDIDATE ESSAY:",
+    "CANDIDATE ESSAY (mark ONLY what is written; do not invent content):",
     essay,
     "",
-    "Score each of the four criteria from 1.0 to 9.0 in half-band steps:",
-    "1. " + crit1 + " — does it fully address the task" + (isT1 ? ", give a clear overview and select key features?" : ", present a clear position developed with support?"),
-    "2. Coherence and Cohesion — organisation, paragraphing, linking.",
-    "3. Lexical Resource — range, precision, collocation, spelling.",
-    "4. Grammatical Range and Accuracy — structures, punctuation, errors.",
-    "Apply the under-length penalty if the essay is below the minimum word count. Judge only what is written; be fair but rigorous, like a real examiner.",
+    "OFFICIAL BAND DESCRIPTORS (bands 5-9; weaker scripts fall to band 4 or below):",
+    crit1.toUpperCase() + " (" + (isT1 ? "TA" : "TR") + "):",
+    desc1.join("\n"),
+    "COHERENCE & COHESION (CC):",
+    DESC_CC.join("\n"),
+    "LEXICAL RESOURCE (LR):",
+    DESC_LR.join("\n"),
+    "GRAMMATICAL RANGE & ACCURACY (GRA):",
+    DESC_GRA.join("\n"),
+    "",
+    "Rules: score each criterion 1.0-9.0 in HALF-BAND steps. Apply the under-length penalty if below the minimum word count. For each criterion, the 'note' must name the SINGLE main band-descriptor reason the script sits at that band (the key limiting issue), citing concrete evidence from THIS essay (a phrase, an error type, a missing feature). Keep every note under 40 words.",
+    "'strengths' = 2-3 things the writer genuinely did well. 'improvements' = 3-4 specific, actionable next steps to move up a band (each tied to a criterion).",
     "",
     "Respond with ONLY a JSON object, no other text, exactly this shape:",
-    '{"taskResponse":{"band":6.5,"note":"one concise sentence"},"coherence":{"band":6.0,"note":"one concise sentence"},"lexical":{"band":6.0,"note":"one concise sentence"},"grammar":{"band":5.5,"note":"one concise sentence"},"strengths":["short point","short point"],"improvements":["specific, actionable point","specific, actionable point","specific, actionable point"]}'
+    '{"taskResponse":{"band":6.5,"note":"the specific band-guide issue with evidence"},"coherence":{"band":6.0,"note":"..."},"lexical":{"band":6.0,"note":"..."},"grammar":{"band":5.5,"note":"..."},"strengths":["...","..."],"improvements":["...","...","..."]}'
   ].join("\n");
 }
 
