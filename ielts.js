@@ -388,12 +388,14 @@
     }, 1000);
   }
 
-  /* ---- Writing (show tasks + live word counter; AI score = Pro) ---- */
+  /* ---- Writing (live word counter + free AI band estimate when enabled) ---- */
   function renderWriting(root, head, test) {
     function task(t, key, label) {
       var box = '<div class="ielts-wbox-wrap"><textarea class="ielts-wbox" data-min="' + t.minWords + '" placeholder="Type your answer here…"></textarea>' +
         '<div class="ielts-wfoot"><span class="ielts-wc" data-key="' + key + '">0 words</span>' +
-        '<button type="button" class="btn btn-secondary ielts-pro-btn" disabled title="Coming in the Pro version">🔒 Get AI band score (Pro)</button></div></div>';
+        '<button type="button" class="btn btn-secondary ielts-pro-btn" disabled title="Coming very soon">🔒 Get AI band score (soon)</button>' +
+        '<button type="button" class="btn btn-primary ielts-eval-btn" data-task="' + key + '" hidden>✨ Get AI band estimate</button></div>' +
+        '<div class="ielts-eval-out" data-task="' + key + '" hidden></div></div>';
       var head2 = '<div class="ielts-wtask-head"><h3>' + label + '</h3><span class="ielts-wtask-min">Write at least ' + t.minWords + " words · " + t.timeSuggest + "</span></div>";
       var prompt = '<p class="ielts-wtask-prompt">' + esc(t.prompt) + "</p>";
       if (t.figure) {
@@ -404,7 +406,7 @@
       return '<section class="ielts-wtask">' + head2 + prompt + box + "</section>";
     }
     root.innerHTML = head +
-      '<div class="ielts-instr">✍️ <strong>Academic Writing.</strong> Complete <strong>both</strong> tasks in <strong>60 minutes</strong> — about 20 min on Task 1 (150+ words) and 40 min on Task 2 (250+ words). Press start to run the clock; the live word counter tracks your length. Detailed AI band feedback arrives in the Pro version.</div>' +
+      '<div class="ielts-instr">✍️ <strong>Academic Writing.</strong> Complete <strong>both</strong> tasks in <strong>60 minutes</strong> — about 20 min on Task 1 (150+ words) and 40 min on Task 2 (250+ words). Press start to run the clock; the live word counter tracks your length. <span class="ielts-eval-note">Detailed AI band feedback is coming soon.</span></div>' +
       timerControl(60) +
       task(test.task1, "t1", "Task 1") + task(test.task2, "t2", "Task 2");
     root.querySelectorAll(".ielts-wbox").forEach(function (box) {
@@ -417,6 +419,75 @@
       });
     });
     wireTimerControl(root);
+    wireEval(root, test);
+  }
+
+  /* ---- Free AI band estimate (server holds the key; button stays hidden
+          until /api/ielts-eval reports enabled). 4 evaluations/visitor/day. ---- */
+  function wireEval(root, test) {
+    fetch("/api/ielts-eval?action=status").then(function (r) { return r.json(); }).then(function (s) {
+      if (!s || !s.enabled) return;             // dormant until the key exists
+      root.querySelectorAll(".ielts-pro-btn").forEach(function (b) { b.hidden = true; });
+      root.querySelectorAll(".ielts-eval-btn").forEach(function (b) { b.hidden = false; });
+      var note = root.querySelector(".ielts-eval-note");
+      if (note) note.innerHTML = "✨ <strong>Free AI band estimate</strong> — write your answer, then press the button (up to " + (s.perDay || 4) + " checks a day).";
+    }).catch(function () { /* offline / local preview — stay dormant */ });
+
+    root.querySelectorAll(".ielts-eval-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var tk = btn.getAttribute("data-task");
+        var t = tk === "t2" ? test.task2 : test.task1;
+        var wrap = btn.closest(".ielts-wbox-wrap");
+        var essay = wrap.querySelector(".ielts-wbox").value;
+        var out = wrap.querySelector(".ielts-eval-out");
+        var wc = (essay.trim().match(/\S+/g) || []).length;
+        out.hidden = false;
+        if (wc < 40) { out.innerHTML = '<p class="ielts-eval-msg">✍️ Write at least 40 words first — the examiner needs something to mark!</p>'; return; }
+        btn.disabled = true; var old = btn.textContent; btn.textContent = "Evaluating… ⏳";
+        out.innerHTML = '<p class="ielts-eval-msg">🤖 The AI examiner is reading your answer…</p>';
+        fetch("/api/ielts-eval", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ task: tk, prompt: t.prompt, essay: essay })
+        }).then(function (r) { return r.json().then(function (d) { return { st: r.status, d: d }; }); })
+          .then(function (x) {
+            btn.disabled = false; btn.textContent = old;
+            var d = x.d || {};
+            if (x.st === 429) {
+              out.innerHTML = '<p class="ielts-eval-msg">⏳ ' + (d.error === "site-limit"
+                ? "Today's free evaluations are all used up site-wide — please try again tomorrow."
+                : "You have used all " + (d.perDay || 4) + " free evaluations for today — come back tomorrow!") + "</p>";
+              return;
+            }
+            if (!d.ok) {
+              out.innerHTML = '<p class="ielts-eval-msg">😕 The evaluator could not score this attempt (' + esc(d.error || "error") + "). Please try again in a minute.</p>";
+              return;
+            }
+            var rows = d.criteria.map(function (c) {
+              return '<div class="ielts-eval-row"><span class="ielts-eval-crit">' + esc(c.name) + '</span>' +
+                '<span class="ielts-eval-band">' + c.band.toFixed(1) + "</span>" +
+                '<span class="ielts-eval-note2">' + esc(c.note) + "</span></div>";
+            }).join("");
+            var list = function (title, items, ic) {
+              if (!items || !items.length) return "";
+              return '<p class="ielts-eval-sub">' + ic + " " + title + "</p><ul class='ielts-eval-list'>" +
+                items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul>";
+            };
+            out.innerHTML =
+              '<div class="ielts-eval-head"><span class="ielts-eval-overall">' + d.overall.toFixed(1) + '</span>' +
+              '<div><strong>Estimated band</strong><br><span class="ielts-eval-meta">' + d.words + " words · " +
+              (typeof d.left === "number" ? d.left + " free check" + (d.left === 1 ? "" : "s") + " left today" : "AI estimate") + "</span></div></div>" +
+              rows +
+              list("What you did well", d.strengths, "💪") +
+              list("How to move up a band", d.improvements, "📈") +
+              '<p class="ielts-eval-disc">AI estimate for practice only — not an official IELTS score.</p>';
+          })
+          .catch(function () {
+            btn.disabled = false; btn.textContent = old;
+            out.innerHTML = '<p class="ielts-eval-msg">📶 Could not reach the evaluator — check your connection and try again.</p>';
+          });
+      });
+    });
   }
 
   /* ---- Speaking (show examiner's questions; AI eval = Pro) ---- */
