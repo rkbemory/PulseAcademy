@@ -3304,6 +3304,7 @@ p a:hover {
   position: absolute;
   top: 12px;
   right: 12px;
+  z-index: 3;   /* above both rotated covers (cover-2 is z-index 2) */
 }
 
 /* ----------- Premium grid — Why card refinement ----------- */
@@ -5629,3 +5630,25 @@ body > footer { flex-shrink: 0; }
 .top-nav-links a[href="books.html"].is-active      { background: #A47B36; color: #fff; box-shadow: none; }
 .top-nav-links a[href="jobs.html"].is-active       { background: #B4541E; color: #fff; box-shadow: none; }
 .top-nav-links a[href="academic.html"].is-active   { background: #0E7490; color: #fff; box-shadow: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   COLOURFUL SECTION SUBNAV — the in-page section buttons on program
+   pages (Topic Discussions / Model Tests / Books / Premium …) become
+   vivid gradient pills. Colour is positional so it works on every
+   page regardless of the labels.
+   ════════════════════════════════════════════════════════════════ */
+.subnav a {
+  color: #fff; font-weight: 600; border: none;
+  box-shadow: 0 2px 8px rgba(10, 35, 80, 0.15);
+}
+.subnav-inner a:nth-child(6n+1) { background: linear-gradient(135deg, #1E3A8A, #2E63B8); }
+.subnav-inner a:nth-child(6n+2) { background: linear-gradient(135deg, #16A34A, #34C56A); }
+.subnav-inner a:nth-child(6n+3) { background: linear-gradient(135deg, #6D28D9, #8B5CF6); }
+.subnav-inner a:nth-child(6n+4) { background: linear-gradient(135deg, #A47B36, #C99A50); }
+.subnav-inner a:nth-child(6n+5) { background: linear-gradient(135deg, #B4541E, #E2784A); }
+.subnav-inner a:nth-child(6n+6) { background: linear-gradient(135deg, #0E7490, #16A6B6); }
+.subnav a:hover {
+  color: #fff; border-color: transparent;
+  filter: brightness(1.1); transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 35, 80, 0.22);
+}
