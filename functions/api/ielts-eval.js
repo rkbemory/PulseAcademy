@@ -14,7 +14,7 @@
    Uses the same PULSE_KV namespace as the visitor counter; if the binding
    is ever absent the function still works, just without server-side limits. */
 
-const MODEL_DEFAULT = "gemini-2.0-flash";
+const MODEL_DEFAULT = "gemini-2.5-flash";   // 2.0-flash is off the free tier now; 2.5-flash grades better anyway
 const PER_IP_DAILY = 4;
 const GLOBAL_DAILY = 1200;
 
@@ -102,23 +102,31 @@ export async function onRequest(context) {
   const p = await bumpLimit(kv, "ieltsEval:ip:" + ip + ":" + day, PER_IP_DAILY, 172800);
   if (!p.ok) return res({ error: "daily-limit", perDay: PER_IP_DAILY }, 429);
 
-  // ---- call Gemini ----
+  // ---- call Gemini (key sent as header — works for both AIza and AQ. key formats) ----
   const model = (env.GEMINI_MODEL || MODEL_DEFAULT);
-  const gUrl = "https://generativelanguage.googleapis.com/v1beta/models/" + model +
-    ":generateContent?key=" + encodeURIComponent(key);
+  const gUrl = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent";
   let gRes, gData;
   try {
     gRes = await fetch(gUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
         contents: [{ parts: [{ text: rubricPrompt(task, taskPrompt, essay) }] }],
-        generationConfig: { temperature: 0.2, maxOutputTokens: 900, responseMimeType: "application/json" }
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 1200,
+          responseMimeType: "application/json",
+          thinkingConfig: { thinkingBudget: 0 }   // grading uses a fixed rubric — no "thinking" tokens needed
+        }
       })
     });
     gData = await gRes.json();
   } catch (e) {
     return res({ error: "upstream", detail: String((e && e.message) || e) }, 502);
+  }
+  if (gRes.status === 429) {
+    // Google's own free-tier daily quota is spent — show the friendly "come back tomorrow" message.
+    return res({ error: "site-limit" }, 429);
   }
   if (!gRes.ok) {
     return res({ error: "upstream", status: gRes.status, detail: gData && gData.error && gData.error.message }, 502);
