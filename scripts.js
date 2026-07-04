@@ -366,10 +366,11 @@
   function attachWhatsNew() {
     var w = document.getElementById("whatsnew");
     if (!w) return;
-    var KEY = "pulse:whatsnew:v1";   // bump the suffix when the list changes to re-alert visitors
-    var seen = false;
-    try { seen = localStorage.getItem(KEY) === "1"; } catch (e) {}
-    if (seen) { if (w.parentNode) w.parentNode.removeChild(w); return; }   // already viewed → gone
+    var KEY = "pulse:whatsnew:v1";        // bump the suffix when the list changes to re-alert everyone
+    var TTL = 4 * 60 * 60 * 1000;         // after viewing, stay hidden ~4h — reappears next visit (morning/evening)
+    var seenAt = 0;
+    try { seenAt = parseInt(localStorage.getItem(KEY) || "0", 10) || 0; } catch (e) {}
+    if (Date.now() - seenAt < TTL) { if (w.parentNode) w.parentNode.removeChild(w); return; }
     var btn = w.querySelector(".whatsnew-btn");
     var panel = w.querySelector(".whatsnew-panel");
     var viewed = false;
@@ -382,9 +383,9 @@
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
         viewed = true;
-        try { localStorage.setItem(KEY, "1"); } catch (e) {}
+        try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
       } else if (viewed) {
-        vanish();   // closed after viewing → the whole widget disappears
+        vanish();   // closed after viewing → gone for the rest of this visit
       }
     }
     btn.addEventListener("click", function () { setOpen(panel.hidden); });
