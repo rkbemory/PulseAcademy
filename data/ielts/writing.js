@@ -159,29 +159,59 @@ window.IELTS.data.writing = {
     task1: {
       minWords: 150, timeSuggest: "~20 min",
       prompt: "The diagram shows how ethanol, a type of biofuel, is produced from plants. Summarise the information by describing the main stages of the process.",
-      figure: '<svg viewBox="0 0 460 250" role="img" aria-label="Process diagram of how ethanol biofuel is produced" font-family="Inter, sans-serif">' +
-        (function () {
-          var steps = [["1. Plants &", "trees grow"], ["2. Harvesting"], ["3. Pre-", "processing"], ["4. Processing", "to cellulose"], ["5. Add sugars", "& microbes"], ["6. Ethanol", "(biofuel)"]];
-          var w = 130, h = 46, out = "";
-          var pos = [[12, 40], [165, 40], [318, 40], [318, 160], [165, 160], [12, 160]];
-          steps.forEach(function (s, i) {
-            var x = pos[i][0], y = pos[i][1];
-            out += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" fill="#E8F0F4" stroke="#1E5F9C"/>';
-            out += '<text x="' + (x + w / 2) + '" y="' + (y + (s.length > 1 ? 20 : 28)) + '" text-anchor="middle" font-size="10" font-weight="600" fill="#123">' + s[0] + "</text>";
-            if (s[1]) out += '<text x="' + (x + w / 2) + '" y="' + (y + 34) + '" text-anchor="middle" font-size="10" font-weight="600" fill="#123">' + s[1] + "</text>";
-          });
-          // row-1 arrows (→)
-          out += '<text x="152" y="68" font-size="14" fill="#1E5F9C">→</text><text x="305" y="68" font-size="14" fill="#1E5F9C">→</text>';
-          // elbow 3 → 4 (down)
-          out += '<path d="M383 86 L383 160" fill="none" stroke="#1E5F9C" stroke-width="1.5" marker-end="url(#ah)"/>';
-          // row-2 arrows (←)
-          out += '<text x="300" y="188" font-size="14" fill="#1E5F9C">←</text><text x="147" y="188" font-size="14" fill="#1E5F9C">←</text>';
-          // ethanol out
-          out += '<path d="M12 183 L12 220 L300 220" fill="none" stroke="#B4541E" stroke-width="1.5" marker-end="url(#ah2)"/>';
-          out += '<text x="306" y="224" font-size="10" fill="#B4541E">Fuel for vehicles → CO₂</text>';
-          out += '<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1E5F9C"/></marker><marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#B4541E"/></marker></defs>';
-          return out;
-        })() + "</svg>"
+      /* Pictorial production cycle in the style of real IELTS figures:
+         plants → harvest → chipping → cellulose → fermentation → ethanol → car,
+         with the CO₂ from the exhaust returning to the plants. */
+      figure: '<svg viewBox="0 0 720 430" role="img" aria-label="Illustrated cycle showing how ethanol biofuel is produced from plants and used as vehicle fuel" font-family="Inter, sans-serif">' +
+        '<defs>' +
+          '<marker id="e5b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1E5F9C"/></marker>' +
+          '<marker id="e5o" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#D07E2A"/></marker>' +
+        '</defs>' +
+        '<circle cx="72" cy="72" r="13" fill="#F6C445"/>' +
+        '<g stroke="#F6C445" stroke-width="2.5" stroke-linecap="round"><line x1="72" y1="50" x2="72" y2="57"/><line x1="72" y1="87" x2="72" y2="94"/><line x1="50" y1="72" x2="57" y2="72"/><line x1="87" y1="72" x2="94" y2="72"/></g>' +
+        '<line x1="66" y1="150" x2="156" y2="150" stroke="#8A6B3F" stroke-width="3" stroke-linecap="round"/>' +
+        '<g stroke="#4C8F2F" stroke-width="4" stroke-linecap="round"><line x1="100" y1="150" x2="100" y2="102"/><line x1="122" y1="150" x2="122" y2="92"/><line x1="144" y1="150" x2="144" y2="106"/></g>' +
+        '<g fill="#6FAF4C"><ellipse cx="91" cy="108" rx="10" ry="4.5" transform="rotate(-28 91 108)"/><ellipse cx="109" cy="116" rx="10" ry="4.5" transform="rotate(28 109 116)"/><ellipse cx="113" cy="98" rx="10" ry="4.5" transform="rotate(-28 113 98)"/><ellipse cx="131" cy="106" rx="10" ry="4.5" transform="rotate(28 131 106)"/><ellipse cx="135" cy="112" rx="10" ry="4.5" transform="rotate(-28 135 112)"/><ellipse cx="153" cy="120" rx="10" ry="4.5" transform="rotate(28 153 120)"/></g>' +
+        '<rect x="322" y="108" width="52" height="22" rx="4" fill="#C23B22"/>' +
+        '<rect x="352" y="86" width="24" height="26" rx="3" fill="#D96A4A"/><rect x="356" y="90" width="16" height="12" rx="2" fill="#DCEEFA"/>' +
+        '<rect x="330" y="90" width="5" height="18" fill="#55606B"/>' +
+        '<circle cx="338" cy="138" r="16" fill="#3A444E"/><circle cx="338" cy="138" r="7" fill="#8B99A6"/>' +
+        '<circle cx="388" cy="142" r="10" fill="#3A444E"/><circle cx="388" cy="142" r="4.5" fill="#8B99A6"/>' +
+        '<polygon points="578,66 642,66 626,102 594,102" fill="#7A8894"/>' +
+        '<rect x="584" y="102" width="52" height="34" rx="4" fill="#98A6B3"/>' +
+        '<g fill="#D9B26A"><rect x="560" y="112" width="11" height="7" rx="2" transform="rotate(-18 560 112)"/><rect x="554" y="126" width="11" height="7" rx="2" transform="rotate(14 554 126)"/><rect x="566" y="138" width="11" height="7" rx="2" transform="rotate(-8 566 138)"/></g>' +
+        '<path d="M196 108 L280 108" fill="none" stroke="#1E5F9C" stroke-width="3" marker-end="url(#e5b)"/>' +
+        '<path d="M440 108 L534 108" fill="none" stroke="#1E5F9C" stroke-width="3" marker-end="url(#e5b)"/>' +
+        '<path d="M610 196 L610 226" fill="none" stroke="#1E5F9C" stroke-width="3" marker-end="url(#e5b)"/>' +
+        '<rect x="578" y="248" width="64" height="62" rx="4" fill="#B9C7D4"/>' +
+        '<ellipse cx="610" cy="248" rx="32" ry="9" fill="#CEDAE4"/>' +
+        '<text x="610" y="286" text-anchor="middle" font-size="11" font-weight="800" letter-spacing="1" fill="#26313B">CELLULOSE</text>' +
+        '<path d="M326 250 L326 304 Q326 312 336 312 L384 312 Q394 312 394 304 L394 250" fill="#EFE7F8" stroke="#6D28D9" stroke-width="2.5"/>' +
+        '<rect x="332" y="270" width="56" height="38" fill="#C9B2E8"/>' +
+        '<g fill="#EFE7F8"><circle cx="346" cy="286" r="4"/><circle cx="362" cy="278" r="3.4"/><circle cx="376" cy="292" r="4"/><circle cx="356" cy="300" r="3"/></g>' +
+        '<path d="M352 236 L360 252 L368 236" fill="#8FA3B8"/>' +
+        '<rect x="84" y="248" width="52" height="64" rx="6" fill="#E0A33C" stroke="#A9761F" stroke-width="2"/>' +
+        '<line x1="86" y1="266" x2="134" y2="266" stroke="#A9761F" stroke-width="2"/><line x1="86" y1="296" x2="134" y2="296" stroke="#A9761F" stroke-width="2"/>' +
+        '<text x="110" y="285" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing="1" fill="#5A3D0E">ETHANOL</text>' +
+        '<path d="M534 280 L440 280" fill="none" stroke="#1E5F9C" stroke-width="3" marker-end="url(#e5b)"/>' +
+        '<path d="M282 280 L196 280" fill="none" stroke="#1E5F9C" stroke-width="3" marker-end="url(#e5b)"/>' +
+        '<path d="M110 318 L110 394 L302 394" fill="none" stroke="#1E5F9C" stroke-width="3" marker-end="url(#e5b)"/>' +
+        '<path d="M336 386 Q340 370 356 370 L384 370 Q398 370 402 386 Z" fill="#4F82D6"/>' +
+        '<rect x="320" y="384" width="92" height="20" rx="8" fill="#2E63B8"/>' +
+        '<circle cx="342" cy="406" r="7.5" fill="#22303F"/><circle cx="394" cy="406" r="7.5" fill="#22303F"/>' +
+        '<path d="M424 392 L700 392 L700 26 L162 26" fill="none" stroke="#D07E2A" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#e5o)"/>' +
+        '<text x="446" y="18" font-size="13.5" font-weight="700" fill="#B4541E">CO&#8322; from the exhaust returns to the plants</text>' +
+        '<g font-weight="800" font-size="13" text-anchor="middle"><circle cx="110" cy="46" r="12" fill="#1E5F9C"/><text x="110" y="50.5" fill="#fff">1</text><circle cx="360" cy="46" r="12" fill="#1E5F9C"/><text x="360" y="50.5" fill="#fff">2</text><circle cx="610" cy="46" r="12" fill="#1E5F9C"/><text x="610" y="50.5" fill="#fff">3</text><circle cx="610" cy="220" r="12" fill="#1E5F9C"/><text x="610" y="224.5" fill="#fff">4</text><circle cx="360" cy="220" r="12" fill="#1E5F9C"/><text x="360" y="224.5" fill="#fff">5</text><circle cx="110" cy="220" r="12" fill="#1E5F9C"/><text x="110" y="224.5" fill="#fff">6</text></g>' +
+        '<g font-size="14.5" font-weight="700" fill="#14304F" text-anchor="middle">' +
+          '<text x="110" y="172">Plants and trees grow</text><text x="110" y="189" font-size="12.5" font-weight="500" fill="#41546B">(absorb CO&#8322;)</text>' +
+          '<text x="360" y="172">Harvesting</text>' +
+          '<text x="610" y="158">Chipped and</text><text x="610" y="175" font-size="12.5" font-weight="500" fill="#41546B">pre-processed</text>' +
+          '<text x="610" y="332">Processed into</text><text x="610" y="349" font-size="12.5" font-weight="500" fill="#41546B">cellulose</text>' +
+          '<text x="360" y="332">Sugars and microbes</text><text x="360" y="349" font-size="12.5" font-weight="500" fill="#41546B">ferment the mixture</text>' +
+          '<text x="110" y="332">Ethanol fuel</text><text x="110" y="349" font-size="12.5" font-weight="500" fill="#41546B">is produced</text>' +
+          '<text x="366" y="424" font-size="12.5" font-weight="600" fill="#41546B">Used as vehicle fuel</text>' +
+        '</g>' +
+        "</svg>"
     },
     task2: {
       minWords: 250, timeSuggest: "~40 min",
@@ -282,22 +312,45 @@ window.IELTS.data.writing = {
     task1: {
       minWords: 150, timeSuggest: "~20 min",
       prompt: "The diagram shows how a rain-shadow desert is formed. Summarise the information by describing the main stages of the process.",
-      figure: '<svg viewBox="0 0 470 250" role="img" aria-label="Process diagram of how a rain-shadow desert forms" font-family="Inter, sans-serif">' +
-        (function () {
-          var steps = [["1. Winds", "approach coast"], ["2. Winds pushed", "upwards"], ["3. Moist air", "rises & cools"], ["4. Clouds form,", "rain falls (windward)"], ["5. Dry air crosses", "the mountain"], ["6. Dry winds reach", "inland → desert"]];
-          var w = 138, h = 46, out = "", pos = [[8, 34], [166, 34], [324, 34], [324, 150], [166, 150], [8, 150]];
-          steps.forEach(function (s, i) {
-            var x = pos[i][0], y = pos[i][1];
-            out += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" fill="#E8F0F4" stroke="#1E5F9C"/>';
-            out += '<text x="' + (x + w / 2) + '" y="' + (y + 20) + '" text-anchor="middle" font-size="10" font-weight="600" fill="#123">' + s[0] + "</text>";
-            out += '<text x="' + (x + w / 2) + '" y="' + (y + 34) + '" text-anchor="middle" font-size="9.5" fill="#334155">' + s[1] + "</text>";
-          });
-          out += '<text x="150" y="62" font-size="14" fill="#1E5F9C">→</text><text x="308" y="62" font-size="14" fill="#1E5F9C">→</text>';
-          out += '<path d="M393 82 L393 150" fill="none" stroke="#1E5F9C" stroke-width="1.5" marker-end="url(#rs)"/>';
-          out += '<text x="308" y="178" font-size="14" fill="#1E5F9C">←</text><text x="150" y="178" font-size="14" fill="#1E5F9C">←</text>';
-          out += '<defs><marker id="rs" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1E5F9C"/></marker></defs>';
-          return out;
-        })() + "</svg>"
+      /* Pictorial cross-section in the style of real IELTS process figures:
+         sea → moist wind → windward rain → peak → dry leeward air → desert. */
+      figure: '<svg viewBox="0 0 720 340" role="img" aria-label="Cross-section diagram showing how a rain-shadow desert forms" font-family="Inter, sans-serif">' +
+        '<defs>' +
+          '<marker id="rs9b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#2E7FC2"/></marker>' +
+          '<marker id="rs9o" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#D07E2A"/></marker>' +
+        '</defs>' +
+        '<rect width="720" height="300" fill="#E8F3FB"/>' +
+        '<circle cx="664" cy="48" r="24" fill="#F6C445"/>' +
+        '<g stroke="#F6C445" stroke-width="3" stroke-linecap="round"><line x1="664" y1="10" x2="664" y2="20"/><line x1="664" y1="76" x2="664" y2="86"/><line x1="626" y1="48" x2="636" y2="48"/><line x1="692" y1="48" x2="702" y2="48"/><line x1="637" y1="21" x2="644" y2="28"/><line x1="684" y1="68" x2="691" y2="75"/><line x1="637" y1="75" x2="644" y2="68"/><line x1="684" y1="28" x2="691" y2="21"/></g>' +
+        '<rect x="0" y="300" width="360" height="40" fill="#A8C98A"/>' +
+        '<rect x="360" y="300" width="360" height="40" fill="#E9D6A4"/>' +
+        '<polygon points="140,300 380,72 630,300" fill="#8FBF6F"/>' +
+        '<polygon points="380,72 630,300 380,300" fill="#CBA36F"/>' +
+        '<polygon points="380,72 404,101 380,113 356,101" fill="#F5F8FA"/>' +
+        '<rect x="0" y="252" width="170" height="48" fill="#5FA7DE"/>' +
+        '<path d="M8 262 Q20 256 32 262 T56 262 T80 262" fill="none" stroke="#BBDCF2" stroke-width="2.5" stroke-linecap="round"/>' +
+        '<path d="M20 278 Q32 272 44 278 T68 278 T92 278" fill="none" stroke="#BBDCF2" stroke-width="2.5" stroke-linecap="round"/>' +
+        '<text x="52" y="296" font-size="13" font-weight="800" letter-spacing="2" fill="#EAF5FC">SEA</text>' +
+        '<g fill="#F7FAFC" stroke="#C4D3DE" stroke-width="1.5"><circle cx="232" cy="124" r="16"/><circle cx="251" cy="113" r="19"/><circle cx="271" cy="122" r="15"/><circle cx="250" cy="128" r="17"/></g>' +
+        '<g fill="#F7FAFC" stroke="#C4D3DE" stroke-width="1.5"><circle cx="312" cy="97" r="12"/><circle cx="327" cy="90" r="14"/><circle cx="341" cy="97" r="11"/></g>' +
+        '<g stroke="#5FA7DE" stroke-width="2.5" stroke-linecap="round"><line x1="228" y1="142" x2="221" y2="162"/><line x1="244" y1="146" x2="237" y2="166"/><line x1="260" y1="146" x2="253" y2="166"/><line x1="276" y1="142" x2="269" y2="162"/><line x1="318" y1="112" x2="311" y2="132"/><line x1="334" y1="112" x2="327" y2="132"/></g>' +
+        '<path d="M56 238 C 118 232 160 214 202 186" fill="none" stroke="#2E7FC2" stroke-width="3.5" marker-end="url(#rs9b)"/>' +
+        '<path d="M216 196 C 256 168 288 144 314 120" fill="none" stroke="#2E7FC2" stroke-width="3.5" marker-end="url(#rs9b)"/>' +
+        '<path d="M406 112 C 462 152 520 212 566 258" fill="none" stroke="#D07E2A" stroke-width="3.5" stroke-dasharray="9 6" marker-end="url(#rs9o)"/>' +
+        '<rect x="649" y="262" width="13" height="40" rx="6" fill="#5D9142"/>' +
+        '<rect x="633" y="268" width="10" height="20" rx="5" fill="#5D9142"/><rect x="633" y="282" width="18" height="8" rx="4" fill="#5D9142"/>' +
+        '<rect x="667" y="258" width="10" height="24" rx="5" fill="#5D9142"/><rect x="659" y="276" width="18" height="8" rx="4" fill="#5D9142"/>' +
+        '<g font-weight="800" font-size="13" text-anchor="middle"><circle cx="28" cy="208" r="11" fill="#1E5F9C"/><text x="28" y="212.5" fill="#fff">1</text><circle cx="140" cy="96" r="11" fill="#1E5F9C"/><text x="140" y="100.5" fill="#fff">2</text><circle cx="247" cy="58" r="11" fill="#1E5F9C"/><text x="247" y="62.5" fill="#fff">3</text><circle cx="503" cy="168" r="11" fill="#1E5F9C"/><text x="503" y="172.5" fill="#fff">4</text><circle cx="583" cy="238" r="11" fill="#1E5F9C"/><text x="583" y="242.5" fill="#fff">5</text></g>' +
+        '<g font-size="14.5" font-weight="600" fill="#14304F">' +
+          '<text x="46" y="203">Moist winds blow</text><text x="46" y="220">in from the sea</text>' +
+          '<text x="158" y="91">Air rises</text><text x="158" y="108">and cools</text>' +
+          '<text x="265" y="53">Clouds form and rain falls</text><text x="265" y="70">on the windward side</text>' +
+          '<text x="521" y="163">Dry air</text><text x="521" y="180">descends</text>' +
+          '<text x="601" y="233">Rain shadow:</text><text x="601" y="250">desert forms</text>' +
+        '</g>' +
+        '<text x="250" y="325" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="1.5" fill="#3E5C2C">WINDWARD SIDE</text>' +
+        '<text x="560" y="325" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="1.5" fill="#7A5C28">LEEWARD SIDE</text>' +
+        "</svg>"
     },
     task2: {
       minWords: 250, timeSuggest: "~40 min",
@@ -310,22 +363,49 @@ window.IELTS.data.writing = {
     task1: {
       minWords: 150, timeSuggest: "~20 min",
       prompt: "The diagram shows how fabric is manufactured from bamboo. Summarise the information by describing the main stages of the process.",
-      figure: '<svg viewBox="0 0 470 250" role="img" aria-label="Process diagram of how bamboo is turned into fabric" font-family="Inter, sans-serif">' +
-        (function () {
-          var steps = [["1. Bamboo", "is grown"], ["2. Harvested", "& chipped"], ["3. Soaked in", "solution → pulp"], ["4. Pulp pressed", "into sheets"], ["5. Sheets spun", "into yarn"], ["6. Yarn woven", "into fabric"]];
-          var w = 138, h = 46, out = "", pos = [[8, 34], [166, 34], [324, 34], [324, 150], [166, 150], [8, 150]];
-          steps.forEach(function (s, i) {
-            var x = pos[i][0], y = pos[i][1];
-            out += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" fill="#EAF3DE" stroke="#639922"/>';
-            out += '<text x="' + (x + w / 2) + '" y="' + (y + 20) + '" text-anchor="middle" font-size="10" font-weight="600" fill="#123">' + s[0] + "</text>";
-            out += '<text x="' + (x + w / 2) + '" y="' + (y + 34) + '" text-anchor="middle" font-size="9.5" fill="#334155">' + s[1] + "</text>";
-          });
-          out += '<text x="150" y="62" font-size="14" fill="#639922">→</text><text x="308" y="62" font-size="14" fill="#639922">→</text>';
-          out += '<path d="M393 82 L393 150" fill="none" stroke="#639922" stroke-width="1.5" marker-end="url(#bb)"/>';
-          out += '<text x="308" y="178" font-size="14" fill="#639922">←</text><text x="150" y="178" font-size="14" fill="#639922">←</text>';
-          out += '<defs><marker id="bb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#639922"/></marker></defs>';
-          return out;
-        })() + "</svg>"
+      /* Pictorial manufacturing chain in the style of real IELTS figures:
+         bamboo grove → chipping → soaking vat → pressing rollers → spinning → woven fabric. */
+      figure: '<svg viewBox="0 0 720 400" role="img" aria-label="Illustrated diagram showing how fabric is manufactured from bamboo" font-family="Inter, sans-serif">' +
+        '<defs><marker id="bb10" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#639922"/></marker></defs>' +
+        '<line x1="72" y1="150" x2="150" y2="150" stroke="#8A6B3F" stroke-width="3" stroke-linecap="round"/>' +
+        '<g stroke="#5D9142" stroke-width="7" stroke-linecap="round"><line x1="92" y1="150" x2="92" y2="60"/><line x1="112" y1="150" x2="112" y2="52"/><line x1="132" y1="150" x2="132" y2="66"/></g>' +
+        '<g stroke="#3E6B2C" stroke-width="2"><line x1="86" y1="128" x2="98" y2="128"/><line x1="86" y1="102" x2="98" y2="102"/><line x1="86" y1="78" x2="98" y2="78"/><line x1="106" y1="120" x2="118" y2="120"/><line x1="106" y1="92" x2="118" y2="92"/><line x1="106" y1="68" x2="118" y2="68"/><line x1="126" y1="132" x2="138" y2="132"/><line x1="126" y1="106" x2="138" y2="106"/><line x1="126" y1="84" x2="138" y2="84"/></g>' +
+        '<g fill="#6FAF4C"><ellipse cx="82" cy="62" rx="11" ry="4" transform="rotate(-30 82 62)"/><ellipse cx="103" cy="50" rx="11" ry="4" transform="rotate(24 103 50)"/><ellipse cx="122" cy="46" rx="11" ry="4" transform="rotate(-24 122 46)"/><ellipse cx="142" cy="62" rx="11" ry="4" transform="rotate(28 142 62)"/></g>' +
+        '<rect x="318" y="94" width="50" height="18" rx="9" fill="#B98A4C"/>' +
+        '<line x1="330" y1="94" x2="330" y2="112" stroke="#8A6B3F" stroke-width="2"/><line x1="344" y1="94" x2="344" y2="112" stroke="#8A6B3F" stroke-width="2"/><line x1="358" y1="94" x2="358" y2="112" stroke="#8A6B3F" stroke-width="2"/>' +
+        '<polygon points="382,64 394,64 380,116 368,116" fill="#8E9AA6"/><rect x="378" y="56" width="20" height="10" rx="4" fill="#5B4A2F"/>' +
+        '<g fill="#D9B26A"><rect x="322" y="126" width="12" height="7" rx="2" transform="rotate(-14 322 126)"/><rect x="342" y="132" width="12" height="7" rx="2" transform="rotate(10 342 132)"/><rect x="362" y="126" width="12" height="7" rx="2" transform="rotate(-6 362 126)"/><rect x="352" y="142" width="12" height="7" rx="2" transform="rotate(16 352 142)"/><rect x="330" y="142" width="12" height="7" rx="2" transform="rotate(-20 330 142)"/></g>' +
+        '<path d="M576 76 L586 146 L634 146 L644 76" fill="#9FB2BF"/>' +
+        '<rect x="583" y="96" width="54" height="44" fill="#BFE3F0"/>' +
+        '<path d="M583 96 Q595 90 610 96 T637 96" fill="none" stroke="#8FCBE8" stroke-width="3"/>' +
+        '<g fill="#D9B26A"><rect x="592" y="102" width="11" height="6" rx="2" transform="rotate(-10 592 102)"/><rect x="612" y="106" width="11" height="6" rx="2" transform="rotate(12 612 106)"/><rect x="600" y="118" width="11" height="6" rx="2" transform="rotate(-16 600 118)"/></g>' +
+        '<path d="M196 104 L280 104" fill="none" stroke="#639922" stroke-width="3" marker-end="url(#bb10)"/>' +
+        '<path d="M436 104 L534 104" fill="none" stroke="#639922" stroke-width="3" marker-end="url(#bb10)"/>' +
+        '<path d="M610 192 L610 222" fill="none" stroke="#639922" stroke-width="3" marker-end="url(#bb10)"/>' +
+        '<rect x="556" y="284" width="108" height="10" rx="3" fill="#F2EAD8" stroke="#C9BC9C" stroke-width="1.5"/>' +
+        '<circle cx="592" cy="264" r="15" fill="#7A8894"/><circle cx="592" cy="264" r="5" fill="#CBD5DE"/>' +
+        '<circle cx="628" cy="264" r="15" fill="#7A8894"/><circle cx="628" cy="264" r="5" fill="#CBD5DE"/>' +
+        '<path d="M534 289 L548 289" fill="none" stroke="#639922" stroke-width="2.5" marker-end="url(#bb10)"/>' +
+        '<circle cx="344" cy="276" r="26" fill="none" stroke="#8A5A2B" stroke-width="5"/>' +
+        '<g stroke="#8A5A2B" stroke-width="2"><line x1="344" y1="252" x2="344" y2="300"/><line x1="320" y1="276" x2="368" y2="276"/><line x1="327" y1="259" x2="361" y2="293"/><line x1="327" y1="293" x2="361" y2="259"/></g>' +
+        '<rect x="384" y="258" width="15" height="36" rx="5" fill="#C9822E"/>' +
+        '<g stroke="#E8D6A8" stroke-width="2"><line x1="385" y1="266" x2="398" y2="266"/><line x1="385" y1="274" x2="398" y2="274"/><line x1="385" y1="282" x2="398" y2="282"/></g>' +
+        '<path d="M370 270 Q378 262 384 262" fill="none" stroke="#D9C58C" stroke-width="2"/>' +
+        '<rect x="78" y="244" width="64" height="16" rx="8" fill="#7FB069"/>' +
+        '<rect x="84" y="258" width="52" height="54" fill="#A7CF8C" stroke="#7FB069" stroke-width="1.5"/>' +
+        '<g stroke="#7FB069" stroke-width="1"><line x1="93" y1="258" x2="93" y2="312"/><line x1="102" y1="258" x2="102" y2="312"/><line x1="111" y1="258" x2="111" y2="312"/><line x1="120" y1="258" x2="120" y2="312"/><line x1="129" y1="258" x2="129" y2="312"/><line x1="84" y1="268" x2="136" y2="268"/><line x1="84" y1="278" x2="136" y2="278"/><line x1="84" y1="288" x2="136" y2="288"/><line x1="84" y1="298" x2="136" y2="298"/></g>' +
+        '<path d="M534 276 L440 276" fill="none" stroke="#639922" stroke-width="3" marker-end="url(#bb10)"/>' +
+        '<path d="M288 276 L196 276" fill="none" stroke="#639922" stroke-width="3" marker-end="url(#bb10)"/>' +
+        '<g font-weight="800" font-size="13" text-anchor="middle"><circle cx="110" cy="36" r="12" fill="#639922"/><text x="110" y="40.5" fill="#fff">1</text><circle cx="360" cy="36" r="12" fill="#639922"/><text x="360" y="40.5" fill="#fff">2</text><circle cx="610" cy="36" r="12" fill="#639922"/><text x="610" y="40.5" fill="#fff">3</text><circle cx="610" cy="216" r="12" fill="#639922"/><text x="610" y="220.5" fill="#fff">4</text><circle cx="360" cy="216" r="12" fill="#639922"/><text x="360" y="220.5" fill="#fff">5</text><circle cx="110" cy="216" r="12" fill="#639922"/><text x="110" y="220.5" fill="#fff">6</text></g>' +
+        '<g font-size="14.5" font-weight="700" fill="#22381A" text-anchor="middle">' +
+          '<text x="110" y="176">Bamboo grown</text><text x="110" y="193" font-size="12.5" font-weight="500" fill="#44603A">(reaches full height)</text>' +
+          '<text x="360" y="176">Harvested and</text><text x="360" y="193" font-size="12.5" font-weight="500" fill="#44603A">cut into chips</text>' +
+          '<text x="610" y="176">Chips soaked in a</text><text x="610" y="193" font-size="12.5" font-weight="500" fill="#44603A">solution to make pulp</text>' +
+          '<text x="610" y="330">Pulp pressed</text><text x="610" y="347" font-size="12.5" font-weight="500" fill="#44603A">into thin sheets</text>' +
+          '<text x="360" y="330">Sheets spun</text><text x="360" y="347" font-size="12.5" font-weight="500" fill="#44603A">into yarn</text>' +
+          '<text x="110" y="330">Yarn woven</text><text x="110" y="347" font-size="12.5" font-weight="500" fill="#44603A">into fabric</text>' +
+        '</g>' +
+        "</svg>"
     },
     task2: {
       minWords: 250, timeSuggest: "~40 min",
