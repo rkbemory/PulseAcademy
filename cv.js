@@ -147,7 +147,7 @@
       sections: ["summary", "education", "experience", "license", "languages", "skills", "references"].map(function (t) {
         return { _id: uid(), type: t, items: [blankItem(t)] };
       }),
-      template: "classic",
+      template: "modern",
       accent: "#14387A",
       declaration: { enabled: false, text: "I hereby declare that the information provided above is true and correct to the best of my knowledge.", showSign: true }
     };
