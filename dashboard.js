@@ -149,6 +149,7 @@
     var u = window.PulseAuth && window.PulseAuth.user;
     var html = "";
     html += head(u);
+    html += smartReviewBanner();
     html += '<div class="dash-top">';
     html +=   '<div class="dash-col dash-programs">' + interestsSection() + toolsSection() + '</div>';
     html +=   '<div class="dash-col dash-main">' + statsSection() + continueSection() + '</div>';
@@ -336,6 +337,30 @@
     return '<section class="dash-section"><h2 class="dash-h2">📈 Performance trend</h2>' +
       '<p class="dash-note">Your last ' + n + ' quiz score(s) over time. Dots: green ≥ 60%, amber 40–59%, red below 40%.</p>' +
       '<div class="dash-chart-wrap">' + svg + '</div></section>';
+  }
+
+  /* Smart Review daily-habit banner — spaced-repetition of missed questions. */
+  function smartReviewBanner() {
+    var c = (window.PulseReview && window.PulseReview.counts) ? window.PulseReview.counts() : null;
+    if (!c) return "";
+    var due = c.due || 0, total = c.total || 0;
+    var line, cta;
+    if (total === 0) {
+      line = "Turn the questions you get wrong into a daily review deck — it remembers them so you don't have to.";
+      cta = "Start Smart Review →";
+    } else if (due === 0) {
+      line = "All caught up — you've reviewed everything due today. " + total + " card" + (total === 1 ? "" : "s") + " in your deck.";
+      cta = "Open Smart Review →";
+    } else {
+      line = "<strong>" + due + "</strong> card" + (due === 1 ? "" : "s") + " due for review today" + (c.reviewedToday ? " · " + c.reviewedToday + " done" : "") + ". A few minutes now keeps them in your memory.";
+      cta = "Review " + due + " card" + (due === 1 ? "" : "s") + " →";
+    }
+    return '<a class="dash-review-banner' + (due > 0 ? " is-due" : "") + '" href="review.html">' +
+      '<span class="dash-review-ic">🧠</span>' +
+      '<span class="dash-review-body"><span class="dash-review-title">Smart Review' +
+        (due > 0 ? '<span class="dash-review-badge">' + due + '</span>' : "") + '</span>' +
+        '<span class="dash-review-line">' + line + '</span></span>' +
+      '<span class="dash-review-cta">' + esc(cta) + '</span></a>';
   }
 
   /* Explore & tools — quick links to non-tracked resources */

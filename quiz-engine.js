@@ -395,6 +395,7 @@
     if (window.PulseAuth && window.PulseAuth.enabled) {
       try { window.PulseAuth.saveResult(result); window.PulseAuth.noteQuizFinished(); } catch (e) {}
     }
+    if (window.PulseReview) { try { window.PulseReview.addMissed(runner.questions, runner.answers, result.testTitle); } catch (e) {} }
     window.location.href = "results.html";
   }
 
@@ -589,6 +590,7 @@
     if (window.PulseAuth && window.PulseAuth.enabled) {
       try { window.PulseAuth.saveResult(result); window.PulseAuth.noteQuizFinished(); } catch (e) {}
     }
+    if (window.PulseReview) { try { window.PulseReview.addMissed(arun.asked, arun.answers, result.testTitle); } catch (e) {} }
     window.location.href = "results.html";
   }
 
