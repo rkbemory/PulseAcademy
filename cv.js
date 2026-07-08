@@ -6,6 +6,7 @@
 
   var LS = "pulse:cv:v1";
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var CEFR = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -31,6 +32,10 @@
 
   /* ---------------- Section schema ---------------- */
   var SCHEMA = {
+    summary: {
+      label: "Professional Summary", icon: "📝", single: true,
+      fields: [{ k: "text", label: "About you (career objective / profile)", type: "textarea", ph: "Dedicated registered nurse with 3 years of ICU experience, seeking to…" }]
+    },
     education: {
       label: "Education", icon: "🎓",
       fields: [
@@ -68,12 +73,21 @@
     },
     languages: {
       label: "Language Skills", icon: "🗣️",
+      note: "For your mother tongue, just tick the box. For other languages, rate the five skills on the European (CEFR) scale — A1 (basic) to C2 (mastery).",
       fields: [
         { k: "language", label: "Language", req: true, ph: "English" },
         { k: "mother", label: "Mother tongue", type: "check" },
-        { k: "level", label: "Proficiency", type: "select", options: ["Basic", "Intermediate", "Advanced", "Fluent", "Native"] },
-        { k: "exam", label: "Evaluation exam (optional)", ph: "IELTS 7.5 / OET B" }
+        { k: "listening", label: "Listening", type: "cefr" },
+        { k: "reading", label: "Reading", type: "cefr" },
+        { k: "spokenInt", label: "Spoken interaction", type: "cefr" },
+        { k: "spokenProd", label: "Spoken production", type: "cefr" },
+        { k: "writing", label: "Writing", type: "cefr" },
+        { k: "exam", label: "Certificate / exam (optional)", ph: "IELTS 7.5 · OET B" }
       ]
+    },
+    skills: {
+      label: "Skills & Competencies", icon: "🩺", simple: true, addWord: "skill",
+      fields: [{ k: "skill", label: "Skill / competency", req: true, ph: "IV cannulation · ECG · Ventilator care · EMR" }]
     },
     training: {
       label: "Training & Courses", icon: "📚",
@@ -86,7 +100,7 @@
       ]
     },
     research: {
-      label: "Research Interests", icon: "🔬", simple: true,
+      label: "Research Interests", icon: "🔬", simple: true, addWord: "interest",
       fields: [{ k: "interest", label: "Research interest", req: true, ph: "Maternal & child health" }]
     },
     publications: {
@@ -122,15 +136,15 @@
       ]
     }
   };
-  var SECTION_ORDER = ["education", "experience", "license", "languages", "training", "research", "publications", "memberships", "references"];
+  var SECTION_ORDER = ["summary", "education", "experience", "license", "languages", "skills", "training", "research", "publications", "memberships", "references"];
 
   /* ---------------- State ---------------- */
   var state;
   function blankItem(type) { var it = {}; SCHEMA[type].fields.forEach(function (f) { it[f.k] = f.type === "check" ? false : ""; }); it._id = uid(); return it; }
   function defaultState() {
     return {
-      personal: { name: "", title: "", dob: "", phone: "", email: "", address: "", links: [{ label: "LinkedIn", url: "" }] },
-      sections: ["education", "experience", "license", "languages", "references"].map(function (t) {
+      personal: { name: "", title: "", dob: "", nationality: "", phone: "", email: "", address: "", photo: "", links: [{ label: "LinkedIn", url: "" }] },
+      sections: ["summary", "education", "experience", "license", "languages", "skills", "references"].map(function (t) {
         return { _id: uid(), type: t, items: [blankItem(t)] };
       }),
       template: "classic",
@@ -143,12 +157,21 @@
   }
   function save() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
 
-  /* ---------------- Boot ---------------- */
+  /* ---------------- Boot & views ---------------- */
+  var rootEl = null, view = "welcome";
   function boot() {
-    var root = document.getElementById("cv-root");
-    if (!root) return;
+    rootEl = document.getElementById("cv-root");
+    if (!rootEl) return;
     state = load();
-    root.innerHTML =
+    renderApp();
+  }
+  function hasContent() {
+    if (state.personal.name || state.personal.title) return true;
+    return state.sections.some(function (s) { return s.items.some(has); });
+  }
+  function renderApp() {
+    if (view === "welcome") { renderWelcome(); return; }
+    rootEl.innerHTML =
       '<div class="cv-app">' +
         '<div class="cv-editor" id="cv-editor"></div>' +
         '<div class="cv-preview-col">' +
@@ -159,6 +182,32 @@
     renderEditor();
     renderToolbar();
     renderPreview();
+  }
+  function featTile(ic, t, d) { return '<div class="cv-feat"><span class="cv-feat-ic">' + ic + "</span><strong>" + esc(t) + "</strong><span>" + esc(d) + "</span></div>"; }
+  function renderWelcome() {
+    var resume = hasContent();
+    rootEl.innerHTML =
+      '<div class="cv-welcome">' +
+        '<div class="cv-welcome-ic">🧾</div>' +
+        "<h2>Build your professional Nurse CV</h2>" +
+        "<p>Create a clean, standard-format CV in minutes. Fill each section, watch it build live, choose a template, and download a print-ready PDF. Everything stays private on your device — nothing is uploaded.</p>" +
+        '<div class="cv-welcome-feats">' +
+          featTile("👁️", "Live preview", "See your CV update as you type") +
+          featTile("🧩", "Add / remove sections", "Keep only the sections you need") +
+          featTile("🗂️", "3 clean templates", "Classic, Modern & Compact") +
+          featTile("🔒", "Private & free", "Saved on your device · export PDF") +
+        "</div>" +
+        '<div class="cv-welcome-actions">' +
+          '<button type="button" class="btn btn-primary cv-start">' + (resume ? "Resume editing" : "Start CV Builder") + " →</button>" +
+          '<label class="cv-tool cv-load-w">📂 Import a saved CV<input type="file" accept="application/json" hidden></label>' +
+          (resume ? '<button type="button" class="cv-tool cv-fresh">Start fresh</button>' : "") +
+        "</div>" +
+        '<p class="cv-welcome-note">Sections available — Personal info · Professional summary · Education · Experience · Licence · Skills · Languages (CEFR) · Training · Publications · Memberships · References · Declaration.</p>' +
+      "</div>";
+    rootEl.querySelector(".cv-start").addEventListener("click", function () { view = "editor"; renderApp(); window.scrollTo(0, 0); });
+    rootEl.querySelector(".cv-load-w input").addEventListener("change", importJSON);
+    var fresh = rootEl.querySelector(".cv-fresh");
+    if (fresh) fresh.addEventListener("click", function () { if (confirm("Start a new blank CV? Your current draft will be cleared.")) { state = defaultState(); save(); view = "editor"; renderApp(); } });
   }
 
   /* ---------------- Toolbar ---------------- */
@@ -191,20 +240,79 @@
     var f = e.target.files[0]; if (!f) return;
     var r = new FileReader();
     r.onload = function () {
-      try { var d = JSON.parse(r.result); if (d && d.personal && Array.isArray(d.sections)) { state = d; state.sections.forEach(function (s) { s._id = s._id || uid(); (s.items || []).forEach(function (i) { i._id = i._id || uid(); }); }); save(); boot(); } }
+      try { var d = JSON.parse(r.result); if (d && d.personal && Array.isArray(d.sections)) { state = d; state.sections.forEach(function (s) { s._id = s._id || uid(); (s.items || []).forEach(function (i) { i._id = i._id || uid(); }); }); save(); view = "editor"; renderApp(); } }
       catch (err) { alert("That file could not be read as a Pulse CV."); }
     };
     r.readAsText(f);
+  }
+
+  function handlePhoto(file) {
+    if (!file) return;
+    var r = new FileReader();
+    r.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var max = 360, w = img.width, h = img.height;
+        if (w > h && w > max) { h = Math.round(h * max / w); w = max; }
+        else if (h > max) { w = Math.round(w * max / h); h = max; }
+        var c = el("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        state.personal.photo = c.toDataURL("image/jpeg", 0.85);
+        save(); renderEditor(); renderPreview();
+      };
+      img.onerror = function () { alert("That image could not be read."); };
+      img.src = r.result;
+    };
+    r.readAsDataURL(file);
   }
 
   /* ---------------- Editor (left) ---------------- */
   function renderEditor() {
     var ed = document.getElementById("cv-editor");
     ed.innerHTML = "";
+    ed.appendChild(editorBar());
     ed.appendChild(personalCard());
+    ed.appendChild(sectionManagerCard());
     state.sections.forEach(function (sec, i) { ed.appendChild(sectionCard(sec, i)); });
-    ed.appendChild(addSectionBar());
     ed.appendChild(declarationCard());
+  }
+
+  function editorBar() {
+    var bar = el("div", "cv-ebar");
+    var back = el("button", "cv-back-btn", "← Start screen"); back.type = "button";
+    back.addEventListener("click", function () { view = "welcome"; renderApp(); window.scrollTo(0, 0); });
+    bar.appendChild(back);
+    bar.appendChild(el("span", "cv-ebar-hint", "Fill the sections — your CV builds live on the right →"));
+    return bar;
+  }
+
+  function sectionManagerCard() {
+    var card = el("div", "cv-card cv-manage");
+    var head = el("div", "cv-card-head");
+    head.innerHTML = '<span class="cv-card-title">🧩 Add or remove sections</span><button type="button" class="cv-manage-toggle" aria-expanded="false">Manage ▾</button>';
+    card.appendChild(head);
+    var body = el("div", "cv-manage-body"); body.hidden = true;
+    body.appendChild(el("p", "cv-note", "Tick the sections you want. Use ▲ ▼ on each section below to reorder them."));
+    var grid = el("div", "cv-manage-grid");
+    SECTION_ORDER.forEach(function (t) {
+      var present = state.sections.some(function (s) { return s.type === t; });
+      var lab = el("label", "cv-manage-item" + (present ? " is-on" : ""));
+      var cb = el("input"); cb.type = "checkbox"; cb.checked = present;
+      cb.addEventListener("change", function () {
+        if (cb.checked) { state.sections.push({ _id: uid(), type: t, items: [blankItem(t)] }); }
+        else { for (var k = 0; k < state.sections.length; k++) { if (state.sections[k].type === t) { state.sections.splice(k, 1); break; } } }
+        save(); renderEditor(); renderPreview();
+      });
+      lab.appendChild(cb); lab.appendChild(el("span", null, SCHEMA[t].icon + " " + esc(SCHEMA[t].label)));
+      grid.appendChild(lab);
+    });
+    body.appendChild(grid);
+    card.appendChild(body);
+    head.querySelector(".cv-manage-toggle").addEventListener("click", function () {
+      var btn = head.querySelector(".cv-manage-toggle"), open = body.hidden;
+      body.hidden = !open; btn.setAttribute("aria-expanded", open ? "true" : "false"); btn.textContent = open ? "Manage ▴" : "Manage ▾";
+    });
+    return card;
   }
 
   function field(label, node) { var w = el("label", "cv-f"); w.appendChild(el("span", "cv-f-lab", esc(label))); w.appendChild(node); return w; }
@@ -225,12 +333,25 @@
     card.appendChild(el("div", "cv-card-head", '<span class="cv-card-title">👤 Personal information</span><span class="cv-card-req">required</span>'));
     var body = el("div", "cv-card-body");
     function set(k) { return function (v) { p[k] = v; save(); renderPreview(); }; }
+    // photo
+    var prow = el("div", "cv-photo-row");
+    prow.appendChild(el("span", "cv-f-lab", "Profile photo (optional)"));
+    var pctrl = el("div", "cv-photo-ctrl");
+    if (p.photo) { var thumb = el("img", "cv-photo-thumb"); thumb.src = p.photo; thumb.alt = ""; pctrl.appendChild(thumb); }
+    var upl = el("label", "cv-add-mini", (p.photo ? "Change" : "Upload") + " photo");
+    var fi = el("input"); fi.type = "file"; fi.accept = "image/*"; fi.hidden = true;
+    fi.addEventListener("change", function () { handlePhoto(fi.files[0]); });
+    upl.appendChild(fi); pctrl.appendChild(upl);
+    if (p.photo) { var rmv = el("button", "cv-x", "Remove"); rmv.type = "button"; rmv.addEventListener("click", function () { p.photo = ""; save(); renderEditor(); renderPreview(); }); pctrl.appendChild(rmv); }
+    prow.appendChild(pctrl);
+    body.appendChild(prow);
     body.appendChild(field("Full name", input(p.name, set("name"), "Rajib Kumar Biswas")));
     body.appendChild(field("Professional title / headline", input(p.title, set("title"), "Registered Nurse · BNMC")));
     var grid = el("div", "cv-grid2");
     grid.appendChild(field("Phone", input(p.phone, set("phone"), "+880 1XXX-XXXXXX", "tel")));
     grid.appendChild(field("Email", input(p.email, set("email"), "name@email.com", "email")));
     grid.appendChild(field("Date of birth (optional)", input(p.dob, set("dob"), "", "date")));
+    grid.appendChild(field("Nationality (optional)", input(p.nationality, set("nationality"), "Bangladeshi")));
     grid.appendChild(field("Address", input(p.address, set("address"), "Dhaka, Bangladesh")));
     body.appendChild(grid);
     // links
@@ -265,15 +386,20 @@
     up.addEventListener("click", function () { move(idx, -1); });
     down.addEventListener("click", function () { move(idx, 1); });
     rm.addEventListener("click", function () { if (confirm("Remove the “" + def.label + "” section?")) { state.sections.splice(idx, 1); save(); renderEditor(); renderPreview(); } });
-    actions.appendChild(up); actions.appendChild(down); actions.appendChild(rm);
+    var col = el("button", "cv-ic-btn cv-collapse", "▾"); col.type = "button"; col.title = "Collapse / expand";
+    col.addEventListener("click", function () { var c = card.classList.toggle("is-collapsed"); col.textContent = c ? "▸" : "▾"; });
+    actions.appendChild(up); actions.appendChild(down); actions.appendChild(rm); actions.appendChild(col);
     head.appendChild(actions);
     card.appendChild(head);
 
     var body = el("div", "cv-card-body");
+    if (def.note) body.appendChild(el("p", "cv-note", esc(def.note)));
     sec.items.forEach(function (it, ii) { body.appendChild(itemBlock(sec, def, it, ii)); });
-    var add = el("button", "cv-add", "+ Add " + (def.simple ? "interest" : "entry")); add.type = "button";
-    add.addEventListener("click", function () { sec.items.push(blankItem(sec.type)); save(); renderEditor(); renderPreview(); });
-    body.appendChild(add);
+    if (!def.single) {
+      var add = el("button", "cv-add", "+ Add " + (def.addWord || "entry")); add.type = "button";
+      add.addEventListener("click", function () { sec.items.push(blankItem(sec.type)); save(); renderEditor(); renderPreview(); });
+      body.appendChild(add);
+    }
     card.appendChild(body);
     return card;
   }
@@ -288,11 +414,18 @@
       bar.appendChild(del);
       blk.appendChild(bar);
     }
-    var grid = el("div", def.simple ? "cv-grid1" : "cv-grid2");
+    var grid = el("div", (def.simple || def.single) ? "cv-grid1" : "cv-grid2");
     def.fields.forEach(function (f) {
       function set(v) { it[f.k] = v; save(); renderPreview(); }
       var node;
       if (f.type === "textarea") { node = field(f.label, textarea(it[f.k], set, f.ph)); node.classList.add("cv-f-wide"); }
+      else if (f.type === "cefr") {
+        var scf = el("select", "cv-in cv-cefr-sel");
+        scf.appendChild(el("option", null, "—"));
+        CEFR.forEach(function (o) { var op = el("option", null, o); op.value = o; if (it[f.k] === o) op.selected = true; scf.appendChild(op); });
+        scf.addEventListener("change", function () { set(scf.value); });
+        node = field(f.label, scf);
+      }
       else if (f.type === "select") {
         var sel = el("select", "cv-in");
         sel.appendChild(el("option", null, "— select —"));
@@ -378,13 +511,17 @@
     if (p.email) contact.push('<span>✉ ' + esc(p.email) + "</span>");
     if (p.address) contact.push('<span>📍 ' + esc(p.address) + "</span>");
     if (p.dob) contact.push('<span>🎂 ' + esc(fmtDOB(p.dob)) + "</span>");
+    if (p.nationality) contact.push('<span>🌐 ' + esc(p.nationality) + "</span>");
     (p.links || []).forEach(function (lk) { if (lk.url) contact.push('<span><a href="' + esc(linkify(lk.url)) + '" target="_blank" rel="noopener">' + esc(lk.label || lk.url) + "</a></span>"); });
 
     var html = '<article class="cv-paper tpl-' + esc(state.template) + '">' +
-      '<header class="cv-h">' +
-        '<h1 class="cv-name">' + (esc(p.name) || '<span class="cv-ph">Your Name</span>') + "</h1>" +
-        (p.title ? '<p class="cv-title">' + esc(p.title) + "</p>" : "") +
-        (contact.length ? '<p class="cv-contact">' + contact.join('<span class="cv-sep">·</span>') + "</p>" : "") +
+      '<header class="cv-h' + (p.photo ? " has-photo" : "") + '">' +
+        (p.photo ? '<img class="cv-photo" src="' + p.photo + '" alt="">' : "") +
+        '<div class="cv-h-text">' +
+          '<h1 class="cv-name">' + (esc(p.name) || '<span class="cv-ph">Your Name</span>') + "</h1>" +
+          (p.title ? '<p class="cv-title">' + esc(p.title) + "</p>" : "") +
+          (contact.length ? '<p class="cv-contact">' + contact.join('<span class="cv-sep">·</span>') + "</p>" : "") +
+        "</div>" +
       "</header>";
 
     state.sections.forEach(function (sec) {
@@ -407,9 +544,14 @@
     var items = sec.items.filter(has);
     if (!items.length) return "";
     var t = sec.type;
+    if (t === "summary") return '<p class="cv-summary">' + esc(items[0].text).replace(/\n/g, "<br>") + "</p>";
+    if (t === "skills") return '<div class="cv-skills">' + items.map(function (i) { return '<span class="cv-skill">' + esc(i.skill) + "</span>"; }).join("") + "</div>";
     if (t === "research") return '<p class="cv-interests">' + items.map(function (i) { return esc(i.interest); }).join(" · ") + "</p>";
     if (t === "languages") return '<ul class="cv-langs">' + items.map(function (i) {
-      return "<li><strong>" + esc(i.language) + (i.mother ? " (mother tongue)" : "") + "</strong>" + (i.level ? " — " + esc(i.level) : "") + (i.exam ? ' <span class="cv-mut">· ' + esc(i.exam) + "</span>" : "") + "</li>";
+      if (i.mother) return "<li><strong>" + esc(i.language) + "</strong> — Mother tongue" + (i.exam ? ' <span class="cv-mut">(' + esc(i.exam) + ")</span>" : "") + "</li>";
+      var sk = [["Listening", i.listening], ["Reading", i.reading], ["Spoken interaction", i.spokenInt], ["Spoken production", i.spokenProd], ["Writing", i.writing]].filter(function (s) { return s[1]; });
+      var g = sk.length ? sk.map(function (s) { return esc(s[0]) + " <b>" + esc(s[1]) + "</b>"; }).join('<span class="cv-sep">·</span>') : "";
+      return "<li><strong>" + esc(i.language) + "</strong>" + (g ? ' — <span class="cv-cefr">' + g + "</span>" : "") + (i.exam ? ' <span class="cv-mut">· ' + esc(i.exam) + "</span>" : "") + "</li>";
     }).join("") + "</ul>";
     if (t === "references") return '<div class="cv-refs">' + items.map(function (i) {
       var line2 = [i.org, i.address].filter(Boolean).map(esc).join(", ");

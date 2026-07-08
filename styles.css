@@ -5980,3 +5980,52 @@ select.cv-in { cursor: pointer; }
   .cv-paper { box-shadow: none !important; max-width: none !important; width: 100% !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
   @page { size: A4; margin: 14mm; }
 }
+
+/* ── CV Builder v2: welcome screen, section manager, collapse, photo, new sections ── */
+.cv-welcome { max-width: 680px; margin: 8px auto; background: var(--surface, #fff); border: 1px solid var(--line-cool, #E2E8F0); border-radius: 18px; box-shadow: var(--shadow-sm); padding: 34px 30px; text-align: center; }
+.cv-welcome-ic { font-size: 3rem; line-height: 1; }
+.cv-welcome h2 { font-size: 1.5rem; color: var(--text); margin: 10px 0 8px; }
+.cv-welcome > p { color: var(--text-soft, #475569); line-height: 1.6; max-width: 540px; margin: 0 auto 20px; }
+.cv-welcome-feats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 0 24px; }
+.cv-feat { display: flex; flex-direction: column; gap: 3px; padding: 14px 10px; background: var(--bg, #F5F7FB); border: 1px solid var(--line-cool, #E2E8F0); border-radius: 12px; }
+.cv-feat-ic { font-size: 1.5rem; }
+.cv-feat strong { font-size: 0.86rem; color: var(--text); }
+.cv-feat span { font-size: 0.75rem; color: var(--text-muted); line-height: 1.35; }
+.cv-welcome-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+.cv-welcome-actions .btn-primary { font-size: 1rem; padding: 12px 26px; }
+.cv-load-w { cursor: pointer; display: inline-flex; align-items: center; }
+.cv-welcome-note { font-size: 0.78rem; color: var(--text-muted); margin: 20px auto 0; max-width: 560px; line-height: 1.5; }
+@media (max-width: 560px) { .cv-welcome-feats { grid-template-columns: 1fr 1fr; } }
+
+.cv-ebar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 2px; }
+.cv-back-btn { font: inherit; font-size: 0.85rem; font-weight: 700; color: var(--primary, #14387A); background: none; border: none; cursor: pointer; padding: 4px 0; }
+.cv-back-btn:hover { text-decoration: underline; }
+.cv-ebar-hint { font-size: 0.78rem; color: var(--text-muted); }
+
+.cv-manage .cv-card-head { cursor: default; }
+.cv-manage-toggle { font: inherit; font-size: 0.8rem; font-weight: 700; color: var(--primary, #14387A); background: var(--surface, #fff); border: 1.5px solid var(--line-cool, #E2E8F0); border-radius: 8px; padding: 5px 12px; cursor: pointer; }
+.cv-manage-body { padding: 12px 15px 15px; }
+.cv-manage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 8px; }
+.cv-manage-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text); padding: 7px 10px; border: 1px solid var(--line-cool, #E2E8F0); border-radius: 9px; cursor: pointer; }
+.cv-manage-item.is-on { background: #EAF1FB; border-color: #C3D6F0; }
+.cv-note { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 4px; }
+
+.cv-collapse { font-size: 0.7rem !important; }
+.cv-card.is-collapsed .cv-card-body { display: none; }
+
+.cv-photo-row { display: flex; flex-direction: column; gap: 6px; }
+.cv-photo-ctrl { display: flex; align-items: center; gap: 10px; }
+.cv-photo-thumb { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--line-cool, #E2E8F0); }
+.cv-cefr-sel { min-width: 0; }
+
+/* preview: photo header, summary, skills, cefr */
+.cv-h { display: flex; align-items: center; gap: 20px; }
+.cv-h-text { flex: 1; min-width: 0; }
+.cv-photo { width: 82px; height: 82px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid #d8dee8; }
+.tpl-classic .cv-h { flex-direction: column; }
+.tpl-classic .cv-photo { margin-bottom: 6px; }
+.cv-summary { margin: 0; font-size: 12.5px; color: #3a4658; line-height: 1.5; }
+.cv-skills { display: flex; flex-wrap: wrap; gap: 6px; }
+.cv-skill { font-size: 11.5px; background: #eef2f8; border: 1px solid #dbe1ea; border-radius: 999px; padding: 2px 11px; color: #2a3448; }
+.tpl-modern .cv-skill { background: #e9eff9; border-color: #cfe0f5; color: #14387A; }
+.cv-cefr b { color: #12203c; font-weight: 700; }
