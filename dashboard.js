@@ -366,6 +366,8 @@
   /* Explore & tools — quick links to non-tracked resources */
   function toolsSection() {
     var links = [
+      { href: "ask.html", ic: "💬", name: "Ask Pulse (AI tutor)" },
+      { href: "review.html", ic: "🧠", name: "Smart Review" },
       { href: "resources.html", ic: "🔗", name: "Resource Hub" },
       { href: "jobs.html", ic: "💼", name: "Nursing Jobs" },
       { href: "books.html", ic: "📚", name: "Books" },
