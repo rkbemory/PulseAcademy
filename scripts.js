@@ -421,6 +421,12 @@
     attachActiveLink();
     attachVisitorCounter();
     attachWhatsNew();
+    // Ask Pulse floating tutor — load once on every page (ask.html already has it)
+    if (!document.querySelector('script[src="ask.js"]')) {
+      var askScript = document.createElement("script");
+      askScript.src = "ask.js"; askScript.defer = true;
+      document.body.appendChild(askScript);
+    }
     registerServiceWorker();
   });
 })();

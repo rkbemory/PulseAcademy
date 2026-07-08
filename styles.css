@@ -5791,3 +5791,70 @@ body > footer { flex-shrink: 0; }
 .ask-send:disabled { opacity: 0.5; cursor: default; }
 .ask-disc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin: 12px 4px 0; }
 @media (max-width: 520px) { .ask-bubble { max-width: 88%; } .ask-stream { padding: 14px; } }
+
+/* ════════════════════════════════════════════════════════════════
+   ASK PULSE — floating launcher + compact chat (site-wide)
+   ════════════════════════════════════════════════════════════════ */
+.pulse-askbot { position: fixed; right: 20px; bottom: 20px; z-index: 960; }
+/* bobbing robot pill launcher */
+.askbot-fab {
+  display: inline-flex; align-items: center; gap: 9px;
+  font: inherit; font-size: 0.92rem; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, #14387A 0%, #2E63B8 100%);
+  border: none; border-radius: 999px; padding: 11px 18px 11px 13px; cursor: pointer;
+  box-shadow: 0 8px 24px rgba(10, 35, 80, 0.32);
+  animation: askbot-bob 2.6s ease-in-out infinite;
+  transition: filter .15s;
+}
+.askbot-fab:hover { filter: brightness(1.08); animation-play-state: paused; }
+.askbot-fab-face { display: inline-flex; }
+@keyframes askbot-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@media (prefers-reduced-motion: reduce) { .askbot-fab { animation: none; } }
+.pulse-askbot.is-open .askbot-fab { display: none; }
+/* greeting nudge */
+.askbot-greet {
+  position: absolute; right: 4px; bottom: 66px; max-width: 210px;
+  background: #fff; color: var(--text, #1F2937); border: 1px solid var(--line-cool, #E2E8F0);
+  border-radius: 14px; border-bottom-right-radius: 4px; padding: 10px 14px; font-size: 0.86rem; font-weight: 600;
+  box-shadow: 0 8px 22px rgba(10, 35, 80, 0.18); cursor: pointer; line-height: 1.35;
+}
+/* compact chat panel */
+.askbot-panel {
+  position: absolute; right: 0; bottom: 0; display: flex; flex-direction: column;
+  width: 374px; max-width: calc(100vw - 32px); height: min(564px, 74vh);
+  background: var(--surface, #fff); border: 1px solid var(--line-cool, #E2E8F0);
+  border-radius: 18px; box-shadow: 0 20px 54px rgba(10, 35, 80, 0.30); overflow: hidden;
+}
+.askbot-panel[hidden] { display: none; }   /* let the hidden attribute win over display:flex */
+.askbot-head {
+  flex: none; display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; color: #fff; background: linear-gradient(135deg, #14387A 0%, #2E63B8 100%);
+}
+.askbot-title { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1rem; }
+.askbot-head-actions { display: inline-flex; align-items: center; gap: 4px; }
+.askbot-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px;
+  border-radius: 8px; border: none; background: rgba(255,255,255,0.14); color: #fff;
+  font-size: 1.15rem; line-height: 1; text-decoration: none; cursor: pointer;
+}
+.askbot-icon-btn:hover { background: rgba(255,255,255,0.28); }
+.askbot-mount { flex: 1; min-height: 0; display: flex; }
+.askbot-mount .ask-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; border: none; border-radius: 0; box-shadow: none; }
+.askbot-mount .ask-stream { flex: 1; min-height: 0; max-height: none; padding: 16px; }
+.askbot-mount .ask-disc { display: none; }
+.askbot-mount .ask-welcome { padding: 16px 6px; }
+.askbot-mount .ask-welcome-ic { font-size: 2.1rem; }
+.askbot-mount .ask-welcome h2 { font-size: 1.12rem; }
+.askbot-mount .ask-starters { gap: 7px; }
+.askbot-mount .ask-starter { font-size: 0.85rem; padding: 9px 12px; }
+@media (max-width: 480px) {
+  .pulse-askbot { right: 14px; bottom: 14px; }
+  .askbot-panel { width: calc(100vw - 24px); height: 76vh; }
+  .askbot-fab-text { display: none; }
+  .askbot-fab { padding: 13px; }
+}
+@media print { .pulse-askbot { display: none !important; } }
+
+/* Move the What's-new widget to the LEFT so it never collides with Ask Pulse */
+.whatsnew { left: 18px; right: auto; }
+.whatsnew-panel { left: 0; right: auto; }
