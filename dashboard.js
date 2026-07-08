@@ -368,6 +368,7 @@
     var links = [
       { href: "ask.html", ic: "💬", name: "Ask Pulse (AI tutor)" },
       { href: "review.html", ic: "🧠", name: "Smart Review" },
+      { href: "cv.html", ic: "🧾", name: "CV Builder" },
       { href: "resources.html", ic: "🔗", name: "Resource Hub" },
       { href: "jobs.html", ic: "💼", name: "Nursing Jobs" },
       { href: "books.html", ic: "📚", name: "Books" },

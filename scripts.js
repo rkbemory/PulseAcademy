@@ -77,6 +77,7 @@
       '<span class="nav-drawer-section">Explore &amp; Tools</span>',
       '<a href="ask.html" class="' + activeFor("ask.html") + '">💬 Ask Pulse (AI tutor)</a>',
       '<a href="review.html" class="' + activeFor("review.html") + '">🧠 Smart Review</a>',
+      '<a href="cv.html" class="' + activeFor("cv.html") + '">🧾 CV Builder</a>',
       '<a href="ielts.html" class="' + activeFor("ielts.html") + '">📝 IELTS Preparation</a>',
       '<a href="jobs.html" class="' + activeFor("jobs.html") + '">💼 Nursing Jobs</a>',
       '<a href="books.html" class="' + activeFor("books.html") + '">📚 Books</a>',
@@ -368,7 +369,7 @@
   function attachWhatsNew() {
     var w = document.getElementById("whatsnew");
     if (!w) return;
-    var KEY = "pulse:whatsnew:v3";        // bump the suffix when the list changes to re-alert everyone
+    var KEY = "pulse:whatsnew:v4";        // bump the suffix when the list changes to re-alert everyone
     var TTL = 4 * 60 * 60 * 1000;         // after viewing, stay hidden ~4h — reappears next visit (morning/evening)
     var seenAt = 0;
     try { seenAt = parseInt(localStorage.getItem(KEY) || "0", 10) || 0; } catch (e) {}
