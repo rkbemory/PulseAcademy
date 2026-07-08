@@ -5759,11 +5759,12 @@ body > footer { flex-shrink: 0; }
 .ask-msg { display: flex; gap: 10px; max-width: 100%; }
 .ask-user { justify-content: flex-end; }
 .ask-ava { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--bg, #EAF1F7); display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; }
-.ask-bubble { max-width: 82%; padding: 11px 15px; border-radius: 14px; font-size: 0.95rem; line-height: 1.55; }
+.ask-bubble { max-width: 84%; padding: 10px 14px; border-radius: 14px; font-size: 0.9rem; line-height: 1.48; letter-spacing: 0.005em; }
 .ask-user .ask-bubble { background: linear-gradient(135deg, #14387A, #2E63B8); color: #fff; border-bottom-right-radius: 5px; }
 .ask-model .ask-bubble { background: var(--bg, #F5F7FB); color: var(--text); border: 1px solid var(--line-cool, #E8EDF3); border-bottom-left-radius: 5px; }
-.ask-bubble p { margin: 0 0 8px; } .ask-bubble p:last-child { margin-bottom: 0; }
-.ask-bubble ul, .ask-bubble ol { margin: 6px 0 8px; padding-left: 20px; } .ask-bubble li { margin: 2px 0; }
+.ask-bubble p { margin: 0 0 6px; } .ask-bubble p:last-child { margin-bottom: 0; }
+.ask-bubble ul, .ask-bubble ol { margin: 4px 0 6px; padding-left: 18px; } .ask-bubble ul:last-child, .ask-bubble ol:last-child { margin-bottom: 0; }
+.ask-bubble li { margin: 1px 0; padding-left: 2px; } .ask-bubble li::marker { color: var(--primary-soft, #2E63B8); }
 .ask-bubble strong { font-weight: 700; }
 .ask-bubble code { background: rgba(20,56,122,0.08); border-radius: 5px; padding: 1px 5px; font-size: 0.9em; }
 .ask-note .ask-bubble { background: #FEF6E7; border-color: #F3D18B; color: #7A5A18; }
@@ -5840,7 +5841,13 @@ body > footer { flex-shrink: 0; }
 .askbot-icon-btn:hover { background: rgba(255,255,255,0.28); }
 .askbot-mount { flex: 1; min-height: 0; display: flex; }
 .askbot-mount .ask-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; border: none; border-radius: 0; box-shadow: none; }
-.askbot-mount .ask-stream { flex: 1; min-height: 0; max-height: none; padding: 16px; }
+.askbot-mount .ask-stream { flex: 1; min-height: 0; max-height: none; padding: 14px 14px 8px; gap: 11px; }
+.askbot-mount .ask-bubble { font-size: 0.855rem; line-height: 1.45; padding: 9px 12px; }
+.askbot-mount .ask-bubble p { margin: 0 0 5px; }
+.askbot-mount .ask-bubble ul, .askbot-mount .ask-bubble ol { margin: 3px 0 5px; }
+.askbot-mount .ask-ava { width: 26px; height: 26px; font-size: 0.9rem; }
+.askbot-mount .ask-form { padding: 10px; }
+.askbot-mount .ask-input { font-size: 0.88rem; padding: 9px 12px; }
 .askbot-mount .ask-disc { display: none; }
 .askbot-mount .ask-welcome { padding: 16px 6px; }
 .askbot-mount .ask-welcome-ic { font-size: 2.1rem; }
