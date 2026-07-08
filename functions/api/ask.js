@@ -79,37 +79,35 @@ export async function onRequest(context) {
   const p = await bumpLimit(kv, "ask:ip:" + ip + ":" + day, PER_IP_DAILY, 172800);
   if (!p.ok) return res({ error: "daily-limit", perDay: PER_IP_DAILY }, 429);
 
-  // ---- call Gemini ----
+  // ---- call Gemini (retry once on transient cold-start / 5xx / empty) ----
   const model = env.GEMINI_MODEL_ASK || MODEL_DEFAULT;
   const url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent";
   const contents = msgs.map(function (m) { return { role: m.role, parts: [{ text: m.text }] }; });
-  let gRes, gData;
-  try {
-    gRes = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM }] },
-        contents: contents,
-        generationConfig: { temperature: 0.4, maxOutputTokens: 900, thinkingConfig: { thinkingBudget: 0 } },
-        safetySettings: [
-          { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
-          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" }
-        ]
-      })
-    });
-    gData = await gRes.json();
-  } catch (e) {
-    return res({ error: "upstream", detail: String((e && e.message) || e) }, 502);
-  }
-  if (gRes.status === 429) return res({ error: "site-limit" }, 429);
-  if (!gRes.ok) return res({ error: "upstream", status: gRes.status, detail: gData && gData.error && gData.error.message }, 502);
+  const payload = JSON.stringify({
+    systemInstruction: { parts: [{ text: SYSTEM }] },
+    contents: contents,
+    generationConfig: { temperature: 0.4, maxOutputTokens: 900, thinkingConfig: { thinkingBudget: 0 } },
+    safetySettings: [
+      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
+      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" }
+    ]
+  });
 
-  let text = "";
-  try { text = gData.candidates[0].content.parts.map(function (p2) { return p2.text || ""; }).join(""); } catch (e) {}
-  if (!text) {
-    var blocked = gData && gData.candidates && gData.candidates[0] && gData.candidates[0].finishReason;
-    return res({ error: "empty", detail: blocked || "no answer" }, 502);
+  let text = "", quota429 = false, lastDetail = "";
+  for (let attempt = 0; attempt < 2; attempt++) {
+    let gRes, gData;
+    try {
+      gRes = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": key }, body: payload });
+      gData = await gRes.json();
+    } catch (e) { lastDetail = String((e && e.message) || e); continue; }   // network blip → retry
+    if (gRes.status === 429) { quota429 = true; break; }                    // real quota → stop
+    if (!gRes.ok) { lastDetail = (gData && gData.error && gData.error.message) || ("http " + gRes.status); continue; }
+    try { text = gData.candidates[0].content.parts.map(function (p2) { return p2.text || ""; }).join(""); } catch (e) {}
+    if (text) break;
+    lastDetail = (gData && gData.candidates && gData.candidates[0] && gData.candidates[0].finishReason) || "empty";
   }
+
+  if (quota429) return res({ error: "site-limit" }, 429);
+  if (!text) return res({ error: "upstream", detail: lastDetail || "no answer" }, 502);
   return res({ ok: true, answer: text.trim(), left: p.left });
 }
