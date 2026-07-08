@@ -5855,6 +5855,6 @@ body > footer { flex-shrink: 0; }
 }
 @media print { .pulse-askbot { display: none !important; } }
 
-/* Move the What's-new widget to the LEFT so it never collides with Ask Pulse */
-.whatsnew { left: 18px; right: auto; }
-.whatsnew-panel { left: 0; right: auto; }
+/* Stack the What's-new widget just ABOVE the Ask Pulse launcher (both bottom-right) */
+.whatsnew { right: 20px; left: auto; bottom: 86px; }
+.whatsnew-panel { right: 0; left: auto; }

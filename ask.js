@@ -14,8 +14,7 @@
     "Explain the difference between Type 1 and Type 2 diabetes.",
     "What are the 5 rights of medication administration?",
     "Why do we monitor potassium with furosemide?",
-    "Summarise the stages of wound healing.",
-    "What causes pre-eclampsia and what are the danger signs?"
+    "Summarise the stages of wound healing."
   ];
 
   function esc(s) {
