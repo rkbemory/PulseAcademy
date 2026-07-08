@@ -148,6 +148,7 @@
         return { _id: uid(), type: t, items: [blankItem(t)] };
       }),
       template: "classic",
+      accent: "#14387A",
       declaration: { enabled: false, text: "I hereby declare that the information provided above is true and correct to the best of my knowledge.", showSign: true }
     };
   }
@@ -184,9 +185,15 @@
     renderPreview();
   }
   function featTile(ic, t, d) { return '<div class="cv-feat"><span class="cv-feat-ic">' + ic + "</span><strong>" + esc(t) + "</strong><span>" + esc(d) + "</span></div>"; }
+  var ACCENTS = [["#14387A", "Navy"], ["#1E5F9C", "Blue"], ["#0E7490", "Teal"], ["#0F766E", "Green"], ["#6D28D9", "Purple"], ["#B4418E", "Magenta"]];
+  function colourSwatches() {
+    return '<div class="cv-colours">' + ACCENTS.map(function (a) {
+      return '<button type="button" class="cv-swatch' + (state.accent === a[0] ? " is-on" : "") + '" data-c="' + a[0] + '" style="background:' + a[0] + '" title="' + a[1] + '" aria-label="Accent colour ' + a[1] + '"></button>';
+    }).join("") + "</div>";
+  }
   function tplThumb(id, name) {
-    // Render a REAL mini-CV of the sample data in this template, scaled to fit.
-    var s = { template: id, personal: SAMPLE.personal, sections: SAMPLE.sections, declaration: SAMPLE.declaration };
+    // Render a REAL mini-CV of the sample data in this template & colour, scaled to fit.
+    var s = { template: id, accent: state.accent, personal: SAMPLE.personal, sections: SAMPLE.sections, declaration: SAMPLE.declaration };
     return '<button type="button" class="cv-tplcard' + (state.template === id ? " is-on" : "") + '" data-tpl="' + id + '">' +
       '<div class="cv-thumb"><div class="cv-thumb-inner">' + buildCV(s) + "</div></div>" +
       '<span class="cv-tplcard-name">' + esc(name) + '<span class="cv-tplcard-tick">✓</span></span></button>';
@@ -201,11 +208,13 @@
         '<div class="cv-welcome-feats">' +
           featTile("👁️", "Live preview", "See your CV update as you type") +
           featTile("🧩", "Add / remove sections", "Keep only the sections you need") +
-          featTile("🗂️", "3 clean templates", "Classic, Modern & Compact") +
+          featTile("🗂️", "4 pro templates + colours", "Classic, Modern, Sidebar & Compact") +
           featTile("🔒", "Private & free", "Saved on your device · export PDF") +
         "</div>" +
         '<p class="cv-tplpick-h">Choose a template — you can switch any time</p>' +
-        '<div class="cv-tplpick">' + tplThumb("classic", "Classic") + tplThumb("modern", "Modern") + tplThumb("compact", "Compact") + "</div>" +
+        '<div class="cv-tplpick" id="cv-tplpick">' + tplThumb("classic", "Classic") + tplThumb("modern", "Modern") + tplThumb("sidebar", "Sidebar") + tplThumb("compact", "Compact") + "</div>" +
+        '<p class="cv-tplpick-h">Accent colour</p>' +
+        '<div id="cv-colourpick">' + colourSwatches() + "</div>" +
         '<div class="cv-welcome-actions">' +
           '<button type="button" class="btn btn-primary cv-start">' + (resume ? "Resume editing" : "Start CV Builder") + " →</button>" +
           '<label class="cv-tool cv-load-w">📂 Import a saved CV<input type="file" accept="application/json" hidden></label>' +
@@ -213,12 +222,19 @@
         "</div>" +
         '<p class="cv-welcome-note">Sections available — Personal info · Professional summary · Education · Experience · Licence · Skills · Languages (CEFR) · Training · Publications · Memberships · References · Declaration.</p>' +
       "</div>";
-    rootEl.querySelectorAll(".cv-tplcard").forEach(function (b) {
-      b.addEventListener("click", function () {
-        state.template = b.getAttribute("data-tpl"); save();
-        rootEl.querySelectorAll(".cv-tplcard").forEach(function (c) { c.classList.toggle("is-on", c === b); });
+    function refreshChooser() {
+      var pick = document.getElementById("cv-tplpick");
+      pick.innerHTML = tplThumb("classic", "Classic") + tplThumb("modern", "Modern") + tplThumb("sidebar", "Sidebar") + tplThumb("compact", "Compact");
+      pick.querySelectorAll(".cv-tplcard").forEach(function (b) {
+        b.addEventListener("click", function () { state.template = b.getAttribute("data-tpl"); save(); refreshChooser(); });
       });
-    });
+      var cp = document.getElementById("cv-colourpick");
+      cp.innerHTML = colourSwatches();
+      cp.querySelectorAll(".cv-swatch").forEach(function (sw) {
+        sw.addEventListener("click", function () { state.accent = sw.getAttribute("data-c"); save(); refreshChooser(); });
+      });
+    }
+    refreshChooser();
     rootEl.querySelector(".cv-start").addEventListener("click", function () { view = "editor"; renderApp(); window.scrollTo(0, 0); });
     rootEl.querySelector(".cv-load-w input").addEventListener("change", importJSON);
     var fresh = rootEl.querySelector(".cv-fresh");
@@ -228,7 +244,7 @@
   /* ---------------- Toolbar ---------------- */
   function renderToolbar() {
     var t = document.getElementById("cv-toolbar");
-    var tpls = [["classic", "Classic"], ["modern", "Modern"], ["compact", "Compact"]];
+    var tpls = [["classic", "Classic"], ["modern", "Modern"], ["sidebar", "Sidebar"], ["compact", "Compact"]];
     t.innerHTML =
       '<div class="cv-tpls-wrap"><span class="cv-tpls-lab">Template:</span><div class="cv-tpls">' + tpls.map(function (x) {
         return '<button type="button" class="cv-tpl' + (state.template === x[0] ? " is-on" : "") + '" data-tpl="' + x[0] + '">' + x[1] + "</button>";
@@ -518,38 +534,60 @@
   }
 
   /* ---------------- Preview (right) ---------------- */
-  function buildCV(st) {
-    var p = st.personal;
-    var contact = [];
-    if (p.phone) contact.push('<span>📞 ' + esc(p.phone) + "</span>");
-    if (p.email) contact.push('<span>✉ ' + esc(p.email) + "</span>");
-    if (p.address) contact.push('<span>📍 ' + esc(p.address) + "</span>");
-    if (p.dob) contact.push('<span>🎂 ' + esc(fmtDOB(p.dob)) + "</span>");
-    if (p.nationality) contact.push('<span>🌐 ' + esc(p.nationality) + "</span>");
-    (p.links || []).forEach(function (lk) { if (lk.url) contact.push('<span><a href="' + esc(linkify(lk.url)) + '" target="_blank" rel="noopener">' + esc(lk.label || lk.url) + "</a></span>"); });
-
-    var html = '<article class="cv-paper tpl-' + esc(st.template) + '">' +
-      '<header class="cv-h' + (p.photo ? " has-photo" : "") + '">' +
-        (p.photo ? '<img class="cv-photo" src="' + p.photo + '" alt="">' : "") +
-        '<div class="cv-h-text">' +
-          '<h1 class="cv-name">' + (esc(p.name) || '<span class="cv-ph">Your Name</span>') + "</h1>" +
-          (p.title ? '<p class="cv-title">' + esc(p.title) + "</p>" : "") +
-          (contact.length ? '<p class="cv-contact">' + contact.join('<span class="cv-sep">·</span>') + "</p>" : "") +
-        "</div>" +
-      "</header>";
-
-    (st.sections || []).forEach(function (sec) {
+  function contactBits(p) {
+    var c = [];
+    if (p.phone) c.push("📞 " + esc(p.phone));
+    if (p.email) c.push("✉ " + esc(p.email));
+    if (p.address) c.push("📍 " + esc(p.address));
+    if (p.dob) c.push("🎂 " + esc(fmtDOB(p.dob)));
+    if (p.nationality) c.push("🌐 " + esc(p.nationality));
+    (p.links || []).forEach(function (lk) { if (lk.url) c.push('<a href="' + esc(linkify(lk.url)) + '" target="_blank" rel="noopener">' + esc(lk.label || lk.url) + "</a>"); });
+    return c;
+  }
+  function sectionsHTML(secs) {
+    var h = "";
+    (secs || []).forEach(function (sec) {
       var body = renderSection(sec);
       if (!body) return;
-      html += '<section class="cv-s"><h2 class="cv-s-h">' + esc(SCHEMA[sec.type].label) + "</h2>" + body + "</section>";
+      h += '<section class="cv-s"><h2 class="cv-s-h">' + esc(SCHEMA[sec.type].label) + "</h2>" + body + "</section>";
     });
+    return h;
+  }
+  function declHTML(st) {
+    if (!(st.declaration && st.declaration.enabled)) return "";
+    return '<section class="cv-s cv-decl"><h2 class="cv-s-h">Declaration</h2><p>' + esc(st.declaration.text) + "</p>" +
+      (st.declaration.showSign ? '<div class="cv-sign"><div><span class="cv-sign-line"></span>Signature</div><div><span class="cv-sign-line"></span>Date</div></div>' : "") + "</section>";
+  }
+  var SIDE = ["skills", "languages", "research"];   // sections that live in the sidebar template's left column
+  function buildCV(st) {
+    var p = st.personal, accent = st.accent || "#14387A";
+    var nameH = '<h1 class="cv-name">' + (esc(p.name) || '<span class="cv-ph">Your Name</span>') + "</h1>" + (p.title ? '<p class="cv-title">' + esc(p.title) + "</p>" : "");
 
-    if (st.declaration && st.declaration.enabled) {
-      html += '<section class="cv-s cv-decl"><h2 class="cv-s-h">Declaration</h2><p>' + esc(st.declaration.text) + "</p>" +
-        (st.declaration.showSign ? '<div class="cv-sign"><div><span class="cv-sign-line"></span>Signature</div><div><span class="cv-sign-line"></span>Date</div></div>' : "") + "</section>";
+    if (st.template === "sidebar") {
+      var side = (st.sections || []).filter(function (s) { return SIDE.indexOf(s.type) >= 0; });
+      var main = (st.sections || []).filter(function (s) { return SIDE.indexOf(s.type) < 0; });
+      var cs = contactBits(p);
+      return '<article class="cv-paper tpl-sidebar" style="--cv-accent:' + accent + '">' +
+        '<aside class="cv-side">' +
+          (p.photo ? '<img class="cv-photo" src="' + p.photo + '" alt="">' : "") +
+          (cs.length ? '<h2 class="cv-s-h">Contact</h2><div class="cv-side-contact">' + cs.map(function (x) { return "<div>" + x + "</div>"; }).join("") + "</div>" : "") +
+          sectionsHTML(side) +
+        "</aside>" +
+        '<div class="cv-main"><header class="cv-h"><div class="cv-h-text">' + nameH + "</div></header>" +
+          sectionsHTML(main) + declHTML(st) +
+        "</div></article>";
     }
-    html += "</article>";
-    return html;
+
+    var contact = contactBits(p);
+    return '<article class="cv-paper tpl-' + esc(st.template) + '" style="--cv-accent:' + accent + '">' +
+      '<header class="cv-h' + (p.photo ? " has-photo" : "") + '">' +
+        (p.photo ? '<img class="cv-photo" src="' + p.photo + '" alt="">' : "") +
+        '<div class="cv-h-text">' + nameH +
+          (contact.length ? '<p class="cv-contact">' + contact.map(function (x) { return "<span>" + x + "</span>"; }).join('<span class="cv-sep">·</span>') + "</p>" : "") +
+        "</div>" +
+      "</header>" +
+      sectionsHTML(st.sections) + declHTML(st) +
+      "</article>";
   }
   function renderPreview() { document.getElementById("cv-preview").innerHTML = buildCV(state); }
 
@@ -602,11 +640,14 @@
     else if (t === "memberships") { title = i.org; sub = [i.role, i.institute].filter(Boolean).join(" · "); dates = range(i.start, i.end); if (i.location) meta.push(i.location); }
 
     return '<div class="cv-e">' +
-      '<div class="cv-e-top"><span class="cv-e-title">' + esc(title) + "</span>" + (dates ? '<span class="cv-e-date">' + esc(dates) + "</span>" : "") + "</div>" +
-      (sub ? '<div class="cv-e-sub">' + esc(sub) + "</div>" : "") +
-      (meta.length ? '<div class="cv-e-meta">' + meta.map(esc).join('<span class="cv-sep">·</span>') + "</div>" : "") +
-      (extra ? '<div class="cv-e-extra">' + (t === "publications" ? extra : esc(extra)) + "</div>" : "") +
-      "</div>";
+      '<div class="cv-e-date">' + (dates ? esc(dates) : "") + "</div>" +
+      '<div class="cv-e-body">' +
+        '<div class="cv-e-title">' + esc(title) + "</div>" +
+        (sub ? '<div class="cv-e-sub">' + esc(sub) + "</div>" : "") +
+        (meta.length ? '<div class="cv-e-meta">' + meta.map(esc).join('<span class="cv-sep">·</span>') + "</div>" : "") +
+        (extra ? '<div class="cv-e-extra">' + (t === "publications" ? extra : esc(extra)) + "</div>" : "") +
+      "</div>" +
+    "</div>";
   }
 
   if (document.readyState !== "loading") boot();
