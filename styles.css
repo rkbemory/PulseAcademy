@@ -6029,3 +6029,44 @@ select.cv-in { cursor: pointer; }
 .cv-skill { font-size: 11.5px; background: #eef2f8; border: 1px solid #dbe1ea; border-radius: 999px; padding: 2px 11px; color: #2a3448; }
 .tpl-modern .cv-skill { background: #e9eff9; border-color: #cfe0f5; color: #14387A; }
 .cv-cefr b { color: #12203c; font-weight: 700; }
+
+/* CV Builder — visual template chooser on the welcome screen */
+.cv-tplpick-h { font-size: 0.82rem; font-weight: 700; color: var(--text-soft, #475569); margin: 6px 0 10px; }
+.cv-tplpick { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+.cv-tplcard { background: none; border: none; cursor: pointer; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.cvt { width: 122px; height: 158px; background: #fff; border: 2px solid var(--line-cool, #E2E8F0); border-radius: 8px; padding: 12px 11px; box-shadow: 0 3px 12px rgba(10,35,80,0.10); transition: border-color .15s, transform .15s; overflow: hidden; }
+.cv-tplcard:hover .cvt { transform: translateY(-2px); }
+.cv-tplcard.is-on .cvt { border-color: var(--primary, #14387A); box-shadow: 0 0 0 3px rgba(20,56,122,0.15); }
+.cvt-h { margin-bottom: 9px; }
+.cvt-name { display: block; height: 8px; width: 66%; background: #12203c; border-radius: 2px; margin-bottom: 4px; }
+.cvt-sub { display: block; height: 4px; width: 42%; background: #9aa6b6; border-radius: 2px; }
+.cvt-sh { height: 5px; width: 40%; background: #14387A; border-radius: 2px; margin: 8px 0 5px; }
+.cvt-ln { height: 3px; width: 100%; background: #d6dde7; border-radius: 2px; margin-bottom: 4px; }
+.cvt-ln.short { width: 62%; }
+/* classic: centered header, serif feel (bar centered) */
+.cvt-classic { text-align: center; }
+.cvt-classic .cvt-h { border-bottom: 2px solid #12203c; padding-bottom: 6px; }
+.cvt-classic .cvt-name { margin-left: auto; margin-right: auto; }
+.cvt-classic .cvt-sub { margin-left: auto; margin-right: auto; }
+.cvt-classic .cvt-sh { margin-left: auto; margin-right: auto; }
+/* modern: blue accent bars on section heads */
+.cvt-modern .cvt-name { background: #14387A; }
+.cvt-modern .cvt-sh { position: relative; padding-left: 6px; background: #14387A; }
+/* compact: denser lines */
+.cvt-compact .cvt-h { margin-bottom: 6px; }
+.cvt-compact .cvt-sh { height: 4px; margin: 5px 0 3px; }
+.cvt-compact .cvt-ln { margin-bottom: 3px; }
+.cv-tplcard-name { display: inline-flex; align-items: center; gap: 5px; font-size: 0.82rem; font-weight: 700; color: var(--text-soft, #475569); }
+.cv-tplcard.is-on .cv-tplcard-name { color: var(--primary, #14387A); }
+.cv-tplcard-tick { display: none; }
+.cv-tplcard.is-on .cv-tplcard-tick { display: inline; color: #16A34A; }
+/* editor toolbar "Template:" label */
+.cv-tpls-wrap { display: inline-flex; align-items: center; gap: 8px; }
+.cv-tpls-lab { font-size: 0.8rem; font-weight: 700; color: var(--text-soft, #475569); }
+
+/* CV Builder — real scaled mini-CV thumbnails in the template chooser */
+.cv-thumb { width: 176px; height: 234px; overflow: hidden; border: 2px solid var(--line-cool, #E2E8F0); border-radius: 9px; background: #fff; box-shadow: 0 3px 12px rgba(10,35,80,0.10); transition: border-color .15s, transform .15s, box-shadow .15s; pointer-events: none; }
+.cv-tplcard:hover .cv-thumb { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,35,80,0.16); }
+.cv-tplcard.is-on .cv-thumb { border-color: var(--primary, #14387A); box-shadow: 0 0 0 3px rgba(20,56,122,0.18); }
+.cv-thumb-inner { width: 800px; transform: scale(0.22); transform-origin: top left; }
+.cv-thumb-inner .cv-paper { box-shadow: none; border-radius: 0; max-width: none; width: 800px; padding: 34px 38px; }

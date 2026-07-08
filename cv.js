@@ -184,6 +184,13 @@
     renderPreview();
   }
   function featTile(ic, t, d) { return '<div class="cv-feat"><span class="cv-feat-ic">' + ic + "</span><strong>" + esc(t) + "</strong><span>" + esc(d) + "</span></div>"; }
+  function tplThumb(id, name) {
+    // Render a REAL mini-CV of the sample data in this template, scaled to fit.
+    var s = { template: id, personal: SAMPLE.personal, sections: SAMPLE.sections, declaration: SAMPLE.declaration };
+    return '<button type="button" class="cv-tplcard' + (state.template === id ? " is-on" : "") + '" data-tpl="' + id + '">' +
+      '<div class="cv-thumb"><div class="cv-thumb-inner">' + buildCV(s) + "</div></div>" +
+      '<span class="cv-tplcard-name">' + esc(name) + '<span class="cv-tplcard-tick">✓</span></span></button>';
+  }
   function renderWelcome() {
     var resume = hasContent();
     rootEl.innerHTML =
@@ -197,6 +204,8 @@
           featTile("🗂️", "3 clean templates", "Classic, Modern & Compact") +
           featTile("🔒", "Private & free", "Saved on your device · export PDF") +
         "</div>" +
+        '<p class="cv-tplpick-h">Choose a template — you can switch any time</p>' +
+        '<div class="cv-tplpick">' + tplThumb("classic", "Classic") + tplThumb("modern", "Modern") + tplThumb("compact", "Compact") + "</div>" +
         '<div class="cv-welcome-actions">' +
           '<button type="button" class="btn btn-primary cv-start">' + (resume ? "Resume editing" : "Start CV Builder") + " →</button>" +
           '<label class="cv-tool cv-load-w">📂 Import a saved CV<input type="file" accept="application/json" hidden></label>' +
@@ -204,6 +213,12 @@
         "</div>" +
         '<p class="cv-welcome-note">Sections available — Personal info · Professional summary · Education · Experience · Licence · Skills · Languages (CEFR) · Training · Publications · Memberships · References · Declaration.</p>' +
       "</div>";
+    rootEl.querySelectorAll(".cv-tplcard").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.template = b.getAttribute("data-tpl"); save();
+        rootEl.querySelectorAll(".cv-tplcard").forEach(function (c) { c.classList.toggle("is-on", c === b); });
+      });
+    });
     rootEl.querySelector(".cv-start").addEventListener("click", function () { view = "editor"; renderApp(); window.scrollTo(0, 0); });
     rootEl.querySelector(".cv-load-w input").addEventListener("change", importJSON);
     var fresh = rootEl.querySelector(".cv-fresh");
@@ -215,9 +230,9 @@
     var t = document.getElementById("cv-toolbar");
     var tpls = [["classic", "Classic"], ["modern", "Modern"], ["compact", "Compact"]];
     t.innerHTML =
-      '<div class="cv-tpls">' + tpls.map(function (x) {
+      '<div class="cv-tpls-wrap"><span class="cv-tpls-lab">Template:</span><div class="cv-tpls">' + tpls.map(function (x) {
         return '<button type="button" class="cv-tpl' + (state.template === x[0] ? " is-on" : "") + '" data-tpl="' + x[0] + '">' + x[1] + "</button>";
-      }).join("") + "</div>" +
+      }).join("") + "</div></div>" +
       '<div class="cv-tools">' +
         '<button type="button" class="cv-tool cv-print">⬇ Download PDF</button>' +
         '<button type="button" class="cv-tool cv-save">💾 Save file</button>' +
@@ -345,7 +360,7 @@
     if (p.photo) { var rmv = el("button", "cv-x", "Remove"); rmv.type = "button"; rmv.addEventListener("click", function () { p.photo = ""; save(); renderEditor(); renderPreview(); }); pctrl.appendChild(rmv); }
     prow.appendChild(pctrl);
     body.appendChild(prow);
-    body.appendChild(field("Full name", input(p.name, set("name"), "Rajib Kumar Biswas")));
+    body.appendChild(field("Full name", input(p.name, set("name"), "Sharmin Akter")));
     body.appendChild(field("Professional title / headline", input(p.title, set("title"), "Registered Nurse · BNMC")));
     var grid = el("div", "cv-grid2");
     grid.appendChild(field("Phone", input(p.phone, set("phone"), "+880 1XXX-XXXXXX", "tel")));
@@ -503,9 +518,8 @@
   }
 
   /* ---------------- Preview (right) ---------------- */
-  function renderPreview() {
-    var pv = document.getElementById("cv-preview");
-    var p = state.personal;
+  function buildCV(st) {
+    var p = st.personal;
     var contact = [];
     if (p.phone) contact.push('<span>📞 ' + esc(p.phone) + "</span>");
     if (p.email) contact.push('<span>✉ ' + esc(p.email) + "</span>");
@@ -514,7 +528,7 @@
     if (p.nationality) contact.push('<span>🌐 ' + esc(p.nationality) + "</span>");
     (p.links || []).forEach(function (lk) { if (lk.url) contact.push('<span><a href="' + esc(linkify(lk.url)) + '" target="_blank" rel="noopener">' + esc(lk.label || lk.url) + "</a></span>"); });
 
-    var html = '<article class="cv-paper tpl-' + esc(state.template) + '">' +
+    var html = '<article class="cv-paper tpl-' + esc(st.template) + '">' +
       '<header class="cv-h' + (p.photo ? " has-photo" : "") + '">' +
         (p.photo ? '<img class="cv-photo" src="' + p.photo + '" alt="">' : "") +
         '<div class="cv-h-text">' +
@@ -524,19 +538,34 @@
         "</div>" +
       "</header>";
 
-    state.sections.forEach(function (sec) {
+    (st.sections || []).forEach(function (sec) {
       var body = renderSection(sec);
       if (!body) return;
       html += '<section class="cv-s"><h2 class="cv-s-h">' + esc(SCHEMA[sec.type].label) + "</h2>" + body + "</section>";
     });
 
-    if (state.declaration.enabled) {
-      html += '<section class="cv-s cv-decl"><h2 class="cv-s-h">Declaration</h2><p>' + esc(state.declaration.text) + "</p>" +
-        (state.declaration.showSign ? '<div class="cv-sign"><div><span class="cv-sign-line"></span>Signature</div><div><span class="cv-sign-line"></span>Date</div></div>' : "") + "</section>";
+    if (st.declaration && st.declaration.enabled) {
+      html += '<section class="cv-s cv-decl"><h2 class="cv-s-h">Declaration</h2><p>' + esc(st.declaration.text) + "</p>" +
+        (st.declaration.showSign ? '<div class="cv-sign"><div><span class="cv-sign-line"></span>Signature</div><div><span class="cv-sign-line"></span>Date</div></div>' : "") + "</section>";
     }
     html += "</article>";
-    pv.innerHTML = html;
+    return html;
   }
+  function renderPreview() { document.getElementById("cv-preview").innerHTML = buildCV(state); }
+
+  /* Realistic sample data so template thumbnails show a true mini-CV. */
+  var SAMPLE = {
+    template: "classic",
+    personal: { name: "Sharmin Akter", title: "Registered Nurse · BNMC", phone: "+880 1XXXXXXXXX", email: "sharmin.akter@email.com", address: "Dhaka, Bangladesh", nationality: "Bangladeshi", photo: "", links: [] },
+    sections: [
+      { type: "summary", items: [{ text: "Compassionate registered nurse with 3 years of ICU experience, seeking international opportunities in critical care." }] },
+      { type: "education", items: [{ course: "B.Sc. in Nursing", institute: "College of Nursing, Dhaka", start: "2016-01", end: "2020-12", grade: "CGPA 3.8/4.0", medium: "English" }] },
+      { type: "experience", items: [{ role: "Staff Nurse", org: "Dhaka Medical College Hospital", dept: "ICU", start: "2021-02", end: "present", details: "Critical-care nursing, medication administration and patient monitoring." }] },
+      { type: "skills", items: [{ skill: "IV cannulation" }, { skill: "ECG" }, { skill: "Ventilator care" }, { skill: "EMR" }] },
+      { type: "languages", items: [{ language: "Bengali", mother: true }, { language: "English", listening: "C1", reading: "C1", spokenInt: "B2", spokenProd: "B2", writing: "C1", exam: "IELTS 7.5" }] }
+    ],
+    declaration: { enabled: false }
+  };
   function fmtDOB(v) { var m = String(v).match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? (m[3] + " " + MONTHS[parseInt(m[2], 10) - 1] + " " + m[1]) : v; }
 
   function has(it) { for (var k in it) { if (k !== "_id" && it[k]) return true; } return false; }
