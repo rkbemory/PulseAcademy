@@ -69,7 +69,7 @@
     function bubble(role, html, cls) {
       var b = document.createElement("div");
       b.className = "ask-msg ask-" + role + (cls ? " " + cls : "");
-      b.innerHTML = (role === "model" ? '<span class="ask-ava">🩺</span>' : "") + '<div class="ask-bubble">' + html + "</div>";
+      b.innerHTML = '<div class="ask-bubble">' + html + "</div>";
       stream.appendChild(b);
       stream.scrollTop = stream.scrollHeight;
       return b;
