@@ -6199,3 +6199,15 @@ select.cv-in { cursor: pointer; }
   }
   .calc-page .calc-nav-a, .calc-page .calc-nav-b { position: static; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   QUICK REFERENCE — vibrant colour-coded section headers
+   ════════════════════════════════════════════════════════════════ */
+.ref-table .ref-group td { border-left: 4px solid var(--primary, #14387A); padding-left: 10px; }
+.ref-table .ref-g-red td    { background: #FBECEF; color: #B3123E; border-left-color: #B3123E; }
+.ref-table .ref-g-blue td   { background: #EAF0FA; color: #14387A; border-left-color: #14387A; }
+.ref-table .ref-g-teal td   { background: #E3F1F4; color: #0E7490; border-left-color: #0E7490; }
+.ref-table .ref-g-amber td  { background: #FBF0DD; color: #8A5A12; border-left-color: #C99A50; }
+.ref-table .ref-g-purple td { background: #F1ECFB; color: #6D28D9; border-left-color: #6D28D9; }
+.ref-note-inline { font-weight: 500; text-transform: none; letter-spacing: 0; opacity: 0.82; font-size: 0.9em; }
+.ref-table tr:not(.ref-group):not(:first-child):hover td { background: var(--bg, #F6F9FC); }
