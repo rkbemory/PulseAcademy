@@ -67,6 +67,7 @@
       '<a href="post-basic.html" class="' + activeFor("post-basic.html") + '">📘 Post Basic Admission</a>',
       '<a href="rn.html" class="' + activeFor("rn.html") + '">🎓 BNMC RN</a>',
       '<a href="nclex.html" class="' + activeFor("nclex.html") + '">🌎 NCLEX-RN</a>',
+      '<a href="credential.html" class="' + activeFor("credential.html") + '">🌐 Credential Evaluation</a>',
       '<div class="nav-drawer-sep"></div>',
       '<span class="nav-drawer-section">Academic</span>',
       '<a href="academic.html" class="' + activeFor("academic.html") + '">📖 Academic Programs</a>',

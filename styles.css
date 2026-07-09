@@ -6240,3 +6240,91 @@ select.cv-in { cursor: pointer; }
 .ref-table .ref-g-purple td { background: #F1ECFB; color: #6D28D9; border-left-color: #6D28D9; }
 .ref-note-inline { font-weight: 500; text-transform: none; letter-spacing: 0; opacity: 0.82; font-size: 0.9em; }
 .ref-table tr:not(.ref-group):not(:first-child):hover td { background: var(--bg, #F6F9FC); }
+
+/* ════════════════════════════════════════════════════════════════
+   CREDENTIAL EVALUATION page + homepage section
+   ════════════════════════════════════════════════════════════════ */
+.cred-head { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+.cred-badge {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  min-width: 72px; height: 58px; padding: 0 12px; border-radius: 14px;
+  font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.02rem;
+  color: #fff; letter-spacing: 0.4px; box-shadow: 0 8px 20px rgba(20,56,122,0.20);
+}
+.cred-badge-overview { background: linear-gradient(135deg,#16A34A,#4ADE80); }
+.cred-badge-cgfns    { background: linear-gradient(135deg,#0E7490,#22B8CF); }
+.cred-badge-wes      { background: linear-gradient(135deg,#14387A,#3B6FD4); }
+.cred-badge-ece      { background: linear-gradient(135deg,#6D28D9,#9B6BF0); }
+.cred-badge-spantran { background: linear-gradient(135deg,#B4541E,#E2784A); }
+.cred-badge-choose   { background: linear-gradient(135deg,#8A5A12,#C99A50); }
+.cred-head-text { min-width: 0; }
+.cred-head-text h2 { margin: 0 0 2px; }
+.cred-site { font-size: 0.9rem; font-weight: 700; color: var(--primary); text-decoration: none; word-break: break-word; }
+.cred-site:hover { text-decoration: underline; }
+.cred-block { margin-top: 15px; }
+.cred-h {
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--text-soft); margin: 0 0 5px;
+}
+.cred-block > p { margin: 0; color: var(--lead-ink); line-height: 1.6; }
+.cred-block ul { margin: 4px 0 0; padding-left: 20px; }
+.cred-block li { margin: 5px 0; color: var(--lead-ink); line-height: 1.5; }
+.cred-block strong { color: var(--primary); }
+.cred-links { list-style: none; padding-left: 0; margin: 4px 0 0; }
+.cred-links li { position: relative; padding-left: 22px; margin: 6px 0; }
+.cred-links li::before { content: "🔗"; position: absolute; left: 0; font-size: 0.82em; top: 1px; }
+.cred-links a { color: var(--primary); font-weight: 600; text-decoration: none; }
+.cred-links a:hover { text-decoration: underline; }
+.cred-pills { display: flex; flex-wrap: wrap; gap: 7px; margin: 6px 0 0; }
+.cred-pill { font-size: 0.76rem; font-weight: 700; padding: 5px 11px; border-radius: 999px;
+  background: var(--primary-tint); color: var(--primary); }
+.cred-pill-gold { background: #F7ECD6; color: #8A5A12; }
+/* video "coming soon" placeholder */
+.cred-video {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 9px; min-height: 148px; border-radius: 16px; text-align: center; padding: 22px 18px;
+  background: linear-gradient(150deg, var(--primary-tint), #ffffff);
+  border: 1.5px dashed var(--primary-soft); color: var(--primary);
+}
+.cred-video-play {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--primary); color: #fff; font-size: 1.15rem; box-shadow: 0 6px 16px rgba(20,56,122,0.30);
+}
+.cred-video-soon {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+  background: var(--accent); color: #3a2a08; padding: 3px 11px; border-radius: 999px;
+}
+.cred-video-note { font-size: 0.88rem; color: var(--text-soft); max-width: 400px; line-height: 1.5; }
+.cred-cta { margin-top: 18px; }
+.cred-callout {
+  margin-top: 15px; padding: 13px 15px; border-radius: 12px;
+  background: rgba(201,154,80,0.10); border: 1px solid rgba(201,154,80,0.38);
+  font-size: 0.92rem; color: var(--lead-ink); line-height: 1.55;
+}
+/* wider stage for the richer credential cards */
+@media (min-width: 761px) {
+  .cred-page .calc-layout { grid-template-columns: 236px minmax(0, 660px); }
+  .cred-page .calc-stage .calc-card { max-width: 660px; }
+}
+
+/* Homepage — Credential Evaluation feature section */
+.cred-home-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 6px 0 22px; }
+.cred-home-card {
+  display: flex; flex-direction: column; gap: 8px; padding: 16px 15px; border-radius: 16px;
+  background: #fff; border: 1px solid var(--line-cool); text-decoration: none; color: inherit;
+  box-shadow: 0 8px 22px rgba(20,56,122,0.07); transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+.cred-home-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20,56,122,0.13); border-color: var(--primary-soft); }
+.cred-home-badge {
+  align-self: flex-start; display: inline-flex; align-items: center; justify-content: center;
+  height: 42px; min-width: 52px; padding: 0 12px; border-radius: 11px;
+  font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 0.92rem; color: #fff;
+}
+.cred-home-card h3 { margin: 0; font-size: 1rem; }
+.cred-home-card p { margin: 0; font-size: 0.86rem; color: var(--text-soft); line-height: 1.45; }
+.cred-home-card .arrow { margin-top: auto; font-weight: 700; color: var(--primary); font-size: 0.85rem; }
+@media (max-width: 760px) {
+  .cred-home-grid { grid-template-columns: repeat(2, 1fr); gap: 11px; }
+  .cred-head { gap: 11px; }
+  .cred-badge { min-width: 60px; height: 52px; font-size: 0.92rem; }
+}
