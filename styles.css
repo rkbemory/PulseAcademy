@@ -61,8 +61,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; color: var(--maroon); line-height: 1.2; }
-h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 700; }
+h1 { font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 800; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; }
 h3 { font-size: 1.25rem; font-weight: 600; }
 a { color: var(--maroon); text-decoration: none; }
 img { max-width: 100%; }
@@ -274,13 +274,13 @@ header.top-nav {
 .subnav a:hover { background: var(--bg-warm); color: var(--maroon); border-color: var(--line); }
 
 /* ===== SECTION DEFAULTS ===== */
-section.block { max-width: 1200px; margin: 0 auto; padding: 54px 24px; }
+section.block { max-width: 1200px; margin: 0 auto; padding: 34px 24px; }
 .section-eyebrow {
   font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
   color: var(--amber); text-transform: uppercase; margin-bottom: 12px;
 }
 .section-title { margin-bottom: 14px; }
-.section-lead { color: var(--text-soft); font-size: 1.05rem; max-width: 640px; margin-bottom: 26px; }
+.section-lead { color: var(--text-soft); font-size: 1.05rem; max-width: 640px; margin-bottom: 16px; }
 
 /* ===== ABOUT GRID (3 columns) ===== */
 .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -2368,7 +2368,7 @@ h2.section-title { color: var(--primary-deep); }
   .hero-ctas .btn { width: 100%; justify-content: center; }
 
   /* Section padding */
-  section.block { padding: 40px 16px; }
+  section.block { padding: 26px 16px; }
   .hex-section { padding: 40px 16px; }
   .home-hero { padding: 68px 18px 76px; }
 
@@ -2927,7 +2927,7 @@ h1, h2, h3, h4 {
   letter-spacing: 2.4px;
   color: var(--accent-deep);
   text-transform: uppercase;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 .section-eyebrow::before {
   content: "";
@@ -2942,11 +2942,11 @@ h1, h2, h3, h4 {
   font-family: 'Playfair Display', serif;
   font-weight: 800;
   letter-spacing: -0.018em;
-  margin-bottom: 16px;
+  margin-bottom: 9px;
 }
 .section-lead {
-  font-size: 1.08rem;
-  line-height: 1.65;
+  font-size: 1.0rem;
+  line-height: 1.5;
   color: var(--text-soft);
 }
 
