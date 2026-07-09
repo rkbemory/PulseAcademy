@@ -6302,6 +6302,23 @@ select.cv-in { cursor: pointer; }
   background: rgba(201,154,80,0.10); border: 1px solid rgba(201,154,80,0.38);
   font-size: 0.92rem; color: var(--lead-ink); line-height: 1.55;
 }
+/* percentage → GPA conversion visual */
+.cred-convert { display: flex; align-items: stretch; gap: 10px; margin: 12px 0 4px; }
+.cred-convert-box {
+  flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 3px;
+  padding: 11px 14px; border-radius: 12px;
+  background: var(--primary-tint); border: 1px solid var(--line-cool);
+}
+.cred-convert-box-alt { background: #F7ECD6; border-color: rgba(201,154,80,0.42); }
+.cred-convert-k { font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-soft); }
+.cred-convert-v { font-size: 0.95rem; font-weight: 700; color: var(--primary); }
+.cred-convert-box-alt .cred-convert-v { color: #8A5A12; }
+.cred-convert-arrow { align-self: center; flex: 0 0 auto; font-size: 1.35rem; font-weight: 800; color: var(--text-soft); }
+.cred-convert-note { font-size: 0.85rem; color: var(--text-soft); margin: 8px 0 0; line-height: 1.5; }
+@media (max-width: 480px) {
+  .cred-convert { flex-direction: column; }
+  .cred-convert-arrow { transform: rotate(90deg); }
+}
 /* wider stage for the richer credential cards */
 @media (min-width: 761px) {
   .cred-page .calc-layout { grid-template-columns: 236px minmax(0, 660px); }
