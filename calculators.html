@@ -39,8 +39,8 @@
     <p class="section-lead">Pick a calculator on the left — results update as you type. Works offline.</p>
 
     <div class="calc-layout">
-      <!-- LEFT: options -->
-      <aside class="calc-nav" role="tablist" aria-label="Choose a calculator">
+      <!-- LEFT column of options -->
+      <aside class="calc-nav calc-nav-a" role="tablist" aria-label="Choose a calculator">
         <button class="calc-nav-item is-active" data-target="calc-simple" role="tab" aria-selected="true">🧮 Simple Calculator</button>
         <button class="calc-nav-item" data-target="calc-bmi"   role="tab" aria-selected="false">📏 BMI</button>
         <button class="calc-nav-item" data-target="calc-drip"  role="tab" aria-selected="false">💧 IV Drip Rate</button>
@@ -53,20 +53,9 @@
         <button class="calc-nav-item" data-target="calc-bsa"  role="tab" aria-selected="false">📐 Body Surface Area</button>
         <button class="calc-nav-item" data-target="calc-ibw"  role="tab" aria-selected="false">⚖️ Ideal Body Weight</button>
         <button class="calc-nav-item" data-target="calc-map"  role="tab" aria-selected="false">❤️ Mean Arterial Pressure</button>
-        <button class="calc-nav-item" data-target="calc-mf"   role="tab" aria-selected="false">👶 Paediatric Fluids (4-2-1)</button>
-        <button class="calc-nav-item" data-target="calc-edd"  role="tab" aria-selected="false">🤰 Estimated Due Date</button>
-        <button class="calc-nav-item" data-target="calc-pk"   role="tab" aria-selected="false">🔥 Burns Fluid (Parkland)</button>
-        <button class="calc-nav-item" data-target="calc-cc"   role="tab" aria-selected="false">🦴 Corrected Calcium</button>
-        <button class="calc-nav-item" data-target="calc-ag"   role="tab" aria-selected="false">⚗️ Anion Gap</button>
-        <button class="calc-nav-item" data-target="calc-gcs"  role="tab" aria-selected="false">🧠 Glasgow Coma Scale</button>
-        <button class="calc-nav-item" data-target="calc-temp"  role="tab" aria-selected="false">🌡️ Temperature °F → °C</button>
-        <button class="calc-nav-item" data-target="calc-wt"    role="tab" aria-selected="false">🏋️ Weight kg ⇄ lb</button>
-        <button class="calc-nav-item" data-target="calc-unit"  role="tab" aria-selected="false">🔄 Unit Converter</button>
-        <button class="calc-nav-item" data-target="calc-period" role="tab" aria-selected="false">🩷 Next Period</button>
-        <button class="calc-nav-item" data-target="calc-ov"    role="tab" aria-selected="false">🌸 Ovulation &amp; Fertile Days</button>
       </aside>
 
-      <!-- RIGHT: the selected calculator -->
+      <!-- MIDDLE: the selected calculator -->
       <div class="calc-stage">
 
         <div class="calc-panel is-active" id="calc-simple" role="tabpanel">
@@ -438,6 +427,21 @@
         </div>
 
       </div>
+
+      <!-- RIGHT column of options -->
+      <aside class="calc-nav calc-nav-b" role="tablist" aria-label="More calculators">
+        <button class="calc-nav-item" data-target="calc-mf"   role="tab" aria-selected="false">👶 Paediatric Fluids (4-2-1)</button>
+        <button class="calc-nav-item" data-target="calc-edd"  role="tab" aria-selected="false">🤰 Estimated Due Date</button>
+        <button class="calc-nav-item" data-target="calc-pk"   role="tab" aria-selected="false">🔥 Burns Fluid (Parkland)</button>
+        <button class="calc-nav-item" data-target="calc-cc"   role="tab" aria-selected="false">🦴 Corrected Calcium</button>
+        <button class="calc-nav-item" data-target="calc-ag"   role="tab" aria-selected="false">⚗️ Anion Gap</button>
+        <button class="calc-nav-item" data-target="calc-gcs"  role="tab" aria-selected="false">🧠 Glasgow Coma Scale</button>
+        <button class="calc-nav-item" data-target="calc-temp" role="tab" aria-selected="false">🌡️ Temperature °F → °C</button>
+        <button class="calc-nav-item" data-target="calc-wt"   role="tab" aria-selected="false">🏋️ Weight kg ⇄ lb</button>
+        <button class="calc-nav-item" data-target="calc-unit" role="tab" aria-selected="false">🔄 Unit Converter</button>
+        <button class="calc-nav-item" data-target="calc-period" role="tab" aria-selected="false">🩷 Next Period</button>
+        <button class="calc-nav-item" data-target="calc-ov"   role="tab" aria-selected="false">🌸 Ovulation &amp; Fertile Days</button>
+      </aside>
     </div>
 
     <div class="calc-disclaimer calc-disclaimer-foot">

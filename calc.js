@@ -75,7 +75,7 @@
     if (v === null || t === null) return out("dr-out", "Enter volume and time…");
     if (t <= 0 || v <= 0) return out("dr-out", "Values must be greater than zero.");
     var g = Math.round((v * df) / t);
-    out("dr-out", "<b>" + g + " gtt/min</b>" + work("(" + v + " mL × " + df + " gtt/mL) ÷ " + t + " min"));
+    out("dr-out", "<b>" + g + " gtt/min</b>" + work("(" + v + " mL × " + df + " gtt/mL) ÷ " + t + " min · set the roller clamp to " + g + " drops per minute (≈ " + Math.round(g / 60 * 10) / 10 + "/sec)"));
   });
 
   /* 2 — IV flow rate (mL/hr) */
@@ -83,7 +83,7 @@
     var v = num($("fr-vol")), t = num($("fr-time"));
     if (v === null || t === null) return out("fr-out", "Enter volume and time…");
     if (t <= 0 || v <= 0) return out("fr-out", "Values must be greater than zero.");
-    out("fr-out", "<b>" + round(v / t, 1) + " mL/hr</b>" + work(v + " mL ÷ " + t + " hr"));
+    out("fr-out", "<b>" + round(v / t, 1) + " mL/hr</b>" + work(v + " mL ÷ " + t + " hr · set the infusion pump to this rate"));
   });
 
   /* 3 — IV infusion time */
@@ -103,7 +103,7 @@
     if (d === null || h === null) return out("do-out", "Enter desired and stock strength…");
     if (h <= 0) return out("do-out", "Stock strength must be greater than zero.");
     var amt = (d / h) * q;
-    out("do-out", "<b>" + round(amt, 2) + " tablet(s) / mL</b>" + work("(" + d + " ÷ " + h + ") × " + q));
+    out("do-out", "<b>" + round(amt, 2) + " tablet(s) / mL</b>" + work("Desired ÷ Have × Quantity = (" + d + " ÷ " + h + ") × " + q + " · administer this amount per dose"));
   });
 
   /* 5 — Weight-based dose (mg/kg) */
@@ -123,7 +123,9 @@
   on(["tc-f"], function () {
     var f = num($("tc-f"));
     if (f === null) return out("tc-out", "Enter a Fahrenheit value…");
-    out("tc-out", "<b>" + round((f - 32) * 5 / 9, 1) + " °C</b>" + work("(" + f + " °F − 32) × 5/9"));
+    var c = (f - 32) * 5 / 9;
+    var band = c < 35 ? "hypothermia (<35 °C)" : c <= 37.5 ? "normal (36.5–37.5 °C)" : c <= 38 ? "low-grade fever" : c <= 39 ? "fever" : "high fever (>39 °C)";
+    out("tc-out", "<b>" + round(c, 1) + " °C</b>" + work("(" + f + " °F − 32) × 5/9 · " + band));
   });
 
   /* BMI — sex, cm or ft/in height, WHO category + scale marker */
