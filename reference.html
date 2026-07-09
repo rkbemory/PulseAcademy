@@ -40,7 +40,21 @@
 
     <div class="calc-layout">
       <aside class="calc-nav" role="tablist" aria-label="Choose a reference">
-        <button class="calc-nav-item is-active" data-target="ref-labs" role="tab" aria-selected="true">🩸 Normal Lab Values</button>
+        <div class="calc-nav-cap">Lab Values</div>
+        <button class="calc-nav-item is-active" data-target="ref-cbc" role="tab" aria-selected="true">🩸 CBC &amp; WBC Differential</button>
+        <button class="calc-nav-item" data-target="ref-lytes" role="tab" aria-selected="false">⚡ Electrolytes</button>
+        <button class="calc-nav-item" data-target="ref-renal" role="tab" aria-selected="false">🫘 Renal Function</button>
+        <button class="calc-nav-item" data-target="ref-glucose" role="tab" aria-selected="false">🍬 Glucose &amp; Diabetes</button>
+        <button class="calc-nav-item" data-target="ref-liver" role="tab" aria-selected="false">🧬 Liver &amp; Protein</button>
+        <button class="calc-nav-item" data-target="ref-lipids" role="tab" aria-selected="false">💛 Lipid Profile</button>
+        <button class="calc-nav-item" data-target="ref-coag" role="tab" aria-selected="false">🩸 Coagulation</button>
+        <button class="calc-nav-item" data-target="ref-cardiac" role="tab" aria-selected="false">🫀 Cardiac Markers</button>
+        <button class="calc-nav-item" data-target="ref-thyroid" role="tab" aria-selected="false">🦋 Thyroid Function</button>
+        <button class="calc-nav-item" data-target="ref-iron" role="tab" aria-selected="false">🧲 Iron Studies</button>
+        <button class="calc-nav-item" data-target="ref-inflam" role="tab" aria-selected="false">🔥 Inflammatory &amp; Metabolic</button>
+        <button class="calc-nav-item" data-target="ref-abg" role="tab" aria-selected="false">🌬️ Blood Gas (ABG)</button>
+        <button class="calc-nav-item" data-target="ref-urine" role="tab" aria-selected="false">🧪 Urinalysis</button>
+        <div class="calc-nav-cap">Bedside Reference</div>
         <button class="calc-nav-item" data-target="ref-vitals" role="tab" aria-selected="false">❤️ Vital Signs by Age</button>
         <button class="calc-nav-item" data-target="ref-drugs" role="tab" aria-selected="false">💊 Therapeutic Drug Levels</button>
         <button class="calc-nav-item" data-target="ref-fluids" role="tab" aria-selected="false">💧 IV Fluids &amp; Tonicity</button>
@@ -49,9 +63,9 @@
 
       <div class="calc-stage calc-stage-wide">
 
-        <div class="calc-panel is-active" id="ref-labs" role="tabpanel">
+        <div class="calc-panel is-active" id="ref-cbc" role="tabpanel">
           <div class="calc-card ref-card">
-            <h2 class="calc-title">🩸 Normal Adult Lab Values <span class="calc-unit">conventional units</span></h2>
+            <h2 class="calc-title ref-h ref-h-red">🩸 CBC &amp; WBC Differential <span class="calc-unit">conventional units</span></h2>
             <table class="ref-table">
               <tr class="ref-group ref-g-red"><td colspan="2">Complete Blood Count (CBC)</td></tr>
               <tr><td>Haemoglobin (Hb)</td><td>M 13.5–17.5 · F 12.0–15.5 g/dL</td></tr>
@@ -72,8 +86,14 @@
               <tr><td>Monocytes</td><td>2–8%</td></tr>
               <tr><td>Eosinophils</td><td>1–4%</td></tr>
               <tr><td>Basophils</td><td>0.5–1%</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-blue"><td colspan="2">Electrolytes</td></tr>
+        <div class="calc-panel" id="ref-lytes" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-blue">⚡ Electrolytes <span class="calc-unit">serum</span></h2>
+            <table class="ref-table">
               <tr><td>Sodium (Na⁺)</td><td>135–145 mEq/L</td></tr>
               <tr><td>Potassium (K⁺)</td><td>3.5–5.0 mEq/L</td></tr>
               <tr><td>Chloride (Cl⁻)</td><td>98–106 mEq/L</td></tr>
@@ -82,20 +102,38 @@
               <tr><td>Calcium (ionised)</td><td>4.5–5.6 mg/dL</td></tr>
               <tr><td>Magnesium</td><td>1.7–2.2 mg/dL</td></tr>
               <tr><td>Phosphate</td><td>2.5–4.5 mg/dL</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-teal"><td colspan="2">Renal Function</td></tr>
+        <div class="calc-panel" id="ref-renal" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-teal">🫘 Renal Function</h2>
+            <table class="ref-table">
               <tr><td>BUN (urea nitrogen)</td><td>7–20 mg/dL</td></tr>
               <tr><td>Creatinine</td><td>M 0.7–1.3 · F 0.6–1.1 mg/dL</td></tr>
               <tr><td>eGFR</td><td>≥ 90 mL/min/1.73m²</td></tr>
               <tr><td>Uric acid</td><td>M 3.4–7.0 · F 2.4–6.0 mg/dL</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-amber"><td colspan="2">Glucose &amp; Diabetes</td></tr>
+        <div class="calc-panel" id="ref-glucose" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-amber">🍬 Glucose &amp; Diabetes</h2>
+            <table class="ref-table">
               <tr><td>Fasting glucose</td><td>70–100 mg/dL</td></tr>
               <tr><td>Random glucose</td><td>&lt; 140 mg/dL</td></tr>
               <tr><td>2-hr OGTT</td><td>&lt; 140 mg/dL</td></tr>
               <tr><td>HbA1c — normal</td><td>&lt; 5.7% (pre-diabetes 5.7–6.4 · diabetes ≥ 6.5)</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-amber"><td colspan="2">Liver &amp; Protein</td></tr>
+        <div class="calc-panel" id="ref-liver" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-amber">🧬 Liver &amp; Protein</h2>
+            <table class="ref-table">
               <tr><td>ALT</td><td>7–56 U/L</td></tr>
               <tr><td>AST</td><td>10–40 U/L</td></tr>
               <tr><td>ALP</td><td>44–147 U/L</td></tr>
@@ -104,54 +142,103 @@
               <tr><td>Direct bilirubin</td><td>0.0–0.3 mg/dL</td></tr>
               <tr><td>Total protein</td><td>6.0–8.3 g/dL</td></tr>
               <tr><td>Albumin</td><td>3.5–5.0 g/dL</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-purple"><td colspan="2">Lipid Profile (desirable)</td></tr>
+        <div class="calc-panel" id="ref-lipids" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-purple">💛 Lipid Profile <span class="calc-unit">desirable</span></h2>
+            <table class="ref-table">
               <tr><td>Total cholesterol</td><td>&lt; 200 mg/dL</td></tr>
               <tr><td>LDL cholesterol</td><td>&lt; 100 mg/dL (optimal)</td></tr>
               <tr><td>HDL cholesterol</td><td>M &gt; 40 · F &gt; 50 mg/dL (higher is better)</td></tr>
               <tr><td>Triglycerides</td><td>&lt; 150 mg/dL</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-red"><td colspan="2">Coagulation</td></tr>
+        <div class="calc-panel" id="ref-coag" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-red">🩸 Coagulation</h2>
+            <table class="ref-table">
               <tr><td>PT (prothrombin time)</td><td>11–13.5 s</td></tr>
               <tr><td>INR (not on warfarin)</td><td>0.8–1.1</td></tr>
               <tr><td>INR (therapeutic, warfarin)</td><td>2.0–3.0</td></tr>
               <tr><td>aPTT</td><td>25–35 s</td></tr>
               <tr><td>Fibrinogen</td><td>200–400 mg/dL</td></tr>
               <tr><td>D-dimer</td><td>&lt; 0.5 µg/mL (&lt; 500 ng/mL)</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-blue"><td colspan="2">Cardiac Markers <span class="ref-note-inline">(assay-specific — confirm locally)</span></td></tr>
+        <div class="calc-panel" id="ref-cardiac" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-blue">🫀 Cardiac Markers</h2>
+            <p class="calc-formula">Assay-specific cut-offs — always confirm against your local laboratory.</p>
+            <table class="ref-table">
               <tr><td>Troponin I</td><td>&lt; 0.04 ng/mL</td></tr>
               <tr><td>CK-MB</td><td>&lt; 5% of total CK</td></tr>
               <tr><td>BNP</td><td>&lt; 100 pg/mL</td></tr>
               <tr><td>NT-proBNP</td><td>&lt; 125 pg/mL</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-teal"><td colspan="2">Thyroid Function</td></tr>
+        <div class="calc-panel" id="ref-thyroid" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-teal">🦋 Thyroid Function</h2>
+            <table class="ref-table">
               <tr><td>TSH</td><td>0.4–4.0 mIU/L</td></tr>
               <tr><td>Free T4</td><td>0.8–1.8 ng/dL</td></tr>
               <tr><td>Free T3</td><td>2.3–4.2 pg/mL</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-amber"><td colspan="2">Iron Studies</td></tr>
+        <div class="calc-panel" id="ref-iron" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-amber">🧲 Iron Studies</h2>
+            <table class="ref-table">
               <tr><td>Serum iron</td><td>M 65–175 · F 50–170 µg/dL</td></tr>
               <tr><td>Ferritin</td><td>M 12–300 · F 12–150 ng/mL</td></tr>
               <tr><td>TIBC</td><td>240–450 µg/dL</td></tr>
               <tr><td>Transferrin saturation</td><td>20–50%</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-purple"><td colspan="2">Inflammatory &amp; Metabolic</td></tr>
+        <div class="calc-panel" id="ref-inflam" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-purple">🔥 Inflammatory &amp; Metabolic</h2>
+            <table class="ref-table">
               <tr><td>CRP</td><td>&lt; 1.0 mg/dL</td></tr>
               <tr><td>Lactate</td><td>0.5–2.2 mmol/L</td></tr>
               <tr><td>Ammonia</td><td>15–45 µg/dL</td></tr>
               <tr><td>Amylase</td><td>30–110 U/L</td></tr>
               <tr><td>Lipase</td><td>0–160 U/L</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-blue"><td colspan="2">Arterial Blood Gas (ABG)</td></tr>
+        <div class="calc-panel" id="ref-abg" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-blue">🌬️ Arterial Blood Gas (ABG)</h2>
+            <table class="ref-table">
               <tr><td>pH</td><td>7.35–7.45</td></tr>
               <tr><td>PaCO₂</td><td>35–45 mmHg</td></tr>
               <tr><td>PaO₂</td><td>80–100 mmHg</td></tr>
               <tr><td>HCO₃⁻ (arterial)</td><td>22–26 mEq/L</td></tr>
               <tr><td>SaO₂</td><td>95–100%</td></tr>
               <tr><td>Base excess</td><td>−2 to +2 mEq/L</td></tr>
+            </table>
+          </div>
+        </div>
 
-              <tr class="ref-group ref-g-teal"><td colspan="2">Urinalysis</td></tr>
+        <div class="calc-panel" id="ref-urine" role="tabpanel">
+          <div class="calc-card ref-card">
+            <h2 class="calc-title ref-h ref-h-teal">🧪 Urinalysis</h2>
+            <table class="ref-table">
               <tr><td>pH</td><td>4.5–8.0</td></tr>
               <tr><td>Specific gravity</td><td>1.005–1.030</td></tr>
               <tr><td>Protein</td><td>Negative (&lt; 150 mg/day)</td></tr>
@@ -162,7 +249,7 @@
 
         <div class="calc-panel" id="ref-vitals" role="tabpanel">
           <div class="calc-card ref-card">
-            <h2 class="calc-title">❤️ Normal Vital Signs by Age</h2>
+            <h2 class="calc-title ref-h ref-h-red">❤️ Normal Vital Signs by Age</h2>
             <table class="ref-table ref-table-vitals">
               <thead><tr><th>Age</th><th>Heart rate (bpm)</th><th>Resp rate (/min)</th><th>Systolic BP (mmHg)</th></tr></thead>
               <tr><td>Newborn (0–1 mo)</td><td>100–160</td><td>30–60</td><td>60–90</td></tr>
@@ -190,7 +277,7 @@
 
         <div class="calc-panel" id="ref-drugs" role="tabpanel">
           <div class="calc-card ref-card">
-            <h2 class="calc-title">💊 Therapeutic Drug Levels <span class="calc-unit">serum</span></h2>
+            <h2 class="calc-title ref-h ref-h-purple">💊 Therapeutic Drug Levels <span class="calc-unit">serum</span></h2>
             <p class="calc-formula">Target therapeutic ranges. Levels are timing- and assay-dependent — always follow your local lab and pharmacy.</p>
             <table class="ref-table">
               <thead><tr><th>Drug</th><th>Therapeutic range</th></tr></thead>
@@ -212,7 +299,7 @@
 
         <div class="calc-panel" id="ref-fluids" role="tabpanel">
           <div class="calc-card ref-card">
-            <h2 class="calc-title">💧 IV Fluids &amp; Tonicity</h2>
+            <h2 class="calc-title ref-h ref-h-teal">💧 IV Fluids &amp; Tonicity</h2>
             <table class="ref-table ref-table-vitals">
               <thead><tr><th>Fluid</th><th>Tonicity</th><th>Key use</th></tr></thead>
               <tr><td>0.9% NaCl (Normal Saline)</td><td>Isotonic</td><td>Resuscitation, replacement</td></tr>
@@ -231,7 +318,7 @@
 
         <div class="calc-panel" id="ref-conv" role="tabpanel">
           <div class="calc-card ref-card">
-            <h2 class="calc-title">🔁 Conversions &amp; Quick Facts</h2>
+            <h2 class="calc-title ref-h ref-h-blue">🔁 Conversions &amp; Quick Facts</h2>
             <table class="ref-table">
               <tr class="ref-group ref-g-teal"><td colspan="2">Weight &amp; length</td></tr>
               <tr><td>Kilograms → pounds</td><td>1 kg = 2.2 lb</td></tr>

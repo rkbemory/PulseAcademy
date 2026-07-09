@@ -4980,6 +4980,26 @@ body > footer { flex-shrink: 0; }
 }
 .ref-page .calc-stage .ref-card { box-shadow: 0 16px 38px rgba(20,56,122,0.10); }
 
+/* Quick Reference — grouped, scrollable left nav + coloured section titles */
+.ref-page .calc-nav { max-height: calc(100vh - 96px); overflow-y: auto; scrollbar-width: thin; }
+.calc-nav-cap {
+  font-size: 0.64rem; font-weight: 800; letter-spacing: 0.9px; text-transform: uppercase;
+  color: var(--text-soft); opacity: 0.62; padding: 9px 12px 3px; user-select: none;
+}
+.calc-nav-cap:first-child { padding-top: 3px; }
+.ref-card .ref-h {
+  border-bottom: 2px solid var(--primary); padding-bottom: 8px; margin-bottom: 4px;
+}
+.ref-h-red    { color: #B3123E; border-bottom-color: #B3123E !important; }
+.ref-h-blue   { color: #14387A; border-bottom-color: #14387A !important; }
+.ref-h-teal   { color: #0E7490; border-bottom-color: #0E7490 !important; }
+.ref-h-amber  { color: #8A5A12; border-bottom-color: #C99A50 !important; }
+.ref-h-purple { color: #6D28D9; border-bottom-color: #6D28D9 !important; }
+@media (max-width: 760px) {
+  .ref-page .calc-nav { max-height: none; overflow: visible; }
+  .calc-nav-cap { flex: 0 0 100%; padding: 6px 4px 2px; }
+}
+
 /* bottom disclaimer — centered under the content, education framing */
 .calc-disclaimer-foot {
   max-width: 728px;
