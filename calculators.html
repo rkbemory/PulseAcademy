@@ -49,6 +49,16 @@
         <button class="calc-nav-item" data-target="calc-dose"  role="tab" aria-selected="false">💊 Dosage (tablets/liquid)</button>
         <button class="calc-nav-item" data-target="calc-wb"    role="tab" aria-selected="false">⚖️ Weight-Based Dose</button>
         <button class="calc-nav-item" data-target="calc-abg"   role="tab" aria-selected="false">🫁 ABG Interpreter</button>
+        <button class="calc-nav-item" data-target="calc-crcl" role="tab" aria-selected="false">🧪 Creatinine Clearance (GFR)</button>
+        <button class="calc-nav-item" data-target="calc-bsa"  role="tab" aria-selected="false">📐 Body Surface Area</button>
+        <button class="calc-nav-item" data-target="calc-ibw"  role="tab" aria-selected="false">⚖️ Ideal Body Weight</button>
+        <button class="calc-nav-item" data-target="calc-map"  role="tab" aria-selected="false">❤️ Mean Arterial Pressure</button>
+        <button class="calc-nav-item" data-target="calc-mf"   role="tab" aria-selected="false">👶 Paediatric Fluids (4-2-1)</button>
+        <button class="calc-nav-item" data-target="calc-edd"  role="tab" aria-selected="false">🤰 Estimated Due Date</button>
+        <button class="calc-nav-item" data-target="calc-pk"   role="tab" aria-selected="false">🔥 Burns Fluid (Parkland)</button>
+        <button class="calc-nav-item" data-target="calc-cc"   role="tab" aria-selected="false">🦴 Corrected Calcium</button>
+        <button class="calc-nav-item" data-target="calc-ag"   role="tab" aria-selected="false">⚗️ Anion Gap</button>
+        <button class="calc-nav-item" data-target="calc-gcs"  role="tab" aria-selected="false">🧠 Glasgow Coma Scale</button>
         <button class="calc-nav-item" data-target="calc-temp"  role="tab" aria-selected="false">🌡️ Temperature °F → °C</button>
         <button class="calc-nav-item" data-target="calc-wt"    role="tab" aria-selected="false">🏋️ Weight kg ⇄ lb</button>
         <button class="calc-nav-item" data-target="calc-unit"  role="tab" aria-selected="false">🔄 Unit Converter</button>
@@ -166,6 +176,161 @@
               <label class="calc-field"><span>HCO₃⁻ (mEq/L)</span><input id="abg-hco3" type="number" inputmode="decimal" placeholder="24"></label>
             </div>
             <div class="calc-result" id="abg-out">Enter pH, PaCO₂ and HCO₃⁻…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-crcl" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🧪 Creatinine Clearance <span class="calc-unit">mL/min</span></h2>
+            <p class="calc-formula">Cockcroft–Gault: [(140 − age) × weight × sex] ÷ (72 × SCr)</p>
+            <div class="bmi-seg" role="group" aria-label="Sex">
+              <button type="button" class="bmi-toggle is-on" data-sex="male">♂ Male</button>
+              <button type="button" class="bmi-toggle" data-sex="female">♀ Female</button>
+            </div>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>Age (years)</span><input id="cr-age" type="number" inputmode="decimal" placeholder="e.g. 45"></label>
+              <label class="calc-field"><span>Weight (kg)</span><input id="cr-wt" type="number" inputmode="decimal" placeholder="e.g. 60"></label>
+              <label class="calc-field"><span>Serum creatinine (mg/dL)</span><input id="cr-scr" type="number" inputmode="decimal" step="0.01" placeholder="e.g. 1.0"></label>
+            </div>
+            <div class="calc-result" id="cr-out">Enter age, weight and creatinine…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-bsa" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">📐 Body Surface Area <span class="calc-unit">m²</span></h2>
+            <p class="calc-formula">Mosteller: √(height cm × weight kg ÷ 3600)</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>Height (cm)</span><input id="bsa-ht" type="number" inputmode="decimal" placeholder="e.g. 160"></label>
+              <label class="calc-field"><span>Weight (kg)</span><input id="bsa-wt" type="number" inputmode="decimal" placeholder="e.g. 60"></label>
+            </div>
+            <div class="calc-result" id="bsa-out">Enter height and weight…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-ibw" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">⚖️ Ideal Body Weight <span class="calc-unit">kg</span></h2>
+            <p class="calc-formula">Devine: 50 (♂) / 45.5 (♀) + 2.3 kg per inch over 5 ft</p>
+            <div class="bmi-seg" role="group" aria-label="Sex">
+              <button type="button" class="bmi-toggle is-on" data-sex="male">♂ Male</button>
+              <button type="button" class="bmi-toggle" data-sex="female">♀ Female</button>
+            </div>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Height (cm)</span><input id="ibw-ht" type="number" inputmode="decimal" placeholder="e.g. 165"></label>
+            </div>
+            <div class="calc-result" id="ibw-out">Enter height…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-map" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">❤️ Mean Arterial Pressure <span class="calc-unit">mmHg</span></h2>
+            <p class="calc-formula">MAP = (SBP + 2 × DBP) ÷ 3</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>Systolic (SBP)</span><input id="map-sbp" type="number" inputmode="decimal" placeholder="e.g. 120"></label>
+              <label class="calc-field"><span>Diastolic (DBP)</span><input id="map-dbp" type="number" inputmode="decimal" placeholder="e.g. 80"></label>
+            </div>
+            <div class="calc-result" id="map-out">Enter systolic and diastolic…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-mf" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">👶 Paediatric Maintenance Fluids <span class="calc-unit">mL/hr</span></h2>
+            <p class="calc-formula">Holliday–Segar 4-2-1: 4 mL/kg (first 10 kg) + 2 (next 10) + 1 (rest)</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>Weight (kg)</span><input id="mf-wt" type="number" inputmode="decimal" placeholder="e.g. 14"></label>
+            </div>
+            <div class="calc-result" id="mf-out">Enter weight…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-edd" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🤰 Estimated Due Date</h2>
+            <p class="calc-formula">Naegele's rule: LMP + 280 days (40 weeks)</p>
+            <div class="calc-fields">
+              <label class="calc-field"><span>First day of last menstrual period (LMP)</span><input id="edd-lmp" type="date"></label>
+            </div>
+            <div class="calc-result" id="edd-out">Pick the first day of the last menstrual period…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-pk" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🔥 Burns Fluid — Parkland <span class="calc-unit">mL / 24 h</span></h2>
+            <p class="calc-formula">4 mL × weight (kg) × % TBSA burned · half in first 8 h</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>Weight (kg)</span><input id="pk-wt" type="number" inputmode="decimal" placeholder="e.g. 70"></label>
+              <label class="calc-field"><span>% TBSA burned</span><input id="pk-tbsa" type="number" inputmode="decimal" placeholder="e.g. 30"></label>
+            </div>
+            <div class="calc-result" id="pk-out">Enter weight and % burn (TBSA)…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-cc" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🦴 Corrected Calcium <span class="calc-unit">mg/dL</span></h2>
+            <p class="calc-formula">Measured Ca + 0.8 × (4.0 − albumin)</p>
+            <div class="calc-fields calc-fields-2">
+              <label class="calc-field"><span>Measured calcium (mg/dL)</span><input id="cc-ca" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 8.2"></label>
+              <label class="calc-field"><span>Albumin (g/dL)</span><input id="cc-alb" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 3.0"></label>
+            </div>
+            <div class="calc-result" id="cc-out">Enter measured calcium and albumin…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-ag" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">⚗️ Anion Gap <span class="calc-unit">mEq/L</span></h2>
+            <p class="calc-formula">Na⁺ − (Cl⁻ + HCO₃⁻) · normal 3–11</p>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>Sodium Na⁺</span><input id="ag-na" type="number" inputmode="decimal" placeholder="e.g. 140"></label>
+              <label class="calc-field"><span>Chloride Cl⁻</span><input id="ag-cl" type="number" inputmode="decimal" placeholder="e.g. 104"></label>
+              <label class="calc-field"><span>Bicarb HCO₃⁻</span><input id="ag-hco3" type="number" inputmode="decimal" placeholder="e.g. 24"></label>
+            </div>
+            <div class="calc-result" id="ag-out">Enter Na⁺, Cl⁻ and HCO₃⁻…</div>
+          </div>
+        </div>
+
+        <div class="calc-panel" id="calc-gcs" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🧠 Glasgow Coma Scale <span class="calc-unit">/ 15</span></h2>
+            <p class="calc-formula">Eye + Verbal + Motor · 13–15 minor · 9–12 moderate · ≤8 severe</p>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>Eye opening</span>
+                <select id="gcs-e">
+                  <option value="">—</option>
+                  <option value="4">4 — Spontaneous</option>
+                  <option value="3">3 — To speech</option>
+                  <option value="2">2 — To pain</option>
+                  <option value="1">1 — None</option>
+                </select>
+              </label>
+              <label class="calc-field"><span>Verbal response</span>
+                <select id="gcs-v">
+                  <option value="">—</option>
+                  <option value="5">5 — Oriented</option>
+                  <option value="4">4 — Confused</option>
+                  <option value="3">3 — Inappropriate words</option>
+                  <option value="2">2 — Incomprehensible</option>
+                  <option value="1">1 — None</option>
+                </select>
+              </label>
+              <label class="calc-field"><span>Motor response</span>
+                <select id="gcs-m">
+                  <option value="">—</option>
+                  <option value="6">6 — Obeys commands</option>
+                  <option value="5">5 — Localises pain</option>
+                  <option value="4">4 — Withdraws</option>
+                  <option value="3">3 — Flexion (decorticate)</option>
+                  <option value="2">2 — Extension (decerebrate)</option>
+                  <option value="1">1 — None</option>
+                </select>
+              </label>
+            </div>
+            <div class="calc-result" id="gcs-out">Select eye, verbal and motor responses…</div>
           </div>
         </div>
 
