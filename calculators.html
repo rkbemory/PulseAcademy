@@ -323,6 +323,27 @@
           </div>
         </div>
 
+        <div class="calc-panel" id="calc-o2" role="tabpanel">
+          <div class="calc-card">
+            <h2 class="calc-title">🫧 Oxygen Tank Duration <span class="calc-unit">time left</span></h2>
+            <p class="calc-formula">(Gauge PSI × cylinder factor) ÷ flow rate (L/min)</p>
+            <div class="calc-fields calc-fields-3">
+              <label class="calc-field"><span>Cylinder</span>
+                <select id="o2-cyl">
+                  <option value="0.28">E cylinder</option>
+                  <option value="0.16">D cylinder</option>
+                  <option value="1.56">M cylinder</option>
+                  <option value="2.41">G cylinder</option>
+                  <option value="3.14">H / K cylinder</option>
+                </select>
+              </label>
+              <label class="calc-field"><span>Gauge pressure (PSI)</span><input id="o2-psi" type="number" inputmode="decimal" placeholder="e.g. 2000"></label>
+              <label class="calc-field"><span>Flow rate (L/min)</span><input id="o2-flow" type="number" inputmode="decimal" placeholder="e.g. 4"></label>
+            </div>
+            <div class="calc-result" id="o2-out">Enter cylinder, pressure and flow rate…</div>
+          </div>
+        </div>
+
         <div class="calc-panel" id="calc-bmi" role="tabpanel">
           <div class="calc-card">
             <h2 class="calc-title">📏 BMI <span class="calc-unit">kg/m²</span></h2>
@@ -436,6 +457,7 @@
         <button class="calc-nav-item" data-target="calc-cc"   role="tab" aria-selected="false">🦴 Corrected Calcium</button>
         <button class="calc-nav-item" data-target="calc-ag"   role="tab" aria-selected="false">⚗️ Anion Gap</button>
         <button class="calc-nav-item" data-target="calc-gcs"  role="tab" aria-selected="false">🧠 Glasgow Coma Scale</button>
+        <button class="calc-nav-item" data-target="calc-o2"   role="tab" aria-selected="false">🫧 Oxygen Tank Duration</button>
         <button class="calc-nav-item" data-target="calc-temp" role="tab" aria-selected="false">🌡️ Temperature °F → °C</button>
         <button class="calc-nav-item" data-target="calc-wt"   role="tab" aria-selected="false">🏋️ Weight kg ⇄ lb</button>
         <button class="calc-nav-item" data-target="calc-unit" role="tab" aria-selected="false">🔄 Unit Converter</button>

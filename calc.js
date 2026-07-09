@@ -398,4 +398,16 @@
     var sev = t >= 13 ? "minor brain injury (13–15)" : t >= 9 ? "moderate (9–12)" : "severe (≤8)";
     out("gcs-out", "<b>GCS " + t + " / 15</b>" + work("E" + e + " V" + v + " M" + m + " · " + sev));
   });
+
+  /* Oxygen tank duration */
+  on(["o2-cyl", "o2-psi", "o2-flow"], function () {
+    if (!$("o2-out")) return;
+    var factor = parseFloat($("o2-cyl").value), psi = num($("o2-psi")), flow = num($("o2-flow"));
+    if (psi === null || flow === null) return out("o2-out", "Enter cylinder, pressure and flow rate…");
+    if (psi < 0 || flow <= 0) return out("o2-out", "Pressure ≥ 0 and flow must be greater than zero.");
+    var mins = (psi * factor) / flow, h = Math.floor(mins / 60), m = Math.round(mins % 60);
+    if (m === 60) { h += 1; m = 0; }
+    var note = psi < 500 ? " · ⚠ gauge below 500 psi — change the cylinder" : "";
+    out("o2-out", "<b>" + h + " h " + m + " min</b>" + work("(" + psi + " psi × " + factor + ") ÷ " + flow + " L/min = " + round(mins, 0) + " min" + note));
+  });
 })();
