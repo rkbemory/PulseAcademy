@@ -4924,9 +4924,17 @@ body > footer { flex-shrink: 0; }
 .calc-fields[hidden] { display: none !important; }
 
 /* ---- Quick Reference page: tables ---- */
+/* Reference uses a clean 2-column layout (nav + table). The higher-specificity
+   .calc-page.ref-page selector overrides the calculators' 3-column grid so the
+   Reference page doesn't inherit a phantom empty right column. */
 @media (min-width: 761px) {
-  .ref-page .calc-layout { grid-template-columns: 232px minmax(0, 620px); }
-  .ref-page .calc-stage .calc-card { max-width: 620px; }
+  .calc-page.ref-page .calc-layout {
+    grid-template-columns: 248px minmax(0, 624px);
+    grid-template-areas: "nav stage";
+    gap: 24px; justify-content: center; max-width: none; margin: 0;
+  }
+  .calc-page.ref-page .calc-nav { grid-area: nav; }
+  .ref-page .calc-stage .calc-card { max-width: 624px; }
 }
 .ref-card { overflow-x: auto; }
 .ref-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 4px; }
@@ -4982,6 +4990,7 @@ body > footer { flex-shrink: 0; }
 
 /* Quick Reference — grouped, scrollable left nav + coloured section titles */
 .ref-page .calc-nav { max-height: calc(100vh - 96px); overflow-y: auto; scrollbar-width: thin; }
+.ref-page .calc-nav-item { white-space: nowrap; }
 .calc-nav-cap {
   font-size: 0.64rem; font-weight: 800; letter-spacing: 0.9px; text-transform: uppercase;
   color: var(--text-soft); opacity: 0.62; padding: 9px 12px 3px; user-select: none;
