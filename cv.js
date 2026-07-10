@@ -156,7 +156,19 @@
     try { var d = JSON.parse(localStorage.getItem(LS)); if (d && d.personal && Array.isArray(d.sections)) { d.sections.forEach(function (s) { s._id = s._id || uid(); (s.items || []).forEach(function (i) { i._id = i._id || uid(); }); }); return d; } } catch (e) {}
     return defaultState();
   }
-  function save() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+  var cvMirrorTimer = null;
+  // Signed in → mirror the CV to the account (debounced) so it follows the user
+  // across devices. syncProgress adopts the newest copy on sign-in (newest-wins).
+  function mirrorCv() {
+    if (!(window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress)) return;
+    if (cvMirrorTimer) clearTimeout(cvMirrorTimer);
+    cvMirrorTimer = setTimeout(function () { try { window.PulseAuth.saveProgress("cv", "v1", state); } catch (e) {} }, 2500);
+  }
+  function save() {
+    state.updatedAt = Date.now();
+    try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
+    mirrorCv();
+  }
 
   /* ---------------- Boot & views ---------------- */
   var rootEl = null, view = "welcome";

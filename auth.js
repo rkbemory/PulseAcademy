@@ -397,8 +397,10 @@
     return Promise.all([
       syncKind("academic", "pulse:academic:progress"),
       syncKind("ielts", "pulse:ielts:progress"),
-      syncKind("ielts-writing", "pulse:ielts:writing")
-    ]).then(function (r) { return r[0] || r[1] || r[2]; });
+      syncKind("ielts-writing", "pulse:ielts:writing"),
+      syncBlob("cv", "pulse:cv:v1"),
+      syncBlob("review", "pulse:review:v1")
+    ]).then(function (r) { return r.some(function (x) { return x; }); });
   }
   function syncKind(kind, lsKey) {
     function numOf(v) { if (typeof v === "number") return v; if (v && typeof v.best === "number") return v.best; return null; }
@@ -439,6 +441,26 @@
           .then(function () {}).catch(function () {});
       }
       return changedLocal;
+    });
+  }
+
+  /* Whole-blob newest-wins sync for single-document stores (CV, Smart Review deck).
+     Each blob carries an `updatedAt` epoch; the newer side wins. Resolves true when
+     localStorage was updated from the account (callers may re-render). */
+  function syncBlob(kind, lsKey) {
+    return fetchProgress(kind).then(function (rows) {
+      var remote = null;
+      rows.forEach(function (r) { if (r && r.key === "v1") remote = r.value; });
+      var local = null;
+      try { local = JSON.parse(localStorage.getItem(lsKey) || "null"); } catch (e) {}
+      var lt = (local && typeof local.updatedAt === "number") ? local.updatedAt : 0;
+      var rt = (remote && typeof remote.updatedAt === "number") ? remote.updatedAt : 0;
+      if (remote && rt > lt) {                                   // account has the newer copy → adopt it
+        try { localStorage.setItem(lsKey, JSON.stringify(remote)); } catch (e) {}
+        return true;
+      }
+      if (local && lt > rt) { saveProgress(kind, "v1", local); } // this device is newer → push it up
+      return false;
     });
   }
 

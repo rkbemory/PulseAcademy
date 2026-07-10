@@ -31,7 +31,19 @@
     if (!Array.isArray(d.seeded)) d.seeded = [];
     return d;
   }
-  function save(d) { try { localStorage.setItem(LS, JSON.stringify(d)); } catch (e) {} }
+  var revMirrorTimer = null;
+  // Signed in → mirror the review deck to the account (debounced) so it follows
+  // the user across devices. syncProgress adopts the newest copy (newest-wins).
+  function mirrorReview(d) {
+    if (!(window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress)) return;
+    if (revMirrorTimer) clearTimeout(revMirrorTimer);
+    revMirrorTimer = setTimeout(function () { try { window.PulseAuth.saveProgress("review", "v1", d); } catch (e) {} }, 2500);
+  }
+  function save(d) {
+    d.updatedAt = Date.now();
+    try { localStorage.setItem(LS, JSON.stringify(d)); } catch (e) {}
+    mirrorReview(d);
+  }
 
   function newCard(q, source, now) {
     return {
