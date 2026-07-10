@@ -101,6 +101,18 @@
     }
     return { attempts: attempts, bestRaw: bestRaw, bestModule: bestKey ? ieltsModuleName(bestKey.split("/")[0]) : "" };
   }
+  /* AI Writing band estimates (kind ielts-writing) — best band /9, separate
+     from the raw /40 auto-scores above. */
+  function ieltsWritingActivity() {
+    var w = readJSON("pulse:ielts:writing", "{}"), count = 0, best = 0;
+    for (var k in w) {
+      if (!w.hasOwnProperty(k)) continue;
+      var b = (typeof w[k] === "number") ? w[k] : null;
+      if (b == null) continue;
+      count++; if (b > best) best = b;
+    }
+    return { count: count, best: best };
+  }
   function ieltsTotal() {
     var M = window.IELTS && window.IELTS.modules, n = 0;
     if (M) ["reading", "listening"].forEach(function (mid) { if (M[mid] && M[mid].tests) n += M[mid].tests.length; });
@@ -136,7 +148,7 @@
   function hasActivity(p, hist) {
     hist = hist || STATE.history;
     if (p.kind === "academic") return academicActivity(p.id).length > 0;
-    if (p.kind === "ielts") return ieltsActivity().attempts > 0;
+    if (p.kind === "ielts") return ieltsActivity().attempts > 0 || ieltsWritingActivity().count > 0;
     return hist.some(function (h) { return h.programId === p.id; });
   }
 
@@ -241,14 +253,21 @@
     return card(p, pct, sub, lines, p.href, e.attempts ? "Practice →" : "Start →");
   }
   function ieltsCard(p) {
-    var a = ieltsActivity(), total = ieltsTotal();
+    var a = ieltsActivity(), w = ieltsWritingActivity(), total = ieltsTotal();
     var pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0;
-    var lines = a.attempts
-      ? '<p class="dash-cont-line"><span>Best</span> ' + esc(a.bestModule) + ' — <strong>' + a.bestRaw + '/40</strong></p>' +
-        '<p class="dash-cont-line dash-cont-prev"><span>Done</span> ' + a.attempts + ' auto-scored test' + (a.attempts === 1 ? "" : "s") + '</p>'
+    var started = a.attempts || w.count;
+    var wLine = w.count ? '<p class="dash-cont-line"><span>Writing</span> AI band <strong>' + w.best + '</strong> · ' + w.count + ' AI check' + (w.count === 1 ? "" : "s") + '</p>' : '';
+    var lines = started
+      ? ((a.attempts
+          ? '<p class="dash-cont-line"><span>Best</span> ' + esc(a.bestModule) + ' — <strong>' + a.bestRaw + '/40</strong></p>' +
+            '<p class="dash-cont-line dash-cont-prev"><span>Done</span> ' + a.attempts + ' auto-scored test' + (a.attempts === 1 ? "" : "s") + '</p>'
+          : "") + wLine)
       : '<p class="dash-cont-line dash-cont-prev">Reading · Listening · Writing · Speaking — not started yet.</p>';
-    var metric = a.attempts ? (a.attempts + " / " + total + " scored tests · best " + a.bestRaw + "/40") : "Academic Reading, Listening, Writing & Speaking";
-    return card(p, pct, metric, lines, p.href, a.attempts ? "Continue →" : "Start →");
+    var mp = [];
+    if (a.attempts) mp.push(a.attempts + " / " + total + " scored · best " + a.bestRaw + "/40");
+    if (w.count) mp.push("Writing band " + w.best);
+    var metric = mp.length ? mp.join(" · ") : "Academic Reading, Listening, Writing & Speaking";
+    return card(p, pct, metric, lines, p.href, started ? "Continue →" : "Start →");
   }
   function card(p, pct, metric, lines, href, cta) {
     return '<div class="dash-cont-card" style="--pc:' + p.color + '">' +
@@ -263,10 +282,19 @@
   function statsSection() {
     var pr = readJSON(LS_PROGRESS, "{}"), studied = Object.keys(pr).length;
     var hist = STATE.history, scores = hist.map(scoreOf);
-    var avg = scores.length ? Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length) : 0;
-    var best = scores.length ? Math.max.apply(null, scores) : 0;
+    // Fold IELTS auto-scored tests (raw /40 → %) into the board so IELTS-only
+    // learners aren't shown an empty "0". Academic self-checks feed Topics studied.
+    var ip = readJSON("pulse:ielts:progress", "{}"), ieltsPct = [], ik;
+    for (ik in ip) {
+      if (!ip.hasOwnProperty(ik)) continue;
+      var iv = ip[ik], raw = (typeof iv === "number") ? iv : (iv && typeof iv.best === "number" ? iv.best : null);
+      if (raw != null) ieltsPct.push(Math.round(raw / 40 * 100));
+    }
+    var all = scores.concat(ieltsPct), tests = hist.length + ieltsPct.length;
+    var avg = all.length ? Math.round(all.reduce(function (a, b) { return a + b; }, 0) / all.length) : 0;
+    var best = all.length ? Math.max.apply(null, all) : 0;
     var stat = function (n, l) { return '<div class="dash-stat"><span class="dash-stat-num">' + n + '</span><span class="dash-stat-label">' + l + '</span></div>'; };
-    var stats = stat(studied, "Topics studied") + stat(hist.length, "Quizzes taken") + stat(avg + "%", "Average score") + stat(best + "%", "Best score");
+    var stats = stat(studied, "Topics studied") + stat(tests, "Tests taken") + stat(avg + "%", "Average score") + stat(best + "%", "Best score");
     return '<section class="dash-section"><h2 class="dash-h2">📊 Your scoreboard</h2>' +
       '<div class="dash-stats">' + stats + '</div></section>';
   }
@@ -277,7 +305,7 @@
     var bars = activePrograms().map(function (p) {
       var pct, label;
       if (p.kind === "academic") { var t = academicTotal(p.id), s = academicActivity(p.id).length; pct = t ? Math.round(s / t * 100) : 0; label = s + "/" + t + " topics"; }
-      else if (p.kind === "ielts") { var a = ieltsActivity(); pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0; label = a.attempts ? ("best " + a.bestRaw + "/40") : "—"; }
+      else if (p.kind === "ielts") { var a = ieltsActivity(), wa = ieltsWritingActivity(); pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0; label = a.attempts ? ("best " + a.bestRaw + "/40") : (wa.count ? ("Writing band " + wa.best) : "—"); }
       else { var e = examActivity(p.id, hist); pct = e.best; label = e.attempts ? ("best " + e.best + "%") : "—"; }
       return '<div class="dash-scorerow"><span class="dash-scorerow-name">' + p.icon + " " + esc(p.name) + '</span>' +
         '<div class="dash-bar" style="--pc:' + p.color + '"><span style="width:' + Math.max(2, Math.min(100, pct)) + '%"></span></div>' +

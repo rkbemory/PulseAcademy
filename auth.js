@@ -396,8 +396,9 @@
     try { sessionStorage.setItem("pulse:progressSynced", "1"); } catch (e) {}
     return Promise.all([
       syncKind("academic", "pulse:academic:progress"),
-      syncKind("ielts", "pulse:ielts:progress")
-    ]).then(function (r) { return r[0] || r[1]; });
+      syncKind("ielts", "pulse:ielts:progress"),
+      syncKind("ielts-writing", "pulse:ielts:writing")
+    ]).then(function (r) { return r[0] || r[1] || r[2]; });
   }
   function syncKind(kind, lsKey) {
     function numOf(v) { if (typeof v === "number") return v; if (v && typeof v.best === "number") return v.best; return null; }
@@ -405,6 +406,8 @@
     function row(k, value) {
       return { user_id: window.PulseAuth.user.id, kind: kind, key: k, value: value, updated_at: new Date().toISOString() };
     }
+    // IELTS raw scores and Writing bands both merge by "keep the higher number".
+    var numeric = (kind === "ielts" || kind === "ielts-writing");
     return fetchProgress(kind).then(function (rows) {
       var local;
       try { local = JSON.parse(localStorage.getItem(lsKey) || "{}"); } catch (e) { local = {}; }
@@ -414,7 +417,7 @@
       var changedLocal = false, pushRows = [], k;
       for (k in remote) {                     // remote → local
         if (!remote.hasOwnProperty(k)) continue;
-        if (kind === "ielts") {
+        if (numeric) {
           var rv = numOf(remote[k]), lv = numOf(local[k]);
           if (rv != null && (lv == null || rv > lv)) { local[k] = rv; changedLocal = true; }
         } else if (local[k] == null || tsOf(remote[k]) > tsOf(local[k])) {
@@ -423,7 +426,7 @@
       }
       for (k in local) {                      // local → remote
         if (!local.hasOwnProperty(k)) continue;
-        if (kind === "ielts") {
+        if (numeric) {
           var lv2 = numOf(local[k]), rv2 = numOf(remote[k]);
           if (lv2 != null && (rv2 == null || lv2 > rv2)) pushRows.push(row(k, lv2));
         } else if (remote[k] == null || tsOf(local[k]) > tsOf(remote[k])) {
@@ -439,12 +442,22 @@
     });
   }
 
-  /* When a user signs in, push any results saved locally while anonymous. */
+  /* When a user signs in, push any guest results not yet on the account. Each
+     pushed entry is marked `synced` so quizzes taken as a guest AFTER a later
+     sign-out still sync on the next sign-in — without ever double-inserting. */
   function syncLocalHistory() {
     try {
       var hist = JSON.parse(localStorage.getItem("pulse:history") || "[]");
-      if (!hist.length || localStorage.getItem("pulse:synced") === "1") return;
-      var rows = hist.slice(0, 50).map(function (h) {
+      if (!Array.isArray(hist) || !hist.length) return;
+      // One-time migration off the old global flag: if it says everything was
+      // already pushed, mark existing entries synced so we don't re-insert them.
+      if (localStorage.getItem("pulse:synced") === "1") {
+        hist.forEach(function (h) { if (h && h.synced == null) h.synced = true; });
+        try { localStorage.setItem("pulse:history", JSON.stringify(hist)); localStorage.removeItem("pulse:synced"); } catch (e) {}
+      }
+      var pending = hist.filter(function (h) { return h && !h.synced; }).slice(0, 50);
+      if (!pending.length) return;
+      var rows = pending.map(function (h) {
         return {
           user_id: window.PulseAuth.user.id,
           program_id: h.programId, test_id: h.testId, test_title: h.testTitle,
@@ -452,8 +465,15 @@
           submitted_at: new Date(h.submittedAt || Date.now()).toISOString(), detail: {}
         };
       });
-      supa.from("quiz_results").insert(rows).then(function () {
-        try { localStorage.setItem("pulse:synced", "1"); } catch (e) {}
+      var pushedKeys = {};
+      pending.forEach(function (h) { pushedKeys[(h.testId || "") + "|" + (h.submittedAt || "")] = 1; });
+      supa.from("quiz_results").insert(rows).then(function (r) {
+        if (r && r.error) return;   // failed → leave unmarked so it retries next sign-in
+        try {
+          var cur = JSON.parse(localStorage.getItem("pulse:history") || "[]");
+          cur.forEach(function (h) { if (h && !h.synced && pushedKeys[(h.testId || "") + "|" + (h.submittedAt || "")]) h.synced = true; });
+          localStorage.setItem("pulse:history", JSON.stringify(cur));
+        } catch (e) {}
       });
     } catch (e) {}
   }

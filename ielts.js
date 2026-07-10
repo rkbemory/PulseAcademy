@@ -6,6 +6,7 @@
 (function () {
   "use strict";
   var LS = "pulse:ielts:progress";
+  var LS_WRITING = "pulse:ielts:writing";   // best AI Writing bands /9, kept separate from the raw /40 auto-scores
   function qs(n) { return new URLSearchParams(location.search).get(n); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]; }); }
   function readJSON(k, d) { try { var v = JSON.parse(localStorage.getItem(k) || d); return (v && typeof v === "object") ? v : JSON.parse(d); } catch (e) { return JSON.parse(d); } }
@@ -18,6 +19,20 @@
       // Signed in → mirror the new best to the account (cross-device).
       if (improved && window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress) {
         window.PulseAuth.saveProgress("ielts", k, score);
+      }
+    } catch (e) {}
+  }
+
+  /* Keep the best AI Writing band (/9) per "<module>/<test>/<task>" so the
+     dashboard can surface it; mirror to the account (kind "ielts-writing"). */
+  function saveWritingBand(key, band) {
+    if (typeof band !== "number") return;
+    try {
+      var p = readJSON(LS_WRITING, "{}");
+      var improved = typeof p[key] !== "number" || band > p[key];
+      if (improved) { p[key] = band; localStorage.setItem(LS_WRITING, JSON.stringify(p)); }
+      if (improved && window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress) {
+        window.PulseAuth.saveProgress("ielts-writing", key, band);
       }
     } catch (e) {}
   }
@@ -489,6 +504,7 @@
           out.innerHTML = renderEvalCard(d);
           retry.hidden = false;
           try { localStorage.setItem(draftKey(tk) + ":result", JSON.stringify(d)); } catch (e) {}
+          saveWritingBand(qs("module") + "/" + qs("test") + "/" + tk, d.overall);   // → dashboard
         })
         .catch(function () {
           btn.disabled = false; btn.textContent = old;
