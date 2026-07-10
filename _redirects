@@ -1,5 +1,8 @@
 # Cloudflare Pages routing.
 # /api/* is handled by Pages Functions (functions/api/...), which run before this file.
-# Unknown routes fall back to the homepage with a 404 status, matching the old
-# Netlify behavior so deep links degrade gracefully without breaking real 404s.
-/*  /index.html  404
+#
+# Unknown routes are served by 404.html with a TRUE 404 status — Cloudflare Pages
+# does this automatically when a 404.html exists. We deliberately no longer rewrite
+# /*  ->  /index.html: that returned index.html with a 200 (a "soft 404"), which
+# search engines treat as duplicate content. Clean URLs (/credential -> credential.html)
+# continue to work natively without any rule here.
