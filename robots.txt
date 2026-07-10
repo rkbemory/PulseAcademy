@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Utility pages carry a noindex meta tag; no need to crawl them.
+Disallow: /admin
+Disallow: /reset
+
+Sitemap: https://pulsefornurses.com/sitemap.xml

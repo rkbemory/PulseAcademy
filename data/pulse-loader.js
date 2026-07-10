@@ -124,7 +124,7 @@
     /* Overrides API for admin panel */
     readOverrides: readOverrides,
     writeOverrides: function (next) {
-      localStorage.setItem(LS_OVERRIDES, JSON.stringify(next || {}));
+      try { localStorage.setItem(LS_OVERRIDES, JSON.stringify(next || {})); } catch (e) {}
       window.Pulse.refresh();
     }
   };

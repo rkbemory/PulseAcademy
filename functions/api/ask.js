@@ -35,14 +35,27 @@ const SYSTEM = [
   "- Politely decline requests that are not about learning nursing/health science or exam prep."
 ].join("\n");
 
-const headers = {
-  "Content-Type": "application/json; charset=utf-8",
-  "Cache-Control": "no-store, max-age=0",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type"
-};
-function res(obj, status) { return new Response(JSON.stringify(obj), { status: status || 200, headers }); }
+const ALLOW_ORIGINS = ["https://pulsefornurses.com", "https://www.pulsefornurses.com"];
+// Reflect only an allowed browser Origin so a third-party site can't spend our
+// Gemini quota through its own visitors' browsers. Same-origin / non-browser
+// requests send no Origin and are never blocked; the KV rate limits stay the hard cap.
+function originInfo(request) {
+  const o = request.headers.get("Origin") || "";
+  if (!o) return { origin: "", blocked: false };
+  if (ALLOW_ORIGINS.indexOf(o) !== -1) return { origin: o, blocked: false };
+  if (/^https:\/\/[a-z0-9-]+\.pages\.dev$/.test(o)) return { origin: o, blocked: false };
+  return { origin: o, blocked: true };
+}
+function corsHeaders(origin) {
+  return {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store, max-age=0",
+    "Access-Control-Allow-Origin": origin || ALLOW_ORIGINS[0],
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Vary": "Origin"
+  };
+}
 function todayUtc() { return new Date().toISOString().slice(0, 10); }
 
 async function bumpLimit(kv, key, max, ttl) {
@@ -55,11 +68,15 @@ async function bumpLimit(kv, key, max, ttl) {
 
 export async function onRequest(context) {
   const { request, env } = context;
+  const oi = originInfo(request);
+  const headers = corsHeaders(oi.origin);
+  const res = function (obj, status) { return new Response(JSON.stringify(obj), { status: status || 200, headers }); };
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
 
   const key = env && env.GEMINI_API_KEY;
   if (request.method === "GET") return res({ enabled: !!key, perDay: PER_IP_DAILY });
   if (request.method !== "POST") return res({ error: "method" }, 405);
+  if (oi.blocked) return res({ error: "forbidden-origin" }, 403);
   if (!key) return res({ error: "not-configured" }, 503);
 
   let body;

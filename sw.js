@@ -3,7 +3,7 @@
    and never get stuck on a stale cache), cache-first for static assets, and
    network-first for the API. Bumps CACHE_NAME on every meaningful update. */
 
-const CACHE_NAME = "pulse-v3.21.1";
+const CACHE_NAME = "pulse-v3.22.0";
 const PRECACHE = [
   "./",
   "cv.html",
@@ -123,6 +123,7 @@ const PRECACHE = [
   "ielts-samples.html",
   "pulse-icon.png",
   "pulse-social.png",
+  "Photo & Logo/Pulse For Nurses Logo.png",
   "manifest.webmanifest"
 ];
 

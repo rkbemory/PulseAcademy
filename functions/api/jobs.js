@@ -18,6 +18,8 @@
 
 const CACHE_KEY = "jobs:v3"; // bump when the data shape changes so stale blobs are ignored
 const CACHE_HOURS = 6;
+const REFRESH_GATE_KEY = "jobs:refreshgate"; // throttles ?refresh=1 forced refreshes
+const REFRESH_COOLDOWN = 300;                // seconds — at most one forced refresh / 5 min
 
 const headers = {
   "Content-Type": "application/json; charset=utf-8",
@@ -206,7 +208,14 @@ export async function onRequest(context) {
   if (request.method !== "GET") return new Response(JSON.stringify({ error: "method" }), { status: 405, headers });
 
   const kv = env && env.PULSE_KV;
-  const forceRefresh = new URL(request.url).searchParams.get("refresh") === "1";
+  let forceRefresh = new URL(request.url).searchParams.get("refresh") === "1";
+  // Throttle forced refreshes: honour ?refresh=1 at most once per REFRESH_COOLDOWN so
+  // it can't be spammed to hammer the upstream sources (UNICEF/icddr,b/ReliefWeb)
+  // through our worker. When recently forced, fall through to the normal cache path.
+  if (forceRefresh && kv) {
+    if (await kv.get(REFRESH_GATE_KEY)) forceRefresh = false;
+    else await kv.put(REFRESH_GATE_KEY, "1", { expirationTtl: REFRESH_COOLDOWN });
+  }
   try {
     if (kv && !forceRefresh) {
       const cached = await kv.get(CACHE_KEY, { type: "json" });

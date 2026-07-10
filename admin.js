@@ -35,27 +35,23 @@
     } catch (e) {}
     return null;
   }
-  function saveAccounts(a) { localStorage.setItem(LS_ACCOUNTS, JSON.stringify(a)); }
+  function saveAccounts(a) { try { localStorage.setItem(LS_ACCOUNTS, JSON.stringify(a)); } catch (e) {} }
 
   /* Check a plaintext password against either a localStorage-overridden value
-     (stored as a SHA-256 hash) or, if not overridden, the default SHA-256 hash. */
+     (stored as a SHA-256 hash) or, if not overridden, the default SHA-256 hash.
+     Compared by hash only — no plaintext fallback. */
   async function checkPassword(role, plaintext) {
     if (!plaintext) return false;
     const stored = loadAccounts();
     const hash = await sha256(plaintext);
-    if (stored && stored[role]) {
-      // Custom password: compare hashes. Accept a legacy plaintext value too so
-      // admins who set one before hashing was added are not locked out.
-      return stored[role] === hash || stored[role] === plaintext;
-    }
-    // Fall back to default hash check
-    return hash === DEFAULT_HASHES[role];
+    if (stored && stored[role]) return stored[role] === hash;   // custom password (hash compare)
+    return hash === DEFAULT_HASHES[role];                       // default hash check
   }
   function loadSession() {
     try { return JSON.parse(localStorage.getItem(LS_SESSION) || "null"); }
     catch (e) { return null; }
   }
-  function saveSession(s) { localStorage.setItem(LS_SESSION, JSON.stringify(s)); }
+  function saveSession(s) { try { localStorage.setItem(LS_SESSION, JSON.stringify(s)); } catch (e) {} }
   function clearSession() { localStorage.removeItem(LS_SESSION); }
 
   /* -------------- LOGIN -------------- */
@@ -448,7 +444,7 @@
           '<div class="row-body">' +
             '<p class="row-expl">' + escapeHtml(t.summary) + '</p>' +
             '<div class="row-actions">' +
-              '<a class="btn btn-secondary" href="topic.html?program=' + encodeURIComponent(pid) + '&topic=' + encodeURIComponent(t.id) + '" target="_blank">Preview ↗</a>' +
+              '<a class="btn btn-secondary" href="topic.html?program=' + encodeURIComponent(pid) + '&topic=' + encodeURIComponent(t.id) + '" target="_blank" rel="noopener">Preview ↗</a>' +
               '<button class="btn btn-danger" data-delete-topic="' + escapeHtml(t.id) + '">Delete</button>' +
             '</div>' +
           '</div>' +

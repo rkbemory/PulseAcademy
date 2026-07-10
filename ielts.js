@@ -449,7 +449,7 @@
     function signInPrompt(out) {
       out.hidden = false;
       out.innerHTML = '<div class="ielts-eval-signin"><p>🔒 <strong>Sign in to get your free AI band estimate</strong><br>' +
-        "<span>It's free — and your result is saved to your dashboard so you can track your progress.</span></p>" +
+        "<span>It's free — sign in to unlock your AI band estimate and detailed examiner feedback.</span></p>" +
         '<button type="button" class="btn btn-primary ielts-eval-signin-btn">Sign in / Create free account</button></div>';
       var b = out.querySelector(".ielts-eval-signin-btn");
       if (b) b.addEventListener("click", function () { if (window.PulseAuth && window.PulseAuth.openModal) window.PulseAuth.openModal("signin", { stay: true }); });
