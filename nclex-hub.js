@@ -34,15 +34,28 @@
       "<span>" + esc(t.title) + "</span><span class='ielts-arrow'>→</span></a>";
   }
 
-  /* Header-only collapsing card: all content lives in .ielts-test-rest, which the
-     shared CSS hides while .is-collapsed — so a closed card is just its header. */
-  function accCard(icon, color, name, meta, contentHTML) {
+  /* IELTS-style card: two items shown as a preview, the rest revealed by
+     "Show all N" (or tapping the header). Cards with ≤2 items just show both. */
+  function accCard(icon, color, name, meta, links) {
+    var n = links.length, preview, rest = "", moreBtn = "", chev = "";
+    if (n <= 2) {
+      preview = links.join("");
+    } else {
+      preview = links.slice(0, 2).join("");
+      rest = links.slice(2).join("");
+      moreBtn = '<button type="button" class="ielts-more" data-more="Show all ' + n + '">Show all ' + n + " ▾</button>";
+      chev = '<span class="ielts-chev" aria-hidden="true">▾</span>';
+    }
     return '<div class="ielts-mod-card is-collapsed" style="--mc:' + color + '">' +
       '<div class="ielts-mod-top" role="button" tabindex="0" aria-expanded="false">' +
       '<span class="ielts-mod-ic">' + icon + "</span>" +
       '<div class="ielts-mod-h"><h3>' + esc(name) + '</h3><span class="ielts-mod-meta">' + esc(meta) + "</span></div>" +
-      '<span class="ielts-chev" aria-hidden="true">▾</span></div>' +
-      '<div class="ielts-test-list"><div class="ielts-test-preview"></div><div class="ielts-test-rest">' + contentHTML + "</div></div></div>";
+      chev + "</div>" +
+      '<div class="ielts-test-list">' +
+        '<div class="ielts-test-preview">' + preview + "</div>" +
+        '<div class="ielts-test-rest">' + rest + "</div>" +
+        moreBtn +
+      "</div></div>";
   }
 
   function chip(key, label, on) {
@@ -104,16 +117,16 @@
 
     /* ---- practise cards ---- */
     var adaptiveCard = accCard("🧠", "#7C6FD9", "Adaptive Exams",
-      adaptive.length + " CAT-style exams · adapt to your level", adaptive.map(testLink).join(""));
+      adaptive.length + " CAT-style exams · adapt to your level", adaptive.map(testLink));
     var modelCard = accCard("📝", "#0E7490", "Question Sets",
-      model.length + " mixed sets · 20 questions each", model.map(testLink).join(""));
+      model.length + " mixed sets · 20 questions each", model.map(testLink));
 
     /* ---- topic category cards ---- */
     var catCards = CATS.map(function (c) {
       var ts = c.ids.map(function (id) { return byId[id]; }).filter(Boolean);
       return accCard(c.icon, c.color, c.name,
         ts.length + " topic" + (ts.length === 1 ? "" : "s") + " · read + check-in",
-        ts.map(topicLink).join(""));
+        ts.map(topicLink));
     }).join("");
 
     root.innerHTML =
@@ -139,19 +152,26 @@
       });
     });
 
-    /* accordion cards (header-only collapse) */
-    root.querySelectorAll(".ielts-mod-card").forEach(function (cd) {
+    /* accordion cards — two shown, "Show all N" (or the header) reveals the rest */
+    function setCard(cd, collapsed) {
+      cd.classList.toggle("is-collapsed", collapsed);
       var head = cd.querySelector(".ielts-mod-top");
-      if (!head) return;
-      function toggle() {
-        var collapsed = !cd.classList.contains("is-collapsed");
-        cd.classList.toggle("is-collapsed", collapsed);
-        head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      if (head) head.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      var more = cd.querySelector(".ielts-more");
+      if (more) more.textContent = collapsed ? (more.getAttribute("data-more") + " ▾") : "Show fewer ▴";
+    }
+    root.querySelectorAll(".ielts-mod-card").forEach(function (cd) {
+      var more = cd.querySelector(".ielts-more");
+      if (!more) return;   // ≤2 items → nothing to expand
+      function toggle() { setCard(cd, !cd.classList.contains("is-collapsed")); }
+      var head = cd.querySelector(".ielts-mod-top");
+      if (head) {
+        head.addEventListener("click", toggle);
+        head.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); toggle(); }
+        });
       }
-      head.addEventListener("click", toggle);
-      head.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); toggle(); }
-      });
+      more.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
     });
   }
 
