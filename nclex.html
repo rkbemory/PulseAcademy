@@ -67,8 +67,8 @@
         20 model question sets, and <strong>5 NCLEX-style adaptive exams</strong> that adapt to your level — just like the real CAT.
       </p>
       <div class="hero-ctas">
-        <a href="#about" class="btn btn-primary">🧭 What is NCLEX?</a>
-        <a href="#tests" class="btn btn-secondary">🧠 Try an Adaptive Exam</a>
+        <a href="#nclex-hub" class="btn btn-primary">🧭 Explore the course</a>
+        <a href="quiz.html?program=nclex&amp;test=ncx-adaptive-01" class="btn btn-secondary">🧠 Try an Adaptive Exam</a>
       </div>
       <div class="stat-strip">
         <div class="stat"><span class="stat-num">30</span><span class="stat-label">Topic discussions</span></div>
@@ -83,61 +83,11 @@
   </div>
 </section>
 
-<nav class="subnav">
-  <div class="subnav-inner">
-    <a href="#about">What is NCLEX</a>
-    <a href="#topics">Topic Discussions</a>
-    <a href="#tests">Question Sets &amp; Adaptive</a>
-    <a href="#premium">Premium</a>
-  </div>
-</nav>
-
-<section class="hex-section" id="about">
-  <div class="hex-inner">
-    <div>
-      <div class="section-eyebrow">⬡ Orientation</div>
-      <h2 class="section-title">What is the NCLEX-RN?</h2>
-      <p class="section-lead">The NCLEX-RN® is the licensing examination a nurse must pass to practice as a Registered Nurse in the United States (and Canada). It tests safe, effective clinical judgement rather than memorized facts.</p>
-      <ul class="why-list">
-        <li><strong>Computer-adaptive (CAT).</strong> The test adjusts to you: answer well and questions get harder; it stops once it is confident whether you pass. Length varies — most candidates answer between about 75 and 150 questions.</li>
-        <li><strong>Next-Gen NCLEX.</strong> Newer formats add case studies and questions that test clinical judgement — recognizing cues, prioritizing, and deciding actions.</li>
-        <li><strong>Organized by Client Needs.</strong> Safe &amp; effective care, health promotion, psychosocial integrity, and physiological integrity — the topics on this page map to these areas.</li>
-        <li><strong>How to use this page.</strong> Read a topic, take its check-in, work through the 20 question sets, then sit an adaptive exam to gauge your readiness.</li>
-      </ul>
-    </div>
-    <div class="why-card-grid">
-      <div class="why-card"><span class="why-num">🌎</span><span class="why-label">US &amp; Canada RN</span></div>
-      <div class="why-card"><span class="why-num">CAT</span><span class="why-label">Adaptive format</span></div>
-      <div class="why-card"><span class="why-num">8</span><span class="why-label">Clinical subjects</span></div>
-      <div class="why-card"><span class="why-num">Free</span><span class="why-label">Free to practice</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="topics">
-  <div class="section-eyebrow">⬡ Concept First</div>
-  <h2 class="section-title">Topic discussions with check-in MCQs</h2>
-  <p class="section-lead">High-yield NCLEX topics across the client-needs areas. Each topic is a focused read that ends with a 10-question check-in and instant rationale.</p>
-  <div class="topics-grid" id="topics-list"></div>
-</section>
-
-<section class="block tests-block" id="tests">
-  <div class="section-eyebrow">⬡ Practice &amp; Simulate</div>
-  <h2 class="section-title">Question Sets &amp; Adaptive Exams</h2>
-  <p class="section-lead">Twenty 20-question mixed sets to build stamina, plus five NCLEX-style adaptive exams that adjust to your level and estimate your pass probability.</p>
-  <div id="tests-catalog"></div>
-</section>
-
-<section class="block" id="premium">
-  <div class="section-eyebrow">⬡ Coming Soon</div>
-  <h2 class="section-title">Pulse NCLEX Premium</h2>
-  <p class="section-lead">When you're ready to go all-in on the US pathway.</p>
-  <div class="premium-grid">
-    <div class="premium-card"><h3>🧩 Next-Gen Case Studies</h3><p>Unfolding clinical-judgement scenarios.</p></div>
-    <div class="premium-card"><h3>🧠 Unlimited Adaptive Exams</h3><p>Full-length CAT simulations.</p></div>
-    <div class="premium-card"><h3>👩‍🏫 Live Review Classes</h3><p>By US-licensed nurse faculty.</p></div>
-    <div class="premium-card"><h3>🗂️ Credential Guidance</h3><p>WES, CGFNS, and licensure support.</p></div>
-  </div>
+<section class="block" id="nclex-hub-sec">
+  <div class="section-eyebrow">⬡ Your NCLEX Course</div>
+  <h2 class="section-title" style="margin-bottom:4px;">Everything you need — in one place.</h2>
+  <p class="section-lead">Pick a tab to learn about the exam, then expand a practice card or a topic area. Nothing is more than a tap away.</p>
+  <div id="nclex-hub"></div>
 </section>
 
 </main>
@@ -182,9 +132,6 @@
 <script src="data/auth-config.js"></script>
 <script src="auth.js"></script>
 <script src="scripts.js"></script>
-<script>
-  PulseQuiz.renderTopicList("#topics-list", "nclex");
-  PulseQuiz.renderCatalog("#tests-catalog", "nclex");
-</script>
+<script src="nclex-hub.js"></script>
 </body>
 </html>
