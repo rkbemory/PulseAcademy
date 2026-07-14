@@ -389,7 +389,7 @@
     try {
       localStorage.setItem(window.Pulse.LS_LAST, JSON.stringify(result));
       const hist = JSON.parse(localStorage.getItem(window.Pulse.LS_HISTORY) || "[]");
-      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt });
+      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt, synced: !!(window.PulseAuth && window.PulseAuth.user) });
       localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
     } catch (e) {}
     if (window.PulseAuth && window.PulseAuth.enabled) {
@@ -584,7 +584,7 @@
     try {
       localStorage.setItem(window.Pulse.LS_LAST, JSON.stringify(result));
       const hist = JSON.parse(localStorage.getItem(window.Pulse.LS_HISTORY) || "[]");
-      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt });
+      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt, synced: !!(window.PulseAuth && window.PulseAuth.user) });
       localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
     } catch (e) {}
     if (window.PulseAuth && window.PulseAuth.enabled) {

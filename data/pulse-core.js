@@ -170,7 +170,7 @@ window.PulseCore = {
     "nclex": {
       id: "nclex",
       name: "NCLEX-RN",
-      fullName: "NCLEX-RN® — Preparation for Bangladeshi Nurses",
+      fullName: "NCLEX-RN® — Preparation for Internationally-Educated Nurses (US & Canada)",
       tagline: "Topic discussions, model question sets, and NCLEX-style adaptive practice exams.",
       level: "International",
       color: "#7C6FD9",
@@ -182,9 +182,9 @@ window.PulseCore = {
       modelTestCount: 20,
       modelTestQuestions: 20,
       modelTestDuration: 25,
-      adaptiveCount: 2,
-      adaptiveMin: 75,
-      adaptiveMax: 75,
+      adaptiveCount: 5,
+      adaptiveMin: 30,
+      adaptiveMax: 60,
       books: [],
       bookBundle: null,
       paid: {

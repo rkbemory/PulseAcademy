@@ -248,7 +248,7 @@ header.top-nav {
 }
 
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; }
   .book-stack { height: 420px; max-width: 360px; margin: 0 auto; }
   .book { width: 230px; height: 310px; }
   .book-title-msn { font-size: 2.4rem; }
@@ -1910,7 +1910,7 @@ footer {
 /* Mobile tweaks */
 @media (max-width: 700px) {
   .hero-inner { grid-template-columns: 1fr; }
-  .hero-program h1 { font-size: 2rem; }
+  .hero-program h1 { font-size: 1.9rem; }
   .hero-book-cover { order: -1; min-height: 280px; }
   .stat-strip { gap: 18px; }
   .stat-num { font-size: 1.5rem; }
@@ -2369,9 +2369,9 @@ h2.section-title { color: var(--primary-deep); }
   .hero-ctas .btn { width: 100%; justify-content: center; }
 
   /* Section padding */
-  section.block { padding: 26px 16px; }
-  .hex-section { padding: 40px 16px; }
-  .home-hero { padding: 68px 18px 76px; }
+  section.block { padding: 18px 16px; }
+  .hex-section { padding: 30px 16px; }
+  .home-hero { padding: 44px 18px 72px; }
 
   /* Programs grid full width */
   .programs-grid, .programs-grid-3 { gap: 14px; }
@@ -2961,7 +2961,7 @@ h1, h2, h3, h4 {
 .home-hero::before { z-index: 0; }
 /* Append wave at bottom of home hero */
 .home-hero {
-  padding-bottom: 130px;
+  padding-bottom: 84px;
 }
 .home-hero-inner { position: relative; z-index: 2; }
 section.block + section.block,
@@ -3105,7 +3105,7 @@ footer .footer-col a:hover::before {
 .stat-num {
   font-family: 'Playfair Display', serif;
   font-weight: 800;
-  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-size: clamp(1.4rem, 3vw, 1.7rem);
   color: var(--primary);
   background: linear-gradient(135deg, var(--primary), var(--accent-deep));
   -webkit-background-clip: text;
@@ -3129,7 +3129,7 @@ footer .footer-col a:hover::before {
   font-size: 0.7rem;
   box-shadow: 0 4px 14px rgba(201, 154, 80, 0.3);
   display: inline-block;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
 /* ----------- Book showcase refinement on program pages ----------- */
