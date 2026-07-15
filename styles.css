@@ -5475,16 +5475,53 @@ body > footer { flex-shrink: 0; }
 .ielts-hub-panel { display: none; }
 .ielts-hub-panel.is-on { display: block; }
 
-/* ---- Compact FAQ accordion (answer-first content for search + AI assistants) ---- */
-.faq-block { max-width: 840px; }
-.faq-list { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
-.faq-q { border: 1px solid var(--line-cool); border-radius: 12px; background: var(--surface, #fff); padding: 0 15px; transition: border-color .15s; }
-.faq-q[open] { border-color: var(--primary-soft, #2E63B8); }
-.faq-q > summary { cursor: pointer; list-style: none; padding: 13px 0; font-weight: 600; color: var(--text); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.faq-q > summary::-webkit-details-marker { display: none; }
-.faq-q > summary::after { content: "＋"; color: var(--primary, #14387A); font-weight: 700; flex: 0 0 auto; }
-.faq-q[open] > summary::after { content: "－"; }
-.faq-q > p { margin: 0 0 13px; color: var(--text-soft); line-height: 1.6; font-size: 0.96rem; }
+/* ---- FAQ accordion (answer-first content for search + AI assistants).
+   Uses .faqx-* names to avoid the older .faq-q/.faq-list component above. ---- */
+.faq-block { max-width: 860px; }
+.faqx-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.faqx-item {
+  display: block;
+  border: 1px solid var(--line-cool);
+  border-radius: 14px;
+  background: var(--surface, #fff);
+  box-shadow: 0 1px 2px rgba(20,56,122,0.04);
+  overflow: hidden;
+  transition: border-color .18s, box-shadow .18s;
+}
+.faqx-item[open] { border-color: var(--primary-soft, #2E63B8); box-shadow: 0 8px 24px rgba(20,56,122,0.09); }
+.faqx-item > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 15px 18px;
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--primary-deep, #14387A);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.faqx-item > summary::-webkit-details-marker { display: none; }
+.faqx-item > summary:hover { color: var(--primary, #14387A); }
+.faqx-item > summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  width: 24px; height: 24px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--primary-tint, #EAF0FA);
+  color: var(--primary, #14387A);
+  font-weight: 700; font-size: 1.1rem; line-height: 1;
+  transition: background .2s, color .2s;
+}
+.faqx-item[open] > summary::after { content: "−"; background: var(--primary, #14387A); color: #fff; }
+.faqx-item > p {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: var(--lead-ink, #4A5768);
+  line-height: 1.65;
+  font-size: 0.97rem;
+}
 /* 2x2 module grid */
 .ielts-mod-2x2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 620px) { .ielts-mod-2x2 { grid-template-columns: 1fr; } }
