@@ -5474,6 +5474,17 @@ body > footer { flex-shrink: 0; }
 .ielts-hub-panels { margin-bottom: 26px; }
 .ielts-hub-panel { display: none; }
 .ielts-hub-panel.is-on { display: block; }
+
+/* ---- Compact FAQ accordion (answer-first content for search + AI assistants) ---- */
+.faq-block { max-width: 840px; }
+.faq-list { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.faq-q { border: 1px solid var(--line-cool); border-radius: 12px; background: var(--surface, #fff); padding: 0 15px; transition: border-color .15s; }
+.faq-q[open] { border-color: var(--primary-soft, #2E63B8); }
+.faq-q > summary { cursor: pointer; list-style: none; padding: 13px 0; font-weight: 600; color: var(--text); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq-q > summary::-webkit-details-marker { display: none; }
+.faq-q > summary::after { content: "＋"; color: var(--primary, #14387A); font-weight: 700; flex: 0 0 auto; }
+.faq-q[open] > summary::after { content: "－"; }
+.faq-q > p { margin: 0 0 13px; color: var(--text-soft); line-height: 1.6; font-size: 0.96rem; }
 /* 2x2 module grid */
 .ielts-mod-2x2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 620px) { .ielts-mod-2x2 { grid-template-columns: 1fr; } }
