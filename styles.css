@@ -3709,60 +3709,32 @@ span.service-chip.is-soon:hover { transform: none; background: rgba(255,255,255,
   /* soft edge so the jelly stays visible over both the dark hero and white sections */
   filter: drop-shadow(0 2px 7px rgba(40,110,200,0.28));
 }
-.jelly-bell {
-  position: relative;
-  width: 46px; height: 34px;
-  border-radius: 50% 50% 42% 42% / 60% 60% 42% 42%;
-  background: radial-gradient(ellipse 72% 82% at 50% 28%,
-    rgba(255,255,255,0.9) 0%, rgba(150,215,255,0.82) 38%,
-    rgba(86,166,246,0.66) 72%, rgba(52,128,226,0.5) 100%);
-  box-shadow:
-    0 0 24px 7px rgba(110,190,255,0.4),
-    inset 0 0 0 1.5px rgba(70,150,235,0.45),
-    inset 0 -8px 14px rgba(70,150,235,0.55),
-    inset 0 5px 11px rgba(255,255,255,0.55);
-  transform-origin: center top;
-  animation: jelly-pulse 4s ease-in-out var(--sd, 0s) infinite;
-}
-/* scalloped, frilly bell rim */
-.jelly-bell::after {
-  content: ""; position: absolute; left: 1px; right: 1px; bottom: -3px; height: 8px;
-  background:
-    radial-gradient(circle at 10% 35%,  rgba(206,238,255,0.75) 0 3px,   transparent 3.6px),
-    radial-gradient(circle at 30% 35%,  rgba(206,238,255,0.75) 0 3.4px, transparent 4px),
-    radial-gradient(circle at 50% 35%,  rgba(206,238,255,0.75) 0 3.6px, transparent 4.2px),
-    radial-gradient(circle at 70% 35%,  rgba(206,238,255,0.75) 0 3.4px, transparent 4px),
-    radial-gradient(circle at 90% 35%,  rgba(150,210,255,0.85) 0 3px,   transparent 3.6px);
-}
-.jelly-arms { display: flex; justify-content: space-evenly; width: 46px; padding: 0 3px; margin-top: -1px; }
-.jelly-arms span {
-  display: block; width: 2px; border-radius: 3px;
-  background: linear-gradient(to bottom, rgba(126,200,255,0.92), rgba(74,152,236,0.4) 76%, transparent);
-  transform-origin: top center;
-  animation: jelly-wave 4s ease-in-out infinite;
-}
-/* centre tentacles longest (imply trailing oral arms), phase-shifted for a travelling wave */
-.jelly-arms span:nth-child(1) { height: 22px; animation-delay: -.2s; }
-.jelly-arms span:nth-child(2) { height: 31px; animation-delay: -.6s; }
-.jelly-arms span:nth-child(3) { height: 42px; width: 2.4px; animation-delay: -1s; }
-.jelly-arms span:nth-child(4) { height: 48px; width: 2.6px; animation-delay: -1.4s; }
-.jelly-arms span:nth-child(5) { height: 42px; width: 2.4px; animation-delay: -1.8s; }
-.jelly-arms span:nth-child(6) { height: 31px; animation-delay: -2.2s; }
-.jelly-arms span:nth-child(7) { height: 22px; animation-delay: -2.6s; }
+/* SVG jellyfish artwork — shared gradients live in the hidden .jelly-defs svg */
+.jz { display: block; width: 100px; height: 160px; overflow: visible;
+  filter: drop-shadow(0 3px 10px rgba(40,110,200,0.3)); }
+.jz-bo { fill: url(#jbBell); stroke: rgba(86,116,214,0.42); stroke-width: 1; }
+.jz-hi { fill: url(#jbHi); opacity: 0.85; }
+.jz-dot { fill: rgba(255,255,255,0.42); }
+.jz-arms path { fill: none; stroke: url(#jbTent); stroke-width: 1.7; stroke-linecap: round; }
+.jz-orals path { fill: none; stroke: url(#jbTent); stroke-width: 3; stroke-linecap: round; opacity: 0.85; }
+/* lifelike motion: bell contracts (pulse) while oral arms + tentacles trail and sway */
+.jz-bell  { transform-box: fill-box; transform-origin: 50% 6%; animation: jz-pulse 4s ease-in-out var(--sd, 0s) infinite; }
+.jz-orals { transform-box: fill-box; transform-origin: 50% 0%; animation: jz-sway 4.2s ease-in-out var(--sd, 0s) infinite reverse; }
+.jz-arms  { transform-box: fill-box; transform-origin: 50% 0%; animation: jz-sway 4.8s ease-in-out var(--sd, 0s) infinite; }
 
-/* swim thrust: bell contracts (pulse) while the body lifts, then relaxes */
+/* swim thrust: body lifts as the bell contracts, then relaxes */
 @keyframes jelly-swim {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50%      { transform: translateY(-9px) rotate(2deg); }
+  50%      { transform: translateY(-11px) rotate(2deg); }
 }
-@keyframes jelly-pulse {
-  0%, 100% { transform: scale(1, 1); }
-  45%      { transform: scale(0.84, 1.1); }
-  70%      { transform: scale(1.04, 0.96); }
+@keyframes jz-pulse {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  42%      { transform: scaleX(0.88) scaleY(1.1); }
+  68%      { transform: scaleX(1.04) scaleY(0.95); }
 }
-@keyframes jelly-wave {
-  0%, 100% { transform: rotate(-9deg) translateX(-1px); }
-  50%      { transform: rotate(9deg)  translateX(1px); }
+@keyframes jz-sway {
+  0%, 100% { transform: skewX(-6deg) translateY(0) scaleY(1); }
+  50%      { transform: skewX(6deg) translateY(3px) scaleY(1.04); }
 }
 /* 2D wander paths — up, down and side to side, looping smoothly */
 @keyframes jelly-wa {
