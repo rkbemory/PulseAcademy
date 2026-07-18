@@ -20,17 +20,6 @@
       ]
     },
     {
-      id: "ielts-scoring", chip: "IELTS scoring", name: "IELTS Band Descriptors & Scoring", icon: "🗣️",
-      blurb: "The official public criteria examiners use to score each IELTS module — the same descriptors our AI Writing & Speaking evaluators apply.",
-      links: [
-        { name: "IELTS Speaking — band descriptors (PDF)", url: "https://ielts.org/cdn/ielts-guides/ielts-speaking-band-descriptors.pdf", desc: "Fluency & coherence, lexical resource, grammatical range & accuracy, and pronunciation — band by band.", tags: ["Official", "Global"] },
-        { name: "IELTS Speaking — key assessment criteria (PDF)", url: "https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf", desc: "How examiners assess the Speaking test and what each criterion rewards.", tags: ["Official", "Global"] },
-        { name: "IELTS Writing — band descriptors (PDF)", url: "https://ielts.org/cdn/ielts-guides/ielts-writing-band-descriptors.pdf", desc: "Task achievement/response, coherence & cohesion, lexical resource, and grammatical range & accuracy — band by band.", tags: ["Official", "Global"] },
-        { name: "IELTS Writing — key assessment criteria (PDF)", url: "https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessment-criteria.pdf", desc: "How examiners assess Writing Task 1 and Task 2.", tags: ["Official", "Global"] },
-        { name: "IELTS scoring in detail (Reading, Listening & overall band)", url: "https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail", desc: "How raw Reading & Listening scores convert to band scores, and how the overall band is averaged.", tags: ["Official", "Global"] }
-      ]
-    },
-    {
       id: "exams", chip: "Licensing", name: "Licensing & Registration Exams", icon: "🎓",
       blurb: "Official bodies for NCLEX and international nurse licensure & credential verification.",
       links: [

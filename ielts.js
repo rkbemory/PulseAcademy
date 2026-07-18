@@ -114,7 +114,14 @@
         bandRow("5", "Modest", "Partial command; copes with overall meaning.") +
         bandRow("4", "Limited", "Basic competence in familiar situations only.") +
       "</div>" +
-      '<p class="ielts-official"><a href="https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail" target="_blank" rel="noopener noreferrer">IELTS scoring in detail ↗</a><a href="https://ieltsliz.com/ielts-band-scores/" target="_blank" rel="noopener noreferrer">IELTS Liz — band scores ↗</a></p>';
+      '<p class="ielts-modline" style="margin-top:16px;">📄 <strong>Official band descriptors &amp; scoring (PDF)</strong> — the public criteria examiners use, and the same rubric our AI Writing &amp; Speaking evaluators follow:</p>' +
+      '<p class="ielts-official">' +
+        '<a href="https://ielts.org/cdn/ielts-guides/ielts-speaking-band-descriptors.pdf" target="_blank" rel="noopener noreferrer">Speaking — band descriptors ↗</a>' +
+        '<a href="https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf" target="_blank" rel="noopener noreferrer">Speaking — key criteria ↗</a>' +
+        '<a href="https://ielts.org/cdn/ielts-guides/ielts-writing-band-descriptors.pdf" target="_blank" rel="noopener noreferrer">Writing — band descriptors ↗</a>' +
+        '<a href="https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessment-criteria.pdf" target="_blank" rel="noopener noreferrer">Writing — key criteria ↗</a>' +
+      "</p>" +
+      '<p class="ielts-official"><a href="https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail" target="_blank" rel="noopener noreferrer">Reading, Listening &amp; overall scoring ↗</a><a href="https://ieltsliz.com/ielts-band-scores/" target="_blank" rel="noopener noreferrer">IELTS Liz — band scores ↗</a></p>';
     var resourcesHTML =
       '<div class="ielts-res-groups">' +
         resGroup("Official test sites", [["IDP IELTS", "https://ielts.idp.com"], ["British Council — Take IELTS", "https://takeielts.britishcouncil.org"], ["IELTS.org", "https://ielts.org"]]) +
@@ -561,11 +568,12 @@
   }
 
   /* ---- Speaking — record Part 1/2/3 aloud and get a free AI band estimate ---- */
-  var SPK_MAX = { 1: 75, 2: 130, 3: 100 };   // per-part recording caps (seconds)
+  var SPK_MAX = { 1: 75, 2: 155, 3: 100 };   // per-part recording caps (seconds) — Part 2 allows a full 2+ min
   function recBlock(part) {
+    var target = part === 2 ? '<span class="ielts-rec-target">🎯 Speak for 2:00 minimum</span>' : "";
     return '<div class="ielts-rec" data-part="' + part + '" data-max="' + SPK_MAX[part] + '">' +
       '<button type="button" class="btn btn-secondary ielts-rec-btn">🎙 Record answer</button>' +
-      '<span class="ielts-rec-status">Not recorded yet</span>' +
+      '<span class="ielts-rec-status">Not recorded yet</span>' + target +
       '<audio class="ielts-rec-audio" controls hidden></audio></div>';
   }
   function renderSpeaking(root, head, test) {
@@ -577,7 +585,7 @@
       '<section class="ielts-spart ielts-cue"><h3>Part 2 — Long turn <span>(3–4 min)</span></h3>' +
         '<div class="ielts-cuecard"><p class="ielts-cue-task">' + esc(p2.cueCard) + "</p><p class='ielts-cue-lead'>You should say:</p><ul>" +
         p2.bullets.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul>" +
-        '<p class="ielts-cue-note">You have 1 minute to prepare, then speak for 1–2 minutes.</p></div>' + recBlock(2) + "</section>" +
+        '<p class="ielts-cue-note">You have 1 minute to prepare, then speak for <strong>at least 2 minutes</strong> (keep going until the recorder stops) — a longer answer gives the AI more to assess.</p></div>' + recBlock(2) + "</section>" +
       '<section class="ielts-spart"><h3>Part 3 — Discussion <span>(4–5 min)</span></h3>' +
         '<p class="ielts-sp-topic">' + esc(p3.topic) + "</p><ul>" + p3.questions.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul>" + recBlock(3) + "</section>" +
       '<div class="ielts-spk-evalbar"><button type="button" class="btn btn-primary ielts-spk-eval-btn">🎯 Get my AI Speaking band</button>' +
