@@ -114,14 +114,29 @@
         bandRow("5", "Modest", "Partial command; copes with overall meaning.") +
         bandRow("4", "Limited", "Basic competence in familiar situations only.") +
       "</div>" +
-      '<p class="ielts-modline" style="margin-top:16px;">📄 <strong>Official band descriptors &amp; scoring (PDF)</strong> — the public criteria examiners use, and the same rubric our AI Writing &amp; Speaking evaluators follow:</p>' +
-      '<p class="ielts-official">' +
-        '<a href="https://ielts.org/cdn/ielts-guides/ielts-speaking-band-descriptors.pdf" target="_blank" rel="noopener noreferrer">Speaking — band descriptors ↗</a>' +
-        '<a href="https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf" target="_blank" rel="noopener noreferrer">Speaking — key criteria ↗</a>' +
-        '<a href="https://ielts.org/cdn/ielts-guides/ielts-writing-band-descriptors.pdf" target="_blank" rel="noopener noreferrer">Writing — band descriptors ↗</a>' +
-        '<a href="https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessment-criteria.pdf" target="_blank" rel="noopener noreferrer">Writing — key criteria ↗</a>' +
-      "</p>" +
-      '<p class="ielts-official"><a href="https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail" target="_blank" rel="noopener noreferrer">Reading, Listening &amp; overall scoring ↗</a><a href="https://ieltsliz.com/ielts-band-scores/" target="_blank" rel="noopener noreferrer">IELTS Liz — band scores ↗</a></p>';
+      '<p class="ielts-modline" style="margin-top:12px;">Want the exact criteria examiners use for each band? See the <strong>📄 Band Description</strong> tab for the official descriptor PDFs.</p>';
+    var descHTML =
+      '<p>Band descriptors are the official public criteria examiners use to award each band. Speaking and Writing are each judged on <strong>four equally-weighted criteria</strong>; Reading and Listening are scored from a raw-mark band table. These are the same rubrics our AI Writing &amp; Speaking evaluators follow.</p>' +
+      '<div class="ielts-desc-groups">' +
+        '<div class="ielts-desc-group"><h4>🎤 Speaking</h4>' +
+          '<p class="ielts-desc-crit">Fluency &amp; coherence · Lexical resource · Grammatical range &amp; accuracy · Pronunciation</p>' +
+          '<p class="ielts-official">' +
+            '<a href="https://ielts.org/cdn/ielts-guides/ielts-speaking-band-descriptors.pdf" target="_blank" rel="noopener noreferrer">Band descriptors ↗</a>' +
+            '<a href="https://ielts.org/cdn/ielts-guides/ielts-speaking-key-assessment-criteria.pdf" target="_blank" rel="noopener noreferrer">Key assessment criteria ↗</a>' +
+          "</p></div>" +
+        '<div class="ielts-desc-group"><h4>✍️ Writing</h4>' +
+          '<p class="ielts-desc-crit">Task achievement / response · Coherence &amp; cohesion · Lexical resource · Grammatical range &amp; accuracy</p>' +
+          '<p class="ielts-official">' +
+            '<a href="https://ielts.org/cdn/ielts-guides/ielts-writing-band-descriptors.pdf" target="_blank" rel="noopener noreferrer">Band descriptors ↗</a>' +
+            '<a href="https://ielts.org/cdn/ielts-guides/ielts-writing-key-assessment-criteria.pdf" target="_blank" rel="noopener noreferrer">Key assessment criteria ↗</a>' +
+          "</p></div>" +
+        '<div class="ielts-desc-group"><h4>📖 Reading &amp; 🎧 Listening</h4>' +
+          '<p class="ielts-desc-crit">40 questions each · your raw mark converts to a band from an official score table (no written descriptors).</p>' +
+          '<p class="ielts-official">' +
+            '<a href="https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail" target="_blank" rel="noopener noreferrer">Raw score → band ↗</a>' +
+            '<a href="https://ieltsliz.com/ielts-band-scores/" target="_blank" rel="noopener noreferrer">IELTS Liz — band scores ↗</a>' +
+          "</p></div>" +
+      "</div>";
     var resourcesHTML =
       '<div class="ielts-res-groups">' +
         resGroup("Official test sites", [["IDP IELTS", "https://ielts.idp.com"], ["British Council — Take IELTS", "https://takeielts.britishcouncil.org"], ["IELTS.org", "https://ielts.org"]]) +
@@ -133,12 +148,14 @@
         hubChip("about", "ℹ️ About IELTS", true) +
         hubChip("structure", "🗂️ Exam structure") +
         hubChip("bands", "🎯 Band scores") +
+        hubChip("desc", "📄 Band Description") +
         hubChip("resources", "🔗 Resources") +
       "</div>" +
       '<div class="ielts-hub-panels">' +
         hubPanel("about", aboutHTML, true) +
         hubPanel("structure", structureHTML) +
         hubPanel("bands", bandsHTML) +
+        hubPanel("desc", descHTML) +
         hubPanel("resources", resourcesHTML) +
       "</div>" +
       '<h2 class="ielts-h2">Practise each module</h2>' +
