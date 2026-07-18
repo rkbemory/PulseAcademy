@@ -3684,61 +3684,112 @@ span.service-chip.is-soon:hover { transform: none; background: rgba(255,255,255,
 @media (max-width: 520px) { .hero-groups { grid-template-columns: 1fr; } }
 
 /* ════════════════════════════════════════════════════════════════
-   Glowing jellyfish — gentle blue/white drift across the hero.
-   Purely decorative: sits behind the hero text (z-index 1), never
-   captures clicks, and is disabled for reduced-motion users.
+   Glowing jellyfish — ambient blue/white creatures that wander the
+   whole homepage (up / down / side). Fixed overlay so they drift over
+   every section as you scroll. Purely decorative: translucent, never
+   capture clicks (pointer-events:none), kept below the top nav and
+   floating buttons (z-index 8), and disabled for reduced-motion users.
+   Layers of transform, one job each:
+     .jelly        → 2D wander across the viewport
+     .jelly-scale  → static per-jelly size
+     .jelly-body   → swim thrust (bob + tilt)
+     .jelly-bell   → bell contraction pulse
+     .jelly-arms span → trailing tentacle wave
    ════════════════════════════════════════════════════════════════ */
-.jelly-field { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+.jelly-field { position: fixed; inset: 0; z-index: 8; overflow: hidden; pointer-events: none; }
 .jelly {
-  position: absolute; bottom: -90px; left: var(--x, 50%);
-  opacity: 0;
-  animation: jelly-rise var(--dur, 28s) linear infinite;
-  animation-delay: var(--d, 0s);
-  will-change: transform, opacity;
+  position: absolute; top: var(--top, 40%); left: var(--left, 50%);
+  opacity: var(--o, .5);
+  will-change: transform;
+  animation: var(--wander, jelly-wa) var(--dur, 52s) ease-in-out var(--d, 0s) infinite var(--dir, normal);
 }
-.jelly-inner { transform: scale(var(--s, 1)); transform-origin: center bottom; }
+.jelly-scale { transform: scale(var(--s, 1)); transform-origin: center center; }
+.jelly-body {
+  animation: jelly-swim 4s ease-in-out var(--sd, 0s) infinite;
+  /* soft edge so the jelly stays visible over both the dark hero and white sections */
+  filter: drop-shadow(0 2px 7px rgba(40,110,200,0.28));
+}
 .jelly-bell {
-  width: 48px; height: 35px;
-  border-radius: 50% 50% 46% 46%;
-  background: radial-gradient(circle at 50% 32%,
-    rgba(255,255,255,0.98) 0%, rgba(188,232,255,0.72) 44%, rgba(80,160,245,0.22) 100%);
+  position: relative;
+  width: 46px; height: 34px;
+  border-radius: 50% 50% 42% 42% / 60% 60% 42% 42%;
+  background: radial-gradient(ellipse 72% 82% at 50% 28%,
+    rgba(255,255,255,0.9) 0%, rgba(150,215,255,0.82) 38%,
+    rgba(86,166,246,0.66) 72%, rgba(52,128,226,0.5) 100%);
   box-shadow:
-    0 0 32px 10px rgba(130,205,255,0.55),
-    inset 0 -7px 13px rgba(120,195,255,0.6),
-    inset 0 4px 10px rgba(255,255,255,0.72);
-  animation: jelly-pulse 3.6s ease-in-out infinite;
+    0 0 24px 7px rgba(110,190,255,0.4),
+    inset 0 0 0 1.5px rgba(70,150,235,0.45),
+    inset 0 -8px 14px rgba(70,150,235,0.55),
+    inset 0 5px 11px rgba(255,255,255,0.55);
   transform-origin: center top;
+  animation: jelly-pulse 4s ease-in-out var(--sd, 0s) infinite;
 }
-.jelly-tentacles { display: flex; justify-content: space-evenly; width: 48px; padding: 0 5px; margin-top: -3px; }
-.jelly-tentacles span {
-  display: block; width: 2.5px; height: 26px; border-radius: 3px;
-  background: linear-gradient(to bottom, rgba(200,235,255,0.9), rgba(150,210,255,0.2) 85%, transparent);
+/* scalloped, frilly bell rim */
+.jelly-bell::after {
+  content: ""; position: absolute; left: 1px; right: 1px; bottom: -3px; height: 8px;
+  background:
+    radial-gradient(circle at 10% 35%,  rgba(206,238,255,0.75) 0 3px,   transparent 3.6px),
+    radial-gradient(circle at 30% 35%,  rgba(206,238,255,0.75) 0 3.4px, transparent 4px),
+    radial-gradient(circle at 50% 35%,  rgba(206,238,255,0.75) 0 3.6px, transparent 4.2px),
+    radial-gradient(circle at 70% 35%,  rgba(206,238,255,0.75) 0 3.4px, transparent 4px),
+    radial-gradient(circle at 90% 35%,  rgba(150,210,255,0.85) 0 3px,   transparent 3.6px);
+}
+.jelly-arms { display: flex; justify-content: space-evenly; width: 46px; padding: 0 3px; margin-top: -1px; }
+.jelly-arms span {
+  display: block; width: 2px; border-radius: 3px;
+  background: linear-gradient(to bottom, rgba(126,200,255,0.92), rgba(74,152,236,0.4) 76%, transparent);
   transform-origin: top center;
-  animation: jelly-sway 3.6s ease-in-out infinite;
+  animation: jelly-wave 4s ease-in-out infinite;
 }
-.jelly-tentacles span:nth-child(1) { height: 24px; animation-delay: -.2s; }
-.jelly-tentacles span:nth-child(2) { height: 30px; animation-delay: -.6s; }
-.jelly-tentacles span:nth-child(3) { height: 34px; animation-delay: -1s; }
-.jelly-tentacles span:nth-child(4) { height: 29px; animation-delay: -1.4s; }
-.jelly-tentacles span:nth-child(5) { height: 23px; animation-delay: -1.8s; }
-@keyframes jelly-rise {
-  0%   { transform: translate(0, 0); opacity: 0; }
-  10%  { opacity: var(--o, .55); }
-  50%  { transform: translate(var(--sway, 30px), -48vh); opacity: var(--o, .55); }
-  90%  { opacity: var(--o, .55); }
-  100% { transform: translate(0, -98vh); opacity: 0; }
+/* centre tentacles longest (imply trailing oral arms), phase-shifted for a travelling wave */
+.jelly-arms span:nth-child(1) { height: 22px; animation-delay: -.2s; }
+.jelly-arms span:nth-child(2) { height: 31px; animation-delay: -.6s; }
+.jelly-arms span:nth-child(3) { height: 42px; width: 2.4px; animation-delay: -1s; }
+.jelly-arms span:nth-child(4) { height: 48px; width: 2.6px; animation-delay: -1.4s; }
+.jelly-arms span:nth-child(5) { height: 42px; width: 2.4px; animation-delay: -1.8s; }
+.jelly-arms span:nth-child(6) { height: 31px; animation-delay: -2.2s; }
+.jelly-arms span:nth-child(7) { height: 22px; animation-delay: -2.6s; }
+
+/* swim thrust: bell contracts (pulse) while the body lifts, then relaxes */
+@keyframes jelly-swim {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-9px) rotate(2deg); }
 }
 @keyframes jelly-pulse {
   0%, 100% { transform: scale(1, 1); }
-  50%      { transform: scale(1.13, 0.8); }
+  45%      { transform: scale(0.84, 1.1); }
+  70%      { transform: scale(1.04, 0.96); }
 }
-@keyframes jelly-sway {
-  0%, 100% { transform: rotate(-7deg); }
-  50%      { transform: rotate(7deg); }
+@keyframes jelly-wave {
+  0%, 100% { transform: rotate(-9deg) translateX(-1px); }
+  50%      { transform: rotate(9deg)  translateX(1px); }
+}
+/* 2D wander paths — up, down and side to side, looping smoothly */
+@keyframes jelly-wa {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(13vw, 9vh); }
+  40%  { transform: translate(25vw, -6vh); }
+  60%  { transform: translate(11vw, -16vh); }
+  80%  { transform: translate(-6vw, 3vh); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes jelly-wb {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-15vw, 12vh); }
+  50%  { transform: translate(-24vw, -7vh); }
+  75%  { transform: translate(-8vw, -18vh); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes jelly-wc {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(10vw, -13vh); }
+  50%  { transform: translate(-6vw, -22vh); }
+  75%  { transform: translate(-15vw, -5vh); }
+  100% { transform: translate(0, 0); }
 }
 @media (max-width: 600px) {
-  /* keep the two bright margin jellyfish; drop the faint ones that cross the text */
-  .jelly:nth-child(2), .jelly:nth-child(3) { display: none; }
+  /* thin the school on small screens so content stays clear */
+  .jelly:nth-child(3), .jelly:nth-child(5), .jelly:nth-child(6) { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .jelly-field { display: none; }
