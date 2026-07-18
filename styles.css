@@ -3650,12 +3650,18 @@ body.pulse-acct-open .visitor-counter {
 }
 .hero-group .service-chip { justify-content: flex-start; width: 100%; white-space: nowrap; }
 .hero-group .service-chip .chip-new, .hero-group .service-chip .chip-soon, .hero-group .service-chip .chip-feat { flex: 0 0 auto; margin-left: auto; }
-/* Feature badges on flagship chips (NCLEX = Adaptive Test, IELTS = AI Evaluation) */
+/* Feature badges on flagship chips (NCLEX = Adaptive Test, IELTS = AI Evaluation).
+   Kept compact so label + badge always fit the column width — chips stay aligned. */
 .service-chip .chip-feat {
-  font-size: 0.56rem; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
-  padding: 2px 7px; border-radius: 999px; white-space: nowrap;
+  font-size: 0.52rem; font-weight: 800; letter-spacing: 0.3px; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 999px; white-space: nowrap;
   background: rgba(255,255,255,0.9); color: #1E293B;
 }
+/* Never let chip content stretch a pill wider than its column: labels may
+   ellipsize, the badge never shrinks. */
+.hero-group .service-chip { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.hero-group .service-chip .chip-new,
+.hero-group .service-chip .chip-soon { font-size: 0.52rem; padding: 2px 6px; letter-spacing: 0.3px; }
 .hero-group .service-chip-nclex .chip-feat { background: #FCE7C0; color: #7A4A12; }
 .hero-group .service-chip-ielts .chip-feat { background: #E7DCFF; color: #4C1D95; }
 /* Colour-coded highlight chips — draw the eye to the flagship NCLEX + IELTS */
@@ -4788,7 +4794,12 @@ tr.jt-soon .jt-date:nth-child(5) { color: #B0443B; font-weight: 600; }
 .hero-groups { margin-top: 16px; gap: 14px 18px; }
 .hero-group { gap: 6px; }
 .hero-group-label { margin-bottom: 0; }
-.home-hero .service-chip { padding: 6px 13px; font-size: 0.82rem; }
+.home-hero .service-chip { padding: 6px 11px; font-size: 0.82rem; gap: 6px; }
+/* mid-width safety: at narrower 5-column layouts, trim label size a touch
+   so the longest label+badge combos never clip */
+@media (min-width: 1081px) and (max-width: 1260px) {
+  .home-hero .service-chip { font-size: 0.78rem; padding: 6px 10px; }
+}
 @media (max-width: 860px) {
   .home-hero { min-height: 0; padding: 34px 18px 64px; }
 }
