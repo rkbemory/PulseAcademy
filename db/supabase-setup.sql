@@ -73,16 +73,21 @@ create policy "own prefs - update"
 
 
 -- ============================================================
--- LEARNING PROGRESS — Academic topics studied & IELTS best scores,
+-- LEARNING PROGRESS — Academic topics studied, IELTS best scores,
+-- AI Writing/Speaking bands, plus CV & Smart Review blobs,
 -- synced across devices. One row per (user, kind, key):
---   kind='academic'  key='<program>/<subject>/<topic>'  value={"studied":true,"score":1,"ts":1730000000000}
---   kind='ielts'     key='<module>/<test>'              value=34   (best raw score /40)
+--   kind='academic'       key='<program>/<subject>/<topic>'  value={"studied":true,"score":1,"ts":1730000000000}
+--   kind='ielts'          key='<module>/<test>'              value=34   (best raw score /40)
+--   kind='ielts-writing'  key='<module>/<test>/<task>'       value=7    (best AI band /9)
+--   kind='ielts-speaking' key='<module>/<test>'              value=6.5  (best AI band /9)
+--   kind='cv'             key='v1'                           value={...whole CV, updatedAt}
+--   kind='review'         key='v1'                           value={...whole deck, updatedAt}
 -- Without this table the site still works exactly as before
--- (academic & IELTS progress simply stays device-local).
+-- (progress simply stays device-local).
 -- ============================================================
 create table if not exists public.learning_progress (
   user_id     uuid not null references auth.users (id) on delete cascade,
-  kind        text not null check (kind in ('academic','ielts')),
+  kind        text not null check (kind in ('academic','ielts','ielts-writing','ielts-speaking','cv','review')),
   key         text not null,
   value       jsonb not null default '{}'::jsonb,
   updated_at  timestamptz not null default now(),

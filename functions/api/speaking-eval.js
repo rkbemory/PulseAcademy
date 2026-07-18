@@ -81,6 +81,11 @@ export async function onRequest(context) {
   if (oi.blocked) return res({ error: "forbidden-origin" }, 403);
   if (!key) return res({ error: "not-configured" }, 503);
 
+  // Reject oversized payloads via Content-Length before buffering the body
+  // (the base64 total is re-checked precisely after parse).
+  const clen = parseInt(request.headers.get("Content-Length") || "0", 10);
+  if (clen > MAX_TOTAL_AUDIO_B64 + 1024 * 1024) return res({ error: "too-large" }, 413);
+
   let body;
   try { body = await request.json(); } catch (e) { return res({ error: "bad-json" }, 400); }
   let parts = Array.isArray(body.parts) ? body.parts : [];

@@ -44,6 +44,12 @@
     try { localStorage.setItem(LS, JSON.stringify(d)); } catch (e) {}
     mirrorReview(d);
   }
+  // After a cross-device sync adopts a newer remote deck into localStorage,
+  // reload the study page so an in-progress session doesn't clobber it.
+  // (Only acts on review.html — this file is also loaded as a library elsewhere.)
+  window.addEventListener("pulse:progress-synced", function () {
+    if (document.getElementById("review-root")) { try { location.reload(); } catch (e) {} }
+  });
 
   function newCard(q, source, now) {
     return {

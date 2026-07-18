@@ -160,7 +160,7 @@
       "</div>" +
       '<h2 class="ielts-h2">Practise each module</h2>' +
       '<div class="ielts-mod-grid ielts-mod-2x2">' + cards + "</div>" +
-      '<p class="ielts-disclaimer">' + esc(meta.note) + " AI evaluation of Writing &amp; Speaking is coming in the Pro version.</p>";
+      '<p class="ielts-disclaimer">' + esc(meta.note) + " AI evaluation of Writing &amp; Speaking is free (daily limits apply); band estimates are for practice guidance, not official scores.</p>";
 
     root.querySelectorAll(".ielts-hub-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
@@ -820,7 +820,7 @@
     }).join("") + "</ul>";
     var thead = "<tr><th>" + esc(f.tableTitle || "") + "</th>" + f.tableCols.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") + "</tr>";
     var tbody = f.tableRows.map(function (row) {
-      return "<tr><td>" + esc(row[0]) + "</td>" + row.slice(1).map(function (c) { return "<td>" + c + "</td>"; }).join("") + "</tr>";
+      return "<tr><td>" + esc(row[0]) + "</td>" + row.slice(1).map(function (c) { return "<td>" + esc(String(c)) + "</td>"; }).join("") + "</tr>";
     }).join("");
     return '<div class="ielts-fig-pierow">' + svg + legend + "</div>" +
       '<table class="ielts-fig-table">' + thead + tbody + "</table>";

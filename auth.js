@@ -401,7 +401,13 @@
       syncKind("ielts-speaking", "pulse:ielts:speaking"),
       syncBlob("cv", "pulse:cv:v1"),
       syncBlob("review", "pulse:review:v1")
-    ]).then(function (r) { return r.some(function (x) { return x; }); });
+    ]).then(function (r) {
+      var changed = r.some(function (x) { return x; });
+      // Tell open pages (CV builder, Smart Review) that localStorage may now
+      // hold a newer remote copy, so they re-hydrate instead of clobbering it.
+      if (changed) { try { window.dispatchEvent(new CustomEvent("pulse:progress-synced")); } catch (e) {} }
+      return changed;
+    });
   }
   function syncKind(kind, lsKey) {
     function numOf(v) { if (typeof v === "number") return v; if (v && typeof v.best === "number") return v.best; return null; }

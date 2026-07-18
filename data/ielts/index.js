@@ -49,7 +49,7 @@ window.IELTS.modules = {
   },
   writing: {
     id: "writing", name: "Writing", icon: "✍️", timeMin: 60,
-    blurb: "Task 1 (150+ words) and Task 2 (250+ words). Practise with a live word counter. AI band score is Pro.",
+    blurb: "Task 1 (150+ words) and Task 2 (250+ words). Live word counter + free AI band score with feedback.",
     tests: [
       { id: "writing-1", title: "Academic Writing — Set 1" },
       { id: "writing-2", title: "Academic Writing — Set 2" },
@@ -65,7 +65,7 @@ window.IELTS.modules = {
   },
   speaking: {
     id: "speaking", name: "Speaking", icon: "🎤", timeMin: 14,
-    blurb: "Parts 1, 2 (cue card) and 3, with the examiner's questions. AI evaluation is Pro.",
+    blurb: "Parts 1, 2 (cue card) and 3 — record your answers and get a free AI band with feedback.",
     tests: [
       { id: "speaking-1", title: "Speaking — Set 1" },
       { id: "speaking-2", title: "Speaking — Set 2" },

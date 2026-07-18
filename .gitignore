@@ -4,6 +4,17 @@
 # Keep these out of any public repo.
 Book_PDF Copy/
 
+# Copyrighted reference material (Cambridge IELTS books & audio) — NEVER publish.
+IELTS Writing Evaluation Criteria/
+
+# Personal files — not for the public repo.
+Photoes_Pulse/
+CV Sample*/
+*.docx
+
+# Local Claude Code dev config
+.claude/
+
 # OS metadata
 .DS_Store
 Thumbs.db

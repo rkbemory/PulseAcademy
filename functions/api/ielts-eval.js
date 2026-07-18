@@ -144,6 +144,10 @@ export async function onRequest(context) {
   if (oi.blocked) return res({ error: "forbidden-origin" }, 403);
   if (!key) return res({ error: "not-configured" }, 503);
 
+  // Reject oversized payloads before buffering/parsing the body.
+  const clen = parseInt(request.headers.get("Content-Length") || "0", 10);
+  if (clen > 64000) return res({ error: "too-large" }, 413);
+
   let body;
   try { body = await request.json(); } catch (e) { return res({ error: "bad-json" }, 400); }
   const task = body.task === "t2" ? "t2" : "t1";

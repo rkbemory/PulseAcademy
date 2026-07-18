@@ -389,14 +389,40 @@
     try {
       localStorage.setItem(window.Pulse.LS_LAST, JSON.stringify(result));
       const hist = JSON.parse(localStorage.getItem(window.Pulse.LS_HISTORY) || "[]");
-      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt, synced: !!(window.PulseAuth && window.PulseAuth.user) });
+      // synced starts false; flipped true only once the account insert confirms
+      // (syncLocalHistory retries any entry still false on the next sign-in).
+      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt, synced: false });
       localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
     } catch (e) {}
-    if (window.PulseAuth && window.PulseAuth.enabled) {
-      try { window.PulseAuth.saveResult(result); window.PulseAuth.noteQuizFinished(); } catch (e) {}
-    }
     if (window.PulseReview) { try { window.PulseReview.addMissed(runner.questions, runner.answers, result.testTitle); } catch (e) {} }
-    window.location.href = "results.html";
+    saveToAccountThenGo(result);
+  }
+
+  /* Push the result to the account (when signed in), mark the history entry
+     synced only once the insert CONFIRMS, then go to the results page.
+     Navigation never waits more than ~2.5s; an unconfirmed insert simply
+     leaves synced:false so syncLocalHistory retries it later (duplicate rows
+     are collapsed by the dashboard's testId+timestamp dedup). */
+  function markHistorySynced(ts) {
+    try {
+      const h = JSON.parse(localStorage.getItem(window.Pulse.LS_HISTORY) || "[]");
+      for (let i = 0; i < h.length; i++) { if (h[i] && h[i].submittedAt === ts) { h[i].synced = true; break; } }
+      localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(h));
+    } catch (e) {}
+  }
+  function saveToAccountThenGo(result) {
+    let gone = false;
+    function go() { if (!gone) { gone = true; window.location.href = "results.html"; } }
+    if (!(window.PulseAuth && window.PulseAuth.enabled)) { go(); return; }
+    try { window.PulseAuth.noteQuizFinished(); } catch (e) {}
+    if (!window.PulseAuth.user) { go(); return; }
+    try {
+      window.PulseAuth.saveResult(result).then(function (r) {
+        if (r && !r.error) markHistorySynced(result.submittedAt);
+        go();
+      }).catch(go);
+      setTimeout(go, 2500);
+    } catch (e) { go(); }
   }
 
   /* ============================================================
@@ -584,14 +610,13 @@
     try {
       localStorage.setItem(window.Pulse.LS_LAST, JSON.stringify(result));
       const hist = JSON.parse(localStorage.getItem(window.Pulse.LS_HISTORY) || "[]");
-      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt, synced: !!(window.PulseAuth && window.PulseAuth.user) });
+      // synced starts false; flipped true only once the account insert confirms
+      // (syncLocalHistory retries any entry still false on the next sign-in).
+      hist.unshift({ programId: result.programId, testId: result.testId, testTitle: result.testTitle, score: result.score, correct: result.correct, total: result.total, submittedAt: result.submittedAt, synced: false });
       localStorage.setItem(window.Pulse.LS_HISTORY, JSON.stringify(hist.slice(0, 50)));
     } catch (e) {}
-    if (window.PulseAuth && window.PulseAuth.enabled) {
-      try { window.PulseAuth.saveResult(result); window.PulseAuth.noteQuizFinished(); } catch (e) {}
-    }
     if (window.PulseReview) { try { window.PulseReview.addMissed(arun.asked, arun.answers, result.testTitle); } catch (e) {} }
-    window.location.href = "results.html";
+    saveToAccountThenGo(result);
   }
 
   function startAdaptiveTimer() {

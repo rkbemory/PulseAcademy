@@ -178,6 +178,15 @@
     state = load();
     renderApp();
   }
+  // After a cross-device sync adopts a newer remote CV into localStorage,
+  // re-hydrate so the next edit doesn't clobber it with this page's older copy.
+  window.addEventListener("pulse:progress-synced", function () {
+    if (!rootEl) return;
+    try {
+      var stored = JSON.parse(localStorage.getItem(LS) || "null");
+      if (stored && stored.updatedAt && stored.updatedAt !== state.updatedAt) { state = load(); renderApp(); }
+    } catch (e) {}
+  });
   function hasContent() {
     if (state.personal.name || state.personal.title) return true;
     return state.sections.some(function (s) { return s.items.some(has); });
