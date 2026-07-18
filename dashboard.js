@@ -113,6 +113,17 @@
     }
     return { count: count, best: best };
   }
+  /* AI Speaking band estimates (kind ielts-speaking) — best band /9. */
+  function ieltsSpeakingActivity() {
+    var w = readJSON("pulse:ielts:speaking", "{}"), count = 0, best = 0;
+    for (var k in w) {
+      if (!w.hasOwnProperty(k)) continue;
+      var b = (typeof w[k] === "number") ? w[k] : null;
+      if (b == null) continue;
+      count++; if (b > best) best = b;
+    }
+    return { count: count, best: best };
+  }
   function ieltsTotal() {
     var M = window.IELTS && window.IELTS.modules, n = 0;
     if (M) ["reading", "listening"].forEach(function (mid) { if (M[mid] && M[mid].tests) n += M[mid].tests.length; });
@@ -148,7 +159,7 @@
   function hasActivity(p, hist) {
     hist = hist || STATE.history;
     if (p.kind === "academic") return academicActivity(p.id).length > 0;
-    if (p.kind === "ielts") return ieltsActivity().attempts > 0 || ieltsWritingActivity().count > 0;
+    if (p.kind === "ielts") return ieltsActivity().attempts > 0 || ieltsWritingActivity().count > 0 || ieltsSpeakingActivity().count > 0;
     return hist.some(function (h) { return h.programId === p.id; });
   }
 
@@ -253,19 +264,21 @@
     return card(p, pct, sub, lines, p.href, e.attempts ? "Practice →" : "Start →");
   }
   function ieltsCard(p) {
-    var a = ieltsActivity(), w = ieltsWritingActivity(), total = ieltsTotal();
+    var a = ieltsActivity(), w = ieltsWritingActivity(), s = ieltsSpeakingActivity(), total = ieltsTotal();
     var pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0;
-    var started = a.attempts || w.count;
+    var started = a.attempts || w.count || s.count;
     var wLine = w.count ? '<p class="dash-cont-line"><span>Writing</span> AI band <strong>' + w.best + '</strong> · ' + w.count + ' AI check' + (w.count === 1 ? "" : "s") + '</p>' : '';
+    var sLine = s.count ? '<p class="dash-cont-line"><span>Speaking</span> AI band <strong>' + s.best + '</strong> · ' + s.count + ' AI check' + (s.count === 1 ? "" : "s") + '</p>' : '';
     var lines = started
       ? ((a.attempts
           ? '<p class="dash-cont-line"><span>Best</span> ' + esc(a.bestModule) + ' — <strong>' + a.bestRaw + '/40</strong></p>' +
             '<p class="dash-cont-line dash-cont-prev"><span>Done</span> ' + a.attempts + ' auto-scored test' + (a.attempts === 1 ? "" : "s") + '</p>'
-          : "") + wLine)
+          : "") + wLine + sLine)
       : '<p class="dash-cont-line dash-cont-prev">Reading · Listening · Writing · Speaking — not started yet.</p>';
     var mp = [];
     if (a.attempts) mp.push(a.attempts + " / " + total + " scored · best " + a.bestRaw + "/40");
     if (w.count) mp.push("Writing band " + w.best);
+    if (s.count) mp.push("Speaking band " + s.best);
     var metric = mp.length ? mp.join(" · ") : "Academic Reading, Listening, Writing & Speaking";
     return card(p, pct, metric, lines, p.href, started ? "Continue →" : "Start →");
   }
@@ -305,7 +318,7 @@
     var bars = activePrograms().map(function (p) {
       var pct, label;
       if (p.kind === "academic") { var t = academicTotal(p.id), s = academicActivity(p.id).length; pct = t ? Math.round(s / t * 100) : 0; label = s + "/" + t + " topics"; }
-      else if (p.kind === "ielts") { var a = ieltsActivity(), wa = ieltsWritingActivity(); pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0; label = a.attempts ? ("best " + a.bestRaw + "/40") : (wa.count ? ("Writing band " + wa.best) : "—"); }
+      else if (p.kind === "ielts") { var a = ieltsActivity(), wa = ieltsWritingActivity(), sa = ieltsSpeakingActivity(); pct = a.bestRaw ? Math.round(a.bestRaw / 40 * 100) : 0; label = a.attempts ? ("best " + a.bestRaw + "/40") : (wa.count ? ("Writing band " + wa.best) : (sa.count ? ("Speaking band " + sa.best) : "—")); }
       else { var e = examActivity(p.id, hist); pct = e.best; label = e.attempts ? ("best " + e.best + "%") : "—"; }
       return '<div class="dash-scorerow"><span class="dash-scorerow-name">' + p.icon + " " + esc(p.name) + '</span>' +
         '<div class="dash-bar" style="--pc:' + p.color + '"><span style="width:' + Math.max(2, Math.min(100, pct)) + '%"></span></div>' +

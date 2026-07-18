@@ -5772,6 +5772,19 @@ body > footer { flex-shrink: 0; }
 .ielts-eval-disc { font-size: 0.75rem; color: var(--text-muted); margin: 12px 0 0; border-top: 1px dashed var(--line-cool); padding-top: 8px; }
 .ielts-eval-prev { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin: 0 0 8px; }
 @media (max-width: 640px) { .ielts-eval-row { grid-template-columns: 1fr 44px; } .ielts-eval-note2 { grid-column: 1 / -1; } }
+
+/* ---- Speaking recorder + AI result extras ---- */
+.ielts-rec { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+.ielts-rec-btn.is-rec { background: #B3123E; color: #fff; border-color: #B3123E; animation: ielts-rec-pulse 1.2s ease-in-out infinite; }
+@keyframes ielts-rec-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(179,18,62,0.45); } 50% { box-shadow: 0 0 0 7px rgba(179,18,62,0); } }
+.ielts-rec-status { font-size: 0.88rem; color: var(--text-soft); }
+.ielts-rec-audio { height: 34px; max-width: 240px; }
+.ielts-spk-evalbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 18px 0 4px; }
+.ielts-spk-hint { font-size: 0.88rem; color: var(--text-soft); }
+.ielts-eval-comment { margin: 2px 0 10px; font-size: 0.96rem; color: var(--text); line-height: 1.55; }
+.ielts-spk-tr { border: 1px solid var(--line-cool); border-radius: 10px; padding: 8px 12px; margin: 6px 0; }
+.ielts-spk-tr > summary { cursor: pointer; font-weight: 600; font-size: 0.92rem; color: var(--primary, #14387A); }
+.ielts-spk-tr > p { margin: 8px 0 2px; font-size: 0.92rem; color: var(--text-soft); line-height: 1.6; }
 /* Writing action buttons (Save / Try again) + sign-in prompt */
 .ielts-wactions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .ielts-save-btn, .ielts-retry-btn { font: inherit; font-size: 0.85rem; font-weight: 600; padding: 8px 15px; border-radius: 999px; cursor: pointer; border: 1.5px solid var(--line-cool); background: var(--surface); color: var(--text-soft); transition: border-color .2s, color .2s, background .2s; }

@@ -398,6 +398,7 @@
       syncKind("academic", "pulse:academic:progress"),
       syncKind("ielts", "pulse:ielts:progress"),
       syncKind("ielts-writing", "pulse:ielts:writing"),
+      syncKind("ielts-speaking", "pulse:ielts:speaking"),
       syncBlob("cv", "pulse:cv:v1"),
       syncBlob("review", "pulse:review:v1")
     ]).then(function (r) { return r.some(function (x) { return x; }); });
@@ -409,7 +410,7 @@
       return { user_id: window.PulseAuth.user.id, kind: kind, key: k, value: value, updated_at: new Date().toISOString() };
     }
     // IELTS raw scores and Writing bands both merge by "keep the higher number".
-    var numeric = (kind === "ielts" || kind === "ielts-writing");
+    var numeric = (kind === "ielts" || kind === "ielts-writing" || kind === "ielts-speaking");
     return fetchProgress(kind).then(function (rows) {
       var local;
       try { local = JSON.parse(localStorage.getItem(lsKey) || "{}"); } catch (e) { local = {}; }

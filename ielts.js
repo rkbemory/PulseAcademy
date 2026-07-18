@@ -560,20 +560,181 @@
       '<p class="ielts-eval-disc">AI estimate for practice, based on the official IELTS band descriptors — not an official IELTS score.</p>';
   }
 
-  /* ---- Speaking (show examiner's questions; AI eval = Pro) ---- */
+  /* ---- Speaking — record Part 1/2/3 aloud and get a free AI band estimate ---- */
+  var SPK_MAX = { 1: 75, 2: 130, 3: 100 };   // per-part recording caps (seconds)
+  function recBlock(part) {
+    return '<div class="ielts-rec" data-part="' + part + '" data-max="' + SPK_MAX[part] + '">' +
+      '<button type="button" class="btn btn-secondary ielts-rec-btn">🎙 Record answer</button>' +
+      '<span class="ielts-rec-status">Not recorded yet</span>' +
+      '<audio class="ielts-rec-audio" controls hidden></audio></div>';
+  }
   function renderSpeaking(root, head, test) {
     var p1 = test.part1, p2 = test.part2, p3 = test.part3;
     root.innerHTML = head +
-      '<p class="ielts-instr">The Speaking test is an 11–14 minute face-to-face interview in three parts. Read the examiner\'s questions below and practise aloud. Recording + AI band feedback arrives in the Pro version.</p>' +
+      '<p class="ielts-instr">The Speaking test is an 11–14 minute interview in three parts. Read each question, then <strong>record your answer aloud</strong> and get a <strong>free AI band estimate</strong> across all four criteria. <span class="ielts-eval-note">🎙 Best in Chrome/Edge with a microphone; all three parts give the most accurate band.</span></p>' +
       '<section class="ielts-spart"><h3>Part 1 — Introduction &amp; interview <span>(4–5 min)</span></h3>' +
-        '<p class="ielts-sp-topic">' + esc(p1.topic) + "</p><ul>" + p1.questions.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul></section>" +
+        '<p class="ielts-sp-topic">' + esc(p1.topic) + "</p><ul>" + p1.questions.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul>" + recBlock(1) + "</section>" +
       '<section class="ielts-spart ielts-cue"><h3>Part 2 — Long turn <span>(3–4 min)</span></h3>' +
         '<div class="ielts-cuecard"><p class="ielts-cue-task">' + esc(p2.cueCard) + "</p><p class='ielts-cue-lead'>You should say:</p><ul>" +
         p2.bullets.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul>" +
-        '<p class="ielts-cue-note">You have 1 minute to prepare, then speak for 1–2 minutes.</p></div>' +
-        '<button type="button" class="btn btn-secondary ielts-pro-btn" disabled title="Coming in the Pro version">🔒 Record &amp; get AI band score (Pro)</button></section>' +
+        '<p class="ielts-cue-note">You have 1 minute to prepare, then speak for 1–2 minutes.</p></div>' + recBlock(2) + "</section>" +
       '<section class="ielts-spart"><h3>Part 3 — Discussion <span>(4–5 min)</span></h3>' +
-        '<p class="ielts-sp-topic">' + esc(p3.topic) + "</p><ul>" + p3.questions.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul></section>";
+        '<p class="ielts-sp-topic">' + esc(p3.topic) + "</p><ul>" + p3.questions.map(function (q) { return "<li>" + esc(q) + "</li>"; }).join("") + "</ul>" + recBlock(3) + "</section>" +
+      '<div class="ielts-spk-evalbar"><button type="button" class="btn btn-primary ielts-spk-eval-btn">🎯 Get my AI Speaking band</button>' +
+        '<span class="ielts-spk-hint">Record at least Part 2, then evaluate.</span></div>' +
+      '<div class="ielts-eval-out ielts-spk-out" hidden></div>';
+    wireSpeakingEval(root, test);
+  }
+
+  function wireSpeakingEval(root, test) {
+    var enabled = true, perDay = 4, pending = false, blobs = {};
+    fetch("/api/speaking-eval?action=status").then(function (r) { return r.json(); }).then(function (s) {
+      enabled = !!(s && s.enabled); perDay = (s && s.perDay) || 4;
+      if (!enabled) { var b = root.querySelector(".ielts-spk-eval-btn"); if (b) { b.disabled = true; b.textContent = "✨ AI Speaking band — coming soon"; } }
+    }).catch(function () {});
+
+    root.querySelectorAll(".ielts-rec").forEach(function (rec) {
+      var part = parseInt(rec.getAttribute("data-part"), 10);
+      var max = parseInt(rec.getAttribute("data-max"), 10) || 120;
+      var btn = rec.querySelector(".ielts-rec-btn"), status = rec.querySelector(".ielts-rec-status"), audio = rec.querySelector(".ielts-rec-audio");
+      var mr = null, chunks = [], timer = null, stopTO = null, secs = 0, recording = false;
+      function stop() { if (mr && mr.state !== "inactive") mr.stop(); }
+      btn.addEventListener("click", function () {
+        if (recording) { stop(); return; }
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === "undefined") {
+          status.textContent = "Recording needs a modern browser with mic access."; return;
+        }
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+          chunks = []; secs = 0; recording = true;
+          try { mr = new MediaRecorder(stream); } catch (e) { mr = new MediaRecorder(stream); }
+          mr.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+          mr.onstop = function () {
+            recording = false; clearInterval(timer); clearTimeout(stopTO);
+            stream.getTracks().forEach(function (t) { t.stop(); });
+            var blob = new Blob(chunks, { type: mr.mimeType || "audio/webm" });
+            blobs[part] = blob;
+            audio.src = URL.createObjectURL(blob); audio.hidden = false;
+            btn.textContent = "🎙 Re-record"; btn.classList.remove("is-rec");
+            status.textContent = "Recorded · " + secs + "s ✓";
+          };
+          mr.start();
+          btn.textContent = "⏹ Stop"; btn.classList.add("is-rec"); status.textContent = "Recording… 0s";
+          timer = setInterval(function () { secs++; status.textContent = "Recording… " + secs + "s (auto-stops at " + max + "s)"; }, 1000);
+          stopTO = setTimeout(stop, max * 1000);
+        }).catch(function () { status.textContent = "🎙 Microphone blocked — allow mic access and try again."; });
+      });
+    });
+
+    var evalBtn = root.querySelector(".ielts-spk-eval-btn"), out = root.querySelector(".ielts-spk-out");
+    function signInPrompt() {
+      out.hidden = false;
+      out.innerHTML = '<div class="ielts-eval-signin"><p>🔒 <strong>Sign in to get your free AI Speaking band</strong><br>' +
+        "<span>It's free — sign in so your band and feedback save to your dashboard.</span></p>" +
+        '<button type="button" class="btn btn-primary ielts-eval-signin-btn">Sign in / Create free account</button></div>';
+      var b = out.querySelector(".ielts-eval-signin-btn");
+      if (b) b.addEventListener("click", function () { if (window.PulseAuth && window.PulseAuth.openModal) window.PulseAuth.openModal("signin", { stay: true }); });
+    }
+    if (window.PulseAuth && window.PulseAuth.onChange) { window.PulseAuth.onChange(function (user) { if (user && pending) { pending = false; runEval(); } }); }
+    function questionText(part) {
+      if (part === 1) return test.part1.topic + ": " + test.part1.questions.join(" ");
+      if (part === 2) return test.part2.cueCard + " You should say: " + test.part2.bullets.join("; ");
+      return test.part3.topic + ": " + test.part3.questions.join(" ");
+    }
+    function runEval() {
+      var recorded = Object.keys(blobs).map(Number).sort();
+      if (!recorded.length) { out.hidden = false; out.innerHTML = '<p class="ielts-eval-msg">🎙 Record at least your Part 2 answer first.</p>'; return; }
+      if (window.PulseAuth && window.PulseAuth.enabled && !window.PulseAuth.user) { pending = true; signInPrompt(); return; }
+      out.hidden = false; out.innerHTML = '<p class="ielts-eval-msg">🎧 Converting your audio…</p>';
+      evalBtn.disabled = true; var old = evalBtn.textContent; evalBtn.textContent = "Evaluating… ⏳";
+      var payload = [], chain = Promise.resolve();
+      recorded.forEach(function (part) {
+        chain = chain.then(function () { return blobToWavBase64(blobs[part]); }).then(function (b64) {
+          payload.push({ part: part, question: questionText(part), audio: b64, mime: "audio/wav" });
+        });
+      });
+      chain.then(function () {
+        out.innerHTML = '<p class="ielts-eval-msg">🤖 The AI examiner is scoring your speaking against the IELTS criteria…</p>';
+        return fetch("/api/speaking-eval", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ parts: payload }) });
+      }).then(function (r) { return r.json().then(function (d) { return { st: r.status, d: d }; }); })
+        .then(function (x) {
+          evalBtn.disabled = false; evalBtn.textContent = old;
+          var d = x.d || {};
+          if (x.st === 429) { out.innerHTML = '<p class="ielts-eval-msg">⏳ ' + (d.error === "site-limit" ? "Today's free evaluations are all used up site-wide — please try again tomorrow." : "You've used all " + (d.perDay || perDay) + " free Speaking checks for today — come back tomorrow!") + "</p>"; return; }
+          if (x.st === 413) { out.innerHTML = '<p class="ielts-eval-msg">🎙 Your recordings are a little long — keep each part within its time limit and try again.</p>'; return; }
+          if (x.st === 503 || d.error === "not-configured") { out.innerHTML = '<p class="ielts-eval-msg">✨ The AI examiner is being set up — please check back soon.</p>'; return; }
+          if (!d.ok) { out.innerHTML = '<p class="ielts-eval-msg">😕 Could not score this attempt. Speak clearly for a little longer and try again.</p>'; return; }
+          out.innerHTML = renderSpeakingCard(d);
+          try { localStorage.setItem("pulse:ielts:spk:" + qs("module") + "/" + qs("test") + ":result", JSON.stringify(d)); } catch (e) {}
+          saveSpeakingBand(qs("module") + "/" + qs("test"), d.overall);
+        })
+        .catch(function () { evalBtn.disabled = false; evalBtn.textContent = old; out.innerHTML = '<p class="ielts-eval-msg">📶 Could not reach the evaluator — check your connection and try again.</p>'; });
+    }
+    if (evalBtn) evalBtn.addEventListener("click", runEval);
+    try {
+      var saved = localStorage.getItem("pulse:ielts:spk:" + qs("module") + "/" + qs("test") + ":result");
+      if (saved) { var d = JSON.parse(saved); if (d && d.ok) { out.hidden = false; out.innerHTML = '<p class="ielts-eval-prev">Your last saved estimate:</p>' + renderSpeakingCard(d); } }
+    } catch (e) {}
+  }
+
+  function saveSpeakingBand(key, band) {
+    if (typeof band !== "number") return;
+    try {
+      var LS_SPK = "pulse:ielts:speaking", p = readJSON(LS_SPK, "{}");
+      var improved = typeof p[key] !== "number" || band > p[key];
+      if (improved) { p[key] = band; localStorage.setItem(LS_SPK, JSON.stringify(p)); }
+      if (improved && window.PulseAuth && window.PulseAuth.user && window.PulseAuth.saveProgress) window.PulseAuth.saveProgress("ielts-speaking", key, band);
+    } catch (e) {}
+  }
+
+  function renderSpeakingCard(d) {
+    var rows = d.criteria.map(function (c) {
+      return '<div class="ielts-eval-row"><span class="ielts-eval-crit">' + esc(c.name) + '</span><span class="ielts-eval-band">' + c.band.toFixed(1) + '</span><span class="ielts-eval-note2">' + esc(c.note) + "</span></div>";
+    }).join("");
+    var list = function (title, items, ic) {
+      if (!items || !items.length) return "";
+      return '<p class="ielts-eval-sub">' + ic + " " + title + "</p><ul class='ielts-eval-list'>" + items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul>";
+    };
+    var pn = { 1: "Part 1", 2: "Part 2", 3: "Part 3" };
+    var parts = (d.parts || []).map(function (p) {
+      if (!p || !p.part) return "";
+      return '<details class="ielts-spk-tr"><summary>' + (pn[p.part] || ("Part " + p.part)) + (p.note ? " — " + esc(p.note) : "") + "</summary><p>" + esc(p.transcript || "") + "</p></details>";
+    }).join("");
+    return '<div class="ielts-eval-head"><span class="ielts-eval-overall">' + d.overall.toFixed(1) + '</span>' +
+      '<div><strong>Estimated overall Speaking band</strong><br><span class="ielts-eval-meta">' +
+      (typeof d.left === "number" ? d.left + " free check" + (d.left === 1 ? "" : "s") + " left today" : "AI estimate") + "</span></div></div>" +
+      (d.comment ? '<p class="ielts-eval-comment">' + esc(d.comment) + "</p>" : "") +
+      '<p class="ielts-eval-sub">📋 Band for each criterion — and the main point</p>' + rows +
+      list("What works well", d.strengths, "✅") +
+      list("What to improve to move up a band", d.improvements, "📈") +
+      (parts ? '<p class="ielts-eval-sub">📝 Your answers (transcribed)</p>' + parts : "") +
+      '<p class="ielts-eval-disc">AI estimate for practice, based on the official IELTS Speaking criteria — not an official IELTS score. Pronunciation is judged from your audio.</p>';
+  }
+
+  /* Decode a recorded clip → 16 kHz mono → 16-bit WAV → base64 (a format Gemini accepts). */
+  function encodeWavBase64(samples, rate) {
+    var n = samples.length, buffer = new ArrayBuffer(44 + n * 2), view = new DataView(buffer);
+    function ws(off, s) { for (var i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); }
+    ws(0, "RIFF"); view.setUint32(4, 36 + n * 2, true); ws(8, "WAVE"); ws(12, "fmt ");
+    view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true);
+    view.setUint32(24, rate, true); view.setUint32(28, rate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+    ws(36, "data"); view.setUint32(40, n * 2, true);
+    var off = 44;
+    for (var i = 0; i < n; i++) { var s = Math.max(-1, Math.min(1, samples[i])); view.setInt16(off, s < 0 ? s * 0x8000 : s * 0x7FFF, true); off += 2; }
+    var bytes = new Uint8Array(buffer), bin = "", chunk = 0x8000;
+    for (var j = 0; j < bytes.length; j += chunk) { bin += String.fromCharCode.apply(null, bytes.subarray(j, j + chunk)); }
+    return btoa(bin);
+  }
+  function blobToWavBase64(blob) {
+    return blob.arrayBuffer().then(function (buf) {
+      var AC = window.AudioContext || window.webkitAudioContext, actx = new AC();
+      return actx.decodeAudioData(buf).then(function (decoded) {
+        try { actx.close(); } catch (e) {}
+        var rate = 16000, len = Math.max(1, Math.ceil(decoded.duration * rate));
+        var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext, off = new OAC(1, len, rate);
+        var src = off.createBufferSource(); src.buffer = decoded; src.connect(off.destination); src.start(0);
+        return off.startRendering().then(function (rb) { return encodeWavBase64(rb.getChannelData(0), rate); });
+      });
+    });
   }
 
   /* ---- Writing sample answers (band 6/7/8/9) ---- */
