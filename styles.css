@@ -3649,7 +3649,15 @@ body.pulse-acct-open .visitor-counter {
   color: var(--accent, #F4B83C); margin-bottom: 2px; padding-left: 4px;
 }
 .hero-group .service-chip { justify-content: flex-start; width: 100%; white-space: nowrap; }
-.hero-group .service-chip .chip-new, .hero-group .service-chip .chip-soon { flex: 0 0 auto; margin-left: auto; }
+.hero-group .service-chip .chip-new, .hero-group .service-chip .chip-soon, .hero-group .service-chip .chip-feat { flex: 0 0 auto; margin-left: auto; }
+/* Feature badges on flagship chips (NCLEX = Adaptive Test, IELTS = AI Evaluation) */
+.service-chip .chip-feat {
+  font-size: 0.56rem; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 999px; white-space: nowrap;
+  background: rgba(255,255,255,0.9); color: #1E293B;
+}
+.hero-group .service-chip-nclex .chip-feat { background: #FCE7C0; color: #7A4A12; }
+.hero-group .service-chip-ielts .chip-feat { background: #E7DCFF; color: #4C1D95; }
 /* Colour-coded highlight chips — draw the eye to the flagship NCLEX + IELTS */
 .hero-group .service-chip-nclex {
   background: linear-gradient(135deg, rgba(232,155,44,0.30), rgba(201,154,80,0.18));
@@ -3674,6 +3682,67 @@ span.service-chip.is-soon:hover { transform: none; background: rgba(255,255,255,
 @media (max-width: 1080px) { .hero-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 14px; } }
 @media (max-width: 720px) { .hero-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; } }
 @media (max-width: 520px) { .hero-groups { grid-template-columns: 1fr; } }
+
+/* ════════════════════════════════════════════════════════════════
+   Glowing jellyfish — gentle blue/white drift across the hero.
+   Purely decorative: sits behind the hero text (z-index 1), never
+   captures clicks, and is disabled for reduced-motion users.
+   ════════════════════════════════════════════════════════════════ */
+.jelly-field { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+.jelly {
+  position: absolute; bottom: -90px; left: var(--x, 50%);
+  opacity: 0;
+  animation: jelly-rise var(--dur, 28s) linear infinite;
+  animation-delay: var(--d, 0s);
+  will-change: transform, opacity;
+}
+.jelly-inner { transform: scale(var(--s, 1)); transform-origin: center bottom; }
+.jelly-bell {
+  width: 48px; height: 35px;
+  border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 50% 32%,
+    rgba(255,255,255,0.98) 0%, rgba(188,232,255,0.72) 44%, rgba(80,160,245,0.22) 100%);
+  box-shadow:
+    0 0 32px 10px rgba(130,205,255,0.55),
+    inset 0 -7px 13px rgba(120,195,255,0.6),
+    inset 0 4px 10px rgba(255,255,255,0.72);
+  animation: jelly-pulse 3.6s ease-in-out infinite;
+  transform-origin: center top;
+}
+.jelly-tentacles { display: flex; justify-content: space-evenly; width: 48px; padding: 0 5px; margin-top: -3px; }
+.jelly-tentacles span {
+  display: block; width: 2.5px; height: 26px; border-radius: 3px;
+  background: linear-gradient(to bottom, rgba(200,235,255,0.9), rgba(150,210,255,0.2) 85%, transparent);
+  transform-origin: top center;
+  animation: jelly-sway 3.6s ease-in-out infinite;
+}
+.jelly-tentacles span:nth-child(1) { height: 24px; animation-delay: -.2s; }
+.jelly-tentacles span:nth-child(2) { height: 30px; animation-delay: -.6s; }
+.jelly-tentacles span:nth-child(3) { height: 34px; animation-delay: -1s; }
+.jelly-tentacles span:nth-child(4) { height: 29px; animation-delay: -1.4s; }
+.jelly-tentacles span:nth-child(5) { height: 23px; animation-delay: -1.8s; }
+@keyframes jelly-rise {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  10%  { opacity: var(--o, .55); }
+  50%  { transform: translate(var(--sway, 30px), -48vh); opacity: var(--o, .55); }
+  90%  { opacity: var(--o, .55); }
+  100% { transform: translate(0, -98vh); opacity: 0; }
+}
+@keyframes jelly-pulse {
+  0%, 100% { transform: scale(1, 1); }
+  50%      { transform: scale(1.13, 0.8); }
+}
+@keyframes jelly-sway {
+  0%, 100% { transform: rotate(-7deg); }
+  50%      { transform: rotate(7deg); }
+}
+@media (max-width: 600px) {
+  /* keep the two bright margin jellyfish; drop the faint ones that cross the text */
+  .jelly:nth-child(2), .jelly:nth-child(3) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jelly-field { display: none; }
+}
 
 /* ----------- Tinted alternate section band ----------- */
 section.block-tint {
