@@ -1,8 +1,9 @@
 /* Pulse for Nurses — "Ask Pulse" AI study tutor.
    - Full-page chat when #ask-root is present (ask.html).
    - A floating robot launcher on every other page that pops a compact chat.
-   Talks to /api/ask (Gemini, server-side key). Multi-turn, sign-in gated when
-   accounts are enabled, dormant-safe when the API key is absent. */
+   Talks to /api/ask (Gemini, server-side key). Multi-turn and open to everyone
+   — no sign-in required; abuse is bounded by the server's per-IP daily limit.
+   Dormant-safe when the API key is absent. */
 (function () {
   "use strict";
   if (window.__pulseAskInit) return;          // guard against double-load
@@ -49,7 +50,7 @@
   function createChat(root, opts) {
     opts = opts || {};
     var thread = loadThread();
-    var busy = false, pending = null;
+    var busy = false;
 
     root.innerHTML =
       '<div class="ask-wrap">' +
@@ -91,25 +92,12 @@
       stream.innerHTML = "";
       thread.forEach(function (m) { bubble(m.role, m.role === "model" ? mdLite(m.text) : esc(m.text)); });
     }
-    function signInPrompt() {
-      var b = bubble("model", "🔒 <strong>Sign in (free) to chat with Pulse</strong><br>Your questions stay with your account.<br><button type=\"button\" class=\"btn btn-primary ask-signin\" style=\"margin-top:10px\">Sign in / Create account</button>", "ask-gate");
-      b.querySelector(".ask-signin").addEventListener("click", function () {
-        if (window.PulseAuth && window.PulseAuth.openModal) window.PulseAuth.openModal("signin", { stay: true });
-      });
-    }
     function autoGrow() { input.style.height = "auto"; input.style.height = Math.min(120, input.scrollHeight) + "px"; }
 
     function ask() {
       if (busy) return;
       var q = input.value.trim();
       if (!q) return;
-      if (window.PulseAuth && window.PulseAuth.enabled && !window.PulseAuth.user) {
-        if (!thread.length) stream.innerHTML = "";
-        bubble("user", esc(q));
-        pending = q; input.value = ""; autoGrow();
-        signInPrompt();
-        return;
-      }
       if (!thread.length) stream.innerHTML = "";
       input.value = ""; autoGrow();
       thread.push({ role: "user", text: q });
@@ -136,11 +124,6 @@
         .catch(function () { typing.remove(); busy = false; sendBtn.disabled = false; bubble("model", "📶 I couldn't reach the server — check your connection and try again.", "ask-note"); });
     }
 
-    if (window.PulseAuth && window.PulseAuth.onChange) {
-      window.PulseAuth.onChange(function (u) {
-        if (u && pending) { var q = pending; pending = null; renderThread(); input.value = q; ask(); }
-      });
-    }
     input.addEventListener("input", autoGrow);
     input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(); } });
     form.addEventListener("submit", function (e) { e.preventDefault(); ask(); });

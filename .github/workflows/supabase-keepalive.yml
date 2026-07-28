@@ -14,7 +14,9 @@ name: Supabase keep-alive
 
 on:
   schedule:
-    - cron: "0 6 * * 1,4"     # 06:00 UTC every Monday & Thursday (max ~3-4 day gap)
+    - cron: "0 6 * * *"       # 06:00 UTC daily — GitHub can skip/delay cron runs
+                              # under load, so daily keeps a wide safety margin
+                              # against the ~7-day inactivity pause.
   workflow_dispatch: {}        # lets you run it on demand from the Actions tab
 
 # Prevent overlapping runs

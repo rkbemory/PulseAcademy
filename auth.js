@@ -10,6 +10,9 @@
 
   var listeners = [];
   var cfg = window.PulseAuthConfig || {};
+  // Shown when the auth service itself can't be reached (offline, blocked, or
+  // the backend is temporarily down) — so a failed call never hangs silently.
+  var UNREACHABLE_MSG = "Sign-in is temporarily unavailable — please try again in a few minutes. Your progress is still saved on this device.";
   var configured =
     cfg.supabaseUrl && cfg.supabaseAnonKey &&
     cfg.supabaseUrl.indexOf("REPLACE_WITH") === -1 &&
@@ -242,10 +245,11 @@
 
     modal.querySelector(".pulse-auth-google").addEventListener("click", function () {
       try { sessionStorage.setItem("pulse:goDash", "1"); } catch (e) {}
-      supa.auth.signInWithOAuth({
+      var g = supa.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo: window.location.origin + window.location.pathname }
       });
+      if (g && g.catch) g.catch(function () { showMsg(UNREACHABLE_MSG); });
     });
 
     modal.querySelector(".pulse-auth-forgot").addEventListener("click", function () {
@@ -254,7 +258,8 @@
       supa.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + "/reset.html" })
         .then(function (r) {
           showMsg(r.error ? r.error.message : "Password reset link sent — check your email.", !r.error);
-        });
+        })
+        .catch(function () { showMsg(UNREACHABLE_MSG); });
     });
 
     form.addEventListener("submit", function (e) {
@@ -281,6 +286,12 @@
         closeModal();
         if (stayAfterAuth) { stayAfterAuth = false; }   // opened from an in-page gate → don't leave the page
         else goDash();
+      }).catch(function () {
+        // Network/service failure (e.g. the auth service is unreachable) rejects
+        // instead of resolving — without this the button would hang on "…".
+        submit.disabled = false;
+        setMode(mode);
+        showMsg(UNREACHABLE_MSG);
       });
     });
   }
