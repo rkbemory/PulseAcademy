@@ -13,6 +13,21 @@
   // Shown when the auth service itself can't be reached (offline, blocked, or
   // the backend is temporarily down) — so a failed call never hangs silently.
   var UNREACHABLE_MSG = "Sign-in is temporarily unavailable — please try again in a few minutes. Your progress is still saved on this device.";
+  /* The Supabase client RESOLVES with {error} on a network failure rather than
+     rejecting, so a dead backend would otherwise surface a raw "Failed to fetch".
+     Map those to the friendly notice; keep real auth errors (wrong password,
+     unconfirmed email, …) exactly as the server worded them. */
+  function isNetworkError(e) {
+    if (!e) return false;
+    if (e.status === 0) return true;
+    var m = String(e.message || "").toLowerCase();
+    return m.indexOf("failed to fetch") !== -1 || m.indexOf("networkerror") !== -1 ||
+           m.indexOf("network request failed") !== -1 || m.indexOf("fetch failed") !== -1 ||
+           m.indexOf("load failed") !== -1 || m.indexOf("err_name_not_resolved") !== -1;
+  }
+  function authErrText(e) {
+    return isNetworkError(e) ? UNREACHABLE_MSG : ((e && e.message) || UNREACHABLE_MSG);
+  }
   var configured =
     cfg.supabaseUrl && cfg.supabaseAnonKey &&
     cfg.supabaseUrl.indexOf("REPLACE_WITH") === -1 &&
@@ -257,7 +272,7 @@
       if (!email) { showMsg("Enter your email above first, then tap Forgot password."); return; }
       supa.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + "/reset.html" })
         .then(function (r) {
-          showMsg(r.error ? r.error.message : "Password reset link sent — check your email.", !r.error);
+          showMsg(r.error ? authErrText(r.error) : "Password reset link sent — check your email.", !r.error);
         })
         .catch(function () { showMsg(UNREACHABLE_MSG); });
     });
@@ -277,7 +292,7 @@
       p.then(function (r) {
         submit.disabled = false;
         setMode(mode); /* resets button label */
-        if (r.error) { showMsg(r.error.message); return; }
+        if (r.error) { showMsg(authErrText(r.error)); return; }
         if (mode === "signup" && r.data && r.data.user && !r.data.session) {
           showMsg("Account created — check your email to confirm, then sign in.", true);
           setMode("signin");
