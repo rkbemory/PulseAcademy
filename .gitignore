@@ -50,3 +50,7 @@ yarn-error.log*
 # Local reference docs (not for deploy)
 Syllabus & Curriculum/
 _syllabus/
+
+# Google OAuth client secret downloads — NEVER commit
+client_secret*.json
+*client_secret*

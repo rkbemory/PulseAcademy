@@ -35,6 +35,8 @@ const PRECACHE = [
   "thanks.html",
   "feedback.html",
   "reset.html",
+  "privacy.html",
+  "terms.html",
   "admin.html",
   "styles.css",
   "scripts.js",
