@@ -39,7 +39,13 @@ jobs:
             "$URL" || echo "000")
           echo "Supabase REST responded with HTTP $code"
           if [ "$code" = "000" ]; then
-            echo "::warning::Could not reach the project — it may be paused. Restore it from the Supabase dashboard; this job will keep it awake afterwards."
+            echo "::error::Supabase project is UNREACHABLE (almost certainly paused)."
+            echo "::error::Sign-in and cross-device sync are DOWN for every user right now."
+            echo "::error::Fix: open https://supabase.com/dashboard, select the project, click Restore."
+            echo "::error::Then run db/migrate-2026-07-18-progress-kinds.sql in the SQL Editor."
+            # Fail on purpose: a green tick here would hide a site-wide outage, and
+            # GitHub emails the repo owner on failure, so this nags daily until fixed.
+            exit 1
           else
             echo "Project is active — inactivity timer reset (any HTTP response counts as activity)."
           fi
