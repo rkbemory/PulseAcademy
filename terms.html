@@ -1,148 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Terms of Service — Pulse for Nurses</title>
-<meta name="description" content="The terms that govern your use of Pulse for Nurses, a free nursing-education portal.">
-<link rel="icon" href="favicon.ico">
+<meta name="description" content="The terms for using Pulse for Nurses: what the free portal offers, acceptable use, educational-use-only limits, and the disclaimers that apply.">
+<meta name="robots" content="index, follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0a2150;
-    --navy-2: #123a7a;
-    --gold: #d9a441;
-    --cream: #f7f1e3;
-    --ink: #22304a;
-    --muted: #5a6a85;
-    --line: #e4e0d3;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: var(--ink);
-    background: #fdfbf5;
-    line-height: 1.7;
-  }
-  .hero {
-    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
-    color: var(--cream);
-    padding: 3.5rem 1.5rem 3rem;
-    text-align: center;
-  }
-  .hero .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .hero .brand a { color: inherit; text-decoration: none; }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    font-weight: 700;
-    color: #fff;
-  }
-  .hero p.effective {
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
-    color: rgba(247, 241, 227, 0.75);
-  }
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
-  }
-  main > p.lead { font-size: 1.02rem; }
-  h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.45rem;
-    color: var(--navy);
-    margin: 2.2rem 0 0.7rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--line);
-  }
-  h2:first-of-type { border-top: none; padding-top: 0; }
-  p { margin-bottom: 0.9rem; }
-  ul { margin: 0 0 0.9rem 1.3rem; }
-  li { margin-bottom: 0.45rem; }
-  strong { color: var(--navy); font-weight: 600; }
-  a { color: var(--navy-2); }
-  .note {
-    background: var(--cream);
-    border-left: 3px solid var(--gold);
-    padding: 0.9rem 1.1rem;
-    border-radius: 0 8px 8px 0;
-    margin: 1.2rem 0;
-    font-size: 0.95rem;
-  }
-  footer {
-    background: var(--navy);
-    color: rgba(247, 241, 227, 0.8);
-    text-align: center;
-    padding: 1.6rem 1.5rem;
-    font-size: 0.9rem;
-  }
-  footer a { color: var(--gold); text-decoration: none; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14387A">
 </head>
 <body>
 
-<header class="hero">
-  <div class="brand"><a href="https://pulsefornurses.com">Pulse for Nurses</a></div>
-  <h1>Terms of Service</h1>
-  <p class="effective">Effective date: August 21, 2026</p>
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text">
+        <span class="brand-name">Pulse For Nurses</span>
+      </span>
+    </a>
+    <nav class="top-nav-links" aria-label="Primary">
+      <a href="academic.html">Academic</a>
+      <a href="msn.html">MSN</a>
+      <a href="post-basic.html">Post Basic</a>
+      <a href="rn.html">BNMC RN</a>
+      <a href="ielts.html">IELTS</a>
+      <a href="nclex.html">NCLEX</a>
+      <a href="jobs.html">Jobs</a>
+    </nav>
+  </div>
 </header>
 
-<main>
-  <p class="lead">Welcome to Pulse for Nurses. These terms govern your use of <a href="https://pulsefornurses.com">pulsefornurses.com</a> (the "Site"), a free nursing-education portal operated from Dhaka, Bangladesh. By using the Site, you agree to these terms. If you do not agree, please do not use the Site.</p>
+<main id="main">
+  <section class="block legal">
+    <div class="section-eyebrow">⬡ Legal</div>
+    <h1 class="section-title">Terms of Service</h1>
+    <p class="legal-date">Effective date: 21 August 2026</p>
+    <p class="section-lead">Welcome to Pulse for Nurses. These terms govern your use of pulsefornurses.com (the “Site”), a free nursing-education portal operated from Dhaka, Bangladesh. By using the Site, you agree to these terms. If you do not agree, please do not use the Site.</p>
 
-  <h2>What the Site provides</h2>
-  <p>The Site offers free educational resources for nurses and nursing students: practice tests and preparation material for NCLEX-RN, IELTS, and BNMC RN licensing; guidance on Bangladesh nursing admissions (MSN, Post Basic); study tools such as calculators, quick references, and a CV builder; and career information. Some features require an account.</p>
+    <h2>What the Site provides</h2>
+    <p>The Site offers free educational resources for nurses and nursing students: practice tests and preparation material for NCLEX-RN, IELTS, and BNMC RN licensing; guidance on Bangladesh nursing admissions (MSN, Post Basic); complete academic programme content; study tools such as calculators, quick references, an AI study tutor, and a CV builder; and career information. Some features require an account.</p>
 
-  <h2>Educational use only</h2>
-  <div class="note">
-    Everything on the Site is provided for education and exam preparation. It is <strong>not</strong> medical, clinical, legal, or immigration advice, and it must never be used to guide patient care. Always follow your institution's protocols and verify licensing, admission, and credentialing requirements with the official bodies concerned (such as BNMC, NCSBN, or the relevant credentialing agency), as their rules change. We do not guarantee any exam result, admission, license, or employment outcome.
-  </div>
+    <h2 class="legal-h-warn">Educational use only</h2>
+    <p class="legal-callout legal-callout-warn">Everything on the Site is provided for education and exam preparation. It is <strong>not medical, clinical, legal, or immigration advice</strong>, and it must never be used to guide patient care. Always follow your institution’s protocols, and verify licensing, admission, and credentialing requirements with the official bodies concerned (such as BNMC, NCSBN, or the relevant credentialing agency), as their rules change. We do not guarantee any exam result, admission, license, or employment outcome. AI-generated feedback, including IELTS band estimates, is a practice aid and is not an official score.</p>
 
-  <h2>Your account</h2>
-  <p>You can create an account by signing in with Google. You agree to provide accurate information, keep your login secure, and accept responsibility for activity under your account. You must be at least 13 years old to use the Site. We may suspend or remove accounts that violate these terms.</p>
+    <h2>Your account</h2>
+    <p>You can create an account with an email address and password, or by signing in with Google. You agree to provide accurate information, keep your login secure, and accept responsibility for activity under your account. You must be at least 13 years old to use the Site. We may suspend or remove accounts that violate these terms.</p>
 
-  <h2>Acceptable use</h2>
-  <p>You agree not to:</p>
-  <ul>
-    <li>copy, scrape, republish, or sell Site content or question banks;</li>
-    <li>use the Site to cheat on, or facilitate cheating on, any actual examination;</li>
-    <li>interfere with the Site's operation, probe its security, or access other users' data;</li>
-    <li>use the Site for any unlawful purpose.</li>
-  </ul>
+    <h2>Acceptable use</h2>
+    <p>You agree not to:</p>
+    <ul class="legal-list">
+      <li>copy, scrape, republish, or sell Site content or question banks;</li>
+      <li>use the Site to cheat on, or facilitate cheating on, any actual examination;</li>
+      <li>interfere with the Site’s operation, probe its security, or access other users’ data;</li>
+      <li>use the Site for any unlawful purpose.</li>
+    </ul>
 
-  <h2>Intellectual property</h2>
-  <p>The Site's content — questions, explanations, guides, design, and branding — belongs to Pulse for Nurses or its licensors. You may use it for your own personal, non-commercial study. Documents you create with our tools (such as a CV) are yours.</p>
+    <h2>Intellectual property</h2>
+    <p>The Site’s content — questions, explanations, guides, design, and branding — belongs to Pulse for Nurses or its licensors. You may use it for your own personal, non-commercial study. Documents you create with our tools, such as a CV, are yours.</p>
 
-  <h2>Third-party services</h2>
-  <p>The Site uses third-party services, including Google (sign-in, analytics), Supabase (accounts and data), and Cloudflare (delivery), and links to external sites such as Facebook and YouTube. Those services have their own terms, and we are not responsible for them. How we handle your data is described in our <a href="privacy.html">Privacy Policy</a>.</p>
+    <h2>Third-party services</h2>
+    <p>The Site uses third-party services, including Google (sign-in, analytics), Supabase (accounts and data), and Cloudflare (delivery), and links to external sites such as Facebook and YouTube. Those services have their own terms, and we are not responsible for them. How we handle your data is described in our <a href="privacy.html">Privacy Policy</a>.</p>
 
-  <h2>Disclaimers and limitation of liability</h2>
-  <p>The Site is provided "as is," free of charge, without warranties of any kind. While we work hard to keep content accurate and current, we cannot promise it is error-free or always available. To the fullest extent permitted by law, Pulse for Nurses is not liable for any indirect or consequential loss arising from use of the Site; our total liability for any claim will not exceed the amount you paid us to use the Site (which is zero for free features).</p>
+    <h2>Disclaimers and limitation of liability</h2>
+    <p>The Site is provided “as is”, free of charge, without warranties of any kind. While we work hard to keep content accurate and current, we cannot promise it is error-free or always available. To the fullest extent permitted by law, Pulse for Nurses is not liable for any indirect or consequential loss arising from use of the Site; our total liability for any claim will not exceed the amount you paid us to use the Site, which is zero for free features.</p>
 
-  <h2>Changes and termination</h2>
-  <p>We may change, suspend, or discontinue any part of the Site, and we may update these terms. Material changes will be reflected on this page with a new effective date. Continued use after changes means you accept them.</p>
+    <h2>Changes and termination</h2>
+    <p>We may change, suspend, or discontinue any part of the Site, and we may update these terms. Material changes will be reflected on this page with a new effective date. Continued use after changes means you accept them.</p>
 
-  <h2>Governing law</h2>
-  <p>These terms are governed by the laws of Bangladesh, and any dispute will be resolved in the courts of Dhaka, Bangladesh.</p>
+    <h2>Governing law</h2>
+    <p>These terms are governed by the laws of Bangladesh, and any dispute will be resolved in the courts of Dhaka, Bangladesh.</p>
 
-  <h2>Contact</h2>
-  <p>Questions about these terms: <a href="mailto:rajkumadnc23@gmail.com">rajkumadnc23@gmail.com</a></p>
+    <h2>Contact</h2>
+    <p>Questions about these terms: <a href="mailto:rajkumadnc23@gmail.com">rajkumadnc23@gmail.com</a></p>
+
+    <p class="legal-crosslink"><a href="privacy.html">Read our Privacy Policy →</a></p>
+  </section>
 </main>
 
 <footer>
-  <a href="https://pulsefornurses.com">Pulse for Nurses</a> · <a href="privacy.html">Privacy Policy</a>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span class="footer-legal"><a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></span>
+      <span><a href="index.html">← Back to home</a> · <a href="feedback.html">Feedback &amp; Support</a></span>
+    </div>
+  </div>
 </footer>
 
+<script src="data/auth-config.js"></script>
+<script src="auth.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>

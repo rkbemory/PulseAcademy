@@ -1,146 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Privacy Policy — Pulse for Nurses</title>
-<meta name="description" content="How Pulse for Nurses collects, uses, and protects your information, including data received through Google Sign-In.">
-<link rel="icon" href="favicon.ico">
+<meta name="description" content="How Pulse for Nurses handles your data: what we collect when you sign in, how study progress is stored, and how to request a copy or deletion of your data.">
+<meta name="robots" content="index, follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0a2150;
-    --navy-2: #123a7a;
-    --gold: #d9a441;
-    --cream: #f7f1e3;
-    --ink: #22304a;
-    --muted: #5a6a85;
-    --line: #e4e0d3;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: var(--ink);
-    background: #fdfbf5;
-    line-height: 1.7;
-  }
-  .hero {
-    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
-    color: var(--cream);
-    padding: 3.5rem 1.5rem 3rem;
-    text-align: center;
-  }
-  .hero .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .hero .brand a { color: inherit; text-decoration: none; }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    font-weight: 700;
-    color: #fff;
-  }
-  .hero p.effective {
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
-    color: rgba(247, 241, 227, 0.75);
-  }
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
-  }
-  main > p.lead { font-size: 1.02rem; }
-  h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.45rem;
-    color: var(--navy);
-    margin: 2.2rem 0 0.7rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--line);
-  }
-  h2:first-of-type { border-top: none; padding-top: 0; }
-  p { margin-bottom: 0.9rem; }
-  ul { margin: 0 0 0.9rem 1.3rem; }
-  li { margin-bottom: 0.45rem; }
-  strong { color: var(--navy); font-weight: 600; }
-  a { color: var(--navy-2); }
-  .note {
-    background: var(--cream);
-    border-left: 3px solid var(--gold);
-    padding: 0.9rem 1.1rem;
-    border-radius: 0 8px 8px 0;
-    margin: 1.2rem 0;
-    font-size: 0.95rem;
-  }
-  footer {
-    background: var(--navy);
-    color: rgba(247, 241, 227, 0.8);
-    text-align: center;
-    padding: 1.6rem 1.5rem;
-    font-size: 0.9rem;
-  }
-  footer a { color: var(--gold); text-decoration: none; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="pulse-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14387A">
 </head>
 <body>
 
-<header class="hero">
-  <div class="brand"><a href="https://pulsefornurses.com">Pulse for Nurses</a></div>
-  <h1>Privacy Policy</h1>
-  <p class="effective">Effective date: August 21, 2026</p>
+<header class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="Photo & Logo/Pulse For Nurses Logo.png" alt="Pulse for Nurses logo" class="brand-img">
+      <span class="brand-text">
+        <span class="brand-name">Pulse For Nurses</span>
+      </span>
+    </a>
+    <nav class="top-nav-links" aria-label="Primary">
+      <a href="academic.html">Academic</a>
+      <a href="msn.html">MSN</a>
+      <a href="post-basic.html">Post Basic</a>
+      <a href="rn.html">BNMC RN</a>
+      <a href="ielts.html">IELTS</a>
+      <a href="nclex.html">NCLEX</a>
+      <a href="jobs.html">Jobs</a>
+    </nav>
+  </div>
 </header>
 
-<main>
-  <p class="lead">Pulse for Nurses ("we," "us") operates <a href="https://pulsefornurses.com">pulsefornurses.com</a>, a free nursing-education portal based in Dhaka, Bangladesh. This policy explains what information we collect, how we use it, and the choices you have. By using the site, you agree to this policy.</p>
+<main id="main">
+  <section class="block legal">
+    <div class="section-eyebrow">⬡ Legal</div>
+    <h1 class="section-title">Privacy Policy</h1>
+    <p class="legal-date">Effective date: 21 August 2026</p>
+    <p class="section-lead">Pulse for Nurses (“we”, “us”) operates pulsefornurses.com, a free nursing-education portal based in Dhaka, Bangladesh. This policy explains what information we collect, how we use it, and the choices you have. By using the site, you agree to this policy.</p>
 
-  <h2>Information we collect</h2>
-  <p><strong>Account information via Google Sign-In.</strong> When you sign in with Google, we receive your name, email address, and profile picture from your Google Account. We do not receive your Google password, and we do not access your Gmail, Google Drive, contacts, or any other Google data.</p>
-  <p><strong>Learning activity.</strong> If you use signed-in features, we store activity connected to your account, such as practice-test attempts, scores, saved progress, and documents you create with our tools (for example, the CV Builder).</p>
-  <p><strong>Usage data.</strong> Like most websites, we collect basic analytics — pages visited, approximate location by country or city, device and browser type — through Google Analytics and Cloudflare. These services use cookies or similar technologies. This data is aggregated and does not identify you personally to us.</p>
+    <h2>Information we collect</h2>
+    <p><strong>Account information.</strong> You can create an account either with an email address and password, or by signing in with Google. If you use Google Sign-In, we receive your name, email address, and profile picture from your Google Account. We never receive your Google password, and we do not access your Gmail, Google Drive, contacts, or any other Google data.</p>
+    <p><strong>Learning activity.</strong> If you use signed-in features, we store activity connected to your account: practice-test attempts, scores, saved study progress, and documents you create with our tools (for example, the CV Builder).</p>
+    <p><strong>Usage data.</strong> Like most websites, we collect basic analytics through Google Analytics and Cloudflare: pages visited, approximate location by country or city, and device and browser type. These services use cookies or similar technologies. This data is aggregated and does not identify you personally to us.</p>
 
-  <h2>How we use your information</h2>
-  <ul>
-    <li>To create and secure your account and let you sign in.</li>
-    <li>To save your study progress, test results, and created documents so you can return to them.</li>
-    <li>To understand how the site is used and improve our content and tools.</li>
-    <li>To respond when you contact us for support.</li>
-  </ul>
-  <p>We do not sell your personal information, and we do not use it for third-party advertising.</p>
+    <h2>How we use your information</h2>
+    <ul class="legal-list">
+      <li>To create and secure your account and let you sign in.</li>
+      <li>To save your study progress, test results, and created documents so you can return to them on any device.</li>
+      <li>To understand how the site is used, so we can improve our content and tools.</li>
+      <li>To respond when you contact us for support.</li>
+    </ul>
+    <p>We do not sell your personal information, and we do not use it for third-party advertising.</p>
+    <p class="legal-callout">Pulse for Nurses’ use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
 
-  <div class="note">
-    Pulse for Nurses' use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including its Limited Use requirements.
-  </div>
+    <h2>How your information is stored and shared</h2>
+    <p>Account data is stored with Supabase, our database and authentication provider, and is encrypted in transit. We share information only with the service providers that make the site work: Supabase (accounts and data), Google (sign-in and analytics), and Cloudflare (site delivery and security). Each processes data on our behalf under its own privacy terms. We may also disclose information if required by law.</p>
 
-  <h2>How your information is stored and shared</h2>
-  <p>Account data is stored with <strong>Supabase</strong>, our database and authentication provider, and is encrypted in transit. We share information only with the service providers that make the site work: Supabase (accounts and data), Google (sign-in and analytics), and Cloudflare (site delivery and security). Each processes data on our behalf under its own privacy terms. We may also disclose information if required by law.</p>
+    <h2>Data retention and deletion</h2>
+    <p>We keep your account data for as long as your account is active. You can request a copy of your data, or ask us to delete your account and its data, at any time by emailing the address below; we act on verified requests within 30 days. You can also revoke our access to your Google Account at any time at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">myaccount.google.com/permissions</a>.</p>
 
-  <h2>Data retention and deletion</h2>
-  <p>We keep your account data for as long as your account is active. You can request a copy of your data or ask us to delete your account and its data at any time by emailing us at the address below; we will act on verified requests within 30 days. You can also revoke our access to your Google Account at any time at <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>.</p>
+    <h2>Cookies</h2>
+    <p>We use cookies and similar technologies for sign-in sessions and analytics. You can control cookies through your browser settings, though blocking them may prevent sign-in from working.</p>
 
-  <h2>Cookies</h2>
-  <p>We use cookies and similar technologies for sign-in sessions and analytics. You can control cookies through your browser settings; blocking them may prevent sign-in from working.</p>
+    <h2>Children</h2>
+    <p>The site is intended for nursing students and professionals and is not directed at children under 13. We do not knowingly collect personal information from children.</p>
 
-  <h2>Children</h2>
-  <p>The site is intended for nursing students and professionals and is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+    <h2>Changes to this policy</h2>
+    <p>If we make material changes, we will update this page and revise the effective date above.</p>
 
-  <h2>Changes to this policy</h2>
-  <p>If we make material changes, we will update this page and revise the effective date above.</p>
+    <h2>Contact</h2>
+    <p>Questions or requests about your data: <a href="mailto:rajkumadnc23@gmail.com">rajkumadnc23@gmail.com</a></p>
 
-  <h2>Contact</h2>
-  <p>Questions or requests about your data: <a href="mailto:rajkumadnc23@gmail.com">rajkumadnc23@gmail.com</a></p>
+    <p class="legal-crosslink"><a href="terms.html">Read our Terms of Service →</a></p>
+  </section>
 </main>
 
 <footer>
-  <a href="https://pulsefornurses.com">Pulse for Nurses</a> · <a href="terms.html">Terms of Service</a>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 Pulse for Nurses. All rights reserved.</span>
+      <span class="footer-legal"><a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a></span>
+      <span><a href="index.html">← Back to home</a> · <a href="feedback.html">Feedback &amp; Support</a></span>
+    </div>
+  </div>
 </footer>
 
+<script src="data/auth-config.js"></script>
+<script src="auth.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>

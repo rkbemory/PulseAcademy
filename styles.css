@@ -6538,3 +6538,36 @@ select.cv-in { cursor: pointer; }
   .cred-head { gap: 11px; }
   .cred-badge { min-width: 60px; height: 52px; font-size: 0.92rem; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   Legal pages (Privacy Policy, Terms of Service) — readable prose
+   column on the standard site chrome, so they stay in step with the
+   rest of the design instead of drifting on their own stylesheet.
+   ════════════════════════════════════════════════════════════════ */
+.block.legal { max-width: 780px; }
+.legal-date {
+  font-size: 0.85rem; color: var(--text-muted); font-weight: 600;
+  letter-spacing: 0.02em; margin: -4px 0 18px;
+}
+.legal h2 {
+  font-size: 1.22rem; color: var(--primary, #14387A); margin: 30px 0 10px;
+  padding-bottom: 7px; border-bottom: 1px solid var(--line-cool);
+}
+.legal h2.legal-h-warn { color: #B3123E; border-bottom-color: rgba(179,18,62,0.28); }
+.legal p { font-size: 1rem; line-height: 1.72; color: var(--text); margin: 0 0 13px; }
+.legal a { color: var(--primary, #14387A); font-weight: 600; }
+.legal a:hover { text-decoration: underline; }
+.legal-list { margin: 0 0 14px; padding-left: 22px; }
+.legal-list li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 7px; }
+.legal-callout {
+  background: var(--bg); border: 1px solid var(--line-cool); border-left: 4px solid var(--primary, #14387A);
+  border-radius: 10px; padding: 13px 16px; margin: 14px 0 16px; font-size: 0.95rem;
+}
+.legal-callout-warn { border-left-color: #B3123E; background: rgba(179,18,62,0.045); }
+.legal-crosslink {
+  margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line-cool); font-weight: 700;
+}
+@media (max-width: 600px) {
+  .legal h2 { font-size: 1.1rem; margin-top: 24px; }
+  .legal p, .legal-list li { font-size: 0.96rem; }
+}
