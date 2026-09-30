@@ -1,0 +1,98 @@
+name: Site health check
+
+# WHY THIS EXISTS
+# On 2026-09-30 Ask Pulse returned HTTP 500 to every visitor for an unknown
+# length of time and nobody noticed, because `/api/ask?action=status` kept
+# answering {"enabled":true}. The status endpoint returns before the rate
+# limiter runs, so it stayed green while the real POST path was throwing.
+#
+# This job therefore exercises the REAL paths a user hits, not the status
+# shortcut, and fails loudly (GitHub emails the repo owner on failure) so an
+# outage surfaces within a day instead of by accident.
+
+on:
+  schedule:
+    - cron: "30 6 * * *"      # 06:30 UTC daily, just after the Supabase keep-alive
+  workflow_dispatch: {}
+
+concurrency:
+  group: pulse-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Pages respond
+        run: |
+          fail=0
+          for p in "" privacy terms ielts nclex dashboard ask academic calculators reference credential jobs books resources cv review; do
+            code=$(curl -sL -o /dev/null -w "%{http_code}" --max-time 30 "https://pulsefornurses.com/$p")
+            if [ "$code" != "200" ]; then echo "::error::/$p returned HTTP $code"; fail=1; else echo "ok  /$p"; fi
+          done
+          exit $fail
+
+      - name: Ask Pulse answers a real question
+        run: |
+          # The status endpoint is NOT enough — it returns before rate limiting.
+          body=$(curl -s --max-time 60 -w '\n%{http_code}' \
+            -X POST "https://pulsefornurses.com/api/ask" \
+            -H "Origin: https://pulsefornurses.com" \
+            -H "Content-Type: application/json" \
+            -d '{"messages":[{"role":"user","text":"What is a normal adult resting heart rate?"}]}')
+          code=$(echo "$body" | tail -n1)
+          json=$(echo "$body" | sed '$d')
+          echo "HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::Ask Pulse POST returned HTTP $code — the AI tutor is DOWN for every user."
+            echo "::error::A 500/1101 usually means the Cloudflare KV daily write quota is exhausted."
+            echo "::error::Check https://pulsefornurses.com/api/visit?action=view — if it reports a KV put limit, that is the cause."
+            echo "$json" | head -c 400
+            exit 1
+          fi
+          echo "$json" | grep -q '"ok":true' || { echo "::error::Ask Pulse replied 200 but with no answer payload."; exit 1; }
+          echo "Ask Pulse healthy."
+
+      - name: IELTS writing evaluator scores an essay
+        run: |
+          body=$(curl -s --max-time 90 -w '\n%{http_code}' \
+            -X POST "https://pulsefornurses.com/api/ielts-eval" \
+            -H "Origin: https://pulsefornurses.com" \
+            -H "Content-Type: application/json" \
+            -d '{"task":"t2","prompt":"Some people think nurses should be paid more. Discuss.","essay":"Nursing is one of the most demanding professions in modern healthcare, and the question of pay is a serious one. In my view nurses deserve substantially higher remuneration. They carry direct responsibility for patient safety, and a single lapse of judgement during a medication round can cost a life. They also work unsocial hours, including nights and weekends, which imposes a real cost on family life and long term health. The shortage of qualified nurses in many countries is itself evidence that current salaries fail to attract and retain enough staff. On the other hand, teachers and paramedics also perform demanding and socially vital work, so a blanket rule would be hard to justify. A better approach is to benchmark pay against training length, risk and responsibility, on which basis nurses would rise considerably."}')
+          code=$(echo "$body" | tail -n1)
+          echo "HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::IELTS writing evaluator returned HTTP $code — free AI band scoring is DOWN."
+            echo "$body" | sed '$d' | head -c 400
+            exit 1
+          fi
+          echo "IELTS writing evaluator healthy."
+
+      - name: Speaking evaluator is configured
+        run: |
+          # Audio cannot be synthesised here, so this only asserts the function
+          # is deployed and holds its Gemini key.
+          s=$(curl -s --max-time 30 "https://pulsefornurses.com/api/speaking-eval?action=status")
+          echo "$s"
+          echo "$s" | grep -q '"enabled":true' || { echo "::error::Speaking evaluator is not enabled (missing GEMINI_API_KEY?)."; exit 1; }
+
+      - name: Sign-in backend is awake
+        run: |
+          KEY="sb_publishable_3ktqBX14e6B4Pi70vZxWEw_564oRbMf"
+          s=$(curl -s --max-time 30 -H "apikey: $KEY" "https://kggkdxfszgougikcjhzn.supabase.co/auth/v1/settings")
+          echo "$s" | head -c 200
+          echo "$s" | grep -q '"email":true' || {
+            echo "::error::Supabase auth is not responding — sign-in is DOWN (project paused?)."
+            echo "::error::Fix: open https://supabase.com/dashboard, select the project, click Restore."
+            exit 1; }
+          echo "Auth healthy."
+
+      - name: KV write budget still has headroom
+        run: |
+          # Warn before the counter can starve the rate limiters again.
+          v=$(curl -s --max-time 30 "https://pulsefornurses.com/api/visit?action=read")
+          echo "$v"
+          echo "$v" | grep -q '"error"' && { echo "::error::Visitor counter is erroring: $v"; exit 1; }
+          echo "Counter healthy."

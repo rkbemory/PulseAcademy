@@ -25,11 +25,19 @@
    Write failures are also swallowed, so a quota breach can never again take a
    page (or another endpoint) down. */
 
-const STATS_KEY = "stats:v2";          // { total, views, date, today }
+const STATS_KEY = "stats:v2";          // { total, views, date, today, w }
 // Legacy keys — read once so existing totals carry over to the single blob.
 const L_TOTAL = "totalVisits";
 const L_DAILY = "dailyVisits";
 const L_VIEWS = "totalViews";
+
+/* Hard write budget. Cloudflare's free tier allows 1,000 KV writes per day for
+   the WHOLE project, and the AI endpoints' rate limiters share that pool. This
+   counter is the only high-volume writer, so it caps itself well below the
+   limit and simply stops counting past the cap. That reserves the remainder for
+   rate limiting, which is the thing that must never run out. `w` resets daily
+   along with the rest of the blob. */
+const WRITE_BUDGET = 600;
 
 const ALLOW_ORIGINS = ["https://pulsefornurses.com", "https://www.pulsefornurses.com"];
 
@@ -70,7 +78,7 @@ async function readStats(kv) {
   let s = null;
   try { s = await kv.get(STATS_KEY, { type: "json" }); } catch (e) { s = null; }
   if (s && typeof s === "object") {
-    return { total: safeInt(s.total), views: safeInt(s.views), date: s.date || todayUtc(), today: safeInt(s.today) };
+    return { total: safeInt(s.total), views: safeInt(s.views), date: s.date || todayUtc(), today: safeInt(s.today), w: safeInt(s.w) };
   }
   // First run after the migration: fold the three legacy keys into one blob.
   let total = 0, views = 0, date = todayUtc(), today = 0;
@@ -80,7 +88,7 @@ async function readStats(kv) {
     const d = await kv.get(L_DAILY, { type: "json" });
     if (d && typeof d === "object") { date = d.date || date; today = safeInt(d.count); }
   } catch (e) { /* fall through with zeros */ }
-  return { total: total, views: views, date: date, today: today };
+  return { total: total, views: views, date: date, today: today, w: 0 };
 }
 
 export async function onRequest(context) {
@@ -104,22 +112,26 @@ export async function onRequest(context) {
 
   try {
     const s = await readStats(kv);
+    const sameDay = (s.date === today);
     let total = s.total, views = s.views;
-    let todayCount = (s.date === today) ? s.today : 0;
+    let todayCount = sameDay ? s.today : 0;
+    let writes = sameDay ? s.w : 0;          // writes already spent today
 
-    // Only our own pages, driven by a real browser, may increment the counter.
+    // Only our own pages, driven by a real browser, may increment the counter,
+    // and only while this counter is still inside its own daily write budget.
     const wantsWrite = (action === "view" || action === "increment");
-    const mayWrite = wantsWrite && isOwnSite(request) && !isBot(request);
+    const mayWrite = wantsWrite && isOwnSite(request) && !isBot(request) && writes < WRITE_BUDGET;
     const bumpDaily = mayWrite && (action === "increment" || daily1);
 
     if (mayWrite) {
       views += 1;
       if (bumpDaily) { total += 1; todayCount += 1; }
+      writes += 1;
       // ONE write per counted visit. A failure here (e.g. the daily free-tier
       // write quota) must never surface as an error: the numbers simply hold
       // until the quota resets, and every other endpoint stays healthy.
       try {
-        await kv.put(STATS_KEY, JSON.stringify({ total: total, views: views, date: today, today: todayCount }));
+        await kv.put(STATS_KEY, JSON.stringify({ total: total, views: views, date: today, today: todayCount, w: writes }));
       } catch (e) { /* quota exhausted — serve the current numbers, skip the write */ }
     }
 
