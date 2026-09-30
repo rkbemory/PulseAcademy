@@ -44,9 +44,17 @@ function halfBand(n) {
 }
 async function bumpLimit(kv, key, max, ttl) {
   if (!kv) return { ok: true, left: max };
-  const cur = parseInt((await kv.get(key)) || "0", 10) || 0;
+  // Reads and writes are guarded separately: on Cloudflare's free tier the
+  // daily KV *write* quota can be exhausted while reads still work. A throw here
+  // would take the whole endpoint down (HTTP 500), so a write failure degrades to
+  // "allow the request, stop counting" rather than an outage. The read-side cap
+  // below still applies to whatever count was recorded before writes stopped.
+  let cur = 0;
+  try { cur = parseInt((await kv.get(key)) || "0", 10) || 0; }
+  catch (e) { return { ok: true, left: max }; }
   if (cur >= max) return { ok: false, left: 0 };
-  await kv.put(key, String(cur + 1), { expirationTtl: ttl });
+  try { await kv.put(key, String(cur + 1), { expirationTtl: ttl }); }
+  catch (e) { /* KV write quota exhausted — serve the request, counter freezes */ }
   return { ok: true, left: max - cur - 1 };
 }
 
